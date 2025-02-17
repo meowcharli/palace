@@ -3,6 +3,19 @@ import {
   type PortableTextComponents,
   type PortableTextBlock,
 } from "next-sanity";
+import imageUrlBuilder from "@sanity/image-url";
+import { createClient } from "next-sanity";
+
+// Setup Sanity client
+const client = createClient({
+  projectId: "your_project_id", // Replace with your Sanity project ID
+  dataset: "production",
+  useCdn: true,
+});
+
+// Setup image builder
+const builder = imageUrlBuilder(client);
+const urlFor = (source) => builder.image(source).url();
 
 export default function CustomPortableText({
   className,
@@ -69,7 +82,7 @@ export default function CustomPortableText({
         return (
           <div className="my-4 flex justify-center">
             <img
-              src={value.asset.url}
+              src={urlFor(value.asset)}
               alt={value.alt || "Blog image"}
               className="rounded-lg shadow-md max-w-full h-auto"
             />
