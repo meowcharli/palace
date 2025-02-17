@@ -17,7 +17,7 @@ header, .banner, .navbar {
 body::after {
   content: "";
   position: fixed;
-  bottom: 0;
+  bottom: 200;
   right: 0;
   width: 200px; /* Adjust the size as needed */
   height: 100px; /* Adjust the size as needed */
