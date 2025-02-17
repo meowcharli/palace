@@ -70,6 +70,14 @@ export default async function RootLayout({
         <section className="min-h-screen">
           {isDraftMode && <AlertBanner />}
           <main>{children}</main>
+          {/* Add the SVG here */}
+          <div className="fixed bottom-0 right-0 z-10">
+            <img
+              src="/decoration.svg" // Path to your SVG
+              alt="Decoration"
+              className="w-48 h-auto" // Adjust size as needed
+            />
+          </div>
           <footer className="bg-[#330613] border-accent-2 border-t">
             <div className="container mx-auto px-5">
               {footer.length > 0 ? (
