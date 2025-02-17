@@ -4,18 +4,6 @@ import { defineField, defineType } from "sanity";
 
 import authorType from "./author";
 
-/**
- * This file is the schema definition for a post.
- *
- * Here you'll be able to edit the different fields that appear when you 
- * create or edit a post in the studio.
- * 
- * Here you can see the different schema types that are available:
-
-  https://www.sanity.io/docs/schema-types
-
- */
-
 export default defineType({
   name: "post",
   title: "Post",
@@ -62,6 +50,20 @@ export default defineType({
             },
           ],
         },
+        {
+          type: "object",
+          name: "video",
+          title: "Embedded Video",
+          fields: [
+            {
+              name: "url",
+              type: "url",
+              title: "Video URL",
+              description: "Supports YouTube, Vimeo, and other embed-friendly platforms.",
+              validation: (rule) => rule.uri({ allowRelative: false, scheme: ["http", "https"] }),
+            },
+          ],
+        },
       ],
     }),
     defineField({
@@ -84,7 +86,7 @@ export default defineType({
           name: "alt",
           type: "string",
           title: "Alternative text",
-          description: "Important for SEO and accessiblity.",
+          description: "Important for SEO and accessibility.",
           validation: (rule) => {
             return rule.custom((alt, context) => {
               if ((context.document?.coverImage as any)?.asset?._ref && !alt) {
