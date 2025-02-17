@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #ddcdbf; /* Equivalent to bg-gray-900 */
-  color: #330613; /* Equivalent to text-white */
+/* Override global styles */
+html, body {
+  background-color: #ddcdbf !important; /* Your custom background color */
+  color: #330613 !important; /* Your custom text color */
+}
+
+/* Hide the white banner */
+header, .banner, .navbar {
+  display: none !important;
 }
