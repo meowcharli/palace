@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Times New Roman", "serif"], // Use Times New Roman as the default font
+        sans: ["var(--font-inter)"], // Revert to Inter
       },
     },
   },
