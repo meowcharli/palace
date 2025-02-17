@@ -12,3 +12,18 @@ html, body {
 header, .banner, .navbar {
   display: none !important;
 }
+
+/* Add the SVG as a background image */
+body::after {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 200px; /* Adjust the size as needed */
+  height: 100px; /* Adjust the size as needed */
+  background-image: url("/decoration.svg"); /* Reference the SVG file */
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  z-index: 10; /* Ensure it appears above other elements */
+  pointer-events: none; /* Ensure it doesn't interfere with clicks */
+}
