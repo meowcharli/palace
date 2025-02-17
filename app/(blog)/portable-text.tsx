@@ -4,19 +4,12 @@ import {
   type PortableTextBlock,
 } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
-import { createClient } from "next-sanity";
-import type { Image } from "sanity"; // Import Image type
-
-// Setup Sanity client
-const client = createClient({
-  projectId: "your_project_id", // Replace with your actual Sanity project ID
-  dataset: "production",
-  useCdn: true,
-});
+import { client } from "@/sanity.client"; // Use existing Sanity client
+import type { Image } from "sanity";
 
 // Setup image builder
 const builder = imageUrlBuilder(client);
-const urlFor = (source: Image) => builder.image(source).url(); // Explicitly typed
+const urlFor = (source: Image) => builder.image(source).url();
 
 export default function CustomPortableText({
   className,
