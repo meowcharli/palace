@@ -1,13 +1,3 @@
-/**
- * This component uses Portable Text to render a post body.
- *
- * You can learn more about Portable Text on:
- * https://www.sanity.io/docs/block-content
- * https://github.com/portabletext/react-portabletext
- * https://portabletext.org/
- *
- */
-
 import {
   PortableText,
   type PortableTextComponents,
@@ -31,11 +21,59 @@ export default function CustomPortableText({
       ),
     },
     marks: {
-      link: ({ children, value }) => {
+      link: ({ children, value }) => (
+        <a href={value?.href} rel="noreferrer noopener">
+          {children}
+        </a>
+      ),
+    },
+    types: {
+      video: ({ value }) => {
+        if (!value?.url) return null;
+
+        const isYouTube = value.url.includes("youtube.com") || value.url.includes("youtu.be");
+        const isVimeo = value.url.includes("vimeo.com");
+
+        if (isYouTube) {
+          return (
+            <iframe
+              width="100%"
+              height="400"
+              src={value.url.replace("watch?v=", "embed/")}
+              title="YouTube Video"
+              frameBorder="0"
+              allowFullScreen
+            />
+          );
+        }
+
+        if (isVimeo) {
+          return (
+            <iframe
+              width="100%"
+              height="400"
+              src={`https://player.vimeo.com/video/${value.url.split("/").pop()}`}
+              title="Vimeo Video"
+              frameBorder="0"
+              allowFullScreen
+            />
+          );
+        }
+
+        return <a href={value.url} target="_blank" rel="noopener noreferrer">Watch Video</a>;
+      },
+
+      image: ({ value }) => {
+        if (!value?.asset?._ref) return null;
+
         return (
-          <a href={value?.href} rel="noreferrer noopener">
-            {children}
-          </a>
+          <div className="my-4 flex justify-center">
+            <img
+              src={value.asset.url}
+              alt={value.alt || "Blog image"}
+              className="rounded-lg shadow-md max-w-full h-auto"
+            />
+          </div>
         );
       },
     },
