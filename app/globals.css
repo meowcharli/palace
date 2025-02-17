@@ -17,13 +17,13 @@ header, .banner, .navbar {
 body::after {
   content: "";
   position: fixed;
-  bottom: 200;
+  bottom: 0;
   right: 0;
   width: 200px; /* Adjust the size as needed */
   height: 100px; /* Adjust the size as needed */
-  background-image: url("/decoration.svg"); /* Reference the SVG file */
+  background-image: url("/decoration.svg"); /* Ensure this path is correct */
   background-repeat: no-repeat;
   background-position: bottom right;
-  z-index: 10; /* Ensure it appears above other elements */
-  pointer-events: none; /* Ensure it doesn't interfere with clicks */
+  z-index: 1000; /* Ensure it appears above other elements */
+  pointer-events: none; /* Ensure it doesn’t interfere with clicks */
 }
