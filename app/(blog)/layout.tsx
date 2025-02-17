@@ -91,9 +91,9 @@ export default async function RootLayout({
                     </a>
                     <a
                       href="https://github.com/vercel/next.js/tree/canary/examples/cms-sanity"
-                      className="mx-3 font-bold hover:underline"
+                      className="mx-3 mb-6 border border-[#89131f] bg-[#89131f] py-3 px-12 font-bold text-white transition-colors duration-200 hover:bg-transparent hover:text-[#89131f] lg:mb-0 lg:px-8"
                     >
-                      View on GitHub
+                      Email us! 📧
                     </a>
                   </div>
                 </div>
