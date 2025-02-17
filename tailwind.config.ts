@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)"],
+        sans: ["var(--font-noto-serif)", "serif"], // Use Noto Serif as the default font
       },
     },
   },
