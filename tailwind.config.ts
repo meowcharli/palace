@@ -6,7 +6,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)"], // Revert to Inter
+        sans: ["var(--font-inter)"],
+      },
+      colors: {
+        background: "#ddcdbf", // Custom background color
+        text: "#330613", // Custom text color
       },
     },
   },
