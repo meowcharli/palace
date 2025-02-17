@@ -1,7 +1,6 @@
 import "../globals.css";
 import { Inter } from "next/font/google";
 
-// Configure Inter font
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -15,7 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen">{children}</body>
+      <body className="min-h-screen bg-background text-text"> {/* Use custom colors */}
+        {children}
+      </body>
     </html>
   );
 }
