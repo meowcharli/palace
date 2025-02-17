@@ -70,7 +70,7 @@ export default async function RootLayout({
         <section className="min-h-screen">
           {isDraftMode && <AlertBanner />}
           <main>{children}</main>
-          <footer className="bg-accent-1 border-accent-2 border-t">
+          <footer className="bg-[#330613] border-accent-2 border-t">
             <div className="container mx-auto px-5">
               {footer.length > 0 ? (
                 <PortableText
@@ -84,9 +84,9 @@ export default async function RootLayout({
                   </h3>
                   <div className="flex flex-col items-center justify-center lg:w-1/2 lg:flex-row lg:pl-4">
                     <a
-  href="https://nextjs.org/docs"
-  className="mx-3 mb-6 border border-[#183f63] bg-transparent py-3 px-12 font-bold text-[#183f63] transition-colors duration-200 hover:bg-[#183f63] hover:text-white lg:mb-0 lg:px-8"
->
+                      href="https://nextjs.org/docs"
+                      className="mx-3 mb-6 border border-[#183f63] bg-[#183f63] py-3 px-12 font-bold text-white transition-colors duration-200 hover:bg-transparent hover:text-[#183f63] lg:mb-0 lg:px-8"
+                    >
                       View our BlueSky 🦋
                     </a>
                     <a
