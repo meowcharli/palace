@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  background-color: #ddcdbf; /* Equivalent to bg-gray-900 */
+  color: #330613; /* Equivalent to text-white */
+}
