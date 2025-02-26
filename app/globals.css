@@ -23,9 +23,9 @@ header.site-header {
 }
 
 /* Define a wider container for the header */
-.container-wide {
-  max-width: 1400px;
-  width: 95%;
+.container-wider {
+  max-width: 1680px; /* 20% wider than before (1400px) */
+  width: 98%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -35,20 +35,21 @@ header.site-header {
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
-  background-color: #D7E7EF;
+  background-color: #FFFFFF;
   color: #000000;
   padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  font-size: 0.875rem;
+  border-radius: 9999px; /* Fully rounded */
+  font-size: 1.125rem; /* 50% bigger text */
   transition: background-color 0.2s ease, color 0.2s ease;
   white-space: normal; /* Allow text to wrap */
   min-width: 200px;
   text-align: left;
+  border: 1px solid #e5e7eb; /* Light border */
 }
 
 .header-button:hover {
-  background-color: #89131F;
-  color: #DDCDBF;
+  background-color: #FFEFF4;
+  color: #89131F;
 }
 
 /* Add the SVG as a background image */
