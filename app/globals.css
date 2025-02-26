@@ -58,6 +58,25 @@ header.site-header {
   color: #89131F;
 }
 
+/* Logo button styling */
+.logo-button {
+  width: clamp(42px, 5vw, 52px);
+  height: clamp(42px, 5vw, 52px);
+  border: 1px solid #e5e7eb;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border-radius: 0.5rem; /* Rounded corners */
+}
+
+/* On hover, match the other buttons' styling */
+a:hover .logo-button {
+  background-color: #FFEFF4 !important;
+  border-color: #89131F;
+}
+
 /* Reduce space between header and content */
 main {
   padding-top: min(1rem, 1.5vh); /* Scale with viewport height */
