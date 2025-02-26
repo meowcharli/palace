@@ -100,6 +100,12 @@ export default defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "videoEmbed",
+      title: "Video Embed",
+      type: "url",
+      description: "URL of the video to embed as the thumbnail",
+    }),
+    defineField({
       name: "date",
       title: "Date",
       type: "datetime",
