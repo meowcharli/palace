@@ -23,10 +23,10 @@ async function CustomHeader() {
     return (
       <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm">
         <div className="container-wide mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-3 md:space-x-6">
             <Link href="/" className="flex items-center">
               {/* Logo */}
-              <div className="w-10 h-10 mr-4 flex-shrink-0">
+              <div className="w-8 h-8 md:w-10 md:h-10 mr-2 md:mr-4 flex-shrink-0">
                 <svg viewBox="0 0 159.47 159.48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g>
                     <rect fill="#330613" x="41.37" y="41.37" width="76.73" height="76.73"/>
@@ -58,28 +58,40 @@ async function CustomHeader() {
 
             {/* Recent Articles */}
             <div className="flex flex-col md:flex-row gap-4">
-              {recentPosts?.slice(0, 2).map((post) => (
+              {recentPosts?.slice(0, 1).map((post) => (
                 <Link 
                   key={post._id} 
                   href={`/posts/${post.slug}`}
                   className="header-button"
                 >
-                  {post.title}
+                  <span className="truncate">{post.title}</span>
                 </Link>
               ))}
+              {/* Second article only shows on medium screens and up */}
+              <div className="hidden md:block">
+                {recentPosts?.slice(1, 2).map((post) => (
+                  <Link 
+                    key={post._id} 
+                    href={`/posts/${post.slug}`}
+                    className="header-button"
+                  >
+                    <span className="truncate">{post.title}</span>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
           
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3">
             <Link 
               href="/contact" 
-              className="header-button"
+              className="inline-flex items-center bg-white text-black px-3 py-1 md:px-4 md:py-2 rounded-full text-[0.85rem] md:text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
             >
               Contact
             </Link>
             <Link 
               href="/support" 
-              className="header-button"
+              className="inline-flex items-center bg-white text-black px-3 py-1 md:px-4 md:py-2 rounded-full text-[0.85rem] md:text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
             >
               Support
             </Link>
@@ -94,7 +106,7 @@ async function CustomHeader() {
       <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm">
         <div className="container-wide mx-auto flex justify-between items-center">
           <Link href="/" className="flex items-center">
-            <div className="w-10 h-10 mr-4 flex-shrink-0">
+            <div className="w-8 h-8 md:w-10 md:h-10 mr-2 md:mr-4 flex-shrink-0">
               <svg viewBox="0 0 159.47 159.48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 {/* SVG content same as above */}
                 <rect fill="#330613" x="41.37" y="41.37" width="76.73" height="76.73"/>
@@ -102,16 +114,16 @@ async function CustomHeader() {
             </div>
           </Link>
           
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3">
             <Link 
               href="/contact" 
-              className="header-button bg-white text-black px-4 py-2 rounded-full text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
+              className="inline-flex items-center bg-white text-black px-3 py-1 md:px-4 md:py-2 rounded-full text-[0.85rem] md:text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
             >
               Contact
             </Link>
             <Link 
               href="/support" 
-              className="header-button bg-white text-black px-4 py-2 rounded-full text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
+              className="inline-flex items-center bg-white text-black px-3 py-1 md:px-4 md:py-2 rounded-full text-[0.85rem] md:text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
             >
               Support
             </Link>
