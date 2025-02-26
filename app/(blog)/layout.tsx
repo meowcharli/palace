@@ -78,7 +78,7 @@ export default async function RootLayout({
                   value={footer as PortableTextBlock[]}
                 />
               ) : (
-                <div className="flex flex-col items-center py-24 lg:flex-row">
+                <div className="flex flex-col items-center py-12 lg:flex-row">
                   <h3 className="mb-6 text-[#ddcdbf] text-center text-1xl leading-tight tracking-tighter py-3 px-12 lg:mb-0 lg:w-1/2 lg:pr-4 lg:text-left lg:text-1xl">
                     Designed with ♥️ in Serbia.
                   </h3>
