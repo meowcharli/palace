@@ -76,7 +76,7 @@ header.site-header {
   left: 50%;
   transform: translate(-50%, -50%);
   transition: background-color 0.2s ease, color 0.2s ease;
-  border-radius: 0.5rem; /* Rounded corners */
+  border-radius: 1rem; /* Rounded corners */
 }
 
 @media (min-width: 768px) {
@@ -88,8 +88,8 @@ header.site-header {
 
 /* On hover, match the other buttons' styling */
 a:hover .logo-button {
-  background-color: #FFEFF4 !important;
-  border-color: #89131F;
+  background-color: #E1F4FF !important;
+  border-color: #e5e7eb;
 }
 
 /* Reduce space between header and content */
