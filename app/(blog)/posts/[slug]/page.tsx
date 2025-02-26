@@ -1,3 +1,4 @@
+// app/(blog)/posts/[slug]/page.tsx
 import { defineQuery } from "next-sanity";
 import type { Metadata, ResolvingMetadata } from "next";
 import { type PortableTextBlock } from "next-sanity";
