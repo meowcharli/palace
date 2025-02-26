@@ -22,8 +22,8 @@ async function CustomHeader() {
 
     return (
       <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm">
-        <div className="container-wide mx-auto px-5 py-2 flex justify-between items-center">
-          <div className="flex items-center space-x-6">
+        <div className="container-wider mx-auto px-0 py-2 flex justify-between items-center">
+          <div className="flex items-center space-x-6 pl-2">
             <Link href="/" className="flex items-center">
               {/* Logo - now 2x the size */}
               <div className="w-10 h-10 mr-4 flex-shrink-0">
@@ -62,7 +62,7 @@ async function CustomHeader() {
                 <Link 
                   key={post._id} 
                   href={`/posts/${post.slug}`}
-                  className="header-button bg-[#D7E7EF] text-[#000000] px-4 py-2 rounded transition-colors duration-200 hover:bg-[#89131F] hover:text-[#DDCDBF] text-sm min-w-[200px] inline-block"
+                  className="header-button bg-[#FFFFFF] text-[#000000] px-4 py-2 rounded-full transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F] text-md min-w-[200px] inline-block border border-gray-200"
                 >
                   {post.title}
                 </Link>
@@ -70,16 +70,16 @@ async function CustomHeader() {
             </div>
           </div>
           
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 pr-2">
             <Link 
               href="/contact" 
-              className="header-button bg-[#D7E7EF] text-[#000000] px-4 py-2 rounded transition-colors duration-200 hover:bg-[#89131F] hover:text-[#DDCDBF] text-sm inline-block"
+              className="header-button bg-[#FFFFFF] text-[#000000] px-4 py-2 rounded-full transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F] text-md inline-block border border-gray-200"
             >
               Contact
             </Link>
             <Link 
               href="/support" 
-              className="header-button bg-[#D7E7EF] text-[#000000] px-4 py-2 rounded transition-colors duration-200 hover:bg-[#89131F] hover:text-[#DDCDBF] text-sm inline-block"
+              className="header-button bg-[#FFFFFF] text-[#000000] px-4 py-2 rounded-full transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F] text-md inline-block border border-gray-200"
             >
               Support
             </Link>
