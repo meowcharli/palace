@@ -1,19 +1,37 @@
 import { Image } from "next-sanity/image";
 import { urlForImage } from "@/sanity/lib/utils";
 import { getVimeoId, buildVimeoEmbedUrl } from "@/utils/vimeo";
+import { useMemo } from "react";
 
 interface CoverImageProps {
   image: any;
   videoEmbed?: string;
+  hideControls?: boolean;
+  autoplay?: boolean;
+  loop?: boolean;
   priority?: boolean;
 }
 
 export default function CoverImage(props: CoverImageProps) {
-  const { image: source, videoEmbed, priority } = props;
+  const { 
+    image: source, 
+    videoEmbed, 
+    hideControls = false, 
+    autoplay = false, 
+    loop = false, 
+    priority 
+  } = props;
 
   // Process Vimeo URL if provided
   const vimeoId = videoEmbed ? getVimeoId(videoEmbed) : null;
-  const embedUrl = vimeoId ? buildVimeoEmbedUrl(vimeoId) : null;
+  
+  // Build the embed URL with options
+  const embedUrl = vimeoId ? buildVimeoEmbedUrl(vimeoId, {
+    autoplay,
+    loop,
+    background: hideControls, // Use background parameter to hide UI controls
+    muted: autoplay // If autoplay is enabled, mute the video (browser requirement)
+  }) : null;
 
   const content = embedUrl ? (
     <div className="video-embed">
