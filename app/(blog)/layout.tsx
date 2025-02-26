@@ -1,3 +1,4 @@
+// app/(blog)/layout.tsx
 import "../globals.css";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -12,6 +13,7 @@ import { draftMode } from "next/headers";
 
 import AlertBanner from "./alert-banner";
 import PortableText from "./portable-text";
+import Header from "@/components/Header"; // Import the Header component
 
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -69,6 +71,7 @@ export default async function RootLayout({
       <body>
         <section className="min-h-screen">
           {isDraftMode && <AlertBanner />}
+          <Header /> {/* Add the Header component here */}
           <main>{children}</main>
           <footer className="bg-[#26323D] border-accent-2 border-t">
             <div className="container mx-auto px-5">
