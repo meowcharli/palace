@@ -71,7 +71,7 @@ async function CustomHeader() {
           <div className="flex items-center space-x-3 md:space-x-6">
             {/* Logo with button background */}
             <Link href="/" className="flex items-center relative">
-              <div className="logo-button rounded-lg bg-white hover:bg-[#FFEFF4] transition-colors duration-200 absolute" aria-hidden="true"></div>
+              <div className="logo-button rounded-2xl bg-white hover:bg-[#FFDCDC] transition-colors duration-200 absolute" aria-hidden="true"></div>
               <div className="w-8 h-8 md:w-10 md:h-10 mr-0 md:mr-0 flex-shrink-0 relative z-10">
                 <svg viewBox="0 0 159.47 159.48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g>
