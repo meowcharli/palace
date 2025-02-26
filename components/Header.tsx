@@ -16,16 +16,15 @@ async function RecentArticles() {
     });
 
     return (
-      <div className="flex flex-row space-x-4 text-sm items-center">
+      <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 items-center">
         {recentPosts?.slice(0, 2).map((post) => (
           <Link 
             key={post._id} 
             href={`/posts/${post.slug}`}
-            className="px-3 py-1 bg-[#D7E7EF] text-[#000000] rounded transition-colors duration-200 hover:bg-[#89131F] hover:text-[#DDCDBF]"
           >
-            <span className="overflow-hidden text-ellipsis whitespace-nowrap" style={{ maxWidth: '150px', display: 'inline-block' }}>
+            <button className="px-4 py-1.5 bg-[#D7E7EF] text-[#000000] rounded transition-colors duration-200 hover:bg-[#89131F] hover:text-[#DDCDBF] text-sm whitespace-normal min-w-[200px] text-left">
               {post.title}
-            </span>
+            </button>
           </Link>
         ))}
       </div>
@@ -40,12 +39,12 @@ async function RecentArticles() {
 
 export default async function Header({ isHomePage = false }: HeaderProps) {
   return (
-    <header className="site-header w-full bg-white border-b border-gray-100 py-1 shadow-sm">
+    <header className="site-header w-full bg-white border-b border-gray-100 py-1.5 shadow-sm">
       <div className="container mx-auto px-5 flex justify-between items-center">
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-6">
           <Link href="/" className="flex items-center">
             {/* Smaller logo */}
-            <div className="w-5 h-5 mr-2 flex-shrink-0">
+            <div className="w-5 h-5 mr-3 flex-shrink-0">
               <svg viewBox="0 0 159.47 159.48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g>
                   <rect fill="#330613" x="41.37" y="41.37" width="76.73" height="76.73"/>
@@ -80,17 +79,15 @@ export default async function Header({ isHomePage = false }: HeaderProps) {
         </div>
         
         <div className="flex items-center space-x-3">
-          <Link 
-            href="/contact" 
-            className="px-3 py-1 bg-[#D7E7EF] text-[#000000] rounded transition-colors duration-200 hover:bg-[#89131F] hover:text-[#DDCDBF] text-sm"
-          >
-            Contact
+          <Link href="/contact">
+            <button className="px-4 py-1.5 bg-[#D7E7EF] text-[#000000] rounded transition-colors duration-200 hover:bg-[#89131F] hover:text-[#DDCDBF] text-sm">
+              Contact
+            </button>
           </Link>
-          <Link 
-            href="/support" 
-            className="px-3 py-1 bg-[#D7E7EF] text-[#000000] rounded transition-colors duration-200 hover:bg-[#89131F] hover:text-[#DDCDBF] text-sm"
-          >
-            Support
+          <Link href="/support">
+            <button className="px-4 py-1.5 bg-[#D7E7EF] text-[#000000] rounded transition-colors duration-200 hover:bg-[#89131F] hover:text-[#DDCDBF] text-sm">
+              Support
+            </button>
           </Link>
         </div>
       </div>
