@@ -66,6 +66,12 @@ export default defineType({
               }).required()
             },
             {
+              name: "embedCode",
+              type: "text",
+              title: "Custom Embed Code",
+              description: "Optional: Paste custom Vimeo embed code for advanced options"
+            },
+            {
               name: "caption",
               type: "string",
               title: "Caption",
@@ -76,6 +82,27 @@ export default defineType({
               type: "boolean",
               title: "Show as Thumbnail",
               description: "Display as a clickable thumbnail instead of embedded player",
+              initialValue: false
+            },
+            {
+              name: "hideControls",
+              type: "boolean",
+              title: "Hide Controls",
+              description: "Hide player controls (uses Vimeo's background mode)",
+              initialValue: false
+            },
+            {
+              name: "autoplay",
+              type: "boolean",
+              title: "Autoplay",
+              description: "Automatically play video when page loads (requires muting)",
+              initialValue: false
+            },
+            {
+              name: "loop",
+              type: "boolean",
+              title: "Loop",
+              description: "Loop the video",
               initialValue: false
             }
           ],
@@ -130,13 +157,48 @@ export default defineType({
     defineField({
       name: "videoEmbed",
       title: "Featured Video",
-      type: "url",
-      description: "Vimeo URL to display as featured video (will be shown as a thumbnail)",
-      validation: (rule) => 
-        rule.uri({
-          allowRelative: false,
-          scheme: ["http", "https"]
-        })
+      type: "object",
+      description: "Add a featured video (shown in place of the cover image)",
+      fields: [
+        {
+          name: "url",
+          type: "url",
+          title: "Vimeo URL",
+          description: "Enter the Vimeo video URL",
+          validation: (rule) => 
+            rule.uri({
+              allowRelative: false,
+              scheme: ["http", "https"]
+            })
+        },
+        {
+          name: "embedCode",
+          type: "text",
+          title: "Custom Embed Code",
+          description: "Optional: Paste custom Vimeo embed code instead of URL for more control"
+        },
+        {
+          name: "hideControls",
+          type: "boolean",
+          title: "Hide Controls",
+          description: "Hide player controls for a cleaner look (will use Vimeo's background parameter)",
+          initialValue: false
+        },
+        {
+          name: "autoplay",
+          type: "boolean",
+          title: "Autoplay",
+          description: "Automatically play video when in view (will be muted)",
+          initialValue: false
+        },
+        {
+          name: "loop",
+          type: "boolean",
+          title: "Loop",
+          description: "Loop the video",
+          initialValue: true
+        }
+      ]
     }),
     defineField({
       name: "date",
