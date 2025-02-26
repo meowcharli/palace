@@ -1,6 +1,7 @@
 // app/(sanity)/layout.tsx
 import "../globals.css";
 import { Inter } from "next/font/google";
+// Make sure to import with the correct case
 import Header from "@/components/Header";
 
 const inter = Inter({
@@ -16,7 +17,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen bg-background text-text">
+      <body className="min-h-screen bg-background text-text"> 
+        {/* Make sure the Header is placed here */}
         <Header />
         {children}
       </body>
