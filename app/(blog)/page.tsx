@@ -13,6 +13,38 @@ import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { heroQuery, settingsQuery } from "@/sanity/lib/queries";
 
+import type { PortableTextBlock } from "next-sanity";
+
+export interface Author {
+  name: string;
+  picture?: {
+    asset?: {
+      _ref: string;
+    };
+    alt?: string;
+    hotspot?: {
+      x: number;
+      y: number;
+      height: number;
+      width: number;
+    };
+  };
+}
+
+export interface Post {
+  _id: string;
+  title: string;
+  slug: string;
+  coverImage: any;
+  videoEmbed?: string;
+  date: string;
+  excerpt?: string;
+  author?: Author;
+  content: PortableTextBlock[];
+}
+
+export type HeroQueryResult = Post | null;
+
 function Intro(props: { title: string | null | undefined; description: any }) {
   const title = props.title || demo.title;
   const description = props.description?.length
