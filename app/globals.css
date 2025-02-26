@@ -57,3 +57,47 @@ body::after {
 .video-thumbnail-container {
   margin-bottom: 1.5rem;
 }
+
+/* Header styles */
+header.site-header {
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #eaeaea;
+  padding: 0.5rem 0;
+}
+
+/* Override the display: none for headers */
+header.site-header {
+  display: flex !important;
+}
+
+/* Logo styling */
+.logo-container img {
+  height: 32px;
+  width: 32px;
+}
+
+/* Recent articles styling */
+.recent-articles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .recent-articles {
+    flex-direction: row;
+    gap: 1rem;
+  }
+}
+
+/* Links styling */
+.header-links a {
+  color: #0a0a0a;
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+}
+
+.header-links a:hover {
+  color: #4a4a4a;
+  text-decoration: underline;
+}
