@@ -1,36 +1,73 @@
 import { Image } from "next-sanity/image";
 import { urlForImage } from "@/sanity/lib/utils";
-import { getVimeoId, buildVimeoEmbedUrl } from "@/utils/vimeo";
-import { useMemo } from "react";
+import { getVimeoId, buildVimeoEmbedUrl, parseEmbedParameters } from "@/utils/vimeo";
+
+import type { VideoEmbed } from "@/sanity.types";
 
 interface CoverImageProps {
   image: any;
-  videoEmbed?: string;
-  hideControls?: boolean;
-  autoplay?: boolean;
-  loop?: boolean;
+  videoEmbed?: VideoEmbed | string;
   priority?: boolean;
 }
 
 export default function CoverImage(props: CoverImageProps) {
-  const { 
-    image: source, 
-    videoEmbed, 
-    hideControls = false, 
-    autoplay = false, 
-    loop = false, 
-    priority 
-  } = props;
+  const { image: source, videoEmbed, priority } = props;
 
-  // Process Vimeo URL if provided
-  const vimeoId = videoEmbed ? getVimeoId(videoEmbed) : null;
+  // Handle both string and object formats for backward compatibility
+  let vimeoUrl: string | undefined;
+  let embedCode: string | undefined;
+  let hideControls = false;
+  let autoplay = false;
+  let loop = false;
+
+  if (typeof videoEmbed === 'string') {
+    vimeoUrl = videoEmbed;
+  } else if (videoEmbed) {
+    vimeoUrl = videoEmbed.url;
+    embedCode = videoEmbed.embedCode;
+    hideControls = videoEmbed.hideControls || false;
+    autoplay = videoEmbed.autoplay || false;
+    loop = videoEmbed.loop || false;
+  }
+
+  // First try to get Vimeo ID from embed code if available
+  let vimeoId: string | null = null;
   
-  // Build the embed URL with options
+  if (embedCode) {
+    vimeoId = getVimeoId(embedCode);
+    
+    // If we have a valid embed code, just use it directly
+    if (vimeoId && embedCode.includes('<iframe')) {
+      const content = (
+        <div 
+          className="video-embed w-full"
+          dangerouslySetInnerHTML={{ __html: embedCode }} 
+        />
+      );
+      
+      return (
+        <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
+          {content}
+        </div>
+      );
+    }
+  }
+  
+  // Otherwise, fall back to URL-based embed
+  if (!vimeoId && vimeoUrl) {
+    vimeoId = getVimeoId(vimeoUrl);
+  }
+  
+  // Build the embed URL with options if we have a valid ID
   const embedUrl = vimeoId ? buildVimeoEmbedUrl(vimeoId, {
     autoplay,
     loop,
     background: hideControls, // Use background parameter to hide UI controls
-    muted: autoplay // If autoplay is enabled, mute the video (browser requirement)
+    muted: autoplay, // If autoplay is enabled, mute the video (browser requirement)
+    portrait: !hideControls,
+    title: !hideControls,
+    byline: !hideControls,
+    color: '00adef' // Use your brand color
   }) : null;
 
   const content = embedUrl ? (
