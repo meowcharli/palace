@@ -9,8 +9,8 @@ export default {
         sans: ["var(--font-inter)"],
       },
       colors: {
-        background: "#ddcdbf", // Custom background color
-        text: "#330613", // Custom text color
+        background: "#040404", // Custom background color
+        text: "#0A0A0A", // Custom text color
       },
     },
   },
