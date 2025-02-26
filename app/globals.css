@@ -8,9 +8,17 @@ html, body {
   color: #0a0a0a !important; /* Your custom text color */
 }
 
-/* Hide the white banner */
-header, .banner, .navbar {
+/* Change this to be more specific - only hide certain headers, not our new custom one */
+header:not(.site-header), .banner, .navbar {
   display: none !important;
+}
+
+/* Add the site-header class to ensure our header is visible */
+header.site-header {
+  display: flex !important;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #eaeaea;
+  width: 100%;
 }
 
 /* Add the SVG as a background image */
@@ -25,7 +33,7 @@ body::after {
   background-repeat: no-repeat;
   background-position: bottom right;
   z-index: 1000; /* Ensure it appears above other elements */
-  pointer-events: none; /* Ensure it doesn’t interfere with clicks */
+  pointer-events: none; /* Ensure it doesn't interfere with clicks */
 }
 
 .responsive-iframe-container {
@@ -56,48 +64,4 @@ body::after {
 
 .video-thumbnail-container {
   margin-bottom: 1.5rem;
-}
-
-/* Header styles */
-header.site-header {
-  background-color: #FFFFFF;
-  border-bottom: 1px solid #eaeaea;
-  padding: 0.5rem 0;
-}
-
-/* Override the display: none for headers */
-header.site-header {
-  display: flex !important;
-}
-
-/* Logo styling */
-.logo-container img {
-  height: 32px;
-  width: 32px;
-}
-
-/* Recent articles styling */
-.recent-articles {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-@media (min-width: 768px) {
-  .recent-articles {
-    flex-direction: row;
-    gap: 1rem;
-  }
-}
-
-/* Links styling */
-.header-links a {
-  color: #0a0a0a;
-  font-size: 0.875rem;
-  transition: color 0.2s ease;
-}
-
-.header-links a:hover {
-  color: #4a4a4a;
-  text-decoration: underline;
 }
