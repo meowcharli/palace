@@ -33,7 +33,7 @@ header.site-header {
   padding-right: 1.25rem;
 }
 
-/* Button styling for header links */
+/* Header button styling */
 .header-button {
   display: inline-flex;
   align-items: center;
@@ -46,9 +46,8 @@ header.site-header {
   transition: background-color 0.2s ease, color 0.2s ease;
   white-space: nowrap; /* Prevent text wrapping */
   overflow: hidden;
-  text-overflow: ellipsis; /* Add ellipsis for overflowing text */
-  min-width: 150px;
-  max-width: 200px;
+  min-width: 200px; /* Larger minimum width in full screen */
+  max-width: 300px; /* Increased max width */
   text-align: left;
   border: 1px solid #e5e7eb; /* Light border */
 }
@@ -64,6 +63,47 @@ header.site-header {
 .header-button:hover {
   background-color: #FFEFF4;
   color: #89131F;
+}
+
+/* Reduce space between header and content */
+main {
+  padding-top: 1rem; /* Reduced from default */
+}
+
+/* Make articles in header respond to available space */
+@media (min-width: 1200px) {
+  .header-article-container {
+    display: flex;
+    gap: 1rem;
+  }
+  .header-article-item {
+    display: block;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .header-article-container {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .header-article-primary {
+    display: block;
+  }
+  .header-article-secondary {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .header-article-container {
+    display: flex;
+  }
+  .header-article-primary {
+    display: block;
+  }
+  .header-article-secondary {
+    display: none;
+  }
 }
 
 /* Add the SVG as a background image */
