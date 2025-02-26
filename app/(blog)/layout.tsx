@@ -200,7 +200,7 @@ export default async function RootLayout({
                 <div className="flex flex-col items-center justify-center lg:w-1/2 lg:flex-row lg:pl-4">
                   <a
                     href="https://bsky.app/profile/4sigs.com"
-                    className="mx-3 mb-6 border border-[#828282] bg-[#DDDDDD] rounded-full py-3 px-12 font-bold text-white transition-colors duration-200 hover:bg-transparent hover:text-[#183f63] lg:mb-0 lg:px-8"
+                    className="mx-3 mb-6 border border-[#828282] bg-[#DDDDDD] rounded-full py-3 px-12 font-bold text-[#828282] transition-colors duration-200 hover:bg-transparent hover:text-[#183f63] lg:mb-0 lg:px-8"
                   >
                     View our BlueSky ->
                   </a>
