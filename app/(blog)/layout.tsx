@@ -70,7 +70,7 @@ export default async function RootLayout({
         <section className="min-h-screen">
           {isDraftMode && <AlertBanner />}
           <main>{children}</main>
-          <footer className="bg-[#330613] border-accent-2 border-t">
+          <footer className="bg-[#26323D] border-accent-2 border-t">
             <div className="container mx-auto px-5">
               {footer.length > 0 ? (
                 <PortableText
@@ -79,7 +79,7 @@ export default async function RootLayout({
                 />
               ) : (
                 <div className="flex flex-col items-center py-24 lg:flex-row">
-                  <h3 className="mb-6 text-[#ddcdbf] text-center text-1xl leading-tight tracking-tighter py-3 px-12 lg:mb-0 lg:w-1/2 lg:pr-4 lg:text-left lg:text-5xl">
+                  <h3 className="mb-6 text-[#ddcdbf] text-center text-1xl leading-tight tracking-tighter py-3 px-12 lg:mb-0 lg:w-1/2 lg:pr-4 lg:text-left lg:text-1xl">
                     Designed with ♥️ in Serbia.
                   </h3>
                   <div className="flex flex-col items-center justify-center lg:w-1/2 lg:flex-row lg:pl-4">
