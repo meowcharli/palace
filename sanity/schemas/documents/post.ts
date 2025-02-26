@@ -53,16 +53,44 @@ export default defineType({
         {
           type: "object",
           name: "video",
-          title: "Embedded Video",
+          title: "Vimeo Embed",
           fields: [
             {
               name: "url",
               type: "url",
-              title: "Video URL",
-              description: "Supports YouTube, Vimeo, and other embed-friendly platforms.",
-              validation: (rule) => rule.uri({ allowRelative: false, scheme: ["http", "https"] }),
+              title: "Vimeo URL",
+              description: "Enter the Vimeo video URL (e.g., https://vimeo.com/123456789)",
+              validation: (rule) => rule.uri({
+                allowRelative: false,
+                scheme: ["http", "https"]
+              }).required()
             },
+            {
+              name: "caption",
+              type: "string",
+              title: "Caption",
+              description: "Optional caption for the video"
+            },
+            {
+              name: "showThumbnail",
+              type: "boolean",
+              title: "Show as Thumbnail",
+              description: "Display as a clickable thumbnail instead of embedded player",
+              initialValue: false
+            }
           ],
+          preview: {
+            select: {
+              url: 'url',
+              caption: 'caption'
+            },
+            prepare({ url, caption }) {
+              return {
+                title: caption || 'Vimeo Embed',
+                subtitle: url
+              }
+            }
+          }
         },
       ],
     }),
@@ -101,9 +129,14 @@ export default defineType({
     }),
     defineField({
       name: "videoEmbed",
-      title: "Video Embed",
+      title: "Featured Video",
       type: "url",
-      description: "URL of the video to embed as the thumbnail",
+      description: "Vimeo URL to display as featured video (will be shown as a thumbnail)",
+      validation: (rule) => 
+        rule.uri({
+          allowRelative: false,
+          scheme: ["http", "https"]
+        })
     }),
     defineField({
       name: "date",
