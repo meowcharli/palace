@@ -24,8 +24,9 @@ const VimeoEmbed: React.FC<VimeoEmbedProps> = ({
     return <div className="text-red-500">Invalid Vimeo URL</div>;
   }
 
-  // If thumbnail mode is on, fetch the thumbnail image
+  // Fix: Move conditional logic inside the effect, not around it
   React.useEffect(() => {
+    // Only fetch if we need to show the thumbnail and have a valid ID
     if (showThumbnail && vimeoId) {
       // For simplicity, we're using the oEmbed API to get the thumbnail
       // Note: In production, you might want to cache this or use a server component
