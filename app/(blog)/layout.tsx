@@ -56,7 +56,7 @@ const inter = Inter({
   display: "swap",
 });
 
-// Custom Header component built directly into the layout
+// Custom Header component with improved responsive design and logo button
 async function CustomHeader() {
   // Fetch the two most recent articles
   try {
@@ -69,9 +69,10 @@ async function CustomHeader() {
       <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm">
         <div className="container-wide mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-3 md:space-x-6">
-            <Link href="/" className="flex items-center">
-              {/* Logo */}
-              <div className="w-8 h-8 md:w-10 md:h-10 mr-2 md:mr-4 flex-shrink-0">
+            {/* Logo with button background */}
+            <Link href="/" className="flex items-center relative">
+              <div className="logo-button rounded-lg bg-white hover:bg-[#FFEFF4] transition-colors duration-200 absolute" aria-hidden="true"></div>
+              <div className="w-8 h-8 md:w-10 md:h-10 mr-2 md:mr-4 flex-shrink-0 relative z-10">
                 <svg viewBox="0 0 159.47 159.48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g>
                     <rect fill="#330613" x="41.37" y="41.37" width="76.73" height="76.73"/>
