@@ -62,8 +62,8 @@ header.site-header {
 }
 
 .header-button:hover {
-  background-color: #C5ECFF;
-  color: #8FC7FF;
+  background-color: #FFEFF4;
+  color: #89131F;
 }
 
 /* Logo button styling */
@@ -88,8 +88,8 @@ header.site-header {
 
 /* On hover, match the other buttons' styling */
 a:hover .logo-button {
-  background-color: #E1F4FF !important;
-  border-color: #e5e7eb;
+  background-color: #C5ECFF !important;
+  border-color: #8FC7FF;
 }
 
 /* Reduce space between header and content */
