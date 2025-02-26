@@ -1,49 +1,50 @@
-import { Image } from "next-sanity/image";
-import { urlForImage } from "@/sanity/lib/utils";
-import { getVimeoId, buildVimeoEmbedUrl } from "@/utils/vimeo";
+import Link from "next/link";
 
-interface CoverImageProps {
-  image: any;
-  videoEmbed?: string;
-  priority?: boolean;
-}
+import Avatar from "./avatar";
+import CoverImage from "./cover-image";
+import DateComponent from "./date";
 
-export default function CoverImage(props: CoverImageProps) {
-  const { image: source, videoEmbed, priority } = props;
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { moreStoriesQuery } from "@/sanity/lib/queries";
 
-  // Process Vimeo URL if provided
-  const vimeoId = videoEmbed ? getVimeoId(videoEmbed) : null;
-  const embedUrl = vimeoId ? buildVimeoEmbedUrl(vimeoId) : null;
-
-  const content = embedUrl ? (
-    <div className="video-embed">
-      <iframe
-        src={embedUrl}
-        frameBorder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        title="Embedded video"
-        className="w-full h-auto"
-        style={{ aspectRatio: '16/9' }}
-      ></iframe>
-    </div>
-  ) : source?.asset?._ref ? (
-    <Image
-      className="h-auto w-full"
-      width={2000}
-      height={1000}
-      alt={source?.alt || ""}
-      src={urlForImage(source)?.height(1000).width(2000).url() as string}
-      sizes="100vw"
-      priority={priority}
-    />
-  ) : (
-    <div className="bg-slate-50" style={{ paddingTop: "50%" }} />
-  );
+export default async function MoreStories(params: {
+  skip: string;
+  limit: number;
+}) {
+  const data = await sanityFetch({ query: moreStoriesQuery, params });
 
   return (
-    <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
-      {content}
-    </div>
+    <>
+      <div className="mb-32 grid grid-cols-1 gap-y-20 md:grid-cols-2 md:gap-x-16 md:gap-y-32 lg:gap-x-32">
+        {data?.map((post) => {
+          const { _id, title, slug, coverImage, videoEmbed, excerpt, author } = post;
+          return (
+            <article key={_id}>
+              <Link href={`/posts/${slug}`} className="group mb-5 block">
+                <CoverImage 
+                  image={coverImage} 
+                  videoEmbed={videoEmbed || undefined} 
+                  priority={false} 
+                />
+              </Link>
+              <h3 className="text-balance mb-3 text-3xl leading-snug">
+                <Link href={`/posts/${slug}`} className="hover:underline">
+                  {title}
+                </Link>
+              </h3>
+              <div className="mb-4 text-lg">
+                <DateComponent dateString={post.date} />
+              </div>
+              {excerpt && (
+                <p className="text-pretty mb-4 text-lg leading-relaxed">
+                  {excerpt}
+                </p>
+              )}
+              {author && <Avatar name={author.name} picture={author.picture} />}
+            </article>
+          );
+        })}
+      </div>
+    </>
   );
 }
