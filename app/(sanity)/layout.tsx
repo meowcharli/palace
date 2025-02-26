@@ -22,10 +22,10 @@ async function CustomHeader() {
 
     return (
       <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm">
-        <div className="container-wider mx-auto px-0 py-2 flex justify-between items-center">
-          <div className="flex items-center space-x-6 pl-2">
+        <div className="flex justify-between items-center w-full">
+          <div className="flex items-center space-x-6 pl-5">
             <Link href="/" className="flex items-center">
-              {/* Logo - now 2x the size */}
+              {/* Logo */}
               <div className="w-10 h-10 mr-4 flex-shrink-0">
                 <svg viewBox="0 0 159.47 159.48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g>
@@ -62,7 +62,7 @@ async function CustomHeader() {
                 <Link 
                   key={post._id} 
                   href={`/posts/${post.slug}`}
-                  className="header-button bg-[#FFFFFF] text-[#000000] px-4 py-2 rounded-full transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F] text-md min-w-[200px] inline-block border border-gray-200"
+                  className="header-button"
                 >
                   {post.title}
                 </Link>
@@ -70,16 +70,16 @@ async function CustomHeader() {
             </div>
           </div>
           
-          <div className="flex items-center gap-3 pr-2">
+          <div className="flex items-center gap-3 pr-5">
             <Link 
               href="/contact" 
-              className="header-button bg-[#FFFFFF] text-[#000000] px-4 py-2 rounded-full transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F] text-md inline-block border border-gray-200"
+              className="header-button"
             >
               Contact
             </Link>
             <Link 
               href="/support" 
-              className="header-button bg-[#FFFFFF] text-[#000000] px-4 py-2 rounded-full transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F] text-md inline-block border border-gray-200"
+              className="header-button"
             >
               Support
             </Link>
