@@ -4,8 +4,8 @@
 
 /* Override global styles */
 html, body {
-  background-color: #ddcdbf !important; /* Your custom background color */
-  color: #330613 !important; /* Your custom text color */
+  background-color: #f1f1f1 !important; /* Your custom background color */
+  color: #0a0a0a !important; /* Your custom text color */
 }
 
 /* Hide the white banner */
