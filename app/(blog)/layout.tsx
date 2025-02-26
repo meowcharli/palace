@@ -101,29 +101,31 @@ async function CustomHeader() {
               </div>
             </Link>
 
-            {/* Recent Articles */}
-            <div className="flex flex-col md:flex-row gap-4">
-              {recentPosts?.slice(0, 1).map((post) => (
-                <Link 
-                  key={post._id} 
-                  href={`/posts/${post.slug}`}
-                  className="header-button"
-                >
-                  <span className="truncate">{post.title}</span>
-                </Link>
-              ))}
-              {/* Second article only shows on medium screens and up */}
-              <div className="hidden md:block">
-                {recentPosts?.slice(1, 2).map((post) => (
+            {/* Recent Articles - Using responsive classes to show/hide based on available space */}
+            <div className="header-article-container">
+              {recentPosts?.length > 0 && (
+                <div className="header-article-primary">
                   <Link 
-                    key={post._id} 
-                    href={`/posts/${post.slug}`}
+                    key={recentPosts[0]._id} 
+                    href={`/posts/${recentPosts[0].slug}`}
                     className="header-button"
                   >
-                    <span className="truncate">{post.title}</span>
+                    {recentPosts[0].title}
                   </Link>
-                ))}
-              </div>
+                </div>
+              )}
+              
+              {recentPosts?.length > 1 && (
+                <div className="header-article-secondary">
+                  <Link 
+                    key={recentPosts[1]._id} 
+                    href={`/posts/${recentPosts[1].slug}`}
+                    className="header-button"
+                  >
+                    {recentPosts[1].title}
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
           
