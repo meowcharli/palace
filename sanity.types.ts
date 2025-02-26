@@ -666,12 +666,20 @@ export interface Author {
   };
 }
 
+export interface VideoEmbed {
+  url?: string;
+  embedCode?: string;
+  hideControls?: boolean;
+  autoplay?: boolean;
+  loop?: boolean;
+}
+
 export interface Post {
   _id: string;
   title: string;
   slug: string;
   coverImage: any;
-  videoEmbed?: string;
+  videoEmbed?: VideoEmbed | string; // Support both string and object for backward compatibility
   date: string;
   excerpt?: string;
   author?: Author;
