@@ -13,38 +13,6 @@ import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { heroQuery, settingsQuery } from "@/sanity/lib/queries";
 
-import type { PortableTextBlock } from "next-sanity";
-
-export interface Author {
-  name: string;
-  picture?: {
-    asset?: {
-      _ref: string;
-    };
-    alt?: string;
-    hotspot?: {
-      x: number;
-      y: number;
-      height: number;
-      width: number;
-    };
-  };
-}
-
-export interface Post {
-  _id: string;
-  title: string;
-  slug: string;
-  coverImage: any;
-  videoEmbed?: string;
-  date: string;
-  excerpt?: string;
-  author?: Author;
-  content: PortableTextBlock[];
-}
-
-export type HeroQueryResult = Post | null;
-
 function Intro(props: { title: string | null | undefined; description: any }) {
   const title = props.title || demo.title;
   const description = props.description?.length
@@ -80,7 +48,7 @@ function HeroPost({
   return (
     <article>
       <Link className="group mb-8 block md:mb-16" href={`/posts/${slug}`}>
-        <CoverImage image={coverImage} videoEmbed={videoEmbed} priority />
+        <CoverImage image={coverImage} videoEmbed={videoEmbed || undefined} priority />
       </Link>
       <div className="mb-20 md:mb-28 md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8">
         <div>
@@ -122,6 +90,7 @@ export default async function Page() {
           title={heroPost.title}
           slug={heroPost.slug}
           coverImage={heroPost.coverImage}
+          videoEmbed={heroPost.videoEmbed}
           excerpt={heroPost.excerpt}
           date={heroPost.date}
           author={heroPost.author}
