@@ -14,20 +14,14 @@ import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { heroQuery, settingsQuery } from "@/sanity/lib/queries";
 
-function Intro(props: { title: string | null | undefined; description: any }) {
+function Intro(props: { title: string | null | undefined }) {
   const title = props.title || demo.title;
-  const description = props.description?.length
-    ? props.description
-    : demo.description;
+  
   return (
-    <section className="mt-6 mb-16 flex flex-col items-center lg:mb-12 lg:flex-row lg:justify-between">
-      {/* Removed the h1 title, keeping only the description */}
-      <h2 className="text-pretty mt-5 text-center text-lg lg:text-left w-full">
-        <PortableText
-          className="prose-lg"
-          value={description?.length ? description : demo.description}
-        />
-      </h2>
+    <section className="mb-16 flex flex-col items-center lg:mb-12 lg:flex-row lg:justify-between">
+      <h1 className="text-pretty text-center text-2xl md:text-4xl lg:text-left font-bold">
+        {title}
+      </h1>
     </section>
   );
 }
@@ -83,7 +77,7 @@ export default async function Page() {
 
   return (
     <div className="container mx-auto px-5">
-      <Intro title={settings?.title} description={settings?.description} />
+      <Intro title={settings?.title} />
       {heroPost ? (
         <HeroPost
           title={heroPost.title}
