@@ -81,7 +81,7 @@ export default async function PostPage({ params }: Props) {
           )}
         </div>
         <div className="mb-8 sm:mx-0 md:mb-16">
-          <CoverImage image={post.coverImage} priority />
+          <CoverImage image={post.coverImage} videoEmbed={post.videoEmbed} priority />
         </div>
         <div className="mx-auto max-w-2xl">
           <div className="mb-6 block md:hidden">
