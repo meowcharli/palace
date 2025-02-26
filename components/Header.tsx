@@ -38,9 +38,9 @@ async function RecentArticles() {
 
 export default async function Header({ isHomePage = false }: HeaderProps) {
   return (
-    <header className="flex bg-white border-b border-gray-100 shadow-sm py-2 w-full">
-      <div className="flex justify-between items-center w-full">
-        <div className="flex items-center space-x-6 pl-5">
+    <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm py-2">
+      <div className="container-wide mx-auto px-5 flex justify-between items-center">
+        <div className="flex items-center space-x-6">
           <Link href="/" className="flex items-center">
             {/* Logo */}
             <div className="w-10 h-10 mr-4 flex-shrink-0">
@@ -77,7 +77,7 @@ export default async function Header({ isHomePage = false }: HeaderProps) {
           <RecentArticles />
         </div>
         
-        <div className="flex items-center gap-3 pr-5">
+        <div className="flex items-center gap-3">
           <Link 
             href="/contact" 
             className="inline-flex items-center bg-white text-black px-4 py-2 rounded-full text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
