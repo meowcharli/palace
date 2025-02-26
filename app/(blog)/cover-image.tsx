@@ -2,7 +2,16 @@ import { Image } from "next-sanity/image";
 import { urlForImage } from "@/sanity/lib/utils";
 import { getVimeoId, buildVimeoEmbedUrl, parseEmbedParameters } from "@/utils/vimeo";
 
-import type { VideoEmbed } from "@/sanity.types";
+// Either import the VideoEmbed interface with the correct path
+// import { VideoEmbed } from "@/sanity.types";
+// Or define it locally
+interface VideoEmbed {
+  url?: string;
+  embedCode?: string;
+  hideControls?: boolean;
+  autoplay?: boolean;
+  loop?: boolean;
+}
 
 interface CoverImageProps {
   image: any;
