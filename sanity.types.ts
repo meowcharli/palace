@@ -647,3 +647,35 @@ declare module "@sanity/client" {
     '*[_type == "post" && defined(slug.current)]{"slug": slug.current}': PostSlugsResult;
   }
 }
+
+import type { PortableTextBlock } from "next-sanity";
+
+export interface Author {
+  name: string;
+  picture?: {
+    asset?: {
+      _ref: string;
+    };
+    alt?: string;
+    hotspot?: {
+      x: number;
+      y: number;
+      height: number;
+      width: number;
+    };
+  };
+}
+
+export interface Post {
+  _id: string;
+  title: string;
+  slug: string;
+  coverImage: any;
+  videoEmbed?: string;
+  date: string;
+  excerpt?: string;
+  author?: Author;
+  content: PortableTextBlock[];
+}
+
+export type HeroQueryResult = Post | null;
