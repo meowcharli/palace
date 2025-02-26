@@ -14,17 +14,7 @@ import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { heroQuery, settingsQuery } from "@/sanity/lib/queries";
 
-function Intro(props: { title: string | null | undefined }) {
-  const title = props.title || demo.title;
-  
-  return (
-    <section className="mb-16 flex flex-col items-center lg:mb-12 lg:flex-row lg:justify-between">
-      <h1 className="text-pretty text-center text-2xl md:text-4xl lg:text-left font-bold">
-        {title}
-      </h1>
-    </section>
-  );
-}
+// Removed the Intro component since we don't want to show the title on the homepage
 
 function HeroPost({
   title,
@@ -77,7 +67,7 @@ export default async function Page() {
 
   return (
     <div className="container mx-auto px-5">
-      <Intro title={settings?.title} />
+      {/* Removed the Intro component with the title */}
       {heroPost ? (
         <HeroPost
           title={heroPost.title}
