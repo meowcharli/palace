@@ -1,37 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Override global styles */
-html, body {
-  background-color: #f1f1f1 !important; /* Your custom background color */
-  color: #0a0a0a !important; /* Your custom text color */
-}
-
-/* Change this to be more specific - only hide certain headers, not our new custom one */
-header:not(.site-header), .banner, .navbar {
-  display: none !important;
-}
-
-/* Add the site-header class to ensure our header is visible */
-header.site-header {
-  display: flex !important;
-  background-color: #FFFFFF;
-  border-bottom: 1px solid #eaeaea;
-  width: 100%;
-  height: 54px; /* Maintained height */
-  padding: 0.5rem 0;
-}
-
-/* Define a wider container for the header */
-.container-wider {
-  max-width: 1680px; /* 20% wider than before (1400px) */
-  width: 98%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Button styling for header links */
+/* Header button styling */
 .header-button {
   display: inline-flex;
   align-items: center;
@@ -53,47 +20,22 @@ header.site-header {
   color: #89131F;
 }
 
-/* Add the SVG as a background image */
-body::after {
-  content: "";
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  width: 200px; /* Adjust the size as needed */
-  height: 100px; /* Adjust the size as needed */
-  background-image: url("/decoration.svg"); /* Ensure this path is correct */
-  background-repeat: no-repeat;
-  background-position: bottom right;
-  z-index: 1000; /* Ensure it appears above other elements */
-  pointer-events: none; /* Ensure it doesn't interfere with clicks */
-}
-
-.responsive-iframe-container {
-  position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
-  height: 0;
-  overflow: hidden;
+/* Container for wider layout */
+.container-wide {
   width: 100%;
-  margin-bottom: 1rem;
-  border-radius: 0.5rem;
+  max-width: 1680px; /* Wider container */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
-.responsive-iframe-container iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
+/* Site header */
+header.site-header {
+  display: flex !important;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid #eaeaea;
   width: 100%;
-  height: 100%;
-  border-radius: 0.5rem;
-}
-
-.video-caption {
-  text-align: center;
-  font-style: italic;
-  margin-top: 0.5rem;
-  color: var(--text-muted, #666);
-}
-
-.video-thumbnail-container {
-  margin-bottom: 1.5rem;
+  height: 54px; /* Maintained height */
+  padding: 0.5rem 0;
 }
