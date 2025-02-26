@@ -22,8 +22,8 @@ async function CustomHeader() {
 
     return (
       <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm">
-        <div className="flex justify-between items-center w-full">
-          <div className="flex items-center space-x-6 pl-5">
+        <div className="container-wide mx-auto flex justify-between items-center">
+          <div className="flex items-center space-x-6">
             <Link href="/" className="flex items-center">
               {/* Logo */}
               <div className="w-10 h-10 mr-4 flex-shrink-0">
@@ -70,7 +70,7 @@ async function CustomHeader() {
             </div>
           </div>
           
-          <div className="flex items-center gap-3 pr-5">
+          <div className="flex items-center gap-3">
             <Link 
               href="/contact" 
               className="header-button"
@@ -92,7 +92,7 @@ async function CustomHeader() {
     // Fallback header with just logo and basic links in case fetching posts fails
     return (
       <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm">
-        <div className="container-wide mx-auto px-5 py-2 flex justify-between items-center">
+        <div className="container-wide mx-auto flex justify-between items-center">
           <Link href="/" className="flex items-center">
             <div className="w-10 h-10 mr-4 flex-shrink-0">
               <svg viewBox="0 0 159.47 159.48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -105,13 +105,13 @@ async function CustomHeader() {
           <div className="flex items-center gap-3">
             <Link 
               href="/contact" 
-              className="header-button bg-[#D7E7EF] text-[#000000] px-4 py-2 rounded transition-colors duration-200 hover:bg-[#89131F] hover:text-[#DDCDBF] text-sm inline-block"
+              className="header-button bg-white text-black px-4 py-2 rounded-full text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
             >
               Contact
             </Link>
             <Link 
               href="/support" 
-              className="header-button bg-[#D7E7EF] text-[#000000] px-4 py-2 rounded transition-colors duration-200 hover:bg-[#89131F] hover:text-[#DDCDBF] text-sm inline-block"
+              className="header-button bg-white text-black px-4 py-2 rounded-full text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
             >
               Support
             </Link>
