@@ -6,7 +6,7 @@
 html, body {
   background-color: #f1f1f1 !important; /* Your custom background color */
   color: #0a0a0a !important; /* Your custom text color */
-  font-size: clamp(16px, 1vw, 18px); /* Base font size relative to viewport */
+  font-size: 16px; /* Fixed base font size */
 }
 
 /* Change this to be more specific - only hide certain headers, not our new custom one */
@@ -20,37 +20,45 @@ header.site-header {
   background-color: #FFFFFF;
   border-bottom: 1px solid #eaeaea;
   width: 100%;
-  height: clamp(50px, 5vh, 60px); /* Responsive height */
+  height: 54px; /* Fixed height */
   padding: 0.5rem 0;
 }
 
-/* Define a wider container for the header with aspect ratio consideration */
+/* Define a wider container for the header */
 .container-wide {
   width: 100%;
-  max-width: min(1680px, 90vw); /* Either 1680px or 90% of viewport width, whichever is smaller */
+  max-width: 1680px; /* Fixed max width */
   margin-left: auto;
   margin-right: auto;
-  padding-left: max(1.25rem, 2vw);
-  padding-right: max(1.25rem, 2vw);
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
-/* Header button styling */
+/* Header button styling - fixed sizes */
 .header-button {
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
   background-color: #FFFFFF;
   color: #000000;
-  padding: clamp(0.4rem, 1vw, 0.75rem) clamp(0.75rem, 2vw, 1.25rem);
+  padding: 0.5rem 1rem;
   border-radius: 9999px; /* Fully rounded */
-  font-size: clamp(0.85rem, 1vw, 0.95rem);
+  font-size: 0.95rem; /* 15% smaller than previous 1.125rem */
   transition: background-color 0.2s ease, color 0.2s ease;
   white-space: nowrap; /* Prevent text wrapping */
   overflow: hidden;
-  min-width: min(200px, 20vw); /* Either 200px or 20% of viewport width, whichever is smaller */
-  max-width: min(300px, 30vw); /* Either 300px or 30% of viewport width, whichever is smaller */
+  min-width: 200px; /* Fixed min width */
+  max-width: 300px; /* Fixed max width */
   text-align: left;
   border: 1px solid #e5e7eb; /* Light border */
+}
+
+@media (max-width: 768px) {
+  .header-button {
+    min-width: 120px;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+  }
 }
 
 .header-button:hover {
@@ -60,8 +68,8 @@ header.site-header {
 
 /* Logo button styling */
 .logo-button {
-  width: clamp(42px, 5vw, 52px);
-  height: clamp(42px, 5vw, 52px);
+  width: 42px;
+  height: 42px;
   border: 1px solid #e5e7eb;
   position: absolute;
   top: 50%;
@@ -69,6 +77,13 @@ header.site-header {
   transform: translate(-50%, -50%);
   transition: background-color 0.2s ease, color 0.2s ease;
   border-radius: 0.5rem; /* Rounded corners */
+}
+
+@media (min-width: 768px) {
+  .logo-button {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 /* On hover, match the other buttons' styling */
@@ -79,11 +94,11 @@ a:hover .logo-button {
 
 /* Reduce space between header and content */
 main {
-  padding-top: min(1rem, 1.5vh); /* Scale with viewport height */
+  padding-top: 1rem; /* Fixed padding */
 }
 
-/* Make articles in header respond to available space based on aspect ratio */
-@media (min-aspect-ratio: 16/9) {
+/* Make articles in header respond to available space based on width */
+@media (min-width: 1200px) {
   .header-article-container {
     display: flex;
     gap: 1rem;
@@ -94,7 +109,7 @@ main {
   }
 }
 
-@media (min-aspect-ratio: 4/3) and (max-aspect-ratio: 16/9) {
+@media (min-width: 768px) and (max-width: 1199px) {
   .header-article-container {
     display: flex;
     gap: 0.75rem;
@@ -107,7 +122,7 @@ main {
   }
 }
 
-@media (max-aspect-ratio: 4/3) {
+@media (max-width: 767px) {
   .header-article-container {
     display: flex;
   }
@@ -119,14 +134,9 @@ main {
   }
 }
 
-/* Adjust content container to be proportional */
+/* Standard container width */
 .container {
-  max-width: min(1100px, 85vw);
-}
-
-/* Ensure consistent spacing */
-.mb-16 {
-  margin-bottom: min(4rem, 6vh);
+  max-width: 1100px;
 }
 
 /* Add the SVG as a background image */
@@ -135,12 +145,12 @@ body::after {
   position: fixed;
   bottom: 0;
   right: 0;
-  width: min(200px, 15vw); /* Responsive width */
-  height: min(100px, 12vh); /* Responsive height */
+  width: 200px;
+  height: 100px;
   background-image: url("/decoration.svg");
   background-repeat: no-repeat;
   background-position: bottom right;
-  background-size: contain; /* Ensure full image is visible */
+  background-size: contain;
   z-index: 1000;
   pointer-events: none;
 }
@@ -151,7 +161,7 @@ body::after {
   height: 0;
   overflow: hidden;
   width: 100%;
-  margin-bottom: min(1rem, 2vh);
+  margin-bottom: 1rem;
   border-radius: 0.5rem;
 }
 
@@ -167,27 +177,10 @@ body::after {
 .video-caption {
   text-align: center;
   font-style: italic;
-  margin-top: min(0.5rem, 1vh);
+  margin-top: 0.5rem;
   color: var(--text-muted, #666);
 }
 
 .video-thumbnail-container {
-  margin-bottom: min(1.5rem, 3vh);
-}
-
-/* Ensure text sizes remain proportional */
-h1 {
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
-}
-
-h2 {
-  font-size: clamp(1.25rem, 2.5vw, 2rem);
-}
-
-h3 {
-  font-size: clamp(1.125rem, 2vw, 1.75rem);
-}
-
-article h3 {
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  margin-bottom: 1.5rem;
 }
