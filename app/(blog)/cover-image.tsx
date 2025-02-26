@@ -1,5 +1,6 @@
 import { Image } from "next-sanity/image";
 import { urlForImage } from "@/sanity/lib/utils";
+import { getVimeoId, buildVimeoEmbedUrl } from "@/utils/vimeo";
 
 interface CoverImageProps {
   image: any;
@@ -10,10 +11,14 @@ interface CoverImageProps {
 export default function CoverImage(props: CoverImageProps) {
   const { image: source, videoEmbed, priority } = props;
 
-  const content = videoEmbed ? (
+  // Process Vimeo URL if provided
+  const vimeoId = videoEmbed ? getVimeoId(videoEmbed) : null;
+  const embedUrl = vimeoId ? buildVimeoEmbedUrl(vimeoId) : null;
+
+  const content = embedUrl ? (
     <div className="video-embed">
       <iframe
-        src={videoEmbed}
+        src={embedUrl}
         frameBorder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
