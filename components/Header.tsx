@@ -1,12 +1,15 @@
+// components/Header.tsx
 import Link from 'next/link';
 import Image from 'next/image';
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { moreStoriesQuery } from "@/sanity/lib/queries";
 
+// Define props to control whether to show the title on homepage
 interface HeaderProps {
   isHomePage?: boolean;
 }
 
+// Function to fetch recent articles
 async function RecentArticles() {
   // Fetch the two most recent articles
   const recentPosts = await sanityFetch({ 
@@ -31,7 +34,7 @@ async function RecentArticles() {
 
 export default async function Header({ isHomePage = false }: HeaderProps) {
   return (
-    <header className="w-full bg-white border-b border-gray-100 py-2">
+    <header className="w-full bg-white border-b border-gray-100 py-2 shadow-sm">
       <div className="container mx-auto px-5 flex justify-between items-center">
         <div className="flex items-center space-x-6">
           <Link href="/" className="flex items-center">
