@@ -6,7 +6,7 @@
 html, body {
   background-color: #f1f1f1 !important; /* Your custom background color */
   color: #0a0a0a !important; /* Your custom text color */
-  font-size: 16px; /* Fixed base font size */
+  font-size: 18px; /* Increased base font size from 16px to 18px */
 }
 
 /* Change this to be more specific - only hide certain headers, not our new custom one */
@@ -20,18 +20,18 @@ header.site-header {
   background-color: #FFFFFF;
   border-bottom: 1px solid #eaeaea;
   width: 100%;
-  height: 54px; /* Fixed height */
-  padding: 0.5rem 0;
+  height: 64px; /* Increased height from 54px to 64px */
+  padding: 0.75rem 0; /* Increased padding */
 }
 
 /* Define a wider container for the header */
 .container-wide {
   width: 100%;
-  max-width: 1680px; /* Fixed max width */
+  max-width: 1800px; /* Increased from 1680px to 1800px */
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  padding-left: 2rem; /* Increased padding */
+  padding-right: 2rem; /* Increased padding */
 }
 
 /* Header button styling - fixed sizes */
@@ -41,23 +41,23 @@ header.site-header {
   justify-content: flex-start;
   background-color: #FFFFFF;
   color: #000000;
-  padding: 0.5rem 1rem;
+  padding: 0.625rem 1.25rem; /* Increased padding */
   border-radius: 9999px; /* Fully rounded */
-  font-size: 0.95rem; /* 15% smaller than previous 1.125rem */
+  font-size: 1.05rem; /* Increased from 0.95rem */
   transition: background-color 0.2s ease, color 0.2s ease;
   white-space: nowrap; /* Prevent text wrapping */
   overflow: hidden;
-  min-width: 200px; /* Fixed min width */
-  max-width: 300px; /* Fixed max width */
+  min-width: 220px; /* Increased from 200px */
+  max-width: 350px; /* Increased from 300px */
   text-align: left;
   border: 1px solid #e5e7eb; /* Light border */
 }
 
 @media (max-width: 768px) {
   .header-button {
-    min-width: 120px;
-    padding: 0.4rem 0.75rem;
-    font-size: 0.85rem;
+    min-width: 150px; /* Increased from 120px */
+    padding: 0.5rem 0.875rem; /* Slightly increased padding */
+    font-size: 0.9rem; /* Increased from 0.85rem */
   }
 }
 
@@ -68,8 +68,8 @@ header.site-header {
 
 /* Logo button styling */
 .logo-button {
-  width: 42px;
-  height: 42px;
+  width: 48px; /* Increased from 42px */
+  height: 48px; /* Increased from 42px */
   border: 1px solid #e5e7eb;
   position: absolute;
   top: 50%;
@@ -81,8 +81,8 @@ header.site-header {
 
 @media (min-width: 768px) {
   .logo-button {
-    width: 48px;
-    height: 48px;
+    width: 56px; /* Increased from 48px */
+    height: 56px; /* Increased from 48px */
   }
 }
 
@@ -94,14 +94,14 @@ a:hover .logo-button {
 
 /* Reduce space between header and content */
 main {
-  padding-top: 1rem; /* Fixed padding */
+  padding-top: 2rem; /* Increased padding to create more space */
 }
 
 /* Make articles in header respond to available space based on width */
 @media (min-width: 1200px) {
   .header-article-container {
     display: flex;
-    gap: 1rem;
+    gap: 1.25rem; /* Increased gap */
   }
   .header-article-primary,
   .header-article-secondary {
@@ -112,7 +112,7 @@ main {
 @media (min-width: 768px) and (max-width: 1199px) {
   .header-article-container {
     display: flex;
-    gap: 0.75rem;
+    gap: 1rem; /* Increased gap */
   }
   .header-article-primary {
     display: block;
@@ -134,9 +134,11 @@ main {
   }
 }
 
-/* Standard container width */
+/* Standard container width - increased max-width */
 .container {
-  max-width: 1100px;
+  max-width: 1300px; /* Increased from 1100px */
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 /* Add the SVG as a background image */
@@ -145,8 +147,8 @@ body::after {
   position: fixed;
   bottom: 0;
   right: 0;
-  width: 200px;
-  height: 100px;
+  width: 240px; /* Increased size from 200px */
+  height: 120px; /* Increased size from 100px */
   background-image: url("/decoration.svg");
   background-repeat: no-repeat;
   background-position: bottom right;
@@ -161,7 +163,7 @@ body::after {
   height: 0;
   overflow: hidden;
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem; /* Increased from 1rem */
   border-radius: 0.5rem;
 }
 
@@ -177,10 +179,51 @@ body::after {
 .video-caption {
   text-align: center;
   font-style: italic;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem; /* Increased from 0.5rem */
   color: var(--text-muted, #666);
+  font-size: 1.05rem; /* Added font size */
 }
 
 .video-thumbnail-container {
+  margin-bottom: 2rem; /* Increased from 1.5rem */
+}
+
+/* Added styles for better content scaling */
+h1 {
+  font-size: 3.25rem; /* Larger heading size */
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 2.75rem; /* Larger heading size */
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: 2.25rem; /* Larger heading size */
+  line-height: 1.2;
+}
+
+article p {
+  font-size: 1.125rem; /* Larger paragraph size */
+  line-height: 1.8;
   margin-bottom: 1.5rem;
+}
+
+/* Improve spacing for hero post */
+article {
+  margin-bottom: 4rem;
+}
+
+/* Add more space around blog post content */
+.prose {
+  max-width: none;
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+/* Improve spacing for footer */
+footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
 }
