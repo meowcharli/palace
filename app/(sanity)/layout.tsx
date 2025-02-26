@@ -24,9 +24,10 @@ async function CustomHeader() {
       <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm">
         <div className="container-wide mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-3 md:space-x-6">
-            <Link href="/" className="flex items-center">
-              {/* Logo */}
-              <div className="w-8 h-8 md:w-10 md:h-10 mr-2 md:mr-4 flex-shrink-0">
+            {/* Logo with button background */}
+            <Link href="/" className="flex items-center relative">
+              <div className="logo-button rounded-lg bg-white hover:bg-[#FFEFF4] transition-colors duration-200 absolute" aria-hidden="true"></div>
+              <div className="w-8 h-8 md:w-10 md:h-10 mr-2 md:mr-4 flex-shrink-0 relative z-10">
                 <svg viewBox="0 0 159.47 159.48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g>
                     <rect fill="#330613" x="41.37" y="41.37" width="76.73" height="76.73"/>
@@ -56,29 +57,31 @@ async function CustomHeader() {
               </div>
             </Link>
 
-            {/* Recent Articles */}
-            <div className="flex flex-col md:flex-row gap-4">
-              {recentPosts?.slice(0, 1).map((post) => (
-                <Link 
-                  key={post._id} 
-                  href={`/posts/${post.slug}`}
-                  className="header-button"
-                >
-                  <span className="truncate">{post.title}</span>
-                </Link>
-              ))}
-              {/* Second article only shows on medium screens and up */}
-              <div className="hidden md:block">
-                {recentPosts?.slice(1, 2).map((post) => (
+            {/* Recent Articles - Using responsive classes to show/hide based on available space */}
+            <div className="header-article-container">
+              {recentPosts?.length > 0 && (
+                <div className="header-article-primary">
                   <Link 
-                    key={post._id} 
-                    href={`/posts/${post.slug}`}
+                    key={recentPosts[0]._id} 
+                    href={`/posts/${recentPosts[0].slug}`}
                     className="header-button"
                   >
-                    <span className="truncate">{post.title}</span>
+                    {recentPosts[0].title}
                   </Link>
-                ))}
-              </div>
+                </div>
+              )}
+              
+              {recentPosts?.length > 1 && (
+                <div className="header-article-secondary">
+                  <Link 
+                    key={recentPosts[1]._id} 
+                    href={`/posts/${recentPosts[1].slug}`}
+                    className="header-button"
+                  >
+                    {recentPosts[1].title}
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
           
@@ -105,8 +108,10 @@ async function CustomHeader() {
     return (
       <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm">
         <div className="container-wide mx-auto flex justify-between items-center">
-          <Link href="/" className="flex items-center">
-            <div className="w-8 h-8 md:w-10 md:h-10 mr-2 md:mr-4 flex-shrink-0">
+          {/* Logo with button background */}
+          <Link href="/" className="flex items-center relative">
+            <div className="logo-button rounded-lg bg-white hover:bg-[#FFEFF4] transition-colors duration-200 absolute" aria-hidden="true"></div>
+            <div className="w-8 h-8 md:w-10 md:h-10 mr-2 md:mr-4 flex-shrink-0 relative z-10">
               <svg viewBox="0 0 159.47 159.48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 {/* SVG content same as above */}
                 <rect fill="#330613" x="41.37" y="41.37" width="76.73" height="76.73"/>
