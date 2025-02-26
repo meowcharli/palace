@@ -21,7 +21,11 @@ export default async function MoreStories(params: {
           return (
             <article key={_id}>
               <Link href={`/posts/${slug}`} className="group mb-5 block">
-                <CoverImage image={coverImage} videoEmbed={videoEmbed} priority={false} />
+                <CoverImage 
+                  image={coverImage} 
+                  videoEmbed={videoEmbed || undefined} 
+                  priority={false} 
+                />
               </Link>
               <h3 className="text-balance mb-3 text-3xl leading-snug">
                 <Link href={`/posts/${slug}`} className="hover:underline">
