@@ -206,7 +206,7 @@ export default async function RootLayout({
                   </a>
                   <a
                     href="mailto:hello@4sigs.com?subject=*Loud%20honk*%20This%20is%20me--%20contacting%20you!"
-                    className="mx-3 mb-6 border border-[#828282] bg-[#DDDDDD] rounded-full py-3 px-12 font-bold text-white transition-colors duration-200 hover:bg-transparent hover:text-[#89131f] lg:mb-0 lg:px-8"
+                    className="mx-3 mb-6 border border-[#828282] bg-[#DDDDDD] rounded-full py-3 px-12 font-bold text-[#828282] transition-colors duration-200 hover:bg-transparent hover:text-[#89131f] lg:mb-0 lg:px-8"
                   >
                     Email us! 📧
                   </a>
