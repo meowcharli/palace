@@ -1,15 +1,28 @@
 import { Image } from "next-sanity/image";
-
 import { urlForImage } from "@/sanity/lib/utils";
 
 interface CoverImageProps {
   image: any;
+  videoEmbed?: string;
   priority?: boolean;
 }
 
 export default function CoverImage(props: CoverImageProps) {
-  const { image: source, priority } = props;
-  const image = source?.asset?._ref ? (
+  const { image: source, videoEmbed, priority } = props;
+
+  const content = videoEmbed ? (
+    <div className="video-embed">
+      <iframe
+        src={videoEmbed}
+        frameBorder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        title="Embedded video"
+        className="w-full h-auto"
+        style={{ aspectRatio: '16/9' }}
+      ></iframe>
+    </div>
+  ) : source?.asset?._ref ? (
     <Image
       className="h-auto w-full"
       width={2000}
@@ -25,7 +38,7 @@ export default function CoverImage(props: CoverImageProps) {
 
   return (
     <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
-      {image}
+      {content}
     </div>
   );
 }
