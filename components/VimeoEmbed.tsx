@@ -20,11 +20,7 @@ const VimeoEmbed: React.FC<VimeoEmbedProps> = ({
   
   const vimeoId = getVimeoId(url);
   
-  if (!vimeoId) {
-    return <div className="text-red-500">Invalid Vimeo URL</div>;
-  }
-
-  // Fix: Move conditional logic inside the effect, not around it
+  // IMPORTANT: All hooks must be called before any conditional returns
   React.useEffect(() => {
     // Only fetch if we need to show the thumbnail and have a valid ID
     if (showThumbnail && vimeoId) {
@@ -40,6 +36,11 @@ const VimeoEmbed: React.FC<VimeoEmbedProps> = ({
         });
     }
   }, [vimeoId, showThumbnail]);
+
+  // Now we can have conditional returns
+  if (!vimeoId) {
+    return <div className="text-red-500">Invalid Vimeo URL</div>;
+  }
 
   // Thumbnail mode
   if (showThumbnail && !playing) {
