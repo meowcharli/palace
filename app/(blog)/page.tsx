@@ -4,7 +4,6 @@ import { Suspense } from "react";
 
 import Avatar from "./avatar";
 import CoverImage from "./cover-image";
-import DateComponent from "./date";
 import MoreStories from "./more-stories";
 import Onboarding from "./onboarding";
 import PortableText from "./portable-text";
@@ -14,15 +13,12 @@ import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { heroQuery, settingsQuery } from "@/sanity/lib/queries";
 
-// Removed the Intro component since we don't want to show the title on the homepage
-
 function HeroPost({
   title,
   slug,
   excerpt,
   coverImage,
   videoEmbed,
-  date,
   author,
 }: Pick<
   Exclude<HeroQueryResult, null>,
@@ -35,14 +31,13 @@ function HeroPost({
       </Link>
       <div className="mb-20 md:mb-28 md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8">
         <div>
-          <h3 className="text-pretty mb-4 text-4xl leading-tight lg:text-6xl">
+          {/* Reduced title size by changing from text-4xl/text-6xl to text-2xl/text-3xl */}
+          <h3 className="text-pretty mb-4 text-2xl leading-tight lg:text-3xl">
             <Link href={`/posts/${slug}`} className="hover:underline">
               {title}
             </Link>
           </h3>
-          <div className="mb-4 text-lg md:mb-0">
-            <DateComponent dateString={date} />
-          </div>
+          {/* Date component removed */}
         </div>
         <div>
           {excerpt && (
@@ -67,7 +62,6 @@ export default async function Page() {
 
   return (
     <div className="container mx-auto px-5">
-      {/* Removed the Intro component with the title */}
       {heroPost ? (
         <HeroPost
           title={heroPost.title}
