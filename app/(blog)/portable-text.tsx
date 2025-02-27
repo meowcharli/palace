@@ -4,6 +4,7 @@ import {
   type PortableTextBlock,
 } from "next-sanity";
 import { urlFor } from "@/lib/sanity"; // brrrrrmmmmmmm
+import Image from "next/image";
 
 export default function CustomPortableText({
   className,
@@ -72,10 +73,12 @@ export default function CustomPortableText({
 
         return (
           <div className="my-4 flex justify-center">
-            <img
+            <Image
               src={imageUrl} // KYS
               alt={value.alt || "Blog image"}
-              className="rounded-lg shadow-md max-w-full h-auto"
+              className="rounded-lg shadow-md"
+              width={800}
+              height={500}
             />
           </div>
         );
