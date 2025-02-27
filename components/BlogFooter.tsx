@@ -4,8 +4,8 @@ import PortableText from '@/app/(blog)/portable-text';
 import { PortableTextBlock } from "next-sanity";
 
 interface BlogFooterProps {
-  footer: PortableTextBlock[];
-  description: PortableTextBlock[];
+  footer: any[];
+  description: any[];
 }
 
 export default function BlogFooter({ footer, description }: BlogFooterProps) {
