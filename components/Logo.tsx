@@ -11,7 +11,7 @@ export default function Logo({ className = '', width = 40, height = 40 }: LogoPr
   return (
     <div className={`relative ${className}`} style={{ width, height }}>
       <Image
-        src="/logowo.svg"
+        src="/svg/logowo.svg"  // Updated path to correctly point to the SVG file
         alt="4Sigs Logo"
         fill
         priority
