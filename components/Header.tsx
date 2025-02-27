@@ -1,61 +1,24 @@
-// components/Header.tsx
+"use client";
+
 import Link from 'next/link';
-import { sanityFetch } from "@/sanity/lib/fetch";
-import { moreStoriesQuery } from "@/sanity/lib/queries";
+import { useState, useEffect } from 'react';
+import SearchBar from './SearchBar';
+
+// We need to make this a client component to use the search functionality
+// But we'll load the posts data server-side
 
 interface HeaderProps {
-  isHomePage?: boolean;
+  recentPosts: any[];
 }
 
-async function RecentArticles() {
-  try {
-    // Fetch the two most recent articles
-    const recentPosts = await sanityFetch({ 
-      query: moreStoriesQuery, 
-      params: { skip: '', limit: 2 } 
-    });
-
-    return (
-      <div className="flex flex-col md:flex-row gap-4">
-        {recentPosts?.slice(0, 1).map((post) => (
-          <Link 
-            key={post._id} 
-            href={`/posts/${post.slug}`}
-            className="inline-flex items-center bg-white text-black px-4 py-2 rounded-full text-[0.95rem] min-w-[150px] max-w-[200px] text-left border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F] truncate md:min-w-[200px]"
-          >
-            <span className="truncate">{post.title}</span>
-          </Link>
-        ))}
-        {/* Second article only shows on medium screens and up */}
-        <div className="hidden md:block">
-          {recentPosts?.slice(1, 2).map((post) => (
-            <Link 
-              key={post._id} 
-              href={`/posts/${post.slug}`}
-              className="inline-flex items-center bg-white text-black px-4 py-2 rounded-full text-[0.95rem] min-w-[150px] max-w-[200px] text-left border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F] truncate"
-            >
-              <span className="truncate">{post.title}</span>
-            </Link>
-          ))}
-        </div>
-      </div>
-    );
-  } catch (error) {
-    console.error("Error fetching recent posts:", error);
-    return (
-      <div className="text-sm text-gray-500">Recent posts unavailable</div>
-    );
-  }
-}
-
-export default async function Header({ isHomePage = false }: HeaderProps) {
+export default function Header({ recentPosts }: HeaderProps) {
   return (
     <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm py-2">
       <div className="container-wide mx-auto px-5 flex justify-between items-center">
         <div className="flex items-center space-x-3 md:space-x-6">
-          <Link href="/" className="flex items-center">
-            {/* Logo */}
-            <div className="w-8 h-8 md:w-10 md:h-10 mr-2 md:mr-4 flex-shrink-0">
+          <Link href="/" className="flex items-center relative">
+            <div className="logo-button rounded-2xl bg-white hover:bg-[#FFDCDC] transition-colors duration-200 absolute" aria-hidden="true"></div>
+            <div className="w-8 h-8 md:w-10 md:h-10 mr-0 md:mr-0 flex-shrink-0 relative z-10">
               <svg viewBox="0 0 159.47 159.48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g>
                   <rect fill="#330613" x="41.37" y="41.37" width="76.73" height="76.73"/>
@@ -86,16 +49,37 @@ export default async function Header({ isHomePage = false }: HeaderProps) {
           </Link>
 
           {/* Recent Articles */}
-          <RecentArticles />
+          <div className="header-article-container">
+            {recentPosts?.length > 0 && (
+              <div className="header-article-primary">
+                <Link 
+                  key={recentPosts[0]._id} 
+                  href={`/posts/${recentPosts[0].slug}`}
+                  className="header-button"
+                >
+                  {recentPosts[0].title}
+                </Link>
+              </div>
+            )}
+            
+            {recentPosts?.length > 1 && (
+              <div className="header-article-secondary">
+                <Link 
+                  key={recentPosts[1]._id} 
+                  href={`/posts/${recentPosts[1].slug}`}
+                  className="header-button"
+                >
+                  {recentPosts[1].title}
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
         
         <div className="flex items-center gap-2 md:gap-3">
-          <Link 
-            href="/contact" 
-            className="inline-flex items-center bg-white text-black px-3 py-1 md:px-4 md:py-2 rounded-full text-[0.85rem] md:text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
-          >
-            Contact
-          </Link>
+          {/* Search Bar replacing Contact button */}
+          <SearchBar />
+          
           <Link 
             href="/support" 
             className="inline-flex items-center bg-white text-black px-3 py-1 md:px-4 md:py-2 rounded-full text-[0.85rem] md:text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
