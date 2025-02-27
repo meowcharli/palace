@@ -1,6 +1,7 @@
 // components/BlogHeader.tsx
 import Link from 'next/link';
 import Logo from './Logo';
+import SearchBar from './SearchBar';
 
 interface BlogHeaderProps {
   recentPosts: Array<{
@@ -50,30 +51,8 @@ export default function BlogHeader({ recentPosts }: BlogHeaderProps) {
         </div>
         
         <div className="flex items-center gap-2 md:gap-3">
-          {/* Morphing search bar (client component) */}
-          <div id="search-bar-container">
-            {/* This will be replaced by client-side JavaScript */}
-            <Link 
-              href="/search" 
-              className="inline-flex items-center bg-white text-black px-3 py-1 md:px-4 md:py-2 rounded-full text-[0.85rem] md:text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
-            >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-4 w-4 mr-1" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
-                />
-              </svg>
-              Search
-            </Link>
-          </div>
+          {/* Improved search bar component */}
+          <SearchBar />
           
           <Link 
             href="/support" 
