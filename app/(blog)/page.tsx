@@ -1,80 +1,101 @@
-'use client';
+// app/(blog)/page.tsx
+import Link from "next/link";
+import { Suspense } from "react";
 
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import Avatar from "./avatar";
+import CoverImage from "./cover-image";
+import MoreStories from "./more-stories";
+import Onboarding from "./onboarding";
+import PortableText from "./portable-text";
 
-// This is a simple client-side search page placeholder
-// In a real implementation, you would connect to Sanity's search API
+import type { HeroQueryResult } from "@/sanity.types";
+import * as demo from "@/sanity/lib/demo";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { heroQuery, settingsQuery } from "@/sanity/lib/queries";
 
-export default function SearchPage() {
-  const searchParams = useSearchParams();
-  const query = searchParams.get('q') || '';
-  const [isLoading, setIsLoading] = useState(true);
-  const [results, setResults] = useState<any[]>([]);
-
-  useEffect(() => {
-    // This is where you would fetch real search results from Sanity
-    // For this example, we're just simulating a search delay
-    setIsLoading(true);
-    
-    const timer = setTimeout(() => {
-      // Mock results - in a real implementation, you would fetch from Sanity
-      setResults([]);
-      setIsLoading(false);
-    }, 1000);
-    
-    return () => clearTimeout(timer);
-  }, [query]);
-
+function HeroPost({
+  title,
+  slug,
+  excerpt,
+  coverImage,
+  videoEmbed,
+  author,
+}: Pick<
+  Exclude<HeroQueryResult, null>,
+  "title" | "coverImage" | "videoEmbed" | "date" | "excerpt" | "author" | "slug"
+>) {
   return (
-    <div className="container mx-auto px-5 py-12">
-      <h1 className="text-4xl font-bold mb-8">Search Results</h1>
-      {query ? (
-        <p className="text-xl mb-8">
-          Showing results for: <span className="font-semibold">&#34;{query}&#34;</span>
-        </p>
-      ) : (
-        <p className="text-xl mb-8">
-          Please enter a search term to find articles.
-        </p>
-      )}
+    <article>
+      <Link className="group mb-8 block md:mb-16" href={`/posts/${slug}`}>
+        <CoverImage image={coverImage} videoEmbed={videoEmbed || undefined} priority />
+      </Link>
+      <div className="mb-20 md:mb-28 md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8">
+        <div>
+          {/* Reduced title size by changing from text-4xl/text-6xl to text-2xl/text-3xl */}
+          <h3 className="text-pretty mb-4 text-2xl leading-tight lg:text-3xl">
+            <Link href={`/posts/${slug}`} className="hover:underline">
+              {title}
+            </Link>
+          </h3>
+          {/* Date component removed */}
+        </div>
+        <div>
+          {excerpt && (
+            <p className="text-pretty mb-4 text-lg leading-relaxed">
+              {excerpt}
+            </p>
+          )}
+          {author && <Avatar name={author.name} picture={author.picture} />}
+        </div>
+      </div>
+    </article>
+  );
+}
 
-      {isLoading ? (
-        <div className="flex justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
-        </div>
-      ) : results.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {results.map((result) => (
-            <div key={result.id} className="border p-6 rounded-lg shadow-sm">
-              <h2 className="text-2xl font-bold mb-2">
-                <Link href={`/posts/${result.slug}`} className="hover:underline">
-                  {result.title}
-                </Link>
-              </h2>
-              <p className="text-gray-600 mb-4">{result.excerpt}</p>
-              <Link 
-                href={`/posts/${result.slug}`}
-                className="text-[#89131F] hover:underline"
-              >
-                Read more →
-              </Link>
-            </div>
-          ))}
-        </div>
+// Wrap client components in Suspense
+function PageContent({ heroPost, settings }: { heroPost: any, settings: any }) {
+  return (
+    <div className="container mx-auto px-5">
+      {heroPost ? (
+        <HeroPost
+          title={heroPost.title}
+          slug={heroPost.slug}
+          coverImage={heroPost.coverImage}
+          videoEmbed={heroPost.videoEmbed}
+          excerpt={heroPost.excerpt}
+          date={heroPost.date}
+          author={heroPost.author}
+        />
       ) : (
-        <div className="text-center py-12">
-          <p className="text-xl">No results found.</p>
-          <p className="mt-2">Try another search term or browse our recent articles.</p>
-          <Link 
-            href="/"
-            className="inline-block mt-6 px-6 py-3 rounded-full bg-[#FFEFF4] text-[#89131F] hover:bg-[#89131F] hover:text-white transition-colors"
-          >
-            Back to Home
-          </Link>
-        </div>
+        <Suspense fallback={<div className="py-60 text-center">Loading...</div>}>
+          <Onboarding />
+        </Suspense>
+      )}
+      {heroPost?._id && (
+        <aside>
+          <h2 className="mb-8 text-6xl font-semibold leading-tight tracking-tighter md:text-4xl">
+            More of our stuff ↴
+          </h2>
+          <Suspense fallback={<div className="py-20 text-center">Loading more stories...</div>}>
+            <MoreStories skip={heroPost._id} limit={100} />
+          </Suspense>
+        </aside>
       )}
     </div>
+  );
+}
+
+export default async function Page() {
+  const [settings, heroPost] = await Promise.all([
+    sanityFetch({
+      query: settingsQuery,
+    }),
+    sanityFetch({ query: heroQuery }),
+  ]);
+
+  return (
+    <Suspense fallback={<div className="container mx-auto px-5 py-20 text-center">Loading page...</div>}>
+      <PageContent heroPost={heroPost} settings={settings} />
+    </Suspense>
   );
 }
