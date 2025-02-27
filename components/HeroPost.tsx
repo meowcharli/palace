@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import CoverImage from '@/app/(blog)/cover-image';
 import Avatar from '@/app/(blog)/avatar';
-import { Post } from '@/utils/types';
+import type { Post } from '@/utils/types';
 
 type HeroPostProps = {
-  post: Pick<Post, 'title' | 'coverImage' | 'videoEmbed' | 'date' | 'excerpt' | 'author' | 'slug'>;
+  post: Post;
 };
 
 export default function HeroPost({ post }: HeroPostProps) {
