@@ -124,6 +124,15 @@ article {
 footer {
   margin-top: 4rem;
   padding-top: 2rem;
+  background-color: #FFFFFF !important;
+}
+
+footer * {
+  color: #AAAAAA !important;
+}
+
+footer .bg-[#DDDDDD] {
+  background-color: #FFFFFF !important;
 }
 
 /* Video and Iframe Containers */
