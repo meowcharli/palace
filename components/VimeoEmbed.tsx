@@ -1,31 +1,31 @@
-import React from 'react';
-import { getVimeoId, buildVimeoEmbedUrl } from '../utils/vimeo';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { getVimeoId, buildVimeoEmbedUrl } from '@/utils/vimeo';
+import type { VimeoEmbedProps } from '@/utils/types';
 
-interface VimeoEmbedProps {
-  url: string;
-  caption?: string;
-  showThumbnail?: boolean;
+interface ComponentProps extends VimeoEmbedProps {
   className?: string;
 }
 
-const VimeoEmbed: React.FC<VimeoEmbedProps> = ({ 
+export default function VimeoEmbed({ 
   url, 
+  embedCode,
   caption,
   showThumbnail = false,
-  className = ''
-}) => {
-  const [thumbnailUrl, setThumbnailUrl] = React.useState<string | null>(null);
-  const [playing, setPlaying] = React.useState(!showThumbnail);
+  hideControls = false,
+  autoplay = false,
+  loop = false,
+  className = '',
+}: ComponentProps) {
+  const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
+  const [playing, setPlaying] = useState(!showThumbnail);
   
-  const vimeoId = getVimeoId(url);
+  // Extract Vimeo ID from URL or embed code
+  const vimeoId = getVimeoId(embedCode || url || '');
   
-  // IMPORTANT: All hooks must be called before any conditional returns
-  React.useEffect(() => {
-    // Only fetch if we need to show the thumbnail and have a valid ID
+  // Fetch thumbnail if needed
+  useEffect(() => {
     if (showThumbnail && vimeoId) {
-      // For simplicity, we're using the oEmbed API to get the thumbnail
-      // Note: In production, you might want to cache this or use a server component
       fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}`)
         .then(res => res.json())
         .then(data => {
@@ -37,12 +37,22 @@ const VimeoEmbed: React.FC<VimeoEmbedProps> = ({
     }
   }, [vimeoId, showThumbnail]);
 
-  // Now we can have conditional returns
+  // If no valid Vimeo ID found, return null
   if (!vimeoId) {
-    return <div className="text-red-500">Invalid Vimeo URL</div>;
+    return null;
   }
 
-  // Thumbnail mode
+  // Handle custom embed code if provided
+  if (embedCode && embedCode.includes('<iframe')) {
+    return (
+      <div className={`video-embed w-full ${className}`}>
+        <div dangerouslySetInnerHTML={{ __html: embedCode }} />
+        {caption && <p className="video-caption mt-2">{caption}</p>}
+      </div>
+    );
+  }
+
+  // Show thumbnail view if requested and not playing yet
   if (showThumbnail && !playing) {
     return (
       <div className={`video-thumbnail-container ${className}`}>
@@ -80,15 +90,23 @@ const VimeoEmbed: React.FC<VimeoEmbedProps> = ({
     );
   }
 
+  // Build the embed URL with options
+  const embedUrl = buildVimeoEmbedUrl(vimeoId, {
+    autoplay: playing || autoplay,
+    loop,
+    background: hideControls,
+    muted: autoplay, // If autoplay is enabled, mute by default (browser requirement)
+    portrait: !hideControls,
+    title: !hideControls,
+    byline: !hideControls,
+  });
+
   // Embedded player mode
   return (
     <div className={`video-container ${className}`}>
       <div className="responsive-iframe-container">
         <iframe 
-          src={buildVimeoEmbedUrl(vimeoId, {
-            autoplay: playing,
-            loop: false,
-          })}
+          src={embedUrl}
           width="100%" 
           height="100%" 
           frameBorder="0" 
@@ -100,6 +118,3 @@ const VimeoEmbed: React.FC<VimeoEmbedProps> = ({
       {caption && <p className="video-caption mt-2">{caption}</p>}
     </div>
   );
-};
-
-export default VimeoEmbed;
