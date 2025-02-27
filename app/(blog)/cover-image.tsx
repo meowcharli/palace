@@ -1,7 +1,7 @@
 import { Image } from "next-sanity/image";
 import { urlForImage } from "@/sanity/lib/utils";
-import { VimeoEmbedProps } from "@/utils/types";
 import VimeoEmbed from "@/components/VimeoEmbed";
+import { VimeoEmbedProps } from "@/utils/types";
 
 interface CoverImageProps {
   image: any;
@@ -9,22 +9,22 @@ interface CoverImageProps {
   priority?: boolean;
 }
 
-export default function CoverImage({ image, videoEmbed, priority }: CoverImageProps) {
-  // If we have a video embed, render the video instead of the image
+export default function CoverImage({ image, videoEmbed, priority = false }: CoverImageProps) {
+  // If we have a valid video embed, render it instead of the image
   if (videoEmbed) {
     // Handle string format for backward compatibility
     const videoProps = typeof videoEmbed === 'string' 
       ? { url: videoEmbed } 
       : videoEmbed;
-
+      
     return (
       <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
         <VimeoEmbed {...videoProps} />
       </div>
     );
   }
-
-  // Otherwise, render the image if available
+  
+  // If we have an image, render it
   if (image?.asset?._ref) {
     return (
       <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
@@ -40,8 +40,8 @@ export default function CoverImage({ image, videoEmbed, priority }: CoverImagePr
       </div>
     );
   }
-
-  // Fallback for when neither video nor image is available
+  
+  // Fallback when no image or video is available
   return (
     <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
       <div className="bg-slate-50" style={{ paddingTop: "50%" }} />
