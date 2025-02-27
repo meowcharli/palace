@@ -118,3 +118,4 @@ export default function VimeoEmbed({
       {caption && <p className="video-caption mt-2">{caption}</p>}
     </div>
   );
+}
