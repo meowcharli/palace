@@ -16,8 +16,8 @@ export interface Post {
   _id: string;
   status?: string;
   title: string;
-  slug: string;
-  excerpt?: string;
+  slug: string | null;
+  excerpt?: string | null;
   coverImage?: any;
   videoEmbed?: VimeoEmbedProps | string;
   date?: string;
