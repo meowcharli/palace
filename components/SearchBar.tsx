@@ -118,7 +118,7 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Dig through our stuff..."
+                placeholder="Dig in!"
                 className="w-full bg-white text-black border border-gray-200 rounded-full py-1 md:py-2 focus:outline-none focus:ring-2 focus:ring-[#89131F]"
                 style={{
                   paddingLeft: '20px',
