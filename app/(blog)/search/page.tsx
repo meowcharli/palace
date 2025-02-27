@@ -4,9 +4,6 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-// This is a simple client-side search page placeholder
-// In a real implementation, you would connect to Sanity's search API
-
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
@@ -14,12 +11,9 @@ export default function SearchPage() {
   const [results, setResults] = useState<any[]>([]);
 
   useEffect(() => {
-    // This is where you would fetch real search results from Sanity
-    // For this example, we're just simulating a search delay
     setIsLoading(true);
     
     const timer = setTimeout(() => {
-      // Mock results - in a real implementation, you would fetch from Sanity
       setResults([]);
       setIsLoading(false);
     }, 1000);
@@ -27,12 +21,19 @@ export default function SearchPage() {
     return () => clearTimeout(timer);
   }, [query]);
 
+  // Using JSX to avoid quote escaping issues
+  const queryDisplay = (
+    <span className="font-semibold">
+      {'"'}{query}{'"'}
+    </span>
+  );
+
   return (
     <div className="container mx-auto px-5 py-12">
       <h1 className="text-4xl font-bold mb-8">Search Results</h1>
       {query ? (
         <p className="text-xl mb-8">
-          Showing results for: <span className="font-semibold">"{query}"</span>
+          Showing results for: {queryDisplay}
         </p>
       ) : (
         <p className="text-xl mb-8">
