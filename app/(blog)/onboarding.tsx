@@ -6,16 +6,11 @@
  */
 
 import Link from "next/link";
-import { useSyncExternalStore } from "react";
-
-const emptySubscribe = () => () => {};
 
 export default function Onboarding() {
-  const target = useSyncExternalStore(
-    emptySubscribe,
-    () => (window.top === window ? undefined : "_blank"),
-    () => "_blank",
-  );
+  // Remove useSyncExternalStore which likely uses useSearchParams internally
+  // Instead use a simple constant for the target
+  const target = "_blank"; // Default to opening in a new tab
 
   return (
     <div className="grid grid-flow-row gap-6 py-60 text-center">
