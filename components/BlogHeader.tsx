@@ -7,7 +7,7 @@ interface BlogHeaderProps {
   recentPosts: Array<{
     _id: string;
     title: string;
-    slug: string;
+    slug: string | null;
   }>;
 }
 
@@ -28,7 +28,7 @@ export default function BlogHeader({ recentPosts }: BlogHeaderProps) {
               <div className="header-article-primary">
                 <Link 
                   key={recentPosts[0]._id} 
-                  href={`/posts/${recentPosts[0].slug}`}
+                  href={`/posts/${recentPosts[0].slug || ''}`}
                   className="header-button"
                 >
                   {recentPosts[0].title}
@@ -40,7 +40,7 @@ export default function BlogHeader({ recentPosts }: BlogHeaderProps) {
               <div className="header-article-secondary">
                 <Link 
                   key={recentPosts[1]._id} 
-                  href={`/posts/${recentPosts[1].slug}`}
+                  href={`/posts/${recentPosts[1].slug || ''}`}
                   className="header-button"
                 >
                   {recentPosts[1].title}
