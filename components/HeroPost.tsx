@@ -12,8 +12,12 @@ export default function HeroPost({ post }: HeroPostProps) {
   
   // Convert author.picture to the format expected by Avatar component
   const authorPicture = author?.picture ? {
-    ...author.picture,
-    _type: "image"
+    _type: "image",
+    asset: author.picture.asset ? {
+      _ref: author.picture.asset._ref,
+      _type: "reference"
+    } : undefined,
+    alt: author.picture.alt
   } : null;
   
   return (
