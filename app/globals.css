@@ -2,63 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Override global styles */
+/* ========== Base Styles ========== */
 html, body {
-  background-color: #f1f1f1 !important; /* Your custom background color */
-  color: #0a0a0a !important; /* Your custom text color */
-  font-size: 18px; /* Increased base font size from 16px to 18px */
+  background-color: #f1f1f1 !important;
+  color: #0a0a0a !important;
+  font-size: 18px;
 }
 
-/* Change this to be more specific - only hide certain headers, not our new custom one */
+main {
+  padding-top: 2rem;
+}
+
+/* Hide unwanted headers from external components */
 header:not(.site-header), .banner, .navbar {
   display: none !important;
 }
 
-/* Add the site-header class to ensure our header is visible */
+/* ========== Container Styles ========== */
+.container {
+  max-width: 1300px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.container-wide {
+  width: 100%;
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* ========== Header Components ========== */
 header.site-header {
   display: flex !important;
   background-color: #FFFFFF;
   border-bottom: 1px solid #eaeaea;
   width: 100%;
-  height: 64px; /* Increased height from 54px to 64px */
-  padding: 0.75rem 0; /* Increased padding */
+  height: 64px;
+  padding: 0.75rem 0;
 }
 
-/* Define a wider container for the header */
-.container-wide {
-  width: 100%;
-  max-width: 1800px; /* Increased from 1680px to 1800px */
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 2rem; /* Increased padding */
-  padding-right: 2rem; /* Increased padding */
-}
-
-/* Header button styling - fixed sizes */
+/* Header Buttons */
 .header-button {
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
   background-color: #FFFFFF;
   color: #000000;
-  padding: 0.625rem 1.25rem; /* Increased padding */
-  border-radius: 9999px; /* Fully rounded */
-  font-size: 1.05rem; /* Increased from 0.95rem */
+  padding: 0.625rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 1.05rem;
   transition: background-color 0.2s ease, color 0.2s ease;
-  white-space: nowrap; /* Prevent text wrapping */
+  white-space: nowrap;
   overflow: hidden;
-  min-width: 220px; /* Increased from 200px */
-  max-width: 350px; /* Increased from 300px */
+  min-width: 220px;
+  max-width: 350px;
   text-align: left;
-  border: 1px solid #e5e7eb; /* Light border */
-}
-
-@media (max-width: 768px) {
-  .header-button {
-    min-width: 150px; /* Increased from 120px */
-    padding: 0.5rem 0.875rem; /* Slightly increased padding */
-    font-size: 0.9rem; /* Increased from 0.85rem */
-  }
+  border: 1px solid #e5e7eb;
 }
 
 .header-button:hover {
@@ -66,104 +68,72 @@ header.site-header {
   color: #89131F;
 }
 
-/* Logo button styling */
+/* Logo Button */
 .logo-button {
-  width: 48px; /* Increased from 42px */
-  height: 48px; /* Increased from 42px */
+  width: 48px;
+  height: 48px;
   border: 1px solid #e5e7eb;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   transition: background-color 0.2s ease, color 0.2s ease;
-  border-radius: 1rem; /* Rounded corners */
+  border-radius: 1rem;
 }
 
-@media (min-width: 768px) {
-  .logo-button {
-    width: 56px; /* Increased from 48px */
-    height: 56px; /* Increased from 48px */
-  }
-}
-
-/* On hover, match the other buttons' styling */
 a:hover .logo-button {
   background-color: #C5ECFF !important;
   border-color: #8FC7FF;
 }
 
-/* Reduce space between header and content */
-main {
-  padding-top: 2rem; /* Increased padding to create more space */
+/* ========== Typography ========== */
+h1 {
+  font-size: 3.25rem;
+  line-height: 1.1;
 }
 
-/* Make articles in header respond to available space based on width */
-@media (min-width: 1200px) {
-  .header-article-container {
-    display: flex;
-    gap: 1.25rem; /* Increased gap */
-  }
-  .header-article-primary,
-  .header-article-secondary {
-    display: block;
-  }
+h2 {
+  font-size: 2.75rem;
+  line-height: 1.2;
 }
 
-@media (min-width: 768px) and (max-width: 1199px) {
-  .header-article-container {
-    display: flex;
-    gap: 1rem; /* Increased gap */
-  }
-  .header-article-primary {
-    display: block;
-  }
-  .header-article-secondary {
-    display: block;
-  }
+h3 {
+  font-size: 2.25rem;
+  line-height: 1.2;
 }
 
-@media (max-width: 767px) {
-  .header-article-container {
-    display: flex;
-  }
-  .header-article-primary {
-    display: block;
-  }
-  .header-article-secondary {
-    display: none;
-  }
+article p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
 }
 
-/* Standard container width - increased max-width */
-.container {
-  max-width: 1300px; /* Increased from 1100px */
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+.prose {
+  max-width: none;
+  font-size: 1.125rem;
+  line-height: 1.8;
 }
 
-/* Add the SVG as a background image */
-body::after {
-  content: "";
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  width: 240px; /* Increased size from 200px */
-  height: 120px; /* Increased size from 100px */
-  background-image: url("/decoration.svg");
-  background-repeat: no-repeat;
-  background-position: bottom right;
-  background-size: contain;
-  z-index: 1000;
-  pointer-events: none;
+/* ========== Components ========== */
+/* Article Components */
+article {
+  margin-bottom: 4rem;
 }
 
+/* Footer */
+footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+}
+
+/* Video and Iframe Containers */
 .responsive-iframe-container {
   position: relative;
   padding-bottom: 56.25%; /* 16:9 aspect ratio */
   height: 0;
   overflow: hidden;
   width: 100%;
-  margin-bottom: 1.5rem; /* Increased from 1rem */
+  margin-bottom: 1.5rem;
   border-radius: 0.5rem;
 }
 
@@ -179,51 +149,76 @@ body::after {
 .video-caption {
   text-align: center;
   font-style: italic;
-  margin-top: 0.75rem; /* Increased from 0.5rem */
+  margin-top: 0.75rem;
   color: var(--text-muted, #666);
-  font-size: 1.05rem; /* Added font size */
+  font-size: 1.05rem;
 }
 
 .video-thumbnail-container {
-  margin-bottom: 2rem; /* Increased from 1.5rem */
+  margin-bottom: 2rem;
 }
 
-/* Added styles for better content scaling */
-h1 {
-  font-size: 3.25rem; /* Larger heading size */
-  line-height: 1.1;
+/* Background decoration */
+body::after {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 240px;
+  height: 120px;
+  background-image: url("/decoration.svg");
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: contain;
+  z-index: 1000;
+  pointer-events: none;
 }
 
-h2 {
-  font-size: 2.75rem; /* Larger heading size */
-  line-height: 1.2;
+/* ========== Responsive Styles ========== */
+/* Desktop (large) */
+@media (min-width: 1200px) {
+  .header-article-container {
+    display: flex;
+    gap: 1.25rem;
+  }
+  .header-article-primary,
+  .header-article-secondary {
+    display: block;
+  }
 }
 
-h3 {
-  font-size: 2.25rem; /* Larger heading size */
-  line-height: 1.2;
+/* Desktop (medium) and Tablet */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .header-article-container {
+    display: flex;
+    gap: 1rem;
+  }
+  .header-article-primary,
+  .header-article-secondary {
+    display: block;
+  }
+  
+  .logo-button {
+    width: 56px;
+    height: 56px;
+  }
 }
 
-article p {
-  font-size: 1.125rem; /* Larger paragraph size */
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
-}
-
-/* Improve spacing for hero post */
-article {
-  margin-bottom: 4rem;
-}
-
-/* Add more space around blog post content */
-.prose {
-  max-width: none;
-  font-size: 1.125rem;
-  line-height: 1.8;
-}
-
-/* Improve spacing for footer */
-footer {
-  margin-top: 4rem;
-  padding-top: 2rem;
+/* Mobile */
+@media (max-width: 767px) {
+  .header-article-container {
+    display: flex;
+  }
+  .header-article-primary {
+    display: block;
+  }
+  .header-article-secondary {
+    display: none;
+  }
+  
+  .header-button {
+    min-width: 150px;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.9rem;
+  }
 }
