@@ -231,3 +231,8 @@ body::after {
     font-size: 0.9rem;
   }
 }
+
+input[placeholder="Search articles..."] {
+  padding-left: 1.25rem !important; /* Increase from 1rem (pl-4) to 1.25rem */
+  padding-right: 3rem !important;   /* Ensure enough space for buttons */
+}
