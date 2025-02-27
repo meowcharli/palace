@@ -3,39 +3,57 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image'; 
+import { searchPosts, type SearchResult } from '@/lib/search';
+import { urlForImage } from '@/sanity/lib/utils';
 
 function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
   const [isLoading, setIsLoading] = useState(true);
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<SearchResult[]>([]);
 
   useEffect(() => {
-    setIsLoading(true);
+    async function fetchResults() {
+      setIsLoading(true);
+      
+      try {
+        if (query) {
+          const searchResults = await searchPosts(query);
+          setResults(searchResults);
+        } else {
+          setResults([]);
+        }
+      } catch (error) {
+        console.error('Search error:', error);
+        setResults([]);
+      } finally {
+        setIsLoading(false);
+      }
+    }
     
-    const timer = setTimeout(() => {
-      // Mock results - in a real implementation, you would fetch from Sanity
-      setResults([]);
-      setIsLoading(false);
-    }, 1000);
-    
-    return () => clearTimeout(timer);
+    fetchResults();
   }, [query]);
+
+  // JSX approach to avoid quote escaping issues
+  const queryDisplay = (
+    <span className="font-semibold">
+      {'"'}{query}{'"'}
+    </span>
+  );
 
   return (
     <div className="container mx-auto px-5 py-12">
       <h1 className="text-4xl font-bold mb-8">Search Results</h1>
-      {/* eslint-disable react/no-unescaped-entities */}
       {query ? (
         <p className="text-xl mb-8">
-          Showing results for: <span className="font-semibold">"{query}"</span>
+          Showing results for: {queryDisplay}
         </p>
       ) : (
         <p className="text-xl mb-8">
           Please enter a search term to find articles.
         </p>
       )}
-      {/* eslint-enable react/no-unescaped-entities */}
 
       {isLoading ? (
         <div className="flex justify-center py-12">
@@ -44,13 +62,26 @@ function SearchResults() {
       ) : results.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {results.map((result) => (
-            <div key={result.id} className="border p-6 rounded-lg shadow-sm">
+            <div key={result._id} className="border p-6 rounded-lg shadow-sm">
+              {result.mainImage?.asset?._ref && (
+                <div className="mb-4">
+                  <Image
+                    src={urlForImage(result.mainImage)?.width(600).height(300).url() || ''}
+                    alt={result.title}
+                    width={600}
+                    height={300}
+                    className="w-full h-40 object-cover rounded-md"
+                  />
+                </div>
+              )}
               <h2 className="text-2xl font-bold mb-2">
                 <Link href={`/posts/${result.slug}`} className="hover:underline">
                   {result.title}
                 </Link>
               </h2>
-              <p className="text-gray-600 mb-4">{result.excerpt}</p>
+              {result.excerpt && (
+                <p className="text-gray-600 mb-4">{result.excerpt}</p>
+              )}
               <Link 
                 href={`/posts/${result.slug}`}
                 className="text-[#89131F] hover:underline"
