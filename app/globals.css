@@ -232,7 +232,7 @@ body::after {
   }
 }
 
-input[placeholder="Search articles..."] {
+input[placeholder="Dig through our stuff..."] {
   padding-left: 1.25rem !important; /* Increase from 1rem (pl-4) to 1.25rem */
   padding-right: 3rem !important;   /* Ensure enough space for buttons */
 }
