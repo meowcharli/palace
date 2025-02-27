@@ -10,6 +10,12 @@ type HeroPostProps = {
 export default function HeroPost({ post }: HeroPostProps) {
   const { title, slug, excerpt, coverImage, videoEmbed, author } = post;
   
+  // Convert author.picture to the format expected by Avatar component
+  const authorPicture = author?.picture ? {
+    ...author.picture,
+    _type: "image"
+  } : null;
+  
   return (
     <article>
       <Link className="group mb-8 block md:mb-16" href={`/posts/${slug || ''}`}>
@@ -33,7 +39,7 @@ export default function HeroPost({ post }: HeroPostProps) {
               {excerpt}
             </p>
           )}
-          {author && <Avatar name={author.name} picture={author.picture} />}
+          {author && <Avatar name={author.name} picture={authorPicture} />}
         </div>
       </div>
     </article>
