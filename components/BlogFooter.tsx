@@ -1,6 +1,6 @@
 // components/BlogFooter.tsx
 import Link from 'next/link';
-import PortableText from 'app/(blog)/portable-text';
+import PortableText from '@/app/(blog)/portable-text';
 import { PortableTextBlock } from "next-sanity";
 
 interface BlogFooterProps {
