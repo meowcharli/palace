@@ -32,6 +32,7 @@ export interface Author {
       _ref: string;
     };
     alt?: string;
+    _type?: string;
   } | null;
 }
 
