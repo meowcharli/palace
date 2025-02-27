@@ -115,7 +115,7 @@ const MorphingSearch = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search articles..."
-                className="w-full bg-white text-black border border-gray-200 rounded-full py-1 pl-4 pr-10 md:py-2 focus:outline-none focus:ring-2 focus:ring-[#89131F]"
+                className="w-full bg-white text-black border border-gray-200 rounded-full py-1 pl-6 pr-14 md:py-2 focus:outline-none focus:ring-2 focus:ring-[#89131F]"
               />
               <div className="absolute right-0 top-0 h-full flex items-center pr-2">
                 <button 
