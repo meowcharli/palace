@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-export default function SearchPage() {
+function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
   const [isLoading, setIsLoading] = useState(true);
@@ -14,6 +14,7 @@ export default function SearchPage() {
     setIsLoading(true);
     
     const timer = setTimeout(() => {
+      // Mock results - in a real implementation, you would fetch from Sanity
       setResults([]);
       setIsLoading(false);
     }, 1000);
@@ -21,25 +22,20 @@ export default function SearchPage() {
     return () => clearTimeout(timer);
   }, [query]);
 
-  // Using JSX to avoid quote escaping issues
-  const queryDisplay = (
-    <span className="font-semibold">
-      {'"'}{query}{'"'}
-    </span>
-  );
-
   return (
     <div className="container mx-auto px-5 py-12">
       <h1 className="text-4xl font-bold mb-8">Search Results</h1>
+      {/* eslint-disable react/no-unescaped-entities */}
       {query ? (
         <p className="text-xl mb-8">
-          Showing results for: {queryDisplay}
+          Showing results for: <span className="font-semibold">"{query}"</span>
         </p>
       ) : (
         <p className="text-xl mb-8">
           Please enter a search term to find articles.
         </p>
       )}
+      {/* eslint-enable react/no-unescaped-entities */}
 
       {isLoading ? (
         <div className="flex justify-center py-12">
@@ -77,5 +73,20 @@ export default function SearchPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="container mx-auto px-5 py-12">
+        <h1 className="text-4xl font-bold mb-8">Search Results</h1>
+        <div className="flex justify-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gray-900"></div>
+        </div>
+      </div>
+    }>
+      <SearchResults />
+    </Suspense>
   );
 }
