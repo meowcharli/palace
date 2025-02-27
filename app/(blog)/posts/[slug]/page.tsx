@@ -8,7 +8,6 @@ import { Suspense } from "react";
 
 import Avatar from "../../avatar";
 import CoverImage from "../../cover-image";
-import DateComponent from "../../date";
 import MoreStories from "../../more-stories";
 import PortableText from "../../portable-text";
 
@@ -90,11 +89,7 @@ export default async function PostPage({ params }: Props) {
               <Avatar name={post.author.name} picture={post.author.picture} />
             )}
           </div>
-          <div className="mb-6 text-lg">
-            <div className="mb-4 text-lg">
-              <DateComponent dateString={post.date} />
-            </div>
-          </div>
+          {/* Date section removed */}
         </div>
         {post.content?.length && (
           <PortableText
