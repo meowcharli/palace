@@ -90,9 +90,6 @@ export default async function RootLayout({
         <BlogFooter footer={footer} description={description} />
         {isDraftMode && <VisualEditing />}
         <SpeedInsights />
-
-        {/* Import the MorphingSearch component */}
-        <script src="/morphing-search.js" async defer></script>
       </body>
     </html>
   );
