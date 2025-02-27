@@ -32,7 +32,7 @@ export default function SearchPage() {
       <h1 className="text-4xl font-bold mb-8">Search Results</h1>
       {query ? (
         <p className="text-xl mb-8">
-          Showing results for: <span className="font-semibold">&ldquo;{query}&rdquo;</span>
+          Showing results for: <span className="font-semibold">&#34;{query}&#34;</span>
         </p>
       ) : (
         <p className="text-xl mb-8">
