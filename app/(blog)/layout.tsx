@@ -150,8 +150,9 @@ export default async function RootLayout({
             </div>
             
             <div className="flex items-center gap-2 md:gap-3">
-              {/* Search button (client component will be added with script) */}
-              <div id="search-button-container">
+              {/* Morphing search bar (client component) */}
+              <div id="search-bar-container">
+                {/* This will be replaced by client-side JavaScript */}
                 <Link 
                   href="/search" 
                   className="inline-flex items-center bg-white text-black px-3 py-1 md:px-4 md:py-2 rounded-full text-[0.85rem] md:text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
@@ -231,76 +232,8 @@ export default async function RootLayout({
         {isDraftMode && <VisualEditing />}
         <SpeedInsights />
 
-        {/* Client-side search functionality will be added here */}
-        <script id="search-script" dangerouslySetInnerHTML={{
-          __html: `
-            document.addEventListener('DOMContentLoaded', function() {
-              const searchBtn = document.querySelector('#search-button-container a');
-              
-              if (searchBtn) {
-                searchBtn.addEventListener('click', function(e) {
-                  e.preventDefault();
-                  
-                  // Create overlay
-                  const overlay = document.createElement('div');
-                  overlay.className = 'fixed inset-0 z-50 flex items-start justify-center';
-                  overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-                  
-                  // Create search form
-                  const searchContainer = document.createElement('div');
-                  searchContainer.className = 'w-full max-w-3xl mt-32 px-4';
-                  
-                  const form = document.createElement('form');
-                  form.action = '/search';
-                  form.className = 'relative';
-                  
-                  const input = document.createElement('input');
-                  input.type = 'text';
-                  input.name = 'q';
-                  input.placeholder = 'Search articles...';
-                  input.className = 'w-full bg-white text-black border-0 rounded-full py-4 pl-6 pr-12 shadow-lg text-lg focus:outline-none focus:ring-2 focus:ring-[#89131F]';
-                  
-                  const submitBtn = document.createElement('button');
-                  submitBtn.type = 'submit';
-                  submitBtn.className = 'absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#89131F]';
-                  submitBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>';
-                  
-                  const helpText = document.createElement('p');
-                  helpText.className = 'text-white text-center mt-4 text-sm';
-                  helpText.textContent = 'Press ESC to cancel';
-                  
-                  // Assemble the elements
-                  form.appendChild(input);
-                  form.appendChild(submitBtn);
-                  searchContainer.appendChild(form);
-                  searchContainer.appendChild(helpText);
-                  overlay.appendChild(searchContainer);
-                  document.body.appendChild(overlay);
-                  
-                  // Focus the input
-                  setTimeout(() => {
-                    input.focus();
-                  }, 100);
-                  
-                  // Close on ESC key
-                  document.addEventListener('keydown', function escHandler(e) {
-                    if (e.key === 'Escape') {
-                      document.body.removeChild(overlay);
-                      document.removeEventListener('keydown', escHandler);
-                    }
-                  });
-                  
-                  // Close when clicking outside
-                  overlay.addEventListener('click', function(e) {
-                    if (e.target === overlay) {
-                      document.body.removeChild(overlay);
-                    }
-                  });
-                });
-              }
-            });
-          `
-        }} />
+        {/* Import the MorphingSearch component */}
+        <script src="/morphing-search.js" async defer></script>
       </body>
     </html>
   );
