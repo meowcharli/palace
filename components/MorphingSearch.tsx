@@ -82,6 +82,7 @@ const MorphingSearch = () => {
       <div 
         ref={containerRef}
         className={`relative z-50 transition-all duration-300 ease-in-out ${isExpanded ? 'w-64 md:w-80' : 'w-auto'}`}
+        style={{ backgroundColor: isExpanded ? '#f8f8f8' : 'transparent' }} // Added background color for testing
       >
         <form onSubmit={handleSubmit} className="relative flex items-center">
           {!isExpanded ? (
@@ -115,7 +116,13 @@ const MorphingSearch = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search articles..."
-                className="w-full bg-white text-black border border-gray-200 rounded-full py-1 pl-6 pr-14 md:py-2 focus:outline-none focus:ring-2 focus:ring-[#89131F]"
+                className="w-full bg-white text-black border border-gray-200 rounded-full py-1 md:py-2 focus:outline-none focus:ring-2 focus:ring-[#89131F]"
+                style={{ 
+                  paddingLeft: '20px', 
+                  paddingRight: '60px',
+                  backgroundColor: '#ffffff',
+                  boxShadow: '0 0 5px rgba(0,0,0,0.1)'
+                }} // Direct style instead of classes
               />
               <div className="absolute right-0 top-0 h-full flex items-center pr-2">
                 <button 
