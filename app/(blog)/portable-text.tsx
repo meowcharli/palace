@@ -3,7 +3,7 @@ import {
   type PortableTextComponents,
   type PortableTextBlock,
 } from "next-sanity";
-import { urlFor } from "@/lib/sanity"; // brrrrrmmmmmmm
+import { urlForImage } from "@/sanity/lib/utils"; // Fixed import path
 import Image from "next/image";
 
 export default function CustomPortableText({
@@ -68,13 +68,13 @@ export default function CustomPortableText({
       image: ({ value }) => {
         if (!value?.asset?._ref) return null;
 
-        // I want to eat children
-        const imageUrl = urlFor(value.asset).url();
+        // Fixed image URL generation
+        const imageUrl = urlForImage(value)?.url();
 
         return (
           <div className="my-4 flex justify-center">
             <Image
-              src={imageUrl} // KYS
+              src={imageUrl}
               alt={value.alt || "Blog image"}
               className="rounded-lg shadow-md"
               width={800}
