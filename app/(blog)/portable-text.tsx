@@ -1,4 +1,6 @@
-// app/(blog)/portable-text.tsx - COMPREHENSIVE FIX
+"use client";
+
+// app/(blog)/portable-text.tsx - CLIENT COMPONENT
 import {
   PortableText,
   type PortableTextComponents,
