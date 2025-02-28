@@ -232,12 +232,65 @@ body::after {
   }
 }
 
-/* ========== Mobile Optimization ========== */
+/* ========== Mobile Optimization CSS ========== */
+/* Mobile-specific styles for optimal viewing on smaller screens */
+
+/* Container sizing for different screen sizes */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1300px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .container-wide {
+    width: 100%;
+    max-width: 1800px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Tablet container sizing */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .container {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .container-wide {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Mobile-specific styles */
 @media (max-width: 767px) {
-  /* Header sizing adjustments */
+  /* Header sizing and spacing adjustments */
   header.site-header {
     height: 72px !important; /* Make header slightly bigger on mobile */
     padding: 0.5rem 0;
+  }
+  
+  /* Container adjustments for mobile - full width */
+  .container {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .container-wide {
+    width: 100%;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  /* Keep some spacing for logos and UI elements in header */
+  header.site-header .container-wide {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
   }
   
   /* Make the logo slightly bigger for better touch target */
@@ -246,25 +299,43 @@ body::after {
     height: 56px !important;
   }
   
+  /* Logo sizing for mobile */
+  .mobile-logo {
+    width: 44px !important; 
+    height: 44px !important;
+  }
+  
   /* Hide all buttons except search and logo */
   header.site-header .header-article-container,
   header.site-header a[href="/support"] {
     display: none !important;
   }
   
-  /* Ensure search button is visible */
+  /* Ensure search button is visible and enhance it */
   header.site-header form button,
   header.site-header .relative button {
     display: flex !important;
   }
   
-  /* Homepage margin and padding adjustments */
-  .container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  /* Make the search button more prominent */
+  header.site-header button[type="button"] {
+    padding: 0.5rem 0.75rem !important;
+    font-weight: 500;
   }
   
-  /* Adjust article layouts for mobile */
+  /* When search is expanded, make it take more space */
+  div[class*="relative z-50"].w-64 {
+    width: calc(100vw - 100px) !important;
+  }
+  
+  /* Style improvements for search input on mobile */
+  input[type="text"][placeholder*="search" i],
+  input[type="text"][placeholder*="Search" i],
+  input[type="text"][placeholder*="beta" i] {
+    font-size: 16px !important; /* Prevent iOS zoom on focus */
+  }
+  
+  /* Article layout adjustments */
   article.hero-post .mb-16 {
     margin-bottom: 0.5rem !important;
   }
@@ -303,6 +374,19 @@ body::after {
     margin-bottom: 2rem !important;
   }
   
+  /* Full bleed images that extend to edges */
+  .group.mb-4.block img,
+  .mb-8.sm\:mx-0.md\:mb-16 img {
+    border-radius: 0 !important; /* Remove any border radius */
+  }
+  
+  /* Fix spacing on images */
+  .shadow-md.transition-shadow.duration-200.group-hover\:shadow-lg.sm\:mx-0 {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100vw !important;
+  }
+  
   /* Make footer article list more compact */
   .footer-article-list h2 {
     font-size: 1.5rem !important;
@@ -312,75 +396,32 @@ body::after {
   .footer-article-list .gap-6 {
     gap: 0.75rem !important;
   }
-}
-
-/* ========== Container Optimizations ========== */
-
-/* Desktop container sizing */
-@media (min-width: 1024px) {
-  .container {
-    max-width: 1300px;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-
-  .container-wide {
-    width: 100%;
-    max-width: 1800px;
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-/* Tablet container sizing */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .container {
-    max-width: 100%;
+  
+  /* Footer adjustments */
+  footer {
     padding-left: 1rem;
     padding-right: 1rem;
   }
   
-  .container-wide {
-    width: 100%;
+  /* Article card adjustments */
+  article {
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 2rem;
+  }
+  
+  article:last-child {
+    border-bottom: none;
+  }
+  
+  /* Text alignment and margins */
+  h1, h2, h3 {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-}
-
-/* Mobile container sizing - full width */
-@media (max-width: 767px) {
-  .container {
-    max-width: 100%;
-    padding-left: 0;
-    padding-right: 0;
-  }
   
-  .container-wide {
-    width: 100%;
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-  }
-  
-  /* Keep some spacing for logos and UI elements in header */
-  header.site-header .container-wide {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-  }
-  
-  /* Full width images with no margins */
-  article .group.mb-4.block {
-    margin-left: 0;
-    margin-right: 0;
-  }
-  
-  /* Adjust spacing for mobile-friendly reading */
-  article h3 {
-    font-size: 1.5rem;
-    line-height: 1.3;
-  }
-  
-  article p {
-    font-size: 1rem;
-    line-height: 1.6;
+  /* Fix avatar component on small screens */
+  .flex.items-center.text-xl {
+    padding-left: 1rem;
+    flex-wrap: wrap;
   }
 }
