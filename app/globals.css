@@ -603,4 +603,35 @@ body::after {
     font-size: 0.8rem !important;
     line-height: 1.3;
   }
+/* Ensure video embeds respect the card boundaries */
+.container > .hero-post > article .responsive-iframe-container,
+.container > .main-posts > article .responsive-iframe-container {
+  border-radius: 8px 8px 0 0 !important;
+  overflow: hidden !important;
+  margin-bottom: 0 !important;
+}
+
+/* Fix video post styling */
+.container > .hero-post > article .video-container,
+.container > .main-posts > article .video-container {
+  margin-bottom: 0 !important;
+}
+
+/* Hide video captions on mobile card view for cleaner look */
+.container > .hero-post > article .video-caption,
+.container > .main-posts > article .video-caption {
+  display: none !important;
+}
+
+/* Fix sizing issues with video embeds */
+.container > .hero-post > article iframe,
+.container > .main-posts > article iframe {
+  border-radius: 8px 8px 0 0 !important;
+}
+
+/* Fix padding on hero post text container when it has a video */
+.container > .hero-post > article .responsive-iframe-container + .md\:grid,
+.container > .main-posts > article .responsive-iframe-container + .md\:grid {
+  border-top: 1px solid #f5f5f5 !important;
+}
 }
