@@ -77,7 +77,7 @@ function FooterArticleList({ posts }: { posts: Array<{
   
   return (
     <div className="mt-20 mb-12 border-t pt-10">
-      <h2 className="mb-8 text-3xl font-semibold">All Articles</h2>
+      <h2 className="mb-8 text-3xl font-semibold">All our stuff</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post) => (
           <div key={post._id} className="border-b pb-4">
