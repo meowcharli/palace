@@ -424,4 +424,171 @@ body::after {
     padding-left: 1rem;
     flex-wrap: wrap;
   }
+  
+  /* ========== Mobile Article Buttons ========== */
+  /* Add slight margins back to container for breathing room */
+  .container {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+  
+  /* Article as clickable card/button */
+  article {
+    margin-bottom: 16px !important;
+    border-bottom: none !important;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background-color: #fff;
+    position: relative;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  /* Add active/pressed state effect to articles */
+  article:active,
+  .footer-article-item:active {
+    transform: scale(0.98);
+    transition: transform 0.2s ease;
+  }
+  
+  /* Add subtle hover effect for supported mobile browsers */
+  @media (hover: hover) {
+    article:hover,
+    .footer-article-item:hover {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    }
+  }
+  
+  /* Remove existing margins/paddings to allow for new layout */
+  article .mb-16, 
+  article .mb-20,
+  article .mb-8,
+  article .mb-4 {
+    margin-bottom: 0 !important;
+  }
+  
+  /* The image container */
+  article .group.mb-4.block {
+    margin: 0 !important;
+    display: block;
+  }
+  
+  /* Create white box for title */
+  article .md\:grid {
+    background-color: #FFFFFF;
+    padding: 12px 14px !important;
+    border-top: 1px solid #f5f5f5;
+  }
+  
+  /* Title styling inside white box */
+  article h3 {
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    font-weight: 600;
+  }
+  
+  /* Improve contrast for titles */
+  article h3 a {
+    color: #111;
+  }
+  
+  /* Style the article text content */
+  article p {
+    display: none; /* Hide excerpt on thumbnails for cleaner button look */
+  }
+  
+  /* Style the avatar in the button */
+  article .flex.items-center.text-xl {
+    display: none; /* Hide author info for cleaner button look */
+  }
+  
+  /* Hero post can still show excerpt */
+  article.hero-post p {
+    display: block;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-top: 8px;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    color: #666;
+  }
+  
+  /* Minimize space between articles */
+  .main-posts article {
+    margin-bottom: 16px !important;
+  }
+  
+  /* Add slight horizontal margins for breathing room */
+  .container > .main-posts,
+  .container > .hero-post,
+  .container > .footer-article-list {
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+  
+  /* Ensure images maintain proper aspect ratio */
+  article .group.block img {
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  /* Overlay for clickable effect */
+  article::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0);
+    transition: background-color 0.2s;
+    pointer-events: none;
+    z-index: 2;
+  }
+  
+  article:active::after {
+    background-color: rgba(0,0,0,0.05);
+  }
+  
+  /* Footer article list styling */
+  .footer-article-list {
+    margin-top: 24px !important;
+    padding-top: 16px !important;
+  }
+  
+  .footer-article-list .grid {
+    gap: 16px !important;
+  }
+  
+  .footer-article-list h2 {
+    font-size: 1.25rem !important;
+    padding-left: 8px !important;
+  }
+  
+  .footer-article-list .border-b {
+    background-color: white;
+    border-radius: 8px;
+    padding: 12px !important;
+    border-bottom: none !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .footer-article-list h3 {
+    padding: 0 !important;
+    font-size: 0.95rem !important;
+    margin-bottom: 4px !important;
+  }
+  
+  .footer-article-list p {
+    padding: 0 !important;
+    font-size: 0.85rem !important;
+    line-height: 1.4;
+  }
 }
