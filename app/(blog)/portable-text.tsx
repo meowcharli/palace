@@ -1,4 +1,4 @@
-// app/(blog)/portable-text.tsx - FIXED VERSION
+// app/(blog)/portable-text.tsx - ENHANCED DEBUGGING VERSION
 import {
   PortableText,
   type PortableTextComponents,
@@ -14,6 +14,9 @@ export default function CustomPortableText({
   className?: string;
   value: PortableTextBlock[];
 }) {
+  // Debug the incoming value to see what we're working with
+  console.log('PortableText value:', JSON.stringify(value, null, 2));
+
   const components: PortableTextComponents = {
     block: {
       h5: ({ children }) => (
@@ -67,39 +70,78 @@ export default function CustomPortableText({
       },
 
       image: ({ value }) => {
+        // Debug logging to see exactly what we're working with
+        console.log('Image value:', JSON.stringify(value, null, 2));
+        
         // Check if we have a valid asset reference
         if (!value?.asset?._ref) {
-          console.log("Missing image asset reference", value);
-          return null;
+          console.error("Missing image asset reference:", value);
+          return (
+            <div className="my-4 p-4 bg-red-50 text-red-500 rounded-lg">
+              Error: Missing image reference 
+              <pre className="text-xs mt-2 overflow-auto">
+                {JSON.stringify(value, null, 2)}
+              </pre>
+            </div>
+          );
         }
 
         try {
           // Generate the image URL with proper sizing
-          const imageBuilder = urlForImage(value);
+          const imageUrlBuilder = urlForImage(value);
           
-          if (!imageBuilder) {
-            console.log("Could not build image URL", value);
-            return null;
+          if (!imageUrlBuilder) {
+            console.error("Could not build image URL from:", value);
+            return (
+              <div className="my-4 p-4 bg-red-50 text-red-500 rounded-lg">
+                Error: Could not build image URL
+              </div>
+            );
           }
           
-          const imageUrl = imageBuilder.width(800).height(500).url();
+          // Generate the URL explicitly with width and height
+          const imageUrl = imageUrlBuilder.width(800).height(500).url();
+          
+          console.log('Generated image URL:', imageUrl);
           
           if (!imageUrl) {
-            console.log("Failed to generate image URL");
-            return null;
+            console.error("Failed to generate image URL");
+            return (
+              <div className="my-4 p-4 bg-red-50 text-red-500 rounded-lg">
+                Error: Failed to generate image URL
+              </div>
+            );
           }
+
+          // Fallback to direct URL construction if the above fails - this is a last resort
+          const fallbackUrl = `https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/${process.env.NEXT_PUBLIC_SANITY_DATASET}/${value.asset._ref.replace('image-', '').replace('-jpg', '.jpg').replace('-png', '.png').replace('-webp', '.webp').replace('-gif', '.gif')}`;
+          
+          console.log('Fallback URL:', fallbackUrl);
+
+          // Add a way to toggle between next/image and regular img tag for debugging
+          const useNextImage = true;
 
           return (
             <div className="my-6 flex justify-center">
-              <div className="relative w-full max-w-2xl">
-                <Image
-                  src={imageUrl}
-                  alt={value.alt || "Blog image"}
-                  className="rounded-lg shadow-md"
-                  width={800}
-                  height={500}
-                  sizes="(max-width: 800px) 100vw, 800px"
-                />
+              <div className="relative w-full max-w-2xl overflow-hidden">
+                {useNextImage ? (
+                  <Image
+                    src={imageUrl || fallbackUrl}
+                    alt={value.alt || "Blog image"}
+                    className="rounded-lg shadow-md"
+                    width={800}
+                    height={500}
+                    sizes="(max-width: 800px) 100vw, 800px"
+                    unoptimized={!imageUrl} // If using fallback, don't optimize
+                  />
+                ) : (
+                  <img 
+                    src={imageUrl || fallbackUrl}
+                    alt={value.alt || "Blog image"}
+                    className="rounded-lg shadow-md w-full h-auto"
+                    loading="lazy"
+                  />
+                )}
               </div>
             </div>
           );
@@ -107,7 +149,10 @@ export default function CustomPortableText({
           console.error("Error rendering image:", error);
           return (
             <div className="my-4 p-4 bg-red-50 text-red-500 rounded-lg">
-              Failed to load image
+              Failed to load image: {(error as Error).message}
+              <pre className="text-xs mt-2 overflow-auto">
+                {JSON.stringify(value, null, 2)}
+              </pre>
             </div>
           );
         }
