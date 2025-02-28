@@ -313,3 +313,74 @@ body::after {
     gap: 0.75rem !important;
   }
 }
+
+/* ========== Container Optimizations ========== */
+
+/* Desktop container sizing */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1300px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .container-wide {
+    width: 100%;
+    max-width: 1800px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Tablet container sizing */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .container {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .container-wide {
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Mobile container sizing - full width */
+@media (max-width: 767px) {
+  .container {
+    max-width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .container-wide {
+    width: 100%;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  /* Keep some spacing for logos and UI elements in header */
+  header.site-header .container-wide {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  
+  /* Full width images with no margins */
+  article .group.mb-4.block {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  /* Adjust spacing for mobile-friendly reading */
+  article h3 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+  
+  article p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
