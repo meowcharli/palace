@@ -1,9 +1,7 @@
-// components/Logo.tsx
-
-// For debugging, we'll implement a direct SVG approach instead of using the Image component
-// This will help us determine if it's a path issue or something else
+// components/Logo.tsx - Enhanced for responsive sizing
 
 export default function Logo({ className = '', width = 40, height = 40 }) {
+  // On mobile, we'll use slightly larger dimensions via CSS
   return (
     <div className={`relative ${className}`} style={{ width, height }}>
       <svg 
