@@ -1,6 +1,6 @@
 "use client";
 
-// app/(blog)/portable-text.tsx - SIMPLIFIED APPROACH
+// app/(blog)/portable-text.tsx - TYPESCRIPT FIXED
 import {
   PortableText,
   type PortableTextComponents,
@@ -10,9 +10,29 @@ import { urlForImage } from "@/sanity/lib/utils";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+// Define types for the image value and status
+interface SanityImageAsset {
+  _ref: string;
+  _type?: string;
+}
+
+interface SanityImageValue {
+  _type?: string;
+  asset?: SanityImageAsset;
+  alt?: string;
+  [key: string]: any;
+}
+
+interface ImageStatus {
+  loaded: boolean;
+  error: boolean;
+  url: string;
+  debugInfo: Record<string, any>;
+}
+
 // Simplified direct Sanity image component
-function SimpleSanityImage({ value }) {
-  const [imageStatus, setImageStatus] = useState({
+function SimpleSanityImage({ value }: { value: SanityImageValue }) {
+  const [imageStatus, setImageStatus] = useState<ImageStatus>({
     loaded: false,
     error: false,
     url: "",
@@ -51,8 +71,8 @@ function SimpleSanityImage({ value }) {
       const directUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${imageId}.${format}`;
       
       // Test if the URL is accessible
-      const img = new Image();
-      img.onload = () => {
+      const imgElement = new Image();
+      imgElement.onload = () => {
         console.log("Image loaded successfully:", directUrl);
         setImageStatus({
           loaded: true,
@@ -61,7 +81,7 @@ function SimpleSanityImage({ value }) {
           debugInfo: { imageId, format, projectId, dataset, ref }
         });
       };
-      img.onerror = () => {
+      imgElement.onerror = () => {
         console.error("Failed to load image:", directUrl);
         // Try alternative URL formats
         const altUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${ref.replace('image-', '').split('-')[0]}.${format}`;
@@ -74,7 +94,7 @@ function SimpleSanityImage({ value }) {
           debugInfo: { imageId, format, projectId, dataset, ref, altUrl }
         });
       };
-      img.src = directUrl;
+      imgElement.src = directUrl;
       
       // Set initial URL
       setImageStatus(prev => ({
@@ -89,7 +109,7 @@ function SimpleSanityImage({ value }) {
         loaded: false,
         error: true,
         url: "",
-        debugInfo: { error: error.message, value }
+        debugInfo: { error: (error as Error).message, value }
       });
     }
   }, [value]);
