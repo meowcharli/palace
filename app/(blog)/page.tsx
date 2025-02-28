@@ -1,43 +1,54 @@
-// app/(blog)/page.tsx
+// app/(blog)/page.tsx - Modified version
 import Link from "next/link";
 import { Suspense } from "react";
 
 import Avatar from "./avatar";
 import CoverImage from "./cover-image";
-import MoreStories from "./more-stories";
 import Onboarding from "./onboarding";
 import PortableText from "./portable-text";
 
 import type { HeroQueryResult } from "@/sanity.types";
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { heroQuery, settingsQuery } from "@/sanity/lib/queries";
+import { heroQuery, settingsQuery, moreStoriesQuery } from "@/sanity/lib/queries";
 
-function HeroPost({
+// Modified ArticlePost component that replaces both HeroPost and the articles in MoreStories
+function ArticlePost({
   title,
   slug,
   excerpt,
   coverImage,
   videoEmbed,
   author,
-}: Pick<
-  Exclude<HeroQueryResult, null>,
-  "title" | "coverImage" | "videoEmbed" | "date" | "excerpt" | "author" | "slug"
->) {
+  isHero = false, // Flag to indicate if this is the hero post
+}: {
+  title: string;
+  slug: string;
+  excerpt?: string;
+  coverImage: any;
+  videoEmbed?: any;
+  author?: any;
+  isHero?: boolean;
+}) {
   return (
-    <article>
-      <Link className="group mb-8 block md:mb-16" href={`/posts/${slug}`}>
-        <CoverImage image={coverImage} videoEmbed={videoEmbed || undefined} priority />
+    <article className={`mb-16 md:mb-24 ${isHero ? 'hero-post' : ''}`}>
+      <Link 
+        className="group mb-4 block md:mb-8" // Reduced margin by 50%
+        href={`/posts/${slug}`}
+      >
+        <CoverImage 
+          image={coverImage} 
+          videoEmbed={videoEmbed || undefined} 
+          priority={isHero} 
+        />
       </Link>
-      <div className="mb-20 md:mb-28 md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8">
+      <div className="mb-16 md:mb-20 md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8">
         <div>
-          {/* Reduced title size by changing from text-4xl/text-6xl to text-2xl/text-3xl */}
           <h3 className="text-pretty mb-4 text-2xl leading-tight lg:text-3xl">
             <Link href={`/posts/${slug}`} className="hover:underline">
               {title}
             </Link>
           </h3>
-          {/* Date component removed */}
         </div>
         <div>
           {excerpt && (
@@ -52,50 +63,101 @@ function HeroPost({
   );
 }
 
+// New Footer Article List component
+function FooterArticleList({ posts }) {
+  if (!posts || posts.length === 0) return null;
+  
+  return (
+    <div className="mt-20 mb-12 border-t pt-10">
+      <h2 className="mb-8 text-3xl font-semibold">All Articles</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.map((post) => (
+          <div key={post._id} className="border-b pb-4">
+            <h3 className="text-lg font-medium mb-2">
+              <Link href={`/posts/${post.slug}`} className="hover:underline">
+                {post.title}
+              </Link>
+            </h3>
+            {post.excerpt && (
+              <p className="text-sm text-gray-600 line-clamp-2">{post.excerpt}</p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // Wrap client components in Suspense
-function PageContent({ heroPost, settings }: { heroPost: any, settings: any }) {
+function PageContent({ posts, settings }: { posts: any[], settings: any }) {
+  // If no posts, show onboarding
+  if (!posts || posts.length === 0) {
+    return (
+      <div className="container mx-auto px-5">
+        <Suspense fallback={<div className="py-60 text-center">Loading...</div>}>
+          <Onboarding />
+        </Suspense>
+      </div>
+    );
+  }
+
+  // Get the first post as hero and the rest for the main content
+  const heroPost = posts[0];
+  const mainPosts = posts.slice(1);
+  
   return (
     <div className="container mx-auto px-5">
-      {heroPost ? (
-        <HeroPost
+      {/* Hero Post */}
+      {heroPost && (
+        <ArticlePost
           title={heroPost.title}
           slug={heroPost.slug}
           coverImage={heroPost.coverImage}
           videoEmbed={heroPost.videoEmbed}
           excerpt={heroPost.excerpt}
-          date={heroPost.date}
           author={heroPost.author}
+          isHero={true}
         />
-      ) : (
-        <Suspense fallback={<div className="py-60 text-center">Loading...</div>}>
-          <Onboarding />
-        </Suspense>
       )}
-      {heroPost?._id && (
-        <aside>
-          <h2 className="mb-8 text-6xl font-semibold leading-tight tracking-tighter md:text-4xl">
-            More of our stuff ↴
-          </h2>
-          <Suspense fallback={<div className="py-20 text-center">Loading more stories...</div>}>
-            <MoreStories skip={heroPost._id} limit={100} />
-          </Suspense>
-        </aside>
+
+      {/* Other Posts in the same format */}
+      {mainPosts.length > 0 && (
+        <div className="main-posts">
+          {mainPosts.map((post) => (
+            <ArticlePost
+              key={post._id}
+              title={post.title}
+              slug={post.slug}
+              coverImage={post.coverImage}
+              videoEmbed={post.videoEmbed}
+              excerpt={post.excerpt}
+              author={post.author}
+            />
+          ))}
+        </div>
       )}
+
+      {/* Footer Article List */}
+      <FooterArticleList posts={posts} />
     </div>
   );
 }
 
 export default async function Page() {
-  const [settings, heroPost] = await Promise.all([
+  // Modified to fetch all posts instead of just the hero post
+  const [settings, allPosts] = await Promise.all([
     sanityFetch({
       query: settingsQuery,
     }),
-    sanityFetch({ query: heroQuery }),
+    sanityFetch({ 
+      query: moreStoriesQuery, 
+      params: { skip: '', limit: 100 } // Fetch more posts, adjust limit as needed
+    }),
   ]);
 
   return (
     <Suspense fallback={<div className="container mx-auto px-5 py-20 text-center">Loading page...</div>}>
-      <PageContent heroPost={heroPost} settings={settings} />
+      <PageContent posts={allPosts} settings={settings} />
     </Suspense>
   );
 }
