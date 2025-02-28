@@ -64,7 +64,13 @@ function ArticlePost({
 }
 
 // New Footer Article List component
-function FooterArticleList({ posts }) {
+function FooterArticleList({ posts }: { posts: Array<{
+  _id: string;
+  title: string; 
+  slug: string;
+  excerpt?: string;
+  author?: any;
+}> }) {
   if (!posts || posts.length === 0) return null;
   
   return (
@@ -89,7 +95,19 @@ function FooterArticleList({ posts }) {
 }
 
 // Wrap client components in Suspense
-function PageContent({ posts, settings }: { posts: any[], settings: any }) {
+function PageContent({ posts, settings }: { 
+  posts: Array<{
+    _id: string;
+    title: string;
+    slug: string;
+    excerpt?: string;
+    coverImage: any;
+    videoEmbed?: any;
+    author?: any;
+    date?: string;
+  }>;
+  settings: any;
+}) {
   // If no posts, show onboarding
   if (!posts || posts.length === 0) {
     return (
