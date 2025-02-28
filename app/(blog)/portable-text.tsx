@@ -1,13 +1,13 @@
 "use client";
 
-// app/(blog)/portable-text.tsx - TYPESCRIPT FIXED
+// app/(blog)/portable-text.tsx - FINAL TYPESCRIPT FIXED
 import {
   PortableText,
   type PortableTextComponents,
   type PortableTextBlock,
 } from "next-sanity";
 import { urlForImage } from "@/sanity/lib/utils"; 
-import Image from "next/image";
+import NextImage from "next/image";
 import { useEffect, useState } from "react";
 
 // Define types for the image value and status
@@ -70,8 +70,8 @@ function SimpleSanityImage({ value }: { value: SanityImageValue }) {
       // Construct a direct URL - this should work regardless of the Sanity client
       const directUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${imageId}.${format}`;
       
-      // Test if the URL is accessible
-      const imgElement = new Image();
+      // Test if the URL is accessible - use HTMLImageElement instead of Image constructor
+      const imgElement = document.createElement('img');
       imgElement.onload = () => {
         console.log("Image loaded successfully:", directUrl);
         setImageStatus({
