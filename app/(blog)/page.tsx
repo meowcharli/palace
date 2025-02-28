@@ -1,18 +1,18 @@
-// app/(blog)/page.tsx - Modified version
-import Link from "next/link";
-import { Suspense } from "react";
+// app/(blog)/page.tsx - Updated for mobile optimization
+import Link from 'next/link';
+import { Suspense } from 'react';
 
-import Avatar from "./avatar";
-import CoverImage from "./cover-image";
-import Onboarding from "./onboarding";
-import PortableText from "./portable-text";
+import Avatar from './avatar';
+import CoverImage from './cover-image';
+import Onboarding from './onboarding';
+import PortableText from './portable-text';
 
-import type { HeroQueryResult } from "@/sanity.types";
-import * as demo from "@/sanity/lib/demo";
-import { sanityFetch } from "@/sanity/lib/fetch";
-import { heroQuery, settingsQuery, moreStoriesQuery } from "@/sanity/lib/queries";
+import type { HeroQueryResult } from '@/sanity.types';
+import * as demo from '@/sanity/lib/demo';
+import { sanityFetch } from '@/sanity/lib/fetch';
+import { heroQuery, settingsQuery, moreStoriesQuery } from '@/sanity/lib/queries';
 
-// Modified ArticlePost component that replaces both HeroPost and the articles in MoreStories
+// Modified ArticlePost component with mobile-friendly classes
 function ArticlePost({
   title,
   slug,
@@ -20,7 +20,7 @@ function ArticlePost({
   coverImage,
   videoEmbed,
   author,
-  isHero = false, // Flag to indicate if this is the hero post
+  isHero = false,
 }: {
   title: string;
   slug: string | null;
@@ -65,7 +65,7 @@ function ArticlePost({
   );
 }
 
-// New Footer Article List component
+// Footer Article List component with mobile-friendly classes
 function FooterArticleList({ posts }: { posts: Array<{
   _id: string;
   title: string; 
@@ -76,7 +76,7 @@ function FooterArticleList({ posts }: { posts: Array<{
   if (!posts || posts.length === 0) return null;
   
   return (
-    <div className="mt-20 mb-12 border-t pt-10">
+    <div className="footer-article-list mt-20 mb-12 border-t pt-10">
       <h2 className="mb-8 text-3xl font-semibold">All our stuff</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post) => (
@@ -100,7 +100,7 @@ function FooterArticleList({ posts }: { posts: Array<{
   );
 }
 
-// Wrap client components in Suspense
+// Wrap client components in Suspense with mobile-friendly classes
 function PageContent({ posts, settings }: { 
   posts: Array<{
     _id: string;
@@ -117,7 +117,7 @@ function PageContent({ posts, settings }: {
   // If no posts, show onboarding
   if (!posts || posts.length === 0) {
     return (
-      <div className="container mx-auto px-5">
+      <div className="container mx-auto">
         <Suspense fallback={<div className="py-60 text-center">Loading...</div>}>
           <Onboarding />
         </Suspense>
@@ -130,7 +130,7 @@ function PageContent({ posts, settings }: {
   const mainPosts = posts.slice(1);
   
   return (
-    <div className="container mx-auto px-5">
+    <div className="container mx-auto">
       {/* Hero Post */}
       {heroPost && (
         <ArticlePost
@@ -180,7 +180,7 @@ export default async function Page() {
   ]);
 
   return (
-    <Suspense fallback={<div className="container mx-auto px-5 py-20 text-center">Loading page...</div>}>
+    <Suspense fallback={<div className="container mx-auto py-20 text-center">Loading page...</div>}>
       <PageContent posts={allPosts} settings={settings} />
     </Suspense>
   );
