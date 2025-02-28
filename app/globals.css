@@ -603,35 +603,106 @@ body::after {
     font-size: 0.8rem !important;
     line-height: 1.3;
   }
-/* Ensure video embeds respect the card boundaries */
-.container > .hero-post > article .responsive-iframe-container,
-.container > .main-posts > article .responsive-iframe-container {
-  border-radius: 8px 8px 0 0 !important;
-  overflow: hidden !important;
-  margin-bottom: 0 !important;
-}
 
-/* Fix video post styling */
-.container > .hero-post > article .video-container,
-.container > .main-posts > article .video-container {
-  margin-bottom: 0 !important;
-}
+  /* =================== ENHANCED HERO VIDEO EMBED FIXES =================== */
+  /* Force video containers to have card styling */
+  body .container > .hero-post > article,
+  body .container > .hero-post > article[class*="mb-"] {
+    margin-bottom: 16px !important;
+    border-bottom: none !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
+    background-color: #fff !important;
+    position: relative !important;
+    border: 1px solid rgba(0,0,0,0.05) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    max-width: calc(100% - 16px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
 
-/* Hide video captions on mobile card view for cleaner look */
-.container > .hero-post > article .video-caption,
-.container > .main-posts > article .video-caption {
-  display: none !important;
-}
+  /* Target specifically video containers */
+  body .container > .hero-post > article .responsive-iframe-container,
+  body .container > .main-posts > article .responsive-iframe-container {
+    border-radius: 8px 8px 0 0 !important;
+    overflow: hidden !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 56.25% !important; /* 16:9 aspect ratio */
+  }
+  
+  /* Fix margins on video containers */
+  body .container > .hero-post > article .video-container {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Make sure iframes fit properly */
+  body .container > .hero-post > article .responsive-iframe-container iframe {
+    border-radius: 8px 8px 0 0 !important; 
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  /* Make content grid consistent */
+  body .container > .hero-post > article .md\:grid,
+  body .container > .hero-post > article div[class*="md:grid"] {
+    background-color: #FFFFFF !important;
+    padding: 8px 14px !important;
+    border-top: 1px solid #f5f5f5 !important;
+    margin: 0 !important;
+  }
 
-/* Fix sizing issues with video embeds */
-.container > .hero-post > article iframe,
-.container > .main-posts > article iframe {
-  border-radius: 8px 8px 0 0 !important;
-}
+  /* Hide captions */
+  body .container > .hero-post > article .video-caption {
+    display: none !important;
+  }
 
-/* Fix padding on hero post text container when it has a video */
-.container > .hero-post > article .responsive-iframe-container + .md\:grid,
-.container > .main-posts > article .responsive-iframe-container + .md\:grid {
-  border-top: 1px solid #f5f5f5 !important;
-}
+  /* Ensure video embeds respect the card boundaries */
+  .container > .hero-post > article .responsive-iframe-container,
+  .container > .main-posts > article .responsive-iframe-container {
+    border-radius: 8px 8px 0 0 !important;
+    overflow: hidden !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Fix video post styling */
+  .container > .hero-post > article .video-container,
+  .container > .main-posts > article .video-container {
+    margin-bottom: 0 !important;
+  }
+
+  /* Hide video captions on mobile card view for cleaner look */
+  .container > .hero-post > article .video-caption,
+  .container > .main-posts > article .video-caption {
+    display: none !important;
+  }
+
+  /* Fix sizing issues with video embeds */
+  .container > .hero-post > article iframe,
+  .container > .main-posts > article iframe {
+    border-radius: 8px 8px 0 0 !important;
+  }
+
+  /* Fix padding on hero post text container when it has a video */
+  .container > .hero-post > article .responsive-iframe-container + .md\:grid,
+  .container > .main-posts > article .responsive-iframe-container + .md\:grid {
+    border-top: 1px solid #f5f5f5 !important;
+  }
+  
+  /* Fix shadow-md containers that might be wrapping videos */
+  .container > .hero-post > article .shadow-md,
+  .container > .main-posts > article .shadow-md {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    border-radius: 8px 8px 0 0 !important;
+  }
+  
+  /* Override any padding on video containers */
+  .container > .hero-post > article .responsive-iframe-container,
+  .container > .main-posts > article .responsive-iframe-container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 }
