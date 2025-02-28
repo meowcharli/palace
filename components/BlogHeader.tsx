@@ -15,7 +15,6 @@ export default function BlogHeader({ recentPosts }: BlogHeaderProps) {
   return (
     <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm">
       <div className="container-wide mx-auto flex justify-between items-center">
-        {/* Left section with logo */}
         <div className="flex items-center space-x-3 md:space-x-6">
           {/* Logo with button background - always visible */}
           <Link href="/" className="flex items-center relative">
@@ -51,7 +50,6 @@ export default function BlogHeader({ recentPosts }: BlogHeaderProps) {
           </div>
         </div>
         
-        {/* Right section with search and support (support hidden on mobile) */}
         <div className="flex items-center gap-2 md:gap-3">
           {/* Search bar - always visible */}
           <SearchBar className="mobile-visible" />
