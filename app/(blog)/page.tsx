@@ -80,18 +80,21 @@ function FooterArticleList({ posts }: { posts: Array<{
       <h2 className="mb-8 text-3xl font-semibold">All our stuff</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post) => (
-          <div key={post._id} className="border-b pb-4">
-            <h3 className="text-lg font-medium mb-2">
-              {post.slug ? (
-                <Link href={`/posts/${post.slug}`} className="hover:underline">
-                  {post.title}
-                </Link>
-              ) : (
-                <span>{post.title}</span>
-              )}
-            </h3>
-            {post.excerpt && (
-              <p className="text-sm text-gray-600 line-clamp-2">{post.excerpt}</p>
+          <div key={post._id} className="footer-article-item border-b pb-4">
+            {post.slug ? (
+              <Link href={`/posts/${post.slug}`} className="footer-article-link block">
+                <h3 className="text-lg font-medium mb-2">{post.title}</h3>
+                {post.excerpt && (
+                  <p className="text-sm text-gray-600 line-clamp-2">{post.excerpt}</p>
+                )}
+              </Link>
+            ) : (
+              <div className="footer-article-content">
+                <h3 className="text-lg font-medium mb-2">{post.title}</h3>
+                {post.excerpt && (
+                  <p className="text-sm text-gray-600 line-clamp-2">{post.excerpt}</p>
+                )}
+              </div>
             )}
           </div>
         ))}
