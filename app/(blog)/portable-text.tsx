@@ -3,7 +3,7 @@ import {
   type PortableTextComponents,
   type PortableTextBlock,
 } from "next-sanity";
-import { urlForImage } from "@/sanity/lib/utils"; // Fixed import path
+import { urlForImage } from "@/sanity/lib/utils"; 
 import Image from "next/image";
 
 export default function CustomPortableText({
@@ -68,8 +68,11 @@ export default function CustomPortableText({
       image: ({ value }) => {
         if (!value?.asset?._ref) return null;
 
-        // Fixed image URL generation
-        const imageUrl = urlForImage(value)?.url();
+        // Fixed image URL generation with fallback
+        const imageUrl = urlForImage(value)?.url() || "";
+        
+        // Skip rendering if no valid URL
+        if (!imageUrl) return null;
 
         return (
           <div className="my-4 flex justify-center">
