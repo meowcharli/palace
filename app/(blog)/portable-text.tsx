@@ -1,6 +1,6 @@
 "use client";
 
-// app/(blog)/portable-text.tsx - CLIENT COMPONENT
+// app/(blog)/portable-text.tsx - SIMPLIFIED APPROACH
 import {
   PortableText,
   type PortableTextComponents,
@@ -8,146 +8,161 @@ import {
 } from "next-sanity";
 import { urlForImage } from "@/sanity/lib/utils"; 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-// Helper function to parse Sanity image reference
-function parseAssetRef(ref) {
-  if (!ref || typeof ref !== 'string') return null;
+// Simplified direct Sanity image component
+function SimpleSanityImage({ value }) {
+  const [imageStatus, setImageStatus] = useState({
+    loaded: false,
+    error: false,
+    url: "",
+    debugInfo: {}
+  });
   
-  try {
-    // Format is typically: image-Tb9Ew8CXIwaY6R1kjMvI9uRR-2000x1000-jpg
-    const refParts = ref.split('-');
+  useEffect(() => {
+    if (!value?.asset?._ref) return;
     
-    // Need at least 3 parts: "image", [id], [format]
-    if (refParts.length < 3) return null;
-    
-    // Get the ID (could be multiple segments for complex IDs)
-    const idParts = refParts.slice(1, -1);
-    const id = idParts.join('-');
-    
-    // Get the format (last part, may include dimensions)
-    const lastPart = refParts[refParts.length - 1];
-    let format = lastPart;
-    
-    // If the last part has dimensions (like 2000x1000-jpg)
-    if (lastPart.includes('x') && lastPart.includes('-')) {
-      format = lastPart.split('-').pop();
+    // Parse the asset reference directly - simplified approach
+    try {
+      const ref = value.asset._ref;
+      console.log("Image reference:", ref);
+      
+      // Extract the ID part - the format is typically image-[id]-dimensions-format
+      // e.g., image-abc123-800x600-jpg
+      const match = ref.match(/^image-([a-zA-Z0-9]+)(?:-\d+x\d+)?-([a-z]+)$/);
+      
+      if (!match) {
+        console.error("Invalid image reference format:", ref);
+        setImageStatus({
+          loaded: false, 
+          error: true,
+          url: "",
+          debugInfo: { error: "Invalid reference format", ref }
+        });
+        return;
+      }
+      
+      const imageId = match[1];
+      const format = match[2];
+      const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+      const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
+      
+      // Construct a direct URL - this should work regardless of the Sanity client
+      const directUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${imageId}.${format}`;
+      
+      // Test if the URL is accessible
+      const img = new Image();
+      img.onload = () => {
+        console.log("Image loaded successfully:", directUrl);
+        setImageStatus({
+          loaded: true,
+          error: false,
+          url: directUrl,
+          debugInfo: { imageId, format, projectId, dataset, ref }
+        });
+      };
+      img.onerror = () => {
+        console.error("Failed to load image:", directUrl);
+        // Try alternative URL formats
+        const altUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${ref.replace('image-', '').split('-')[0]}.${format}`;
+        console.log("Trying alternate URL:", altUrl);
+        
+        setImageStatus({
+          loaded: false,
+          error: true,
+          url: directUrl, // We'll still try to display it
+          debugInfo: { imageId, format, projectId, dataset, ref, altUrl }
+        });
+      };
+      img.src = directUrl;
+      
+      // Set initial URL
+      setImageStatus(prev => ({
+        ...prev,
+        url: directUrl,
+        debugInfo: { imageId, format, projectId, dataset, ref }
+      }));
+      
+    } catch (error) {
+      console.error("Error parsing image reference:", error, value);
+      setImageStatus({
+        loaded: false,
+        error: true,
+        url: "",
+        debugInfo: { error: error.message, value }
+      });
     }
-    
-    return { id, format };
-  } catch (error) {
-    console.error("Error parsing asset reference:", error);
-    return null;
-  }
-}
-
-// Image component that tries multiple approaches
-function SanityImage({ value }) {
-  const [loadFailed, setLoadFailed] = useState(false);
-  const [approachIndex, setApproachIndex] = useState(0);
+  }, [value]);
   
-  if (!value?.asset?._ref) return null;
-  
-  // Get image dimensions from the reference if available
+  // Get dimensions from the reference
   let width = 800;
   let height = 500;
-  
-  try {
-    const ref = value.asset._ref;
-    const dimensionMatch = ref.match(/(\d+)x(\d+)/);
+  if (value?.asset?._ref) {
+    const dimensionMatch = value.asset._ref.match(/(\d+)x(\d+)/);
     if (dimensionMatch) {
       width = parseInt(dimensionMatch[1]);
       height = parseInt(dimensionMatch[2]);
     }
-  } catch (e) {
-    console.warn("Could not extract dimensions:", e);
   }
   
-  // Create placeholder/fallback with correct dimensions
-  const placeholder = (
-    <div 
-      className="bg-gray-200 rounded-lg" 
-      style={{ 
-        width: '100%', 
-        maxWidth: `${width}px`,
-        aspectRatio: `${width}/${height}`,
-        margin: '0 auto'
-      }}
-    >
-      <div className="flex items-center justify-center h-full text-gray-500">
-        Image loading...
-      </div>
-    </div>
-  );
-
-  // Parse the asset reference to get direct URL components
-  const assetInfo = parseAssetRef(value.asset._ref);
-  if (!assetInfo) return placeholder;
-  
-  const { id, format } = assetInfo;
-  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-  const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
-  
-  // Approach 1: Using urlForImage from Sanity
-  const sanityUrl = urlForImage(value)?.width(width).height(height).url();
-  
-  // Approach 2: Direct CDN URL construction
-  const directUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${id}.${format}`;
-  
-  // Approach 3: Extra-direct URL construction
-  let extraDirectUrl = null;
-  try {
-    // Very direct reference parsing
-    const ref = value.asset._ref;
-    const plainId = ref.replace(/^image-/, '').split('-')[0];
-    extraDirectUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${plainId}.${format}`;
-  } catch (e) {
-    console.warn("Could not create extra-direct URL:", e);
-  }
-  
-  // Select approach based on current state
-  const urls = [
-    sanityUrl,
-    directUrl,
-    extraDirectUrl
-  ].filter(Boolean);
-  
-  // If all approaches failed, show error
-  if (approachIndex >= urls.length) {
-    console.error("All image loading approaches failed for:", value);
+  // Return error state if needed
+  if (imageStatus.error && process.env.NODE_ENV !== 'production') {
     return (
-      <div className="my-4 max-w-2xl mx-auto p-4 bg-red-50 text-red-700 rounded-lg">
-        <p>Image failed to load</p>
-        <details className="mt-2 text-xs">
-          <summary>Debug info</summary>
-          <pre className="mt-2 p-2 bg-gray-100 rounded">
-            {JSON.stringify({
-              ref: value.asset._ref,
-              parsed: assetInfo,
-              urls: urls
-            }, null, 2)}
-          </pre>
-        </details>
+      <div className="my-4 max-w-2xl mx-auto">
+        <div className="bg-red-50 p-4 rounded-lg text-red-700">
+          <p className="font-bold">Image failed to load</p>
+          <p>Check browser console for details</p>
+          
+          <details className="mt-2 text-xs">
+            <summary>Debug info</summary>
+            <pre className="mt-2 p-2 bg-gray-100 rounded overflow-auto max-h-64">
+              {JSON.stringify(imageStatus.debugInfo, null, 2)}
+            </pre>
+          </details>
+          
+          {/* Still try to show the image */}
+          {imageStatus.url && (
+            <div className="mt-4 p-2 border border-gray-300 rounded-lg">
+              <p className="text-xs mb-2">Attempted image:</p>
+              <img 
+                src={imageStatus.url} 
+                alt="Failed to load - debug view" 
+                className="max-w-full h-auto" 
+              />
+            </div>
+          )}
+        </div>
       </div>
     );
   }
   
-  const currentUrl = urls[approachIndex];
+  // Show loading placeholder if URL not set yet
+  if (!imageStatus.url) {
+    return (
+      <div className="my-6 flex justify-center">
+        <div 
+          className="bg-gray-200 rounded-lg animate-pulse" 
+          style={{ 
+            width: '100%', 
+            maxWidth: `${width}px`,
+            aspectRatio: `${width}/${height}`,
+          }}
+        />
+      </div>
+    );
+  }
   
-  // Display an image with the correct proportions
+  // Return the image
   return (
     <div className="my-6 flex justify-center">
-      <div className="relative max-w-full" style={{ maxWidth: `${width}px` }}>
+      <div className="relative" style={{ width: '100%', maxWidth: `${width}px` }}>
+        {/* Standard img tag for maximum compatibility */}
         <img
-          src={currentUrl}
-          alt={value.alt || "Blog image"}
+          src={imageStatus.url}
+          alt={value?.alt || "Blog image"}
           width={width}
           height={height}
           className="rounded-lg shadow-md max-w-full h-auto"
-          onError={() => {
-            console.warn(`Image approach ${approachIndex + 1} failed, trying next approach`);
-            setApproachIndex(prev => prev + 1);
-          }}
           style={{ aspectRatio: `${width}/${height}` }}
         />
       </div>
@@ -162,6 +177,16 @@ export default function CustomPortableText({
   className?: string;
   value: PortableTextBlock[];
 }) {
+  // Log the entire portable text value for debugging
+  useEffect(() => {
+    console.log('PortableText content:', value);
+    // Look specifically for image blocks
+    const imageBlocks = value?.filter(block => block._type === 'image');
+    if (imageBlocks?.length) {
+      console.log('Image blocks found:', imageBlocks);
+    }
+  }, [value]);
+
   const components: PortableTextComponents = {
     block: {
       h5: ({ children }) => (
@@ -214,8 +239,8 @@ export default function CustomPortableText({
         return <a href={value.url} target="_blank" rel="noopener noreferrer">Watch Video</a>;
       },
       
-      // Use our enhanced image component
-      image: ({ value }) => <SanityImage value={value} />
+      // Use our simplified image component
+      image: ({ value }) => <SimpleSanityImage value={value} />
     },
   };
 
