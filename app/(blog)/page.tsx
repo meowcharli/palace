@@ -23,13 +23,15 @@ function ArticlePost({
   isHero = false, // Flag to indicate if this is the hero post
 }: {
   title: string;
-  slug: string;
-  excerpt?: string;
+  slug: string | null;
+  excerpt?: string | null;
   coverImage: any;
   videoEmbed?: any;
   author?: any;
   isHero?: boolean;
 }) {
+  if (!slug) return null; // Skip rendering posts without a slug
+  
   return (
     <article className={`mb-16 md:mb-24 ${isHero ? 'hero-post' : ''}`}>
       <Link 
@@ -67,8 +69,8 @@ function ArticlePost({
 function FooterArticleList({ posts }: { posts: Array<{
   _id: string;
   title: string; 
-  slug: string;
-  excerpt?: string;
+  slug: string | null;
+  excerpt?: string | null;
   author?: any;
 }> }) {
   if (!posts || posts.length === 0) return null;
@@ -80,9 +82,13 @@ function FooterArticleList({ posts }: { posts: Array<{
         {posts.map((post) => (
           <div key={post._id} className="border-b pb-4">
             <h3 className="text-lg font-medium mb-2">
-              <Link href={`/posts/${post.slug}`} className="hover:underline">
-                {post.title}
-              </Link>
+              {post.slug ? (
+                <Link href={`/posts/${post.slug}`} className="hover:underline">
+                  {post.title}
+                </Link>
+              ) : (
+                <span>{post.title}</span>
+              )}
             </h3>
             {post.excerpt && (
               <p className="text-sm text-gray-600 line-clamp-2">{post.excerpt}</p>
@@ -99,8 +105,8 @@ function PageContent({ posts, settings }: {
   posts: Array<{
     _id: string;
     title: string;
-    slug: string;
-    excerpt?: string;
+    slug: string | null;
+    excerpt?: string | null;
     coverImage: any;
     videoEmbed?: any;
     author?: any;
