@@ -1,3 +1,4 @@
+// app/(blog)/portable-text.tsx - FIXED VERSION
 import {
   PortableText,
   type PortableTextComponents,
@@ -66,31 +67,56 @@ export default function CustomPortableText({
       },
 
       image: ({ value }) => {
-        if (!value?.asset?._ref) return null;
+        // Check if we have a valid asset reference
+        if (!value?.asset?._ref) {
+          console.log("Missing image asset reference", value);
+          return null;
+        }
 
-        // Fixed image URL generation with fallback
-        const imageUrl = urlForImage(value)?.url() || "";
-        
-        // Skip rendering if no valid URL
-        if (!imageUrl) return null;
+        try {
+          // Generate the image URL with proper sizing
+          const imageBuilder = urlForImage(value);
+          
+          if (!imageBuilder) {
+            console.log("Could not build image URL", value);
+            return null;
+          }
+          
+          const imageUrl = imageBuilder.width(800).height(500).url();
+          
+          if (!imageUrl) {
+            console.log("Failed to generate image URL");
+            return null;
+          }
 
-        return (
-          <div className="my-4 flex justify-center">
-            <Image
-              src={imageUrl}
-              alt={value.alt || "Blog image"}
-              className="rounded-lg shadow-md"
-              width={800}
-              height={500}
-            />
-          </div>
-        );
+          return (
+            <div className="my-6 flex justify-center">
+              <div className="relative w-full max-w-2xl">
+                <Image
+                  src={imageUrl}
+                  alt={value.alt || "Blog image"}
+                  className="rounded-lg shadow-md"
+                  width={800}
+                  height={500}
+                  sizes="(max-width: 800px) 100vw, 800px"
+                />
+              </div>
+            </div>
+          );
+        } catch (error) {
+          console.error("Error rendering image:", error);
+          return (
+            <div className="my-4 p-4 bg-red-50 text-red-500 rounded-lg">
+              Failed to load image
+            </div>
+          );
+        }
       },
     },
   };
 
   return (
-    <div className={["prose", className].filter(Boolean).join(" ")}>
+    <div className={["prose lg:prose-xl", className].filter(Boolean).join(" ")}>
       <PortableText components={components} value={value} />
     </div>
   );
