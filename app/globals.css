@@ -231,3 +231,85 @@ body::after {
     font-size: 0.9rem;
   }
 }
+
+/* ========== Mobile Optimization ========== */
+@media (max-width: 767px) {
+  /* Header sizing adjustments */
+  header.site-header {
+    height: 72px !important; /* Make header slightly bigger on mobile */
+    padding: 0.5rem 0;
+  }
+  
+  /* Make the logo slightly bigger for better touch target */
+  header.site-header .logo-button {
+    width: 56px !important;
+    height: 56px !important;
+  }
+  
+  /* Hide all buttons except search and logo */
+  header.site-header .header-article-container,
+  header.site-header a[href="/support"] {
+    display: none !important;
+  }
+  
+  /* Ensure search button is visible */
+  header.site-header form button,
+  header.site-header .relative button {
+    display: flex !important;
+  }
+  
+  /* Homepage margin and padding adjustments */
+  .container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  /* Adjust article layouts for mobile */
+  article.hero-post .mb-16 {
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .main-posts article,
+  .hero-post {
+    margin-bottom: 2rem !important;
+  }
+  
+  /* Grid adjustments for mobile */
+  .md\:grid {
+    display: block !important;
+  }
+  
+  /* Add some padding to text content but not images */
+  article h3, 
+  article p, 
+  article .text-pretty, 
+  .footer-article-list,
+  .mb-8,
+  .mb-12 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  /* Reduce extra spacing */
+  .pb-4 {
+    padding-bottom: 0.5rem !important;
+  }
+  
+  .mb-8 {
+    margin-bottom: 1rem !important;
+  }
+  
+  .mb-16 {
+    margin-bottom: 2rem !important;
+  }
+  
+  /* Make footer article list more compact */
+  .footer-article-list h2 {
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .footer-article-list .gap-6 {
+    gap: 0.75rem !important;
+  }
+}
