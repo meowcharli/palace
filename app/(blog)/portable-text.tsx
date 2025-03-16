@@ -1,13 +1,12 @@
 "use client";
 
-// app/(blog)/portable-text.tsx - FIXED VERSION
+// app/(blog)/portable-text.tsx - DARK MODE VERSION
 import {
   PortableText,
   type PortableTextComponents,
   type PortableTextBlock,
 } from "next-sanity";
 import { imageBuilder, urlForImage } from "@/sanity/lib/utils"; 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 // Define types for the image value and status
@@ -70,7 +69,7 @@ function SanityImage({ value }: { value: SanityImageValue }) {
   if (loading) {
     return (
       <div className="my-6 flex justify-center">
-        <div className="bg-gray-200 rounded-lg animate-pulse w-full h-64"></div>
+        <div className="bg-gray-800 rounded-lg animate-pulse w-full h-64"></div>
       </div>
     );
   }
@@ -78,7 +77,7 @@ function SanityImage({ value }: { value: SanityImageValue }) {
   if (error || !imageUrl) {
     if (process.env.NODE_ENV !== 'production') {
       return (
-        <div className="my-4 p-4 border border-red-300 bg-red-50 rounded-lg text-red-700">
+        <div className="my-4 p-4 border border-red-800 bg-red-900 rounded-lg text-red-300">
           <p>Image failed to load: {JSON.stringify(value, null, 2)}</p>
         </div>
       );
@@ -107,43 +106,43 @@ export default function CustomPortableText({
   const components: PortableTextComponents = {
     block: {
       h1: ({children}) => (
-        <h1 className="mb-4 text-3xl font-bold">{children}</h1>
+        <h1 className="mb-4 text-3xl font-bold text-white">{children}</h1>
       ),
       h2: ({children}) => (
-        <h2 className="mb-4 text-2xl font-bold">{children}</h2>
+        <h2 className="mb-4 text-2xl font-bold text-white">{children}</h2>
       ),
       h3: ({children}) => (
-        <h3 className="mb-4 text-xl font-bold">{children}</h3>
+        <h3 className="mb-4 text-xl font-bold text-white">{children}</h3>
       ),
       h4: ({children}) => (
-        <h4 className="mb-4 text-lg font-bold">{children}</h4>
+        <h4 className="mb-4 text-lg font-bold text-white">{children}</h4>
       ),
       h5: ({ children }) => (
-        <h5 className="mb-2 text-sm font-semibold">{children}</h5>
+        <h5 className="mb-2 text-sm font-semibold text-white">{children}</h5>
       ),
       h6: ({ children }) => (
-        <h6 className="mb-1 text-xs font-semibold">{children}</h6>
+        <h6 className="mb-1 text-xs font-semibold text-white">{children}</h6>
       ),
       normal: ({children}) => (
-        <p className="mb-4 text-lg">{children}</p>
+        <p className="mb-4 text-lg text-gray-300">{children}</p>
       ),
       blockquote: ({children}) => (
-        <blockquote className="border-l-4 border-gray-200 pl-4 my-4 italic">{children}</blockquote>
+        <blockquote className="border-l-4 border-gray-700 pl-4 my-4 italic text-gray-400">{children}</blockquote>
       ),
     },
     marks: {
       link: ({ children, value }) => (
         <a 
           href={value?.href} 
-          className="text-blue-600 hover:underline"
+          className="text-blue-400 hover:underline"
           rel="noreferrer noopener"
           target={value?.href?.startsWith('http') ? '_blank' : undefined}
         >
           {children}
         </a>
       ),
-      strong: ({children}) => <strong className="font-bold">{children}</strong>,
-      em: ({children}) => <em className="italic">{children}</em>,
+      strong: ({children}) => <strong className="font-bold text-white">{children}</strong>,
+      em: ({children}) => <em className="italic text-gray-300">{children}</em>,
     },
     types: {
       video: ({ value }) => {
@@ -163,7 +162,7 @@ export default function CustomPortableText({
                   allowFullScreen
                 />
               </div>
-              {value.caption && <p className="text-center text-sm mt-2 text-gray-600">{value.caption}</p>}
+              {value.caption && <p className="text-center text-sm mt-2 text-gray-400">{value.caption}</p>}
             </div>
           );
         }
@@ -179,12 +178,12 @@ export default function CustomPortableText({
                   allowFullScreen
                 />
               </div>
-              {value.caption && <p className="text-center text-sm mt-2 text-gray-600">{value.caption}</p>}
+              {value.caption && <p className="text-center text-sm mt-2 text-gray-400">{value.caption}</p>}
             </div>
           );
         }
 
-        return <a href={value.url} target="_blank" rel="noopener noreferrer">Watch Video</a>;
+        return <a href={value.url} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Watch Video</a>;
       },
       
       // Use our simplified image component
@@ -193,7 +192,7 @@ export default function CustomPortableText({
   };
 
   return (
-    <div className={["prose lg:prose-xl max-w-none", className].filter(Boolean).join(" ")}>
+    <div className={["prose lg:prose-xl max-w-none text-white", className].filter(Boolean).join(" ")}>
       <PortableText components={components} value={value} />
     </div>
   );
