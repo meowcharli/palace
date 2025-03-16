@@ -28,9 +28,9 @@ export default function Avatar({ name, picture }: Props) {
           />
         </div>
       ) : (
-        <div className="mr-1">By </div>
+        <div className="mr-1 text-gray-300">By </div>
       )}
-      <div className="text-pretty text-xl font-bold">{name}</div>
+      <div className="text-pretty text-xl font-bold text-white">{name}</div>
     </div>
   );
 }
