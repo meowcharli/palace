@@ -76,8 +76,8 @@ export default async function RootLayout({
   const recentPosts = await getRecentPosts();
 
   return (
-    <html lang="en" className={`${inter.variable} bg-white text-black`}>
-      <body className="flex flex-col min-h-screen">
+    <html lang="en" className={`${inter.variable} bg-black text-white`}>
+      <body className="flex flex-col min-h-screen bg-black">
         {isDraftMode && <AlertBanner />}
         
         {/* Header with recent posts */}
