@@ -7,9 +7,15 @@ interface CoverImageProps {
   image: any;
   videoEmbed?: VimeoEmbedProps | string;
   priority?: boolean;
+  onVideoClick?: () => void; // Optional click handler
 }
 
-export default function CoverImage({ image, videoEmbed, priority = false }: CoverImageProps) {
+export default function CoverImage({ 
+  image, 
+  videoEmbed, 
+  priority = false, 
+  onVideoClick 
+}: CoverImageProps) {
   // If we have a valid video embed, render it instead of the image
   if (videoEmbed) {
     // Handle string format for backward compatibility
@@ -19,7 +25,11 @@ export default function CoverImage({ image, videoEmbed, priority = false }: Cove
       
     return (
       <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
-        <VimeoEmbed {...videoProps} />
+        <VimeoEmbed 
+          {...videoProps} 
+          showThumbnail={true} 
+          isClickable={true} 
+        />
       </div>
     );
   }
@@ -44,7 +54,7 @@ export default function CoverImage({ image, videoEmbed, priority = false }: Cove
   // Fallback when no image or video is available
   return (
     <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
-      <div className="bg-slate-50" style={{ paddingTop: "50%" }} />
+      <div className="bg-gray-900" style={{ paddingTop: "50%" }} />
     </div>
   );
 }
