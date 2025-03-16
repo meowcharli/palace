@@ -1,4 +1,4 @@
-// components/BlogHeader.tsx - Updated for mobile optimization
+// components/BlogHeader.tsx - Updated for dark mode
 import Link from 'next/link';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
@@ -13,19 +13,19 @@ interface BlogHeaderProps {
 
 export default function BlogHeader({ recentPosts }: BlogHeaderProps) {
   return (
-    <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm">
+    <header className="site-header w-full bg-black border-b border-gray-800 shadow-md">
       <div className="container-wide mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-3 md:space-x-6">
           {/* Logo with button background - always visible */}
           <Link href="/" className="flex items-center relative">
-            <div className="logo-button rounded-2xl bg-white hover:bg-[#FFDCDC] transition-colors duration-200 absolute" aria-hidden="true"></div>
-            <Logo className="mobile-logo" />
+            <div className="logo-button rounded-2xl bg-black hover:bg-gray-900 transition-colors duration-200 absolute" aria-hidden="true"></div>
+            <Logo className="w-10 h-10" />
           </Link>
 
-          {/* Recent Articles - hidden on mobile */}
-          <div className="header-article-container">
+          {/* Recent Articles */}
+          <div className="flex space-x-3">
             {recentPosts?.length > 0 && (
-              <div className="header-article-primary">
+              <div>
                 <Link 
                   key={recentPosts[0]._id} 
                   href={`/posts/${recentPosts[0].slug || ''}`}
@@ -37,7 +37,7 @@ export default function BlogHeader({ recentPosts }: BlogHeaderProps) {
             )}
             
             {recentPosts?.length > 1 && (
-              <div className="header-article-secondary">
+              <div>
                 <Link 
                   key={recentPosts[1]._id} 
                   href={`/posts/${recentPosts[1].slug || ''}`}
@@ -50,14 +50,14 @@ export default function BlogHeader({ recentPosts }: BlogHeaderProps) {
           </div>
         </div>
         
-        <div className="flex items-center gap-2 md:gap-3">
-          {/* Search bar - always visible */}
-          <SearchBar className="mobile-visible" />
+        <div className="flex items-center gap-3">
+          {/* Search bar */}
+          <SearchBar />
           
-          {/* Support button - hidden on mobile */}
+          {/* Support button */}
           <Link 
             href="/support" 
-            className="inline-flex items-center bg-white text-black px-3 py-1 md:px-4 md:py-2 rounded-full text-[0.85rem] md:text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
+            className="inline-flex items-center bg-gray-900 text-white px-4 py-2 rounded-full text-sm border border-gray-700 transition-colors duration-200 hover:bg-gray-800"
           >
             Support
           </Link>
