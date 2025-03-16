@@ -26,11 +26,11 @@ function ImageStack({ posts }: {
     <div className="image-stack">
       {posts.map((post) => (
         <div key={post._id} className="image-stack-item">
-          <Link href={`/posts/${post.slug || ''}`}>
+          <Link href={`/posts/${post.slug || ''}`} className="block">
             <CoverImage 
               image={post.coverImage} 
               videoEmbed={post.videoEmbed || undefined} 
-              priority={posts.indexOf(post) < 2} 
+              priority={posts.indexOf(post) < 2}
             />
           </Link>
         </div>
