@@ -9,6 +9,7 @@ export interface VimeoEmbedProps {
   loop?: boolean;
   caption?: string;
   showThumbnail?: boolean;
+  isClickable?: boolean; // Added this new property
 }
 
 // Post type definitions 
