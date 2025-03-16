@@ -74,7 +74,7 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
   // Create overlay for dimming the page when search is expanded
   const overlay = isOpen ? (
     <div 
-      className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
+      className="fixed inset-0 bg-black bg-opacity-70 z-40 transition-opacity duration-300"
       onClick={() => setIsOpen(false)}
       aria-hidden="true"
     />
@@ -92,7 +92,7 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
             <button
               type="button"
               onClick={toggleSearch}
-              className="inline-flex items-center bg-white text-black px-3 py-1 md:px-4 md:py-2 rounded-full text-[0.85rem] md:text-[0.95rem] border border-gray-200 transition-colors duration-200 hover:bg-[#FFEFF4] hover:text-[#89131F]"
+              className="inline-flex items-center bg-gray-900 text-white px-4 py-2 rounded-full text-sm border border-gray-700 transition-colors duration-200 hover:bg-gray-800"
               aria-label="Search"
             >
               <svg 
@@ -118,8 +118,8 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="This is still in beta"
-                className="w-full bg-white text-black border border-gray-200 rounded-full py-1 md:py-2 focus:outline-none focus:ring-2 focus:ring-[#89131F]"
+                placeholder="Search..."
+                className="w-full bg-gray-900 text-white border border-gray-700 rounded-full py-2 focus:outline-none focus:ring-2 focus:ring-gray-500"
                 style={{
                   paddingLeft: '20px',
                   paddingRight: '60px'
@@ -128,7 +128,7 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
               <div className="absolute right-0 top-0 h-full flex items-center pr-2">
                 <button 
                   type="submit" 
-                  className="h-full px-2 flex items-center justify-center text-gray-500 hover:text-[#89131F]"
+                  className="h-full px-2 flex items-center justify-center text-gray-400 hover:text-white"
                   aria-label="Submit search"
                 >
                   <svg 
@@ -149,7 +149,7 @@ export default function SearchBar({ className = '' }: SearchBarProps) {
                 <button 
                   type="button" 
                   onClick={toggleSearch}
-                  className="h-full px-2 flex items-center justify-center text-gray-500 hover:text-[#89131F]"
+                  className="h-full px-2 flex items-center justify-center text-gray-400 hover:text-white"
                   aria-label="Close search"
                 >
                   <svg 
