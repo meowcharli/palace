@@ -7,14 +7,12 @@ interface CoverImageProps {
   image: any;
   videoEmbed?: VimeoEmbedProps | string;
   priority?: boolean;
-  onVideoClick?: () => void; // Optional click handler
 }
 
 export default function CoverImage({ 
   image, 
   videoEmbed, 
-  priority = false, 
-  onVideoClick 
+  priority = false
 }: CoverImageProps) {
   // If we have a valid video embed, render it instead of the image
   if (videoEmbed) {
@@ -24,11 +22,14 @@ export default function CoverImage({
       : videoEmbed;
       
     return (
-      <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
-        <VimeoEmbed 
-          {...videoProps} 
-          showThumbnail={true} 
-          isClickable={true} 
+      <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0 relative">
+        {/* The actual video embed */}
+        <VimeoEmbed {...videoProps} showThumbnail={true} />
+        
+        {/* Transparent overlay to make the entire area clickable */}
+        <div 
+          className="absolute inset-0 z-10 cursor-pointer" 
+          aria-hidden="true"
         />
       </div>
     );
