@@ -7,6 +7,7 @@ import type { VimeoEmbedProps } from '@/utils/types';
 
 interface ComponentProps extends VimeoEmbedProps {
   className?: string;
+  isClickable?: boolean; // New prop to make the whole component clickable
 }
 
 export default function VimeoEmbed({ 
@@ -18,16 +19,17 @@ export default function VimeoEmbed({
   autoplay = false,
   loop = false,
   className = '',
+  isClickable = false, // Default is false for backward compatibility
 }: ComponentProps) {
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
-  const [playing, setPlaying] = useState(!showThumbnail);
+  const [playing, setPlaying] = useState(!showThumbnail || autoplay);
   
   // Extract Vimeo ID from URL or embed code
   const vimeoId = getVimeoId(embedCode || url || '');
   
   // Fetch thumbnail if needed
   useEffect(() => {
-    if (showThumbnail && vimeoId) {
+    if ((showThumbnail || isClickable) && vimeoId) {
       fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}`)
         .then(res => res.json())
         .then(data => {
@@ -37,7 +39,14 @@ export default function VimeoEmbed({
           console.error('Error fetching Vimeo thumbnail:', err);
         });
     }
-  }, [vimeoId, showThumbnail]);
+  }, [vimeoId, showThumbnail, isClickable]);
+
+  // Handle click
+  const handleClick = () => {
+    if (isClickable) {
+      setPlaying(true);
+    }
+  };
 
   // If no valid Vimeo ID found, return null
   if (!vimeoId) {
@@ -47,7 +56,10 @@ export default function VimeoEmbed({
   // Handle custom embed code if provided
   if (embedCode && embedCode.includes('<iframe')) {
     return (
-      <div className={`video-embed w-full ${className}`}>
+      <div 
+        className={`video-embed w-full ${className} ${isClickable ? 'cursor-pointer' : ''}`}
+        onClick={isClickable ? handleClick : undefined}
+      >
         <div dangerouslySetInnerHTML={{ __html: embedCode }} />
         {caption && <p className="video-caption mt-2">{caption}</p>}
       </div>
@@ -55,7 +67,7 @@ export default function VimeoEmbed({
   }
 
   // Show thumbnail view if requested and not playing yet
-  if (showThumbnail && !playing) {
+  if ((showThumbnail || isClickable) && !playing) {
     return (
       <div className={`video-thumbnail-container ${className}`}>
         {thumbnailUrl ? (
@@ -68,7 +80,7 @@ export default function VimeoEmbed({
               alt={caption || "Video thumbnail"} 
               width={640} 
               height={360} 
-              className="rounded-lg"
+              className="rounded-lg w-full"
             />
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="w-16 h-16 bg-black bg-opacity-60 rounded-full flex items-center justify-center">
@@ -83,8 +95,8 @@ export default function VimeoEmbed({
             </div>
           </div>
         ) : (
-          <div className="bg-gray-200 animate-pulse rounded-lg aspect-video flex items-center justify-center">
-            <span>Loading thumbnail...</span>
+          <div className="bg-gray-800 animate-pulse rounded-lg aspect-video flex items-center justify-center">
+            <span className="text-gray-400">Loading thumbnail...</span>
           </div>
         )}
         {caption && <p className="video-caption mt-2">{caption}</p>}
@@ -105,7 +117,10 @@ export default function VimeoEmbed({
 
   // Embedded player mode
   return (
-    <div className={`video-container ${className}`}>
+    <div 
+      className={`video-container ${className} ${isClickable ? 'cursor-pointer' : ''}`}
+      onClick={isClickable ? handleClick : undefined}
+    >
       <div className="responsive-iframe-container">
         <iframe 
           src={embedUrl}
