@@ -8,8 +8,7 @@
 import Link from "next/link";
 
 export default function Onboarding() {
-  // Remove useSyncExternalStore which likely uses useSearchParams internally
-  // Instead use a simple constant for the target
+  // Use a simple constant for the target
   const target = "_blank"; // Default to opening in a new tab
 
   return (
@@ -40,8 +39,8 @@ export default function Onboarding() {
         />
       </svg>
       <div>
-        <h3 className="text-sm font-semibold text-gray-900">No posts</h3>
-        <p className="mt-1 text-sm text-gray-500">
+        <h3 className="text-sm font-semibold text-gray-300">No posts</h3>
+        <p className="mt-1 text-sm text-gray-400">
           Get started by creating a new post.
         </p>
       </div>
