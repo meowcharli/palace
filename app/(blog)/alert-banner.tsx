@@ -19,7 +19,7 @@ export default function AlertBanner() {
     <div
       className={`${
         pending ? "animate-pulse" : ""
-      } fixed top-0 left-0 z-50 w-full border-b bg-white/95 text-black backdrop-blur`}
+      } fixed top-0 left-0 z-50 w-full border-b bg-gray-900/95 text-white backdrop-blur`}
     >
       <div className="py-2 text-center text-sm">
         {pending ? (
@@ -36,7 +36,7 @@ export default function AlertBanner() {
                   }),
                 )
               }
-              className="hover:text-cyan underline transition-colors duration-200"
+              className="hover:text-blue-400 underline transition-colors duration-200"
             >
               Back to published
             </button>
