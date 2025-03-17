@@ -18,8 +18,9 @@ export default function Header({ recentPosts }: HeaderProps) {
         <div className="flex items-center space-x-3 md:space-x-6">
           <Link href="/" className="flex items-center relative">
             <div className="logo-button rounded-2xl bg-white hover:bg-[#FFDCDC] transition-colors duration-200 absolute" aria-hidden="true"></div>
-            <div className="w-8 h-8 md:w-10 md:h-10 mr-0 md:mr-0 flex-shrink-0 relative z-10">
-              <svg viewBox="0 0 159.47 159.48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div className="w-8 h-8 md:w-10 md:h-10 mr-0 md:mr-0 flex-shrink-0 relative z-10 logo-wrapper">
+              <svg viewBox="0 0 159.47 159.48" fill="none" xmlns="http://www.w3.org/2000/svg" 
+                className="w-full h-full inverted-svg mix-blend-difference">
                 <g>
                   <rect fill="#330613" x="41.37" y="41.37" width="76.73" height="76.73"/>
                   <g>
