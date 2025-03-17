@@ -74,7 +74,7 @@ header.site-header {
 .logo-black {
   fill: black;
   stroke: black;
-  stroke-width: 6;
+  stroke-width: 15;
   transition: stroke-width 0.3s ease;
 }
 
@@ -88,11 +88,19 @@ header.site-header {
 
 /* Hover effect for logos */
 .logo-hover-container:hover .logo-black {
-  stroke-width: 18;
+  stroke-width: 24;
 }
 
 .logo-hover-container:hover .logo-white {
   stroke-width: 12;
+}
+
+/* Add additional styling to prevent cutoff */
+.logo-hover-container {
+  display: inline-block;
+  position: relative;
+  overflow: visible;
+  margin: -6px;
 }
 
 /* Button transitions */
