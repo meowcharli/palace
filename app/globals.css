@@ -63,17 +63,14 @@ header.site-header {
   background-color: #fff !important;
 }
 
-.mix-blend-difference {
-  mix-blend-mode: difference !important;
+/* Logo path hover effect */
+.logo-path {
+  transition: stroke-width 500ms ease-in-out !important;
 }
 
+/* Button transitions */
 .transition-colors.\!duration-300 {
   transition-duration: 300ms !important;
-}
-
-/* Force invert for logo */
-.mix-blend-difference.\!invert {
-  filter: invert(1) !important;
 }
 
 /* Animation for search box appearance */
