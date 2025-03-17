@@ -1,6 +1,77 @@
-/* Add these styles to your app/globals.css file */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* True inverted logo effect using mix-blend-mode */
+/* ========== Base Styles ========== */
+html, body {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  font-size: 18px;
+}
+
+main {
+  padding-top: 1rem;
+}
+
+/* Hide unwanted headers from external components */
+header:not(.site-header), .banner, .navbar {
+  display: none !important;
+}
+
+/* Remove header styles that are no longer needed */
+header.site-header {
+  display: none !important;
+}
+
+/* ========== Container Styles ========== */
+.container {
+  max-width: 1300px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.container-wide {
+  width: 100%;
+  max-width: 1800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* ========== Floating Button Styles ========== */
+.floating-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #333333;
+}
+
+.floating-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-color: #555555;
+}
+
+/* ========== Overrides for buttons and logo ========== */
+.group:hover .group-hover\:\!text-black {
+  color: #000 !important;
+}
+
+.hover\:bg-white:hover {
+  background-color: #fff !important;
+}
+
+/* ========== Negative Space Logo Styles ========== */
+.logo-wrapper {
+  position: relative;
+  display: inline-block;
+  mix-blend-mode: difference;
+  z-index: 10;
+}
+
+/* NEW - True inverted logo effect */
 .inverted-logo {
   position: relative;
   mix-blend-mode: difference;
@@ -17,9 +88,217 @@
   stroke-width: 8px;
 }
 
-/* Ensure the negative effect works in all browsers */
+/* Fallback for browsers that don't support mix-blend-mode */
 @supports not (mix-blend-mode: difference) {
   .inverted-logo svg {
     filter: invert(1);
   }
+}
+
+/* Alternative filter-only approach */
+.filter-inverted {
+  isolation: isolate;
+  position: relative;
+  z-index: 10;
+}
+
+.filter-inverted svg {
+  filter: invert(1);
+  transition: all 300ms ease-in-out;
+}
+
+.filter-inverted svg:hover {
+  transform: translateY(-1px);
+  filter: invert(1) drop-shadow(0 0 3px rgba(255, 255, 255, 0.7));
+}
+
+.logo-path {
+  transition: stroke-width 500ms ease-in-out;
+}
+
+/* Button transitions */
+.transition-colors.\!duration-300 {
+  transition-duration: 300ms !important;
+}
+
+/* Animation for search box appearance */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+input[type="text"] {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* ========== Typography ========== */
+h1 {
+  font-size: 3.25rem;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 2.75rem;
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: 2.25rem;
+  line-height: 1.2;
+}
+
+article p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.prose {
+  max-width: none;
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #ffffff;
+}
+
+/* Adjust prose text colors for dark mode */
+.prose h1, .prose h2, .prose h3,
+.prose h4, .prose h5, .prose h6,
+.prose p, .prose li, .prose blockquote {
+  color: #ffffff;
+}
+
+.prose a {
+  color: #90caf9;
+}
+
+.prose strong {
+  color: #ffffff;
+}
+
+/* ========== Components ========== */
+/* Article Components */
+article {
+  margin-bottom: 4rem;
+}
+
+/* Footer */
+footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  background-color: #111111 !important;
+}
+
+footer * {
+  color: #999999 !important;
+}
+
+footer .bg-[#DDDDDD] {
+  background-color: #111111 !important;
+}
+
+/* Video and Iframe Containers */
+.responsive-iframe-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.responsive-iframe-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+}
+
+.video-caption {
+  text-align: center;
+  font-style: italic;
+  margin-top: 0.75rem;
+  color: var(--text-muted, #aaaaaa);
+  font-size: 1.05rem;
+}
+
+.video-thumbnail-container {
+  margin-bottom: 2rem;
+}
+
+/* ========== Homepage Image Stack ========== */
+.image-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Reduced from 2rem to bring posts closer together */
+  margin-bottom: 4rem;
+}
+
+.image-stack-item {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  margin-bottom: 0; /* Remove any bottom margin */
+}
+
+.image-stack-item:hover {
+  transform: translateY(-5px);
+}
+
+/* Make video embeds clickable with the same hover effect as images */
+.responsive-iframe-container {
+  cursor: pointer;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Add following orange circle under cursor */
+.cursor-follower {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #FF6B00;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  opacity: 0.7;
+  box-shadow: 0 0 10px rgba(255, 107, 0, 0.5);
+}
+
+.image-stack-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0.5rem;
+}
+
+/* Dark mode search bar */
+input[type="text"] {
+  background-color: #111111 !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+/* Dark mode buttons */
+button, 
+.inline-flex {
+  background-color: #111111 !important;
+  color: #ffffff !important;
+  border-color: #333333 !important;
+}
+
+button:hover,
+.inline-flex:hover {
+  background-color: #222222 !important;
+  color: #ffffff !important;
+}
+
+/* Background decoration (remove or adjust for dark mode) */
+body::after {
+  display: none; /* Remove decoration */
 }
