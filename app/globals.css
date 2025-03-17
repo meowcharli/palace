@@ -64,42 +64,6 @@ header.site-header {
 }
 
 /* ========== Logo Styles ========== */
-/* Logo hover container */
-.logo-hover-container {
-  display: inline-block;
-  position: relative;
-}
-
-/* Black logo styling */
-.logo-black {
-  fill: black;
-  stroke: black;
-  stroke-width: 15;
-  transition: stroke-width 0.3s ease;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-/* White logo styling */
-.logo-white {
-  fill: white;
-  stroke: white;
-  stroke-width: 0.5;
-  transition: stroke-width 0.3s ease;
-  position: relative;
-  z-index: 10;
-}
-
-/* Hover effect for logos */
-.logo-hover-container:hover .logo-black {
-  stroke-width: 24;
-}
-
-.logo-hover-container:hover .logo-white {
-  stroke-width: 12;
-}
-
 /* Logo hover container and wrapper to prevent cutoff */
 .logo-hover-container {
   display: inline-block;
@@ -112,6 +76,46 @@ header.site-header {
   padding: 28px;
   margin: -28px;
   display: inline-block;
+}
+
+/* Logo containers for proper stacking */
+.logo-black-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.logo-white-container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Black logo styling */
+.logo-black {
+  fill: black;
+  stroke: black;
+  stroke-width: 15;
+  transition: stroke-width 0.3s ease;
+}
+
+/* White logo styling */
+.logo-white {
+  fill: white;
+  stroke: white;
+  stroke-width: 0.5;
+  transition: stroke-width 0.3s ease;
+}
+
+/* Hover effect for logos */
+.logo-hover-container:hover .logo-black {
+  stroke-width: 24;
+}
+
+.logo-hover-container:hover .logo-white {
+  stroke-width: 12;
 }
 
 /* Button transitions */
