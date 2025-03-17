@@ -64,23 +64,13 @@ header.site-header {
 }
 
 /* ========== Logo Styles ========== */
-/* Logo hover container and wrapper to prevent cutoff */
+/* Logo hover container */
 .logo-hover-container {
   display: inline-block;
   position: relative;
-  overflow: visible;
-}
-
-.logo-wrapper {
-  position: relative;
-  padding: 28px;
-  margin: -28px;
-  display: inline-block;
-}
-
-/* Logo containers for proper stacking */
-.logo-black-container, .logo-white-container {
-  display: none; /* Remove these styles as we're not using these containers anymore */
+  margin: -24px;
+  padding: 24px;
+  overflow: visible !important;
 }
 
 /* Black logo styling */
