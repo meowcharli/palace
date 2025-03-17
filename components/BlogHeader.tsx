@@ -1,4 +1,4 @@
-// components/BlogHeader.tsx - Updated for dark mode
+// components/BlogHeader.tsx - Updated with inverted logo effect
 import Link from 'next/link';
 import Logo from './Logo';
 import SearchBar from './SearchBar';
@@ -16,10 +16,10 @@ export default function BlogHeader({ recentPosts }: BlogHeaderProps) {
     <header className="site-header w-full bg-black border-b border-gray-800 shadow-md">
       <div className="container-wide mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-3 md:space-x-6">
-          {/* Logo with button background - always visible */}
+          {/* Logo with button background - with mix-blend-mode effect */}
           <Link href="/" className="flex items-center relative">
             <div className="logo-button rounded-2xl bg-black hover:bg-gray-900 transition-colors duration-200 absolute" aria-hidden="true"></div>
-            <Logo className="w-10 h-10" />
+            <Logo className="w-10 h-10 inverted-svg mix-blend-difference" />
           </Link>
 
           {/* Recent Articles */}
