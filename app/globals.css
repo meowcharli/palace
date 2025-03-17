@@ -10,7 +10,7 @@ html, body {
 }
 
 main {
-  padding-top: 1rem;
+  padding-top: 4rem;
 }
 
 /* Hide unwanted headers from external components */
@@ -54,8 +54,8 @@ header.site-header {
   border-color: #555555;
 }
 
-/* Logo SVG hover effect - adds white stroke with proper transition */
-.logo-path {
+/* SVG hover effect - adds white stroke with proper transition */
+.logo-path, svg path {
   transition: stroke-width 500ms ease-in-out !important;
 }
 
