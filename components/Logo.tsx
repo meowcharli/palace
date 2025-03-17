@@ -1,13 +1,13 @@
-// components/Logo.tsx - Enhanced for responsive sizing
+// components/Logo.tsx - Enhanced with mix-blend-mode support
 
 export default function Logo({ className = '', width = 40, height = 40 }) {
   // On mobile, we'll use slightly larger dimensions via CSS
   return (
-    <div className={`relative ${className}`} style={{ width, height }}>
+    <div className={`logo-wrapper ${className}`} style={{ width, height }}>
       <svg 
         viewBox="0 0 159.47 159.48" 
         xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full"
+        className="w-full h-full inverted-svg mix-blend-difference"
       >
         <g>
           <rect fill="#330613" x="41.37" y="41.37" width="76.73" height="76.73"/>
