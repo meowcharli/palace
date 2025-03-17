@@ -63,12 +63,43 @@ header.site-header {
   background-color: #fff !important;
 }
 
-/* ========== Negative Space Logo Styles ========== */
+/* ========== Negative Filter Logo Styles ========== */
 .logo-wrapper {
   position: relative;
   display: inline-block;
   mix-blend-mode: difference;
   z-index: 10;
+}
+
+.negative-filter {
+  position: relative;
+  isolation: isolate;
+  mix-blend-mode: difference;
+  z-index: 10;
+}
+
+.negative-filter svg {
+  fill: white; /* This will be inverted by the mix-blend-mode */
+}
+
+/* Optional: Add a subtle backdrop for better contrast on complex backgrounds */
+.negative-filter::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  z-index: -1;
+  background-color: transparent; /* Change to rgba(0,0,0,0.1) if needed for better visibility */
+  pointer-events: none;
+}
+
+/* Alternative approach using CSS filters if mix-blend-mode is problematic */
+.negative-filter-alt svg {
+  filter: invert(1) hue-rotate(180deg);
+  /* This combination inverts colors similar to a photographic negative */
 }
 
 .logo-path {
@@ -260,4 +291,12 @@ button:hover,
 /* Background decoration (remove or adjust for dark mode) */
 body::after {
   display: none; /* Remove decoration */
+}
+
+/* For browsers that might struggle with mix-blend-mode, add a fallback */
+@supports not (mix-blend-mode: difference) {
+  .negative-filter svg {
+    fill: white;
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.3));
+  }
 }
