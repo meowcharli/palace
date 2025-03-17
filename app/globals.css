@@ -64,12 +64,18 @@ header.site-header {
 }
 
 /* ========== Logo Styles ========== */
-/* Logo container with padding to prevent cutoff */
+/* Invisible button to provide ample space */
+.invisible-button {
+  display: inline-block;
+  padding: 40px;
+  margin: -40px;
+  overflow: visible;
+}
+
+/* Logo container with extra space */
 .logo-container {
   position: relative;
   display: inline-block;
-  padding: 24px;
-  margin: -24px;
   overflow: visible;
 }
 
