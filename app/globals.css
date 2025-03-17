@@ -54,6 +54,15 @@ header.site-header {
   border-color: #555555;
 }
 
+/* Logo SVG hover effect - adds white stroke */
+.logo-svg {
+  transition: filter 0.2s ease-in-out;
+}
+
+.floating-btn:hover .logo-svg {
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.7));
+}
+
 /* Animation for search box appearance */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
