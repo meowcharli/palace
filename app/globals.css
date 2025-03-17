@@ -57,13 +57,14 @@ header.site-header {
 /* Logo SVG hover effect - adds white stroke */
 .logo-svg {
   transition: all 0.2s ease-in-out;
-  stroke: transparent;
-  stroke-width: 0;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.3));
 }
 
-.floating-btn:hover .logo-svg {
+.logo-svg:hover {
   stroke: #fff;
-  stroke-width: 0.5px;
+  stroke-width: 2px;
+  transform: translateY(-2px);
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.5));
 }
 
 /* Animation for search box appearance */
