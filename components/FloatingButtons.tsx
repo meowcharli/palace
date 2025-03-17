@@ -72,7 +72,7 @@ export default function FloatingButtons() {
             onMouseOver={(e) => {
               const svgPath = e.currentTarget.querySelector('path');
               if (svgPath) {
-                svgPath.setAttribute('stroke-width', '2');
+                svgPath.setAttribute('stroke-width', '12');
               }
             }}
             onMouseOut={(e) => {
