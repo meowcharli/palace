@@ -63,9 +63,31 @@ header.site-header {
   background-color: #fff !important;
 }
 
-/* Logo path hover effect */
+/* ========== Negative Space Logo Styles ========== */
+/* Logo container for negative space effect */
+.logo-container {
+  position: relative;
+  display: inline-block;
+  background-color: transparent;
+  mix-blend-mode: exclusion;
+}
+
+/* Base styles for the SVG logo */
+.logo-svg {
+  filter: invert(1);
+}
+
+/* Logo path with negative space effect */
 .logo-path {
+  fill: white;
   transition: stroke-width 500ms ease-in-out !important;
+  stroke: white;
+  stroke-width: 0;
+}
+
+/* Hover state for logo path */
+.logo-path-hovered {
+  stroke-width: 12px;
 }
 
 /* Button transitions */
@@ -73,15 +95,10 @@ header.site-header {
   transition-duration: 300ms !important;
 }
 
-/* Mix blend mode for logo */
-.mix-blend-difference {
-  mix-blend-mode: difference !important;
-}
-
 /* Animation for search box appearance */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(-10); }
 }
 
 input[type="text"] {
