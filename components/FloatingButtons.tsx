@@ -79,7 +79,7 @@ export default function FloatingButtons() {
                 fill="#fff" 
                 stroke="#fff" 
                 strokeWidth={isLogoHovered ? 12 : 0}
-                className="transition-all duration-500 ease-in-out" 
+                className="logo-path transition-all duration-500 ease-in-out" 
               />
             </svg>
           </Link>
