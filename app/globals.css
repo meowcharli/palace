@@ -63,42 +63,20 @@ header.site-header {
   background-color: #fff !important;
 }
 
-/* ========== Inverted Logo Styles ========== */
-/* This uses the same technique as your cursor-invert example */
-#invert-logo {
-  position: relative;
-  width: 115px;
-  height: 28px;
-  background-color: white; /* White background ensures proper inversion */
-  mix-blend-mode: difference; /* This creates the invert effect */
-  pointer-events: none;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* ========== Logo Styles ========== */
+/* Simple inversion approach without white background */
+.inverted-svg {
+  filter: invert(1);
+  mix-blend-mode: difference;
 }
 
-/* Ensure clicks pass through to the link */
-#invert-logo + a {
-  pointer-events: auto;
-}
-
-/* Add glow on hover */
-#invert-logo.hovered {
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-/* For browsers that don't support mix-blend-mode */
+/* Ensure the logo is visible in all browsers */
 @supports not (mix-blend-mode: difference) {
-  #invert-logo {
-    background-color: transparent;
-  }
-  #invert-logo svg path {
-    fill: white;
+  .inverted-svg {
+    filter: invert(1);
   }
 }
 
-/* Legacy logo wrapper styling */
 .logo-wrapper {
   position: relative;
   display: inline-block;
