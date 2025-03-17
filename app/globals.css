@@ -70,6 +70,8 @@ header.site-header {
   padding: 40px;
   margin: -40px;
   overflow: visible;
+  position: relative;
+  z-index: 10;
 }
 
 /* Logo container with extra space */
@@ -77,12 +79,16 @@ header.site-header {
   position: relative;
   display: inline-block;
   overflow: visible;
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden; /* Prevent flickering in some browsers */
 }
 
 /* Logo positioning */
 .logo {
   position: relative;
   display: block;
+  overflow: visible;
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
 /* Path styling for the black logo (behind) */
@@ -91,6 +97,7 @@ header.site-header {
   stroke: black;
   stroke-width: 15;
   transition: stroke-width 0.3s ease;
+  paint-order: stroke fill; /* Ensures stroke is behind fill */
 }
 
 /* Path styling for the white logo (in front) */
@@ -99,6 +106,7 @@ header.site-header {
   stroke: white;
   stroke-width: 0.5;
   transition: stroke-width 0.3s ease;
+  paint-order: stroke fill; /* Ensures stroke is behind fill */
 }
 
 /* Hover effects */
