@@ -10,6 +10,7 @@ export default function FloatingButtons() {
   const [isLogoHovered, setIsLogoHovered] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const invertLogoRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   // Toggle search input
@@ -31,6 +32,17 @@ export default function FloatingButtons() {
       setIsSearchOpen(false);
     }
   };
+
+  // Handle logo hover
+  useEffect(() => {
+    if (invertLogoRef.current) {
+      if (isLogoHovered) {
+        invertLogoRef.current.classList.add('hovered');
+      } else {
+        invertLogoRef.current.classList.remove('hovered');
+      }
+    }
+  }, [isLogoHovered]);
 
   // Close search when clicking outside
   useEffect(() => {
@@ -73,7 +85,7 @@ export default function FloatingButtons() {
             onMouseEnter={() => setIsLogoHovered(true)}
             onMouseLeave={() => setIsLogoHovered(false)}
           >
-            <div id="invert-logo">
+            <div id="invert-logo" ref={invertLogoRef}>
               <svg width="115" height="28" viewBox="0 0 419.17 94.81" xmlns="http://www.w3.org/2000/svg" className="transition-all duration-300 hover:translate-y-[-1px]">
                 <path 
                   d="M419.17 0v17.84h-53.06c-2.36 0-4.28 1.91-4.28 4.27v16.96h57.34v30.24l-.72.73-24.06 24.03-.72.73h-49.68V76.97h53.06c2.36 0 4.27-1.92 4.27-4.28V56.91h-57.33V25.49l.73-.72L368.76.72l.73-.72zm-86 39.09v30.64l-.72.73-23.63 23.62-.72.73H258v-69.3l.73-.73L282.77.74l.73-.73h42.01l-4.22 4.22-12.89 12.9-.72.73h-27.55c-2.36 0-4.28 1.92-4.28 4.28v54.83h35.27c2.36 0 4.28-1.92 4.28-4.28v-33.6zM57.34 0h17.82v94.79H57.34V56.91H25.48l-.72-.72L.72 32.14 0 31.41V0h17.84v34.8c0 2.36 1.92 4.28 4.28 4.28h35.22zm103.82 0v17.84H108.1c-2.36 0-4.28 1.91-4.28 4.27v16.96h57.34v30.24l-.72.73-24.05 24.03-.72.73H86V76.97h53.04c2.36 0 4.28-1.92 4.28-4.28V56.91H86V25.49l.72-.72L110.75.72l.73-.72zm86.02 0v17.84h-24.39c-2.36 0-4.28 1.91-4.28 4.27v50.58c0 2.36 1.92 4.28 4.28 4.28h24.39V94.8h-75.19V76.97h24.39c2.36 0 4.28-1.92 4.28-4.28V22.11c0-2.36-1.92-4.27-4.28-4.27h-24.39V0z" 
