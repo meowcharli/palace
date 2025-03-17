@@ -64,7 +64,7 @@ header.site-header {
 }
 
 /* ========== Logo Styles ========== */
-/* Simple inversion approach without white background */
+/* Logo with mix-blend-mode for negative filter effect */
 .inverted-svg {
   filter: invert(1);
   mix-blend-mode: difference;
@@ -77,10 +77,17 @@ header.site-header {
   }
 }
 
+/* Container for the inverted logo */
 .logo-wrapper {
   position: relative;
   display: inline-block;
   z-index: 10;
+  isolation: isolate;
+}
+
+/* Mix-blend-mode utility class */
+.mix-blend-difference {
+  mix-blend-mode: difference;
 }
 
 .logo-path {
