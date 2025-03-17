@@ -79,18 +79,8 @@ header.site-header {
 }
 
 /* Logo containers for proper stacking */
-.logo-black-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-.logo-white-container {
-  position: relative;
-  z-index: 2;
+.logo-black-container, .logo-white-container {
+  display: none; /* Remove these styles as we're not using these containers anymore */
 }
 
 /* Black logo styling */
