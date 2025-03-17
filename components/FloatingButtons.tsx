@@ -125,29 +125,16 @@ export default function FloatingButtons() {
                   </form>
                 </div>
               ) : (
-                <div 
+                <button
                   onClick={toggleSearch}
-                  className="transition-all duration-300 hover:translate-y-[-1px] cursor-pointer"
+                  className="bg-gray-900 hover:bg-gray-800 rounded-md shadow-lg w-10 h-10 flex items-center justify-center transition-all duration-200 z-10"
                   aria-label="Search"
                 >
                   <svg 
                     data-name="Layer 2" 
                     xmlns="http://www.w3.org/2000/svg" 
                     viewBox="0 0 108.4 108.4" 
-                    className="h-7 w-7 text-white"
-                    onMouseEnter={(e) => {
-                      const svgPath = e.currentTarget.querySelector('path');
-                      if (svgPath) {
-                        svgPath.setAttribute('stroke', 'currentColor');
-                        svgPath.setAttribute('stroke-width', '8');
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      const svgPath = e.currentTarget.querySelector('path');
-                      if (svgPath) {
-                        svgPath.setAttribute('stroke-width', '0');
-                      }
-                    }}
+                    className="h-5 w-5 text-white"
                   >
                     <path 
                       d="M86.46 73.84V16.28L70.18 0h-53.9L0 16.28v53.9l16.28 16.28h57.56l21.94 21.94 12.62-12.62zM70.18 57.56l-.25-.25-12.62 12.62.25.25H16.28v-53.9h53.9z" 
@@ -158,33 +145,20 @@ export default function FloatingButtons() {
                       data-name="Layer 2"
                     />
                   </svg>
-                </div>
+                </button>
               )}
             </div>
             
-            {/* Support Icon */}
+            {/* Support Button */}
             <Link 
               href="/support" 
-              className="transition-all duration-300 hover:translate-y-[-1px]"
+              className="bg-gray-900 hover:bg-gray-800 rounded-md shadow-lg w-10 h-10 flex items-center justify-center transition-all duration-200 z-10"
             >
               <svg 
                 data-name="Layer 2" 
                 xmlns="http://www.w3.org/2000/svg" 
                 viewBox="0 0 113.98 94.8" 
-                className="h-7 w-7 text-white"
-                onMouseEnter={(e) => {
-                  const svgPath = e.currentTarget.querySelector('path');
-                  if (svgPath) {
-                    svgPath.setAttribute('stroke', 'currentColor');
-                    svgPath.setAttribute('stroke-width', '8');
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  const svgPath = e.currentTarget.querySelector('path');
-                  if (svgPath) {
-                    svgPath.setAttribute('stroke-width', '0');
-                  }
-                }}
+                className="h-5 w-5 text-white"
               >
                 <path 
                   d="M96.13 0H17.85L0 17.85v59.1L17.85 94.8h78.28l17.85-17.85v-59.1zM17.85 76.95V40.36l26.52 26.51 10.08 10.08zm2.74-59.1h72.8l-36.4 36.4zm75.54 59.1H59.54l10.08-10.07 26.51-26.52z" 
