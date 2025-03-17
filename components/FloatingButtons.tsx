@@ -73,7 +73,7 @@ export default function FloatingButtons() {
             onMouseEnter={() => setIsLogoHovered(true)}
             onMouseLeave={() => setIsLogoHovered(false)}
           >
-            <svg width="115" height="28" viewBox="0 0 419.17 94.81" xmlns="http://www.w3.org/2000/svg" className="transition-all duration-300 hover:translate-y-[-1px] mix-blend-difference">
+            <svg width="115" height="28" viewBox="0 0 419.17 94.81" xmlns="http://www.w3.org/2000/svg" className="transition-all duration-300 hover:translate-y-[-1px] mix-blend-difference !invert">
               <path 
                 d="M419.17 0v17.84h-53.06c-2.36 0-4.28 1.91-4.28 4.27v16.96h57.34v30.24l-.72.73-24.06 24.03-.72.73h-49.68V76.97h53.06c2.36 0 4.27-1.92 4.27-4.28V56.91h-57.33V25.49l.73-.72L368.76.72l.73-.72zm-86 39.09v30.64l-.72.73-23.63 23.62-.72.73H258v-69.3l.73-.73L282.77.74l.73-.73h42.01l-4.22 4.22-12.89 12.9-.72.73h-27.55c-2.36 0-4.28 1.92-4.28 4.28v54.83h35.27c2.36 0 4.28-1.92 4.28-4.28v-33.6zM57.34 0h17.82v94.79H57.34V56.91H25.48l-.72-.72L.72 32.14 0 31.41V0h17.84v34.8c0 2.36 1.92 4.28 4.28 4.28h35.22zm103.82 0v17.84H108.1c-2.36 0-4.28 1.91-4.28 4.27v16.96h57.34v30.24l-.72.73-24.05 24.03-.72.73H86V76.97h53.04c2.36 0 4.28-1.92 4.28-4.28V56.91H86V25.49l.72-.72L110.75.72l.73-.72zm86.02 0v17.84h-24.39c-2.36 0-4.28 1.91-4.28 4.27v50.58c0 2.36 1.92 4.28 4.28 4.28h24.39V94.8h-75.19V76.97h24.39c2.36 0 4.28-1.92 4.28-4.28V22.11c0-2.36-1.92-4.27-4.28-4.27h-24.39V0z" 
                 fill="#fff" 
@@ -84,7 +84,7 @@ export default function FloatingButtons() {
             </svg>
           </Link>
           
-          {/* Right Side Icons */}
+          {/* Right Side Icons - Fixed spacing and hover effects */}
           <div className="flex items-center space-x-3 pointer-events-auto">
             {/* Search Icon & Input */}
             <div ref={searchContainerRef} className="relative">
@@ -127,14 +127,14 @@ export default function FloatingButtons() {
               ) : (
                 <button
                   onClick={toggleSearch}
-                  className="bg-black hover:bg-white w-10 h-10 flex items-center justify-center transition-all duration-200 group"
+                  className="bg-black hover:bg-white w-10 h-10 flex items-center justify-center transition-colors !duration-300 group"
                   aria-label="Search"
                 >
                   <svg 
                     data-name="Layer 2" 
                     xmlns="http://www.w3.org/2000/svg" 
                     viewBox="0 0 108.4 108.4" 
-                    className="h-5 w-5 text-white group-hover:text-black transition-colors duration-200"
+                    className="h-5 w-5 text-white group-hover:!text-black transition-colors !duration-300"
                   >
                     <path 
                       d="M86.46 73.84V16.28L70.18 0h-53.9L0 16.28v53.9l16.28 16.28h57.56l21.94 21.94 12.62-12.62zM70.18 57.56l-.25-.25-12.62 12.62.25.25H16.28v-53.9h53.9z" 
@@ -148,13 +148,13 @@ export default function FloatingButtons() {
             {/* Support Button */}
             <Link 
               href="/support" 
-              className="bg-black hover:bg-white w-10 h-10 flex items-center justify-center transition-all duration-200 group"
+              className="bg-black hover:bg-white w-10 h-10 flex items-center justify-center transition-colors !duration-300 group"
             >
               <svg 
                 data-name="Layer 2" 
                 xmlns="http://www.w3.org/2000/svg" 
                 viewBox="0 0 113.98 94.8" 
-                className="h-5 w-5 text-white group-hover:text-black transition-colors duration-200"
+                className="h-5 w-5 text-white group-hover:!text-black transition-colors !duration-300"
               >
                 <path 
                   d="M96.13 0H17.85L0 17.85v59.1L17.85 94.8h78.28l17.85-17.85v-59.1zM17.85 76.95V40.36l26.52 26.51 10.08 10.08zm2.74-59.1h72.8l-36.4 36.4zm75.54 59.1H59.54l10.08-10.07 26.51-26.52z" 
