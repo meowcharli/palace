@@ -10,7 +10,7 @@ html, body {
 }
 
 main {
-  padding-top: 4rem;
+  padding-top: 1rem;
 }
 
 /* Hide unwanted headers from external components */
@@ -71,6 +71,11 @@ header.site-header {
 /* Button transitions */
 .transition-colors.\!duration-300 {
   transition-duration: 300ms !important;
+}
+
+/* Mix blend mode for logo */
+.mix-blend-difference {
+  mix-blend-mode: difference !important;
 }
 
 /* Animation for search box appearance */
