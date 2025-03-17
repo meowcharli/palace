@@ -8,10 +8,10 @@ import { Inter } from "next/font/google";
 import { draftMode } from "next/headers";
 
 import AlertBanner from "./alert-banner";
-import BlogHeader from "@/components/BlogHeader";
+import FloatingButtons from "@/components/FloatingButtons";
 import BlogFooter from "@/components/BlogFooter";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { settingsQuery, moreStoriesQuery } from "@/sanity/lib/queries";
+import { settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import * as demo from "@/sanity/lib/demo";
 
@@ -51,19 +51,6 @@ const inter = Inter({
   display: "swap",
 });
 
-// Fetch recent posts for the header
-async function getRecentPosts() {
-  try {
-    return await sanityFetch({ 
-      query: moreStoriesQuery, 
-      params: { skip: '', limit: 2 } 
-    });
-  } catch (error) {
-    console.error("Error loading recent posts:", error);
-    return [];
-  }
-}
-
 export default async function RootLayout({
   children,
 }: {
@@ -73,17 +60,16 @@ export default async function RootLayout({
   const footer = data?.footer || [];
   const description = data?.description || demo.description;
   const { isEnabled: isDraftMode } = await draftMode();
-  const recentPosts = await getRecentPosts();
 
   return (
     <html lang="en" className={`${inter.variable} bg-black text-white`}>
       <body className="flex flex-col min-h-screen bg-black">
         {isDraftMode && <AlertBanner />}
         
-        {/* Header with recent posts */}
-        <BlogHeader recentPosts={recentPosts} />
+        {/* Floating Buttons instead of traditional header */}
+        <FloatingButtons />
         
-        <main className="flex-grow">
+        <main className="flex-grow mt-16">
           {children}
         </main>
         
