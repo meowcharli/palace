@@ -64,34 +64,35 @@ header.site-header {
 }
 
 /* ========== Logo Styles ========== */
-/* Logo with mix-blend-mode for negative filter effect */
-.inverted-svg {
-  filter: invert(1);
-  mix-blend-mode: difference;
-}
-
-/* Ensure the logo is visible in all browsers */
-@supports not (mix-blend-mode: difference) {
-  .inverted-svg {
-    filter: invert(1);
-  }
-}
-
-/* Container for the inverted logo */
-.logo-wrapper {
-  position: relative;
+/* Logo hover container */
+.logo-hover-container {
   display: inline-block;
-  z-index: 10;
-  isolation: isolate;
+  position: relative;
 }
 
-/* Mix-blend-mode utility class */
-.mix-blend-difference {
-  mix-blend-mode: difference;
+/* Black logo styling */
+.logo-black {
+  fill: black;
+  stroke: black;
+  stroke-width: 6;
+  transition: stroke-width 0.3s ease;
 }
 
-.logo-path {
-  transition: stroke-width 500ms ease-in-out;
+/* White logo styling */
+.logo-white {
+  fill: white;
+  stroke: white;
+  stroke-width: 0.5;
+  transition: stroke-width 0.3s ease;
+}
+
+/* Hover effect for logos */
+.logo-hover-container:hover .logo-black {
+  stroke-width: 18;
+}
+
+.logo-hover-container:hover .logo-white {
+  stroke-width: 12;
 }
 
 /* Button transitions */
@@ -279,26 +280,4 @@ button:hover,
 /* Background decoration (remove or adjust for dark mode) */
 body::after {
   display: none; /* Remove decoration */
-}
-
-/* Custom styles for making mix-blend-mode work */
-.blend-logo-container {
-  position: relative;
-  mix-blend-mode: difference;
-  z-index: 50;
-  isolation: isolate;
-}
-
-.blend-logo {
-  fill: white;
-}
-
-/* Fallback for browsers that don't support mix-blend-mode */
-@supports not (mix-blend-mode: difference) {
-  .blend-logo-container {
-    mix-blend-mode: normal;
-  }
-  .blend-logo {
-    fill: white;
-  }
 }
