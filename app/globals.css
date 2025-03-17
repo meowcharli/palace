@@ -76,6 +76,9 @@ header.site-header {
   stroke: black;
   stroke-width: 15;
   transition: stroke-width 0.3s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /* White logo styling */
@@ -84,6 +87,8 @@ header.site-header {
   stroke: white;
   stroke-width: 0.5;
   transition: stroke-width 0.3s ease;
+  position: relative;
+  z-index: 10;
 }
 
 /* Hover effect for logos */
@@ -95,12 +100,18 @@ header.site-header {
   stroke-width: 12;
 }
 
-/* Add additional styling to prevent cutoff */
+/* Logo hover container and wrapper to prevent cutoff */
 .logo-hover-container {
   display: inline-block;
   position: relative;
   overflow: visible;
-  margin: -6px;
+}
+
+.logo-wrapper {
+  position: relative;
+  padding: 28px;
+  margin: -28px;
+  display: inline-block;
 }
 
 /* Button transitions */
