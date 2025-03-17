@@ -151,7 +151,7 @@ export default function FloatingButtons() {
                   >
                     <path 
                       d="M86.46 73.84V16.28L70.18 0h-53.9L0 16.28v53.9l16.28 16.28h57.56l21.94 21.94 12.62-12.62zM70.18 57.56l-.25-.25-12.62 12.62.25.25H16.28v-53.9h53.9z" 
-                      style="fill:currentColor" 
+                      fill="currentColor" 
                       className="transition-all duration-500 ease-in-out" 
                       stroke="currentColor"
                       strokeWidth="0"
@@ -188,7 +188,7 @@ export default function FloatingButtons() {
               >
                 <path 
                   d="M96.13 0H17.85L0 17.85v59.1L17.85 94.8h78.28l17.85-17.85v-59.1zM17.85 76.95V40.36l26.52 26.51 10.08 10.08zm2.74-59.1h72.8l-36.4 36.4zm75.54 59.1H59.54l10.08-10.07 26.51-26.52z" 
-                  style="fill:currentColor" 
+                  fill="currentColor" 
                   className="transition-all duration-500 ease-in-out" 
                   stroke="currentColor"
                   strokeWidth="0"
