@@ -63,53 +63,46 @@ header.site-header {
   background-color: #fff !important;
 }
 
-/* ========== Negative Space Logo Styles ========== */
-.logo-wrapper {
+/* ========== Inverted Logo Styles ========== */
+/* This uses the same technique as your cursor-invert example */
+#invert-logo {
   position: relative;
-  display: inline-block;
-  mix-blend-mode: difference;
+  width: 115px;
+  height: 28px;
+  background-color: white; /* White background ensures proper inversion */
+  mix-blend-mode: difference; /* This creates the invert effect */
+  pointer-events: none;
   z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* NEW - True inverted logo effect */
-.inverted-logo {
-  position: relative;
-  mix-blend-mode: difference;
-  z-index: 10;
+/* Ensure clicks pass through to the link */
+#invert-logo + a {
+  pointer-events: auto;
 }
 
-.inverted-logo svg {
-  fill: white;
+/* Add glow on hover */
+#invert-logo.hovered {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
-/* Hover effect for stroke width */
-.stroke-expanded {
-  stroke: white;
-  stroke-width: 8px;
-}
-
-/* Fallback for browsers that don't support mix-blend-mode */
+/* For browsers that don't support mix-blend-mode */
 @supports not (mix-blend-mode: difference) {
-  .inverted-logo svg {
-    filter: invert(1);
+  #invert-logo {
+    background-color: transparent;
+  }
+  #invert-logo svg path {
+    fill: white;
   }
 }
 
-/* Alternative filter-only approach */
-.filter-inverted {
-  isolation: isolate;
+/* Legacy logo wrapper styling */
+.logo-wrapper {
   position: relative;
+  display: inline-block;
   z-index: 10;
-}
-
-.filter-inverted svg {
-  filter: invert(1);
-  transition: all 300ms ease-in-out;
-}
-
-.filter-inverted svg:hover {
-  transform: translateY(-1px);
-  filter: invert(1) drop-shadow(0 0 3px rgba(255, 255, 255, 0.7));
 }
 
 .logo-path {
