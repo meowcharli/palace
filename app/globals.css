@@ -10,11 +10,16 @@ html, body {
 }
 
 main {
-  padding-top: 2rem;
+  padding-top: 4rem;
 }
 
 /* Hide unwanted headers from external components */
 header:not(.site-header), .banner, .navbar {
+  display: none !important;
+}
+
+/* Remove header styles that are no longer needed */
+header.site-header {
   display: none !important;
 }
 
@@ -34,56 +39,29 @@ header:not(.site-header), .banner, .navbar {
   padding-right: 2rem;
 }
 
-/* ========== Header Components ========== */
-header.site-header {
-  display: flex !important;
-  background-color: #000000;
-  border-bottom: 1px solid #333333;
-  width: 100%;
-  height: 64px;
-  padding: 0.75rem 0;
-}
-
-/* Header Buttons */
-.header-button {
-  display: inline-flex;
+/* ========== Floating Button Styles ========== */
+.floating-btn {
+  display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: flex-start;
-  background-color: #111111;
-  color: #ffffff;
-  padding: 0.625rem 1.25rem;
-  border-radius: 9999px;
-  font-size: 1.05rem;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  white-space: nowrap;
-  overflow: hidden;
-  min-width: 220px;
-  max-width: 350px;
-  text-align: left;
+  transition: all 0.2s ease-in-out;
   border: 1px solid #333333;
 }
 
-.header-button:hover {
-  background-color: #222222;
-  color: #ffffff;
-}
-
-/* Logo Button */
-.logo-button {
-  width: 52px;
-  height: 52px;
-  border: 1px solid #333333;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: background-color 0.2s ease, color 0.2s ease;
-  border-radius: 1rem;
-}
-
-a:hover .logo-button {
-  background-color: #222222 !important;
+.floating-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   border-color: #555555;
+}
+
+/* Animation for search box appearance */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+input[type="text"] {
+  animation: fadeIn 0.2s ease-out;
 }
 
 /* ========== Typography ========== */
