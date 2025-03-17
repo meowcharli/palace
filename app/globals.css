@@ -280,3 +280,25 @@ button:hover,
 body::after {
   display: none; /* Remove decoration */
 }
+
+/* Custom styles for making mix-blend-mode work */
+.blend-logo-container {
+  position: relative;
+  mix-blend-mode: difference;
+  z-index: 50;
+  isolation: isolate;
+}
+
+.blend-logo {
+  fill: white;
+}
+
+/* Fallback for browsers that don't support mix-blend-mode */
+@supports not (mix-blend-mode: difference) {
+  .blend-logo-container {
+    mix-blend-mode: normal;
+  }
+  .blend-logo {
+    fill: white;
+  }
+}
