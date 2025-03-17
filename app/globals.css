@@ -64,37 +64,43 @@ header.site-header {
 }
 
 /* ========== Logo Styles ========== */
-/* Logo hover container */
-.logo-hover-container {
-  display: inline-block;
+/* Logo container with padding to prevent cutoff */
+.logo-container {
   position: relative;
-  margin: -24px;
+  display: inline-block;
   padding: 24px;
-  overflow: visible !important;
+  margin: -24px;
+  overflow: visible;
 }
 
-/* Black logo styling */
-.logo-black {
+/* Logo positioning */
+.logo {
+  position: relative;
+  display: block;
+}
+
+/* Path styling for the black logo (behind) */
+.logo-path-black {
   fill: black;
   stroke: black;
   stroke-width: 15;
   transition: stroke-width 0.3s ease;
 }
 
-/* White logo styling */
-.logo-white {
+/* Path styling for the white logo (in front) */
+.logo-path-white {
   fill: white;
   stroke: white;
   stroke-width: 0.5;
   transition: stroke-width 0.3s ease;
 }
 
-/* Hover effect for logos */
-.logo-hover-container:hover .logo-black {
+/* Hover effects */
+.logo-container:hover .logo-path-black {
   stroke-width: 24;
 }
 
-.logo-hover-container:hover .logo-white {
+.logo-container:hover .logo-path-white {
   stroke-width: 12;
 }
 
