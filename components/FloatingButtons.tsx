@@ -65,73 +65,75 @@ export default function FloatingButtons() {
     <div className="fixed top-0 left-0 w-full z-50 pointer-events-none p-4">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
-          {/* Logo Button (Left) */}
+          {/* Logo Button (Left) - wider rectangle */}
           <Link 
             href="/" 
-            className="floating-btn bg-gray-900 hover:bg-gray-800 rounded-md shadow-lg w-12 h-12 flex items-center justify-center transition-all duration-200 pointer-events-auto"
+            className="floating-btn bg-gray-900 hover:bg-gray-800 rounded-md shadow-lg h-12 px-4 flex items-center justify-center transition-all duration-200 pointer-events-auto"
           >
-            <svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 419.17 94.81" className="w-8 h-8 logo-svg">
+            <svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 419.17 94.81" className="w-24 h-6 logo-svg">
               <path d="M419.17 0v17.84h-53.06c-2.36 0-4.28 1.91-4.28 4.27v16.96h57.34v30.24l-.72.73-24.06 24.03-.72.73h-49.68V76.97h53.06c2.36 0 4.27-1.92 4.27-4.28V56.91h-57.33V25.49l.73-.72L368.76.72l.73-.72zm-86 39.09v30.64l-.72.73-23.63 23.62-.72.73H258v-69.3l.73-.73L282.77.74l.73-.73h42.01l-4.22 4.22-12.89 12.9-.72.73h-27.55c-2.36 0-4.28 1.92-4.28 4.28v54.83h35.27c2.36 0 4.28-1.92 4.28-4.28v-33.6zM57.34 0h17.82v94.79H57.34V56.91H25.48l-.72-.72L.72 32.14 0 31.41V0h17.84v34.8c0 2.36 1.92 4.28 4.28 4.28h35.22zm103.82 0v17.84H108.1c-2.36 0-4.28 1.91-4.28 4.27v16.96h57.34v30.24l-.72.73-24.05 24.03-.72.73H86V76.97h53.04c2.36 0 4.28-1.92 4.28-4.28V56.91H86V25.49l.72-.72L110.75.72l.73-.72zm86.02 0v17.84h-24.39c-2.36 0-4.28 1.91-4.28 4.27v50.58c0 2.36 1.92 4.28 4.28 4.28h24.39V94.8h-75.19V76.97h24.39c2.36 0 4.28-1.92 4.28-4.28V22.11c0-2.36-1.92-4.27-4.28-4.27h-24.39V0z" style={{fill:"#fff"}} data-name="Layer 2"/>
             </svg>
           </Link>
           
           {/* Right Side Buttons */}
           <div className="flex items-center space-x-3 pointer-events-auto">
-            {/* Search Button & Input */}
+            {/* Search Button & Input - Buttons 15% smaller, icons scaled down */}
             <div ref={searchContainerRef} className="relative">
               {isSearchOpen ? (
-                <div className="absolute right-0 top-0 flex items-center">
-                  <form onSubmit={handleSubmit} className="flex items-center">
-                    <input
-                      ref={searchInputRef}
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Search..."
-                      className="bg-gray-900 text-white border border-gray-700 rounded-md py-2 pl-4 pr-12 focus:outline-none focus:ring-2 focus:ring-gray-600 w-56"
-                    />
-                    <div className="absolute right-1 flex items-center space-x-1">
-                      <button 
-                        type="submit" 
-                        className="text-gray-300 hover:text-white h-8 w-8 flex items-center justify-center"
-                        aria-label="Submit search"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                      </button>
-                      <button 
-                        type="button" 
-                        onClick={toggleSearch}
-                        className="text-gray-300 hover:text-white h-8 w-8 flex items-center justify-center"
-                        aria-label="Close search"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </button>
+                <div className="absolute right-0 top-0 z-50">
+                  <form onSubmit={handleSubmit} className="bg-gray-900 border border-gray-700 rounded-md shadow-lg">
+                    <div className="flex items-center">
+                      <input
+                        ref={searchInputRef}
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Search..."
+                        className="bg-gray-900 text-white py-2 pl-3 pr-16 focus:outline-none focus:ring-1 focus:ring-gray-600 w-48 rounded-md"
+                      />
+                      <div className="absolute right-2 flex items-center space-x-2">
+                        <button 
+                          type="submit" 
+                          className="text-gray-300 hover:text-white h-6 w-6 flex items-center justify-center"
+                          aria-label="Submit search"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                          </svg>
+                        </button>
+                        <button 
+                          type="button" 
+                          onClick={toggleSearch}
+                          className="text-gray-300 hover:text-white h-6 w-6 flex items-center justify-center"
+                          aria-label="Close search"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </form>
                 </div>
               ) : (
                 <button
                   onClick={toggleSearch}
-                  className="bg-gray-900 hover:bg-gray-800 rounded-md shadow-lg w-12 h-12 flex items-center justify-center transition-all duration-200"
+                  className="bg-gray-900 hover:bg-gray-800 rounded-md shadow-lg w-10 h-10 flex items-center justify-center transition-all duration-200"
                   aria-label="Search"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 </button>
               )}
             </div>
             
-            {/* Support Button */}
+            {/* Support Button - 15% smaller */}
             <Link 
               href="/support" 
-              className="bg-gray-900 hover:bg-gray-800 rounded-md shadow-lg w-12 h-12 flex items-center justify-center transition-all duration-200"
+              className="bg-gray-900 hover:bg-gray-800 rounded-md shadow-lg w-10 h-10 flex items-center justify-center transition-all duration-200"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </Link>
