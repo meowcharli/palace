@@ -10,7 +10,7 @@ html, body {
 }
 
 main {
-  padding-top: 1rem;
+  padding-top: 4rem;
 }
 
 /* Hide unwanted headers from external components */
@@ -54,9 +54,26 @@ header.site-header {
   border-color: #555555;
 }
 
-/* SVG hover effect - adds white stroke with proper transition */
-.logo-path, svg path {
-  transition: stroke-width 500ms ease-in-out !important;
+/* ========== Overrides for buttons and logo ========== */
+.group:hover .group-hover\:\!text-black {
+  color: #000 !important;
+}
+
+.hover\:bg-white:hover {
+  background-color: #fff !important;
+}
+
+.mix-blend-difference {
+  mix-blend-mode: difference !important;
+}
+
+.transition-colors.\!duration-300 {
+  transition-duration: 300ms !important;
+}
+
+/* Force invert for logo */
+.mix-blend-difference.\!invert {
+  filter: invert(1) !important;
 }
 
 /* Animation for search box appearance */
