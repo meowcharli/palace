@@ -114,7 +114,7 @@ export default function FloatingButtons() {
                     xmlns="http://www.w3.org/2000/svg" 
                     viewBox="0 0 108.4 108.4" 
                     className="w-5 h-5"
-                    style={{ margin: '0 auto', filter: 'drop-shadow(0px 0px 1px #000)' }}
+                    style={{ margin: '0 auto' }}
                   >
                     <path 
                       d="M86.46 73.84V16.28L70.18 0h-53.9L0 16.28v53.9l16.28 16.28h57.56l21.94 21.94 12.62-12.62zM70.18 57.56l-.25-.25-12.62 12.62.25.25H16.28v-53.9h53.9z" 
