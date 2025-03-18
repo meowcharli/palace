@@ -54,6 +54,103 @@ header.site-header {
   border-color: #000000;
 }
 
+/* ========== Pill Button Styling ========== */
+.pill-container {
+  background-color: #FFFFFF;
+  border: 4px solid #000000;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the buttons */
+  transition: width 0.3s ease, height 0.3s ease;
+  overflow: hidden;
+  height: 2.9rem; /* 49.5px - 10% smaller than previous */
+  position: relative;
+  top: -0.3rem; /* Move up instead of down */
+}
+
+.pill-container.expanded {
+  width: 14rem;
+}
+
+.pill-container.collapsed {
+  width: 5.3rem; /* 99px - 10% smaller than previous */
+}
+
+.pill-button {
+  width: 2.23rem; /* 35.7px - keeping same as previous */
+  height: 2.23rem; /* 35.7px - keeping same as previous */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+  background-color: transparent !important;
+  margin: 0; /* Remove any margin */
+  padding: 0; /* Remove any padding */
+  border: none !important;
+}
+
+.pill-button:hover {
+  background-color: #000000 !important;
+}
+
+.pill-button:hover .pill-icon {
+  color: #FFFFFF;
+}
+
+.pill-icon {
+  width: 1rem; /* 16px - 25% bigger than 12.8px */
+  height: 1rem; /* 16px - 25% bigger than 12.8px */
+  color: #000000;
+  transition: color 0.3s ease;
+}
+
+/* Black pill wrapper for transition handling */
+.search-pill-wrapper {
+  width: 100%;
+  opacity: 0;
+  animation: slideInFromRight 0.3s ease-out 0.2s forwards; /* 0.2s delay to wait for white pill expansion */
+}
+
+/* Black pill inside the white pill for search */
+.search-pill {
+  background-color: #000000;
+  border-radius: 9999px;
+  padding: 0.3rem 1.5rem;
+  width: calc(100% + 1.1rem);
+  margin-left: -0.6rem;
+  margin-right: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Update search input styling */
+.search-input {
+  background-color: transparent !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  outline: none !important;
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+  font-size: 0.9rem;
+  height: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* Adjust placeholder color */
+.search-input::placeholder {
+  color: #AAAAAA !important;
+  opacity: 0.7;
+}
+
+/* Override unwanted styles for search input */
+input[type="text"].search-input {
+  background-color: transparent !important;
+  animation: none;
+}
+
 /* ========== Overrides for buttons and logo ========== */
 .group:hover .group-hover\:\!text-black {
   color: #000 !important;
@@ -123,10 +220,21 @@ header.site-header {
   transition-duration: 300ms !important;
 }
 
-/* Animation for search box appearance */
+/* Animation for search box and pill appearance */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animation for black pill sliding in from right */
+@keyframes slideInFromRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Make sure the pill container transition is a bit faster than the black pill appearance */
+.pill-container {
+  transition: width 0.2s ease, height 0.2s ease;
 }
 
 input[type="text"] {
@@ -286,7 +394,7 @@ input[type="text"] {
   border-color: #333333 !important;
 }
 
-/* Dark mode buttons */
+/* Dark mode buttons - OVERRIDE THESE FOR PILL BUTTONS */
 button, 
 .inline-flex {
   background-color: #111111 !important;
@@ -298,6 +406,18 @@ button:hover,
 .inline-flex:hover {
   background-color: #222222 !important;
   color: #ffffff !important;
+}
+
+/* Specific overrides for pill buttons */
+.pill-button {
+  background-color: transparent !important;
+  color: #000000 !important;
+  border: none !important;
+}
+
+.pill-button:hover {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
 }
 
 /* Background decoration (remove or adjust for dark mode) */

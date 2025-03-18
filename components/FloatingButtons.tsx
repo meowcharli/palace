@@ -7,8 +7,8 @@ import { useRouter } from 'next/navigation';
 export default function FloatingButtons() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const searchInputRef = useRef<HTMLInputElement>(null);
-  const searchContainerRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef(null);
+  const searchContainerRef = useRef(null);
   const router = useRouter();
 
   // Toggle search input
@@ -23,7 +23,7 @@ export default function FloatingButtons() {
   };
 
   // Handle search submission
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
@@ -35,8 +35,8 @@ export default function FloatingButtons() {
   useEffect(() => {
     if (!isSearchOpen) return;
 
-    const handleClickOutside = (e: MouseEvent) => {
-      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+    const handleClickOutside = (e) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target)) {
         setIsSearchOpen(false);
       }
     };
@@ -49,7 +49,7 @@ export default function FloatingButtons() {
 
   // Close search with ESC key
   useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
+    const handleEsc = (e) => {
       if (e.key === 'Escape') {
         setIsSearchOpen(false);
       }
@@ -78,57 +78,44 @@ export default function FloatingButtons() {
             </div>
           </Link>
           
-          {/* Right Side Icons */}
+          {/* Right Side Pill with Icons */}
           <div className="flex items-center pointer-events-auto">
-            {/* Search Icon & Input */}
-            <div ref={searchContainerRef} className="relative">
-              {isSearchOpen ? (
-                <div className="absolute right-0 top-0 z-50">
-                  <form onSubmit={handleSubmit} className="bg-gray-900 border border-gray-700 rounded-md shadow-lg">
-                    <div className="flex items-center">
-                      <input
-                        ref={searchInputRef}
-                        type="text"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="Search..."
-                        className="bg-black text-white py-2 pl-3 pr-16 focus:outline-none focus:ring-1 focus:ring-gray-600 w-48 rounded-md"
-                      />
-                      <div className="absolute right-2 flex items-center space-x-2">
-                        <button 
-                          type="submit" 
-                          className="text-gray-300 hover:text-white h-6 w-6 flex items-center justify-center"
-                          aria-label="Submit search"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                          </svg>
-                        </button>
-                        <button 
-                          type="button" 
-                          onClick={toggleSearch}
-                          className="text-gray-300 hover:text-white h-6 w-6 flex items-center justify-center"
-                          aria-label="Close search"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        </button>
-                      </div>
+            {/* Pill Container */}
+            <div className={`pill-container ${isSearchOpen ? 'expanded' : 'collapsed'}`} ref={searchContainerRef}>
+              {/* Search Input (Conditionally Rendered with Delayed Appearance) */}
+              {isSearchOpen && (
+                <div className="flex-grow px-3">
+                  <div className="search-pill-wrapper">
+                    <div className="search-pill">
+                      <form onSubmit={handleSubmit} className="w-full">
+                        <input
+                          ref={searchInputRef}
+                          type="text"
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          placeholder="Search..."
+                          className="search-input"
+                        />
+                      </form>
                     </div>
-                  </form>
+                  </div>
                 </div>
-              ) : (
+              )}
+              
+              {/* Search Button - Hidden when search is open */}
+              {!isSearchOpen && (
                 <button
                   onClick={toggleSearch}
-                  className="bg-black hover:bg-white w-10 h-10 flex items-center justify-center transition-colors !duration-300 group ml-2"
+                  className="pill-button"
                   aria-label="Search"
                 >
                   <svg 
                     data-name="Layer 2" 
                     xmlns="http://www.w3.org/2000/svg" 
                     viewBox="0 0 108.4 108.4" 
-                    className="h-5 w-5 text-white group-hover:!text-black transition-colors !duration-300"
+                    className="w-5 h-5"
+                    style={{ margin: '0 auto', filter: 'drop-shadow(0px 0px 1px #000)' }}
+                    style={{ margin: '0 auto' }}
                   >
                     <path 
                       d="M86.46 73.84V16.28L70.18 0h-53.9L0 16.28v53.9l16.28 16.28h57.56l21.94 21.94 12.62-12.62zM70.18 57.56l-.25-.25-12.62 12.62.25.25H16.28v-53.9h53.9z" 
@@ -137,25 +124,28 @@ export default function FloatingButtons() {
                   </svg>
                 </button>
               )}
+              
+              {/* Support Button - Hidden when search is open */}
+              {!isSearchOpen && (
+                <Link 
+                  href="/support" 
+                  className="pill-button flex items-center justify-center"
+                >
+                  <svg 
+                    data-name="Layer 2" 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 113.98 94.8" 
+                    className="w-5 h-5"
+                    style={{ margin: '0 auto' }}
+                  >
+                    <path 
+                      d="M96.13 0H17.85L0 17.85v59.1L17.85 94.8h78.28l17.85-17.85v-59.1zM17.85 76.95V40.36l26.52 26.51 10.08 10.08zm2.74-59.1h72.8l-36.4 36.4zm75.54 59.1H59.54l10.08-10.07 26.51-26.52z" 
+                      fill="currentColor"
+                    />
+                  </svg>
+                </Link>
+              )}
             </div>
-            
-            {/* Support Button */}
-            <Link 
-              href="/support" 
-              className="bg-black hover:bg-white w-10 h-10 flex items-center justify-center transition-colors !duration-300 group ml-2"
-            >
-              <svg 
-                data-name="Layer 2" 
-                xmlns="http://www.w3.org/2000/svg" 
-                viewBox="0 0 113.98 94.8" 
-                className="h-5 w-5 text-white group-hover:!text-black transition-colors !duration-300"
-              >
-                <path 
-                  d="M96.13 0H17.85L0 17.85v59.1L17.85 94.8h78.28l17.85-17.85v-59.1zM17.85 76.95V40.36l26.52 26.51 10.08 10.08zm2.74-59.1h72.8l-36.4 36.4zm75.54 59.1H59.54l10.08-10.07 26.51-26.52z" 
-                  fill="currentColor"
-                />
-              </svg>
-            </Link>
           </div>
         </div>
       </div>
