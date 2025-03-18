@@ -7,8 +7,8 @@ import { useRouter } from 'next/navigation';
 export default function FloatingButtons() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const searchInputRef = useRef(null);
-  const searchContainerRef = useRef(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   // Toggle search input
@@ -23,7 +23,7 @@ export default function FloatingButtons() {
   };
 
   // Handle search submission
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
@@ -35,8 +35,8 @@ export default function FloatingButtons() {
   useEffect(() => {
     if (!isSearchOpen) return;
 
-    const handleClickOutside = (e) => {
-      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
         setIsSearchOpen(false);
       }
     };
@@ -49,7 +49,7 @@ export default function FloatingButtons() {
 
   // Close search with ESC key
   useEffect(() => {
-    const handleEsc = (e) => {
+    const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsSearchOpen(false);
       }
