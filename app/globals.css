@@ -57,16 +57,16 @@ header.site-header {
 /* ========== Pill Button Styling ========== */
 .pill-container {
   background-color: #000000;
-  border: 0px solid #000000;
+  border: 1px solid #313131;
   border-radius: 0px;
   display: flex;
   align-items: center;
   justify-content: center; /* Center the buttons */
   transition: width 0.3s ease, height 0.3s ease;
   overflow: hidden;
-  height: 2.9rem; /* 49.5px - 10% smaller than previous */
+  height: 2.2rem; /* 49.5px - 10% smaller than previous */
   position: relative;
-  top: -0.3rem; /* Move up instead of down */
+  top: -0.1rem; /* Move up instead of down */
 }
 
 .pill-container.expanded {
@@ -411,13 +411,13 @@ button:hover,
 /* Specific overrides for pill buttons */
 .pill-button {
   background-color: #000000 !important;
-  color: #ffffff !important;
+  color: #dfdfdf !important;
   border: none !important;
 }
 
 .pill-button:hover {
   background-color: #000000 !important;
-  color: #323232 !important;
+  color: #ffffff !important;
 }
 
 /* Background decoration (remove or adjust for dark mode) */
@@ -428,7 +428,7 @@ body::after {
 /* ========== Vertical Gallery Layout ========== */
 .gallery-vertical-columns {
   max-width: 1800px;
-  margin: 2rem auto 4rem;
+  margin: 0rem auto 2rem;
 }
 
 /* Ensure gap between columns on desktop */
@@ -488,7 +488,7 @@ body::after {
   font-size: 1.2rem;
   border-radius: 0.5rem;
   text-align: center;
-  padding: 3rem 1rem;
+  padding: 1rem 1rem;
 }
 
 /* Image aspect ratio preservation */

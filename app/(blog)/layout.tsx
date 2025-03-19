@@ -7,7 +7,6 @@ import { VisualEditing, toPlainText } from "next-sanity";
 import { Inter } from "next/font/google";
 import { draftMode } from "next/headers";
 
-import AlertBanner from "./alert-banner";
 import FloatingButtons from "@/components/FloatingButtons";
 import BlogFooter from "@/components/BlogFooter";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -64,10 +63,10 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} bg-black text-white`}>
       <body className="flex flex-col min-h-screen bg-black">
-        {isDraftMode && <AlertBanner />}
+        {/* Remove the AlertBanner component */}
         
-        {/* Floating Buttons instead of traditional header */}
-        <FloatingButtons />
+        {/* Floating Buttons with isDraftMode prop */}
+        <FloatingButtons isDraftMode={isDraftMode} />
         
         <main className="flex-grow mt-16">
           {children}
