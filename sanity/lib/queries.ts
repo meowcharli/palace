@@ -35,7 +35,7 @@ export const postQuery = defineQuery(`
 `);
 
 export const galleryItemsQuery = defineQuery(`
-  *[_type == "galleryItem"] {
+  *[_type == "galleryItem" && defined(article) && defined(article->slug.current)] | order(order asc) {
     _id,
     title,
     image,

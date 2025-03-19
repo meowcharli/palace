@@ -726,7 +726,7 @@ export type PostQueryResult = {
   } | null;
 } | null;
 // Variable: galleryItemsQuery
-// Query: *[_type == "galleryItem"] {    _id,    title,    image,    videoEmbed,    "articleSlug": article->slug.current,    "articleTitle": article->title,    order,    featured  }
+// Query: *[_type == "galleryItem" && defined(article) && defined(article->slug.current)] | order(order asc) {    _id,    title,    image,    videoEmbed,    "articleSlug": article->slug.current,    "articleTitle": article->title,    order,    featured  }
 export type GalleryItemsQueryResult = Array<{
   _id: string;
   title: string | null;
@@ -764,6 +764,6 @@ declare module "@sanity/client" {
     "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) [0] {\n    content,\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  videoEmbed,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": HeroQueryResult;
     "\n  *[_type == \"post\" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  videoEmbed,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": MoreStoriesQueryResult;
     "\n  *[_type == \"post\" && slug.current == $slug] [0] {\n    content,\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  videoEmbed,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": PostQueryResult;
-    "\n  *[_type == \"galleryItem\"] {\n    _id,\n    title,\n    image,\n    videoEmbed,\n    \"articleSlug\": article->slug.current,\n    \"articleTitle\": article->title,\n    order,\n    featured\n  }\n": GalleryItemsQueryResult;
+    "\n  *[_type == \"galleryItem\" && defined(article) && defined(article->slug.current)] | order(order asc) {\n    _id,\n    title,\n    image,\n    videoEmbed,\n    \"articleSlug\": article->slug.current,\n    \"articleTitle\": article->title,\n    order,\n    featured\n  }\n": GalleryItemsQueryResult;
   }
 }

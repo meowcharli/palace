@@ -133,7 +133,7 @@ export default function FloatingButtons() {
                   <svg 
                     data-name="Layer 2" 
                     xmlns="http://www.w3.org/2000/svg" 
-                    viewBox="0 0 113.98 94.8" 
+                    viewBox="0 0 108.4 108.4" 
                     className="w-5 h-5"
                     style={{ margin: '0 auto' }}
                   >
