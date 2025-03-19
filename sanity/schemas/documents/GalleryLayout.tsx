@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { urlForImage } from '@/sanity/lib/utils';
-import VimeoEmbed from './VimeoEmbed';
+import VimeoEmbed from '@/components/VimeoEmbed';
 import type { GalleryItem } from '@/utils/types';
 
 interface GalleryLayoutProps {
