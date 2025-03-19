@@ -315,6 +315,7 @@ footer [class*="bg-"] {
   width: 100%;
   margin-bottom: 1.5rem;
   border-radius: 0.5rem;
+  background-color: #000000;
 }
 
 .responsive-iframe-container iframe {
@@ -324,6 +325,7 @@ footer [class*="bg-"] {
   width: 100%;
   height: 100%;
   border-radius: 0.5rem;
+  background-color: #000000;
 }
 
 .video-caption {
@@ -455,8 +457,8 @@ body::after {
 }
 
 .gallery-item:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Image styling */
@@ -469,15 +471,11 @@ body::after {
   transition: transform 0.5s ease;
 }
 
-.gallery-image-container:hover img {
-  transform: scale(1.002);
-}
-
 /* Video container styling */
 .gallery-video-container {
   border-radius: 0.5rem;
   overflow: hidden;
-  background-color: #111111;
+  background-color: #000000;
 }
 
 /* Placeholder */

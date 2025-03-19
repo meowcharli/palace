@@ -111,32 +111,31 @@ function GalleryItemComponent({ item }: { item: GalleryItem }) {
       className="gallery-item block transform transition-transform duration-300 hover:-translate-y-0.5 mb-2 w-full"
     >
       {item.videoEmbed?.url ? (
-        // Video content
+        // Video content - With autoplay and controls hidden for preview
         <div className="gallery-video-container w-full">
           <VimeoEmbed 
             url={item.videoEmbed.url} 
             embedCode={item.videoEmbed.embedCode}
-            hideControls={item.videoEmbed.hideControls}
-            autoplay={false}
-            loop={item.videoEmbed.loop}
-            showThumbnail={true}
+            hideControls={true}
+            autoplay={true}
+            loop={true}
+            showThumbnail={false}
             isClickable={true}
+            hideCaption={true}
           />
         </div>
       ) : item.image?.asset?._ref ? (
-        // Image content
+        // Image content - Using original code
         <div className="gallery-image-container w-full">
-          <div className="relative w-full">
-            <Image
-              src={urlForImage(item.image)?.width(800).url() || ''}
-              alt={item.image.alt || item.title || 'Gallery image'}
-              width={800}
-              height={0}
-              sizes="(max-width: 768px) 100vw, 800px"
-              className="w-full h-auto rounded-lg shadow-lg"
-              style={{ aspectRatio: 'auto' }}
-            />
-          </div>
+          <Image
+            src={urlForImage(item.image)?.width(800).url() || ''}
+            alt={item.image.alt || item.title || 'Gallery image'}
+            width={800}
+            height={0}
+            sizes="(max-width: 768px) 100vw, 800px"
+            className="w-full h-auto rounded-lg shadow-lg"
+            style={{ aspectRatio: 'auto' }}
+          />
         </div>
       ) : (
         // Fallback for items without image or video

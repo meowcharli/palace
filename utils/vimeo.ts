@@ -1,3 +1,4 @@
+// File: utils/vimeo.ts
 export interface VimeoThumbnail {
   width: number;
   height: number;
@@ -14,7 +15,9 @@ export interface VimeoMetadata {
 
 // Extract Vimeo ID from a URL or embed code
 export const getVimeoId = (input: string): string | null => {
-  // Check if it's an embed code by looking for iframe
+  if (!input) return null;
+  
+  // Handle embed codes containing iframe
   if (input.includes('<iframe')) {
     const srcMatch = input.match(/src=["'](https?:\/\/player\.vimeo\.com\/video\/(\d+)[^"']*)["']/i);
     if (srcMatch && srcMatch[2]) {
@@ -22,23 +25,43 @@ export const getVimeoId = (input: string): string | null => {
     }
   }
   
-  // Handle normal vimeo URLs
-  const urlRegex = /(?:vimeo\.com\/|player\.vimeo\.com\/video\/)(\d+)/i;
-  const urlMatch = input.match(urlRegex);
-  return urlMatch ? urlMatch[1] : null;
+  // Handle various Vimeo URL formats
+  // Standard URL: https://vimeo.com/123456789
+  // Channel URL: https://vimeo.com/channels/staffpicks/123456789
+  // Player URL: https://player.vimeo.com/video/123456789
+  // Handles URLs with query parameters: https://vimeo.com/123456789?h=abc123def
+  const patterns = [
+    /vimeo\.com\/(\d+)(?:\?.*)?$/i,                     // Basic format
+    /vimeo\.com\/channels\/[^\/]+\/(\d+)(?:\?.*)?$/i,   // Channel format
+    /vimeo\.com\/groups\/[^\/]+\/videos\/(\d+)(?:\?.*)?$/i, // Group format
+    /player\.vimeo\.com\/video\/(\d+)(?:\?.*)?$/i       // Player format
+  ];
+  
+  for (const pattern of patterns) {
+    const match = input.match(pattern);
+    if (match && match[1]) {
+      return match[1];
+    }
+  }
+  
+  return null;
 };
 
-// Parse parameters from an embed code if present
+// Parse parameters from an embed code
 export const parseEmbedParameters = (embedCode: string): Record<string, string> => {
   const params: Record<string, string> = {};
   
-  if (embedCode.includes('<iframe')) {
+  if (embedCode && embedCode.includes('<iframe')) {
     const srcMatch = embedCode.match(/src=["']([^"']*)["']/i);
     if (srcMatch && srcMatch[1]) {
-      const url = new URL(srcMatch[1]);
-      url.searchParams.forEach((value, key) => {
-        params[key] = value;
-      });
+      try {
+        const url = new URL(srcMatch[1]);
+        url.searchParams.forEach((value, key) => {
+          params[key] = value;
+        });
+      } catch (e) {
+        console.error('Error parsing embed URL:', e);
+      }
     }
   }
   
@@ -60,8 +83,11 @@ export const buildVimeoEmbedUrl = (
     dnt?: boolean; // Do Not Track
   } = {}
 ): string => {
+  if (!vimeoId) return '';
+  
   const params = new URLSearchParams();
   
+  // Add parameters based on options
   if (options.autoplay) params.append('autoplay', '1');
   if (options.loop) params.append('loop', '1');
   if (options.muted) params.append('muted', '1');
@@ -72,56 +98,35 @@ export const buildVimeoEmbedUrl = (
   if (options.byline === false) params.append('byline', '0');
   if (options.dnt) params.append('dnt', '1');
   
-  // Always add these for better performance
-  params.append('app_id', 'your_site_name');
+  // Quality settings for better performance
+  params.append('quality', 'auto');
+  
+  // App ID for tracking
+  params.append('app_id', 'custom_website');
   
   const queryString = params.toString() ? `?${params.toString()}` : '';
   return `https://player.vimeo.com/video/${vimeoId}${queryString}`;
 };
 
-// Generate full embed code with custom parameters
-export const generateVimeoEmbedCode = (
-  vimeoId: string,
-  options: {
-    autoplay?: boolean;
-    loop?: boolean;
-    muted?: boolean;
-    background?: boolean;
-    color?: string;
-    width?: string;
-    height?: string;
-    responsive?: boolean;
-    portrait?: boolean;
-    title?: boolean;
-    byline?: boolean;
-    dnt?: boolean;
-  } = {}
-): string => {
-  const embedUrl = buildVimeoEmbedUrl(vimeoId, options);
-  const width = options.width || '640';
-  const height = options.height || '360';
+// Get high-quality thumbnail from Vimeo ID
+export const getVimeoThumbnail = async (vimeoId: string): Promise<string | null> => {
+  if (!vimeoId) return null;
   
-  if (options.responsive) {
-    return `<div style="padding:56.25% 0 0 0;position:relative;">
-      <iframe src="${embedUrl}" 
-        style="position:absolute;top:0;left:0;width:100%;height:100%;" 
-        frameborder="0" 
-        allow="autoplay; fullscreen; picture-in-picture" 
-        allowfullscreen
-        title="Vimeo Video Player">
-      </iframe>
-    </div>
-    <script src="https://player.vimeo.com/api/player.js"></script>`;
+  try {
+    const response = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}`);
+    if (!response.ok) throw new Error('Failed to fetch thumbnail');
+    
+    const data = await response.json();
+    
+    // Try to get higher resolution thumbnail
+    // Vimeo thumbnails often follow this pattern where _640 can be replaced with higher values
+    if (data.thumbnail_url) {
+      return data.thumbnail_url.replace('_640', '_1280');
+    }
+    
+    return data.thumbnail_url || null;
+  } catch (error) {
+    console.error('Error fetching Vimeo thumbnail:', error);
+    return null;
   }
-  
-  return `<iframe 
-    src="${embedUrl}" 
-    width="${width}" 
-    height="${height}" 
-    frameborder="0" 
-    allow="autoplay; fullscreen; picture-in-picture" 
-    allowfullscreen
-    title="Vimeo Video Player">
-  </iframe>
-  <script src="https://player.vimeo.com/api/player.js"></script>`;
 };

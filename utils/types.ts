@@ -1,4 +1,4 @@
-// utils/types.ts
+// File: utils/types.ts
 
 // Types for Vimeo embedding
 export interface VimeoEmbedProps {
@@ -10,6 +10,8 @@ export interface VimeoEmbedProps {
   caption?: string;
   showThumbnail?: boolean;
   isClickable?: boolean;
+  hideCaption?: boolean;
+  customHeight?: number;
 }
 
 // Post type definitions 
