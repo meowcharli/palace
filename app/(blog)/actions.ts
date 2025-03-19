@@ -1,3 +1,4 @@
+// app/(blog)/actions.ts
 "use server";
 
 import { draftMode } from "next/headers";

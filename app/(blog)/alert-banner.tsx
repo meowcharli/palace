@@ -1,3 +1,4 @@
+// app/(blog)/alert-banner.tsx
 "use client";
 
 import { useRouter } from "next/navigation";
