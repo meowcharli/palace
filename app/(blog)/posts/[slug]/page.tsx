@@ -1,4 +1,4 @@
-// app/(blog)/posts/[slug]/page.tsx - Updated for dark theme
+// app/(blog)/posts/[slug]/page.tsx
 import { defineQuery } from "next-sanity";
 import type { Metadata, ResolvingMetadata } from "next";
 import { type PortableTextBlock } from "next-sanity";
@@ -66,13 +66,9 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <div className="container mx-auto px-5">
-      <h2 className="mb-16 mt-10 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
-        <Link href="/" className="hover:underline text-white">
-          {settings?.title || demo.title}
-        </Link>
-      </h2>
+      {/* Removed the back home link since we have the floating button */}
       <article>
-        <h1 className="text-balance mb-12 text-6xl font-bold leading-tight tracking-tighter text-white md:text-7xl md:leading-none lg:text-8xl">
+        <h1 className="text-balance mb-12 mt-8 text-6xl font-bold leading-tight tracking-tighter text-white md:text-7xl md:leading-none lg:text-8xl">
           {post.title}
         </h1>
         <div className="hidden md:mb-12 md:block">

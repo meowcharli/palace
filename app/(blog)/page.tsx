@@ -1,82 +1,90 @@
-// app/(blog)/page.tsx - Updated with image stack layout
-import Link from 'next/link';
-import { Suspense } from 'react';
+// app/(blog)/page.tsx
+import Link from "next/link";
+import { Suspense } from "react";
 
-import CoverImage from './cover-image';
-import Onboarding from './onboarding';
+import Avatar from "./avatar";
+import CoverImage from "./cover-image";
+import DateComponent from "./date";
+import MoreStories from "./more-stories";
+import Onboarding from "./onboarding";
+import PortableText from "./portable-text";
 
-import { sanityFetch } from '@/sanity/lib/fetch';
-import { moreStoriesQuery } from '@/sanity/lib/queries';
+import type { HeroQueryResult } from "@/sanity.types";
+import * as demo from "@/sanity/lib/demo";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { heroQuery, settingsQuery } from "@/sanity/lib/queries";
 
-// Simplified Image Stack component
-function ImageStack({ posts }: { 
-  posts: Array<{
-    _id: string;
-    title: string;
-    slug: string | null;
-    coverImage: any;
-    videoEmbed?: any;
-  }>
-}) {
-  if (!posts || posts.length === 0) {
-    return null;
-  }
-  
+// Hero post without title
+function HeroPost({
+  title,
+  slug,
+  excerpt,
+  coverImage,
+  videoEmbed,
+  date,
+  author,
+}: Pick<
+  Exclude<HeroQueryResult, null>,
+  "title" | "coverImage" | "videoEmbed" | "date" | "excerpt" | "author" | "slug"
+>) {
   return (
-    <div className="image-stack">
-      {posts.map((post) => (
-        <div key={post._id} className="image-stack-item">
-          <Link href={`/posts/${post.slug || ''}`} className="block">
-            <CoverImage 
-              image={post.coverImage} 
-              videoEmbed={post.videoEmbed || undefined} 
-              priority={posts.indexOf(post) < 2}
-            />
-          </Link>
+    <article>
+      <Link className="group mb-8 block md:mb-16" href={`/posts/${slug}`}>
+        <CoverImage image={coverImage} videoEmbed={videoEmbed || undefined} priority />
+      </Link>
+      <div className="mb-20 md:mb-28 md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8">
+        <div>
+          {/* Removed title */}
+          <div className="mb-4 text-lg md:mb-0">
+            <DateComponent dateString={date} />
+          </div>
         </div>
-      ))}
-    </div>
-  );
-}
-
-// Content wrapper component
-function PageContent({ posts }: { 
-  posts: Array<{
-    _id: string;
-    title: string;
-    slug: string | null;
-    coverImage: any;
-    videoEmbed?: any;
-  }>;
-}) {
-  // If no posts, show onboarding
-  if (!posts || posts.length === 0) {
-    return (
-      <div className="container mx-auto">
-        <Suspense fallback={<div className="py-60 text-center">Loading...</div>}>
-          <Onboarding />
-        </Suspense>
+        <div>
+          {excerpt && (
+            <p className="text-pretty mb-4 text-lg leading-relaxed">
+              {excerpt}
+            </p>
+          )}
+          {author && <Avatar name={author.name} picture={author.picture} />}
+        </div>
       </div>
-    );
-  }
-  
-  return (
-    <div className="container mx-auto px-5">
-      <ImageStack posts={posts} />
-    </div>
+    </article>
   );
 }
 
 export default async function Page() {
-  // Fetch all posts
-  const posts = await sanityFetch({ 
-    query: moreStoriesQuery, 
-    params: { skip: '', limit: 100 } // Fetch posts, adjust limit as needed
-  });
+  const [settings, heroPost] = await Promise.all([
+    sanityFetch({
+      query: settingsQuery,
+    }),
+    sanityFetch({ query: heroQuery }),
+  ]);
 
   return (
-    <Suspense fallback={<div className="container mx-auto py-20 text-center text-white">Loading...</div>}>
-      <PageContent posts={posts} />
-    </Suspense>
+    <div className="container mx-auto px-5">
+      {heroPost ? (
+        <HeroPost
+          title={heroPost.title}
+          slug={heroPost.slug}
+          coverImage={heroPost.coverImage}
+          videoEmbed={heroPost.videoEmbed}
+          excerpt={heroPost.excerpt}
+          date={heroPost.date}
+          author={heroPost.author}
+        />
+      ) : (
+        <Onboarding />
+      )}
+      {heroPost?._id && (
+        <aside>
+          <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter md:text-7xl">
+            More Stories
+          </h2>
+          <Suspense>
+            <MoreStories skip={heroPost._id} limit={2} />
+          </Suspense>
+        </aside>
+      )}
+    </div>
   );
 }

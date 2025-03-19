@@ -33,3 +33,16 @@ export const postQuery = defineQuery(`
     ${postFields}
   }
 `);
+
+export const galleryItemsQuery = defineQuery(`
+  *[_type == "galleryItem"] {
+    _id,
+    title,
+    image,
+    videoEmbed,
+    "articleSlug": article->slug.current,
+    "articleTitle": article->title,
+    order,
+    featured
+  }
+`);

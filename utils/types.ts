@@ -9,7 +9,7 @@ export interface VimeoEmbedProps {
   loop?: boolean;
   caption?: string;
   showThumbnail?: boolean;
-  isClickable?: boolean; // Added this new property
+  isClickable?: boolean;
 }
 
 // Post type definitions 
@@ -43,4 +43,16 @@ export interface Settings {
   description?: any[];
   footer?: any[];
   ogImage?: any;
+}
+
+// Gallery Item type
+export interface GalleryItem {
+  _id: string;
+  title: string;
+  image?: any;
+  videoEmbed?: VimeoEmbedProps;
+  articleSlug: string;
+  articleTitle: string;
+  order: number;
+  featured: boolean;
 }

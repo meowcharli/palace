@@ -1,3 +1,4 @@
+// app/(blog)/onboarding.tsx
 "use client";
 
 /**
@@ -39,13 +40,13 @@ export default function Onboarding() {
         />
       </svg>
       <div>
-        <h3 className="text-sm font-semibold text-gray-300">No posts</h3>
+        <h3 className="text-sm font-semibold text-gray-300">No content</h3>
         <p className="mt-1 text-sm text-gray-400">
-          Get started by creating a new post.
+          Get started by creating posts and gallery items.
         </p>
       </div>
 
-      <div>
+      <div className="flex flex-col items-center space-y-4">
         <Link
           className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           href="/studio/intent/create/template=post;type=post/"
@@ -61,6 +62,26 @@ export default function Onboarding() {
           </svg>
           Create Post
         </Link>
+        
+        <Link
+          className="inline-flex items-center rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+          href="/studio"
+          target={target}
+        >
+          <svg
+            className="-ml-0.5 mr-1.5 h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+          </svg>
+          Go to Sanity Studio
+        </Link>
+        
+        <p className="mt-2 text-xs text-gray-400">
+          In the Sanity Studio, you can create both posts and gallery items for your homepage.
+        </p>
       </div>
     </div>
   );

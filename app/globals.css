@@ -424,3 +424,143 @@ button:hover,
 body::after {
   display: none; /* Remove decoration */
 }
+
+/* Add to app/globals.css */
+
+/* Gallery Layout */
+.gallery-container {
+  margin-top: 2rem;
+}
+
+.gallery-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.gallery-item {
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+}
+
+@media (max-width: 640px) {
+  .gallery-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Gallery Layout - Add to app/globals.css */
+.gallery-container {
+  margin-top: 2rem;
+}
+
+.gallery-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.gallery-item {
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+}
+
+@media (max-width: 640px) {
+  .gallery-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Gallery Layout - Add to app/globals.css */
+.gallery-container {
+  margin-top: 2rem;
+}
+
+.gallery-item {
+  transition: transform 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+}
+
+.gallery-item img,
+.gallery-item .responsive-iframe-container {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.gallery-item .responsive-iframe-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+.gallery-item .responsive-iframe-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+}
+
+/* Larger post styling */
+.large-post {
+  width: 100%;
+  margin-bottom: 4rem;
+}
+
+/* Two posts per row, margin to margin */
+@media (min-width: 768px) {
+  .large-post {
+    max-width: 100%;
+  }
+  
+  .large-post img, 
+  .large-post .shadow-md {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+  }
+}
+
+/* Adjust spacing for the posts grid */
+@media (min-width: 768px) {
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  .md\:gap-x-16 {
+    column-gap: 2rem;
+  }
+  
+  .container {
+    width: 95%;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Ensure images maintain aspect ratio */
+.large-post .shadow-md, 
+.large-post .video-embed {
+  aspect-ratio: 16 / 9;
+  height: auto;
+  max-height: 100%;
+  object-fit: cover;
+}

@@ -1,3 +1,4 @@
+// sanity.config.ts
 "use client";
 /**
  * This config is used to set up Sanity Studio that's mounted on the `app/(sanity)/studio/[[...tool]]/page.tsx` route
@@ -18,6 +19,7 @@ import { pageStructure, singletonPlugin } from "@/sanity/plugins/settings";
 import { assistWithPresets } from "@/sanity/plugins/assist";
 import author from "@/sanity/schemas/documents/author";
 import post from "@/sanity/schemas/documents/post";
+import galleryItem from "@/sanity/schemas/documents/galleryItem";
 import settings from "@/sanity/schemas/singletons/settings";
 import { resolveHref } from "@/sanity/lib/utils";
 
@@ -37,6 +39,7 @@ export default defineConfig({
       // Documents
       post,
       author,
+      galleryItem,
     ],
   },
   plugins: [
@@ -68,6 +71,11 @@ export default defineConfig({
                 homeLocation,
               ],
             }),
+          }),
+          galleryItem: defineLocations({
+            locations: [homeLocation],
+            message: "Gallery items are shown on the homepage",
+            tone: "positive",
           }),
         },
       },
