@@ -70,15 +70,15 @@ header.site-header {
 }
 
 .pill-container.expanded {
-  width: 14rem;
+  width: 20rem;
 }
 
 .pill-container.collapsed {
-  width: 5.1rem; /* 99px - 10% smaller than previous */
+  width: 14rem; /* 99px - 10% smaller than previous */
 }
 
 .pill-button {
-  width: 2.1rem; /* 35.7px - keeping same as previous */
+  width: 6rem; /* 35.7px - keeping same as previous */
   height: 2.1rem; /* 35.7px - keeping same as previous */
   display: flex;
   align-items: center;
