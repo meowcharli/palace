@@ -26,6 +26,7 @@ export interface Post {
   date?: string;
   author?: Author;
   content?: any;
+  tags?: string[]; // Add tags property to Post interface
 }
 
 export interface Author {

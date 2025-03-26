@@ -1,8 +1,20 @@
 // File: app/(blog)/more-stories.tsx
 import Link from "next/link";
-import CoverImage from "./cover-image";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { Post } from "@/utils/types";
+
+// We need to create a custom type for this component since it includes 'tags'
+interface PostWithTags {
+  _id: string;
+  status?: string;
+  title: string;
+  slug: string | null;
+  excerpt?: string | null;
+  coverImage?: any;
+  videoEmbed?: any;
+  date?: string;
+  author?: any;
+  tags?: string[];
+}
 
 // Updated query - no longer skips any posts and shows all posts
 const allPostsQuery = `
@@ -22,12 +34,12 @@ const allPostsQuery = `
 
 export default async function MoreStories() {
   // Fetch all posts instead of just a few
-  const data = await sanityFetch({ query: allPostsQuery });
+  const data = await sanityFetch<PostWithTags[]>({ query: allPostsQuery });
 
   return (
     <>
       <div className="mb-8 grid grid-cols-3 gap-y-0 md:grid-cols-3 md:gap-x-0 md:gap-y-0 lg:gap-x-8">
-        {data?.map((post: Post) => {
+        {data?.map((post: PostWithTags) => {
           const { _id, title, slug, coverImage, videoEmbed, tags } = post;
           const postUrl = `/posts/${slug}`;
           
