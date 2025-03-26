@@ -34,7 +34,7 @@ const allPostsQuery = `
 
 export default async function MoreStories() {
   // Fetch all posts instead of just a few
-  const data = await sanityFetch<PostWithTags[]>({ query: allPostsQuery });
+  const data = await sanityFetch({ query: allPostsQuery });
 
   return (
     <>

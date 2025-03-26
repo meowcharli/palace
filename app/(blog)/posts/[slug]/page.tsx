@@ -87,20 +87,6 @@ export default async function PostPage({ params }: Props) {
             )}
           </div>
           
-          {/* Display tags if available */}
-          {post.tags && post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mb-8">
-              {post.tags.map((tag: string) => (
-                <Link 
-                  key={tag} 
-                  href={`/tags/${tag}`}
-                  className="text-sm px-3 py-1 bg-gray-800 text-gray-300 rounded hover:bg-gray-700"
-                >
-                  {tag}
-                </Link>
-              ))}
-            </div>
-          )}
         </div>
         {post.content?.length && (
           <PortableText
