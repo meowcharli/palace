@@ -2,6 +2,7 @@
 import Link from "next/link";
 import CoverImage from "./cover-image";
 import { sanityFetch } from "@/sanity/lib/fetch";
+import { Post } from "@/utils/types";
 
 // Updated query - no longer skips any posts and shows all posts
 const allPostsQuery = `
@@ -26,7 +27,7 @@ export default async function MoreStories() {
   return (
     <>
       <div className="mb-8 grid grid-cols-3 gap-y-0 md:grid-cols-3 md:gap-x-0 md:gap-y-0 lg:gap-x-8">
-        {data?.map((post) => {
+        {data?.map((post: Post) => {
           const { _id, title, slug, coverImage, videoEmbed, tags } = post;
           const postUrl = `/posts/${slug}`;
           
