@@ -1,4 +1,4 @@
-// app/(blog)/posts/[slug]/page.tsx
+// File: app/(blog)/posts/[slug]/page.tsx
 import { defineQuery } from "next-sanity";
 import type { Metadata, ResolvingMetadata } from "next";
 import { type PortableTextBlock } from "next-sanity";
@@ -6,10 +6,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
-import Avatar from "../../avatar";
-import CoverImage from "../../cover-image";
-import MoreStories from "../../more-stories";
-import PortableText from "../../portable-text";
+import Avatar from "@/app/(blog)/avatar";
+import CoverImage from "@/app/(blog)/cover-image";
+import MoreStories from "@/app/(blog)/more-stories";
+import PortableText from "@/app/(blog)/portable-text";
 
 import * as demo from "@/sanity/lib/demo";
 import { sanityFetch } from "@/sanity/lib/fetch";
@@ -68,7 +68,8 @@ export default async function PostPage({ params }: Props) {
     <div className="container mx-auto px-5">
       {/* Removed the back home link since we have the floating button */}
       <article>
-        <h1 className="text-balance mb-12 mt-8 text-6xl font-bold leading-tight tracking-tighter text-white md:text-7xl md:leading-none lg:text-8xl">
+        {/* Made the title smaller (text-4xl instead of text-6xl) */}
+        <h1 className="text-balance mb-8 mt-8 text-4xl font-boldd leading-tight tracking-tighter text-white md:text-5xl md:leading-none lg:text-5xl">
           {post.title}
         </h1>
         <div className="hidden md:mb-12 md:block">
@@ -85,6 +86,21 @@ export default async function PostPage({ params }: Props) {
               <Avatar name={post.author.name} picture={post.author.picture} />
             )}
           </div>
+          
+          {/* Display tags if available */}
+          {post.tags && post.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-8">
+              {post.tags.map((tag: string) => (
+                <Link 
+                  key={tag} 
+                  href={`/tags/${tag}`}
+                  className="text-sm px-3 py-1 bg-gray-800 text-gray-300 rounded hover:bg-gray-700"
+                >
+                  {tag}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
         {post.content?.length && (
           <PortableText
@@ -95,11 +111,13 @@ export default async function PostPage({ params }: Props) {
       </article>
       <aside>
         <hr className="border-gray-800 mb-24 mt-28" />
-        <h2 className="mb-8 text-6xl font-bold leading-tight tracking-tighter text-white md:text-7xl">
-          Recent Stories
+        {/* Changed heading to "All Posts" and made it smaller */}
+        <h2 className="mb-8 text-3xl font-bold leading-tight tracking-tighter text-white md:text-4xl">
+        all posts ▾
         </h2>
         <Suspense>
-          <MoreStories skip={post._id} limit={2} />
+          {/* Removing the parameters since MoreStories now shows all posts */}
+          <MoreStories />
         </Suspense>
       </aside>
     </div>

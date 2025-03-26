@@ -7,7 +7,6 @@ import VimeoEmbed from "@/components/VimeoEmbed";
 import { urlForImage } from '@/sanity/lib/utils';
 import type { GalleryItem } from '@/utils/types';
 import Onboarding from "./onboarding";
-import PortableText from "./portable-text";
 
 // Main Page Component
 export default function Page() {
@@ -111,7 +110,7 @@ function GalleryItemComponent({ item }: { item: GalleryItem }) {
       className="gallery-item block transform transition-transform duration-300 hover:-translate-y-0.5 mb-2 w-full"
     >
       {item.videoEmbed?.url ? (
-        // Video content - With autoplay and controls hidden for preview
+        // Video content - With explicit isClickable flag for overlay
         <div className="gallery-video-container w-full">
           <VimeoEmbed 
             url={item.videoEmbed.url} 
@@ -120,12 +119,12 @@ function GalleryItemComponent({ item }: { item: GalleryItem }) {
             autoplay={true}
             loop={true}
             showThumbnail={false}
-            isClickable={true}
+            isClickable={true} // This enables the invisible overlay
             hideCaption={true}
           />
         </div>
       ) : item.image?.asset?._ref ? (
-        // Image content - Using original code
+        // Image content
         <div className="gallery-image-container w-full">
           <Image
             src={urlForImage(item.image)?.width(800).url() || ''}

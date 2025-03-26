@@ -80,7 +80,17 @@ export default function VimeoEmbed({
   if (embedCode && embedCode.includes('<iframe')) {
     return (
       <div className={`video-embed w-full ${className}`} style={customHeight ? { height: `${customHeight}px` } : {}}>
-        <div dangerouslySetInnerHTML={{ __html: embedCode }} />
+        <div className="relative">
+          <div dangerouslySetInnerHTML={{ __html: embedCode }} />
+          
+          {/* Add invisible overlay for clickable items */}
+          {isClickable && (
+            <div 
+              className="absolute inset-0 z-10 cursor-pointer" 
+              aria-hidden="true"
+            />
+          )}
+        </div>
         {!hideCaption && caption && <p className="video-caption mt-2">{caption}</p>}
       </div>
     );
@@ -119,6 +129,14 @@ export default function VimeoEmbed({
                   </svg>
                 </div>
               </div>
+            )}
+            
+            {/* If this is a clickable item in a gallery, add an invisible overlay */}
+            {isClickable && (
+              <div 
+                className="absolute inset-0 z-10 cursor-pointer" 
+                aria-hidden="true"
+              />
             )}
             
             {/* Loading placeholder */}
@@ -161,7 +179,8 @@ export default function VimeoEmbed({
         height: customHeight ? `${customHeight}px` : 'auto',
         backgroundColor: '#000',
         borderRadius: '8px',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        position: 'relative' // Added for positioning the overlay correctly
       }}
     >
       <div 
@@ -191,6 +210,15 @@ export default function VimeoEmbed({
           }}
         />
       </div>
+      
+      {/* Add invisible overlay for clickable items */}
+      {isClickable && (
+        <div 
+          className="absolute inset-0 z-10 cursor-pointer" 
+          aria-hidden="true"
+        />
+      )}
+      
       {!hideCaption && caption && <p className="video-caption mt-2 text-gray-400">{caption}</p>}
     </div>
   );
