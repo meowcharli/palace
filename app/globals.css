@@ -436,7 +436,7 @@ body::after {
 /* Ensure gap between columns on desktop */
 @media (min-width: 768px) {
   .gallery-vertical-columns .grid {
-    column-gap: 2rem;
+    column-gap: 0.2rem;
   }
 }
 
@@ -451,14 +451,13 @@ body::after {
 .gallery-item {
   width: 100%;
   margin-bottom: 2rem;
-  transform: translateY(0);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 .gallery-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0.85; /* 92% opacity (8% darker) */
 }
 
 /* Image styling */

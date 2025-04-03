@@ -8,6 +8,55 @@ import { urlForImage } from '@/sanity/lib/utils';
 import type { GalleryItem } from '@/utils/types';
 import Onboarding from "./onboarding";
 
+// Gallery Item Component - Moved outside of Page component
+function GalleryItemComponent({ item }: { item: GalleryItem }) {
+  return (
+    <Link 
+      href={`/posts/${item.articleSlug}`} 
+      className="gallery-item block mb-2 w-full relative group"
+    >
+      {item.videoEmbed?.url ? (
+        // Video content - With explicit isClickable flag for overlay
+        <div className="gallery-video-container w-full">
+          <VimeoEmbed 
+            url={item.videoEmbed.url} 
+            embedCode={item.videoEmbed.embedCode}
+            hideControls={true}
+            autoplay={true}
+            loop={true}
+            showThumbnail={false}
+            isClickable={true} // This enables the invisible overlay
+            hideCaption={true}
+          />
+          <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-7 transition-opacity duration-300"></div>
+        </div>
+      ) : item.image?.asset?._ref ? (
+        // Image content
+        <div className="gallery-image-container w-full relative">
+          <Image
+            src={urlForImage(item.image)?.url() || ''}
+            alt={item.image.alt || item.title || 'Gallery image'}
+            width={2000}
+            height={0}
+            quality={100}
+            sizes="(max-width: 768px) 100vw, 100vw"
+            className="w-full h-auto shadow-lg"
+            style={{ aspectRatio: 'auto' }}
+            priority={true}
+          />
+          <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-7 transition-opacity duration-300"></div>
+        </div>
+      ) : (
+        // Fallback for items without image or video
+        <div className="gallery-placeholder w-full h-64 bg-gray-800 flex items-center justify-center relative">
+          <span className="text-gray-400">Image</span>
+          <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-7 transition-opacity duration-300"></div>
+        </div>
+      )}
+    </Link>
+  );
+}
+
 // Main Page Component
 export default function Page() {
   const [settings, setSettings] = useState<any>(null);
@@ -74,18 +123,26 @@ export default function Page() {
     );
   }
   
-  // Split the shuffled items into two columns
-  const leftColumnItems = shuffledItems.filter((_, index) => index % 2 === 0);
-  const rightColumnItems = shuffledItems.filter((_, index) => index % 2 === 1);
-  
+  // Split the shuffled items into three columns
+  const leftColumnItems = shuffledItems.filter((_, index) => index % 3 === 0);
+  const middleColumnItems = shuffledItems.filter((_, index) => index % 3 === 1);
+  const rightColumnItems = shuffledItems.filter((_, index) => index % 3 === 2);
+
   return (
     <div className="container mx-auto px-5">
       {/* Gallery layout */}
       <div className="gallery-vertical-columns mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-0 gap-y-1">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-0 gap-y-1">
           {/* Left Column */}
           <div className="gallery-column flex flex-col space-y-0">
             {leftColumnItems.map((item) => (
+              <GalleryItemComponent key={item._id} item={item} />
+            ))}
+          </div>
+          
+          {/* Middle Column */}
+          <div className="gallery-column flex flex-col space-y-0">
+            {middleColumnItems.map((item) => (
               <GalleryItemComponent key={item._id} item={item} />
             ))}
           </div>
@@ -99,50 +156,5 @@ export default function Page() {
         </div>
       </div>
     </div>
-  );
-}
-
-function GalleryItemComponent({ item }: { item: GalleryItem }) {
-  return (
-    <Link 
-      href={`/posts/${item.articleSlug}`} 
-      className="gallery-item block transform transition-transform duration-300 hover:-translate-y-0.5 mb-2 w-full"
-    >
-      {item.videoEmbed?.url ? (
-        // Video content - With explicit isClickable flag for overlay
-        <div className="gallery-video-container w-full">
-          <VimeoEmbed 
-            url={item.videoEmbed.url} 
-            embedCode={item.videoEmbed.embedCode}
-            hideControls={true}
-            autoplay={true}
-            loop={true}
-            showThumbnail={false}
-            isClickable={true} // This enables the invisible overlay
-            hideCaption={true}
-          />
-        </div>
-      ) : item.image?.asset?._ref ? (
-        // Image content
-        <div className="gallery-image-container w-full">
-          <Image
-            src={urlForImage(item.image)?.url() || ''}
-            alt={item.image.alt || item.title || 'Gallery image'}
-            width={2000}
-            height={0}
-            quality={100}
-            sizes="(max-width: 768px) 100vw, 100vw"
-            className="w-full h-auto shadow-lg"
-            style={{ aspectRatio: 'auto' }}
-            priority={true}
-          />
-        </div>
-      ) : (
-        // Fallback for items without image or video
-        <div className="gallery-placeholder w-full h-64 bg-gray-800 flex items-center justify-center">
-          <span className="text-gray-400">Image</span>
-        </div>
-      )}
-    </Link>
   );
 }
