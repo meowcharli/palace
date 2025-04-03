@@ -82,16 +82,16 @@ export default function Page() {
     <div className="container mx-auto px-5">
       {/* Gallery layout */}
       <div className="gallery-vertical-columns mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-0 gap-y-1">
           {/* Left Column */}
-          <div className="gallery-column flex flex-col space-y-2">
+          <div className="gallery-column flex flex-col space-y-0">
             {leftColumnItems.map((item) => (
               <GalleryItemComponent key={item._id} item={item} />
             ))}
           </div>
           
           {/* Right Column */}
-          <div className="gallery-column flex flex-col space-y-2">
+          <div className="gallery-column flex flex-col space-y-0">
             {rightColumnItems.map((item) => (
               <GalleryItemComponent key={item._id} item={item} />
             ))}
@@ -132,14 +132,14 @@ function GalleryItemComponent({ item }: { item: GalleryItem }) {
             height={0}
             quality={100}
             sizes="(max-width: 768px) 100vw, 100vw"
-            className="w-full h-auto rounded-lg shadow-lg"
+            className="w-full h-auto shadow-lg"
             style={{ aspectRatio: 'auto' }}
             priority={true}
           />
         </div>
       ) : (
         // Fallback for items without image or video
-        <div className="gallery-placeholder w-full h-64 bg-gray-800 rounded-lg flex items-center justify-center">
+        <div className="gallery-placeholder w-full h-64 bg-gray-800 flex items-center justify-center">
           <span className="text-gray-400">Image</span>
         </div>
       )}

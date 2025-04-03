@@ -25,18 +25,18 @@ header.site-header {
 
 /* ========== Container Styles ========== */
 .container {
-  max-width: 1300px;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  max-width: 1800px;
+  padding-left: 0rem;
+  padding-right: 0rem;
 }
 
 .container-wide {
   width: 100%;
-  max-width: 1800px;
+  max-width: 2000px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-left: 0rem;
+  padding-right: 0rem;
 }
 
 /* ========== Floating Button Styles ========== */
