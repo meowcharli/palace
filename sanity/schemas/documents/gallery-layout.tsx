@@ -87,6 +87,7 @@ function GalleryItemComponent({ item }: { item: GalleryItem }) {
               height={0}
               sizes="(max-width: 2000px) 100vw, 800px"
               className="w-full h-auto rounded-lg shadow-lg"
+              quality={100}
               style={{ aspectRatio: 'auto' }}
             />
           </div>
