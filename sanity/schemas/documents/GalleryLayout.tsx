@@ -81,14 +81,18 @@ function GalleryItemComponent({ item }: { item: GalleryItem }) {
         <div className="gallery-image-container w-full">
           <div className="relative w-full">
             <Image
-              src={urlForImage(item.image)?.width(800).url() || ''}
+              src={urlForImage(item.image)
+                ?.width(1600) // Increased width for higher quality
+                .quality(100) // Set quality parameter in URL builder
+                .url() || ''}
               alt={item.image.alt || item.title || 'Gallery image'}
-              width={800}
+              width={1600} // Match with width used in URL builder
               height={0}
-              sizes="(max-width: 2000px) 100vw, 800px"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 800px" // Better responsive sizing
               className="w-full h-auto rounded-lg shadow-lg"
               quality={100}
               style={{ aspectRatio: 'auto' }}
+              priority={true} // Add priority for above-the-fold images
             />
           </div>
           {item.title && (
