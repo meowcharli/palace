@@ -85,7 +85,7 @@ function GalleryItemComponent({ item }: { item: GalleryItem }) {
               alt={item.image.alt || item.title || 'Gallery image'}
               width={800}
               height={0}
-              sizes="(max-width: 768px) 100vw, 800px"
+              sizes="(max-width: 2000px) 100vw, 800px"
               className="w-full h-auto rounded-lg shadow-lg"
               style={{ aspectRatio: 'auto' }}
             />
