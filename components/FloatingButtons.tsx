@@ -38,15 +38,12 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
   // Handle exit preview mode
   const handleExitPreview = () => {
     console.log("Exit Preview Mode clicked");
-    // Try to disable draft mode by fetching the API route
     fetch('/api/draft-mode/disable', { method: 'GET' })
       .then(() => {
-        // Reload the page to ensure we're out of draft mode
         window.location.href = '/';
       })
       .catch(err => {
         console.error('Error disabling draft mode:', err);
-        // If API call fails, just navigate normally
         window.location.href = '/';
       });
   };
@@ -83,7 +80,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
 
   return (
     <>
-      {/* Draft mode exit button - in a completely separate div */}
+      {/* Draft mode exit button */}
       {isDraftMode && (
         <div 
           style={{ 
@@ -101,7 +98,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           <button
             onClick={handleExitPreview}
             style={{
-              backgroundColor: '#004cff',
+              backgroundColor: '000000',
               color: 'white',
               padding: '8px 24px',
               borderRadius: '9999px',
@@ -121,91 +118,136 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       {/* Regular floating buttons */}
       <div className="fixed top-0 left-0 w-full z-50 pointer-events-none p-4">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center">
-            {/* Logo with dual outlines */}
+          <div className="flex justify-between items-start">
+            {/* Logo with hover effect */}
             <Link href="/" className="pointer-events-auto">
-              <div className="invisible-button">
-                <div className="logo-container">
-                  <svg width="138" height="33.6" viewBox="-10 -10 439.17 114.81" className="logo">
-                    {/* Added padding to the viewBox (-10 on each side) */}
-                    <path className="logo-path-black" d="M419.17 0v17.84h-53.06c-2.36 0-4.28 1.91-4.28 4.27v16.96h57.34v30.24l-.72.73-24.06 24.03-.72.73h-49.68V76.97h53.06c2.36 0 4.27-1.92 4.27-4.28V56.91h-57.33V25.49l.73-.72L368.76.72l.73-.72zm-86 39.09v30.64l-.72.73-23.63 23.62-.72.73H258v-69.3l.73-.73L282.77.74l.73-.73h42.01l-4.22 4.22-12.89 12.9-.72.73h-27.55c-2.36 0-4.28 1.92-4.28 4.28v54.83h35.27c2.36 0 4.28-1.92 4.28-4.28v-33.6zM57.34 0h17.82v94.79H57.34V56.91H25.48l-.72-.72L.72 32.14 0 31.41V0h17.84v34.8c0 2.36 1.92 4.28 4.28 4.28h35.22zm103.82 0v17.84H108.1c-2.36 0-4.28 1.91-4.28 4.27v16.96h57.34v30.24l-.72.73-24.05 24.03-.72.73H86V76.97h53.04c2.36 0 4.28-1.92 4.28-4.28V56.91H86V25.49l.72-.72L110.75.72l.73-.72zm86.02 0v17.84h-24.39c-2.36 0-4.28 1.91-4.28 4.27v50.58c0 2.36 1.92 4.28 4.28 4.28h24.39V94.8h-75.19V76.97h24.39c2.36 0 4.28-1.92 4.28-4.28V22.11c0-2.36-1.92-4.27-4.28-4.27h-24.39V0z" />
-                    <path className="logo-path-white" d="M419.17 0v17.84h-53.06c-2.36 0-4.28 1.91-4.28 4.27v16.96h57.34v30.24l-.72.73-24.06 24.03-.72.73h-49.68V76.97h53.06c2.36 0 4.27-1.92 4.27-4.28V56.91h-57.33V25.49l.73-.72L368.76.72l.73-.72zm-86 39.09v30.64l-.72.73-23.63 23.62-.72.73H258v-69.3l.73-.73L282.77.74l.73-.73h42.01l-4.22 4.22-12.89 12.9-.72.73h-27.55c-2.36 0-4.28 1.92-4.28 4.28v54.83h35.27c2.36 0 4.28-1.92 4.28-4.28v-33.6zM57.34 0h17.82v94.79H57.34V56.91H25.48l-.72-.72L.72 32.14 0 31.41V0h17.84v34.8c0 2.36 1.92 4.28 4.28 4.28h35.22zm103.82 0v17.84H108.1c-2.36 0-4.28 1.91-4.28 4.27v16.96h57.34v30.24l-.72.73-24.05 24.03-.72.73H86V76.97h53.04c2.36 0 4.28-1.92 4.28-4.28V56.91H86V25.49l.72-.72L110.75.72l.73-.72zm86.02 0v17.84h-24.39c-2.36 0-4.28 1.91-4.28 4.27v50.58c0 2.36 1.92 4.28 4.28 4.28h24.39V94.8h-75.19V76.97h24.39c2.36 0 4.28-1.92 4.28-4.28V22.11c0-2.36-1.92-4.27-4.28-4.27h-24.39V0z" />
-                  </svg>
-                </div>
+              <div className="logo-hover-container">
+                <svg width="111.11" height="57.39" viewBox="0 0 111.11 57.39" className="logo-default">
+                  <path d="M27.68 0v5.54H16.61v22.14h-5.54V5.54H0V0zm29.66 0v8.26L46.27 19.33v8.34h-5.54v-8.34L29.66 8.26V0h5.54v6.72l8.3 8.3 8.3-8.3V0zm24.12 0L87 5.54v5.54l-5.54 5.54H64.85v11.07h-5.54V0h22.14ZM64.85 11.07h16.61V5.53H64.85zM111.11 0v5.54H94.5v5.54h11.07v5.54H94.5v5.54h16.61v5.54H88.97V0zM27.68 29.71v5.54H16.61v22.14h-5.54V35.25H0v-5.54zm24.12 0 5.54 5.54v22.14H51.8V46.32H35.19v11.07h-5.54V35.25l5.54-5.54zM35.19 40.78H51.8v-5.54H35.19zm51.8-11.07v5.54h-3.16l-8.3 8.3 8.3 8.3h3.16v5.54H75.05v-5.06h2.17l-4.07-4.07-9.13 9.13h-4.71v-5.54h3.16l8.3-8.3-8.3-8.3h-3.16v-5.54h11.94v5.06h-2.17l4.07 4.07 9.13-9.13z" fill="#919191" />
+                </svg>
+                <svg width="123.25" height="57.39" viewBox="0 0 123.25 57.39" className="logo-hover">
+                  <path d="M27.68 0v5.54H16.61v22.14h-5.54V5.54H0V0zm29.66 0v8.26L46.27 19.33v8.34h-5.54v-8.34L29.66 8.26V0h5.54v6.72l8.3 8.3 8.3-8.3V0zm24.12 0L87 5.54v5.54l-5.54 5.54H64.85v11.07h-5.54V0h22.14ZM64.85 11.07h16.61V5.53H64.85zM111.11 0v5.54H94.5v5.54h11.07v5.54H94.5v5.54h16.61v5.54H88.97V0zM27.68 29.71v5.54H16.61v22.14h-5.54V35.25H0v-5.54zm24.12 0 5.54 5.54v22.14H51.8V46.32H35.19v11.07h-5.54V35.25l5.54-5.54zM35.19 40.78H51.8v-5.54H35.19zm51.8-11.07v5.54h-3.16l-8.3 8.3 8.3 8.3h3.16v5.54H75.05v-5.06h2.17l-4.07-4.07-9.13 9.13h-4.71v-5.54h3.16l8.3-8.3-8.3-8.3h-3.16v-5.54h11.94v5.06h-2.17l4.07 4.07 9.13-9.13zm22.42 0L98.34 40.78h24.91v5.54H98.34l11.07 11.07h-6.6L88.97 43.55l13.84-13.84z" fill="#9f9f9f" />
+                </svg>
               </div>
             </Link>
             
-            {/* Right Side Pill with Icons */}
-            <div className="flex items-center pointer-events-auto">
-              {/* Pill Container */}
-              <div className={`pill-container ${isSearchOpen ? 'expanded' : 'collapsed'}`} ref={searchContainerRef}>
-                {/* Search Input (Conditionally Rendered with Delayed Appearance) */}
-                {isSearchOpen && (
-                  <div className="flex-grow px-3">
-                    <div className="search-pill-wrapper">
-                      <div className="search-pill">
-                        <form onSubmit={handleSubmit} className="w-full">
-                          <input
-                            ref={searchInputRef}
-                            type="text"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder="Search..."
-                            className="search-input"
-                          />
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                )}
+            {/* Right Side - SVGs and Search */}
+            <div className="flex items-start pointer-events-auto">
+              {/* Search Container (Only appears when search is open) */}
+              {isSearchOpen && (
+                <div className="search-container mr-4" ref={searchContainerRef}>
+                  <form onSubmit={handleSubmit} className="w-full">
+                    <input
+                      ref={searchInputRef}
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search..."
+                      className="search-input"
+                    />
+                  </form>
+                </div>
+              )}
+              
+              {/* SVG Buttons - Stacked Vertically */}
+              <div className="flex flex-col items-end" style={{ gap: `${0.2}rem` }}>
+                {/* Search Button SVG */}
+                <svg 
+                  data-name="Layer 2" 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="-19 0 234.23 31.37" 
+                  height="20"
+                  className="svg-clickable"
+                  onClick={toggleSearch}
+                  aria-label="Search"
+                >
+                  <path 
+                    d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm48.17 0v6.27H47.37v6.27h18.82l6.27 6.27v6.27l-6.27 6.27H42.22v-6.27h23.97v-6.27H47.37l-6.27-6.27V6.27L47.37 0zm28.45 0v6.27H80.97v6.27h12.55v6.27H80.97v6.27h18.82v6.27H74.7V0zm27.34 0 6.27 6.27v25.09h-6.27V18.81h-18.82v12.55h-6.27V6.27L108.31 0zm-18.82 12.55h18.82V6.28h-18.82zM160.74 0l6.27 6.27v6.27l-5.42 5.42 5.42 5.42v7.98h-6.27v-6.27l-6.27-6.27h-12.55v12.55h-6.27V0zm-18.82 12.55h18.82V6.28h-18.82zM194.35 0l6.27 6.27v6.27h-6.27V6.27h-18.82v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27h-18.82l-6.27-6.27V6.27L175.53 0zm39.88 0v31.37h-6.27V18.82h-18.82v12.55h-6.27V0h6.27v12.55h18.82V0z" 
+                    fill="#919191"
+                  />
+                </svg>
                 
-                {/* Search Button - Hidden when search is open */}
-                {!isSearchOpen && (
-                  <button
-                    onClick={toggleSearch}
-                    className="pill-button"
-                    aria-label="Search"
+                {/* Contact Button SVG */}
+                <Link href="/contact">
+                  <svg 
+                    data-name="Layer 2" 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 274.11 31.37" 
+                    height="20"
+                    className="svg-clickable"
+                    aria-label="Contact"
                   >
-                    <svg 
-                      data-name="Layer 2" 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      viewBox="0 0 750 90.16" 
-                      className="w-full h-full"
-                    >
-                      <path 
-                        d="M0 72.98V17.31L16.29 0h23.09l-17.7 18.72c-1.11 1.03-1.67 2.35-1.67 3.98v44.76c0 1.62.56 2.95 1.67 3.98l17.57 18.72H16.29zm56.94 17.18V72.2h47.2q2.955 0 5.13-2.31c1.45-1.54 2.18-3.38 2.18-5.52V54.11H62.97c-1.2 0-2.18-.19-2.95-.58s-1.39-.85-1.86-1.41c-.47-.55-.79-1.13-.96-1.73s-.26-1.07-.26-1.41V24.23L81.82 0h49.63v17.96h-47.2q-2.955 0-5.13 2.31c-1.46 1.54-2.18 3.38-2.18 5.51v10.39h48.48c1.2 0 2.18.19 2.95.58s1.39.86 1.86 1.41c.47.56.79 1.11.96 1.67s.26 1.01.26 1.35v24.88l-24.88 24.11H56.94Zm92.22 0V0h74.52v17.96h-50.66c-.86 0-1.71.41-2.56 1.22-.86.81-1.28 1.95-1.28 3.4v13.59h40.91v17.96h-40.91v13.59c0 1.37.43 2.46 1.28 3.27s1.71 1.22 2.56 1.22h50.66v17.96h-74.52Zm92.21-65.92L266.25 0H291l24.88 24.24v65.92h-20.01V54.12h-30.65c-.86 0-1.71.38-2.56 1.15-.86.77-1.28 1.88-1.28 3.33v31.55h-20.01zm48.48 15.77q2.31 0 4.17-1.92c1.24-1.28 1.86-2.86 1.86-4.75v-7.57c0-2.14-.71-3.98-2.12-5.51s-3.1-2.31-5.07-2.31h-20.14c-1.97 0-3.65.77-5.07 2.31-1.41 1.54-2.12 3.38-2.12 5.51v14.24h28.47Zm43.73-15.77L358.46 0h49.63v29.88L397.7 40.01c-2.57 2.57-3.85 5.17-3.85 7.82s.98 4.81 2.95 6.48 4.66 2.59 8.08 2.76l3.21.13v32.96h-20.01V70.67c0-2.05-.38-4.06-1.15-6.03s-1.86-3.72-3.27-5.26-3.12-2.8-5.13-3.78-4.25-1.47-6.73-1.47h-18.21v36.04h-20.01zm50.28 11.93q1.41 0 2.82-1.41c.94-.94 1.41-2.14 1.41-3.59V17.96h-30.27q-1.41 0-2.82 1.35c-.94.9-1.41 2.07-1.41 3.53v13.34h30.27Zm41.81 53.99V24.24L450.55 0h49.76v27.57h-20.14v-9.62h-26.55c-2.22 0-4.08.86-5.58 2.57s-2.24 3.68-2.24 5.9v45.79h29.88v-9.62h24.62v4.23l-23.47 23.34h-51.17Zm92.08 0V0h20.01v36.17h30.65c.85 0 1.71-.4 2.56-1.22.85-.81 1.28-1.9 1.28-3.27V0h20.01v90.16h-20.01V54.12H541.6c-.86 0-1.71.38-2.56 1.15-.86.77-1.28 1.84-1.28 3.21v31.68zm91.96 0 17.7-18.6c1.11-1.28 1.67-2.65 1.67-4.1V22.7c0-1.54-.56-2.86-1.67-3.98L609.71 0h23.09l16.29 17.31v55.66L632.8 90.16z" 
-                        data-name="Layer 2"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </button>
-                )}
-                
-                {/* Support Button - Hidden when search is open */}
-                {!isSearchOpen && (
-                  <Link 
-                    href="/contact" 
-                    className="pill-button flex items-center justify-center"
-                  >
-                    <svg 
-                      data-name="Layer 2" 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      viewBox="0 0 750 90.16" 
-                      className="w-full h-full"
-                    >
-                      <path 
-                        d="M0 72.98V17.31L16.29 0h23.09l-17.7 18.72c-1.11 1.03-1.67 2.35-1.67 3.98v44.76c0 1.62.56 2.95 1.67 3.98l17.57 18.72H16.29zm56.81 17.18V24.24L81.7 0h49.76v27.57h-20.14v-9.62H84.77c-2.22 0-4.08.86-5.58 2.57s-2.24 3.68-2.24 5.9v45.79h29.88v-9.62h24.62v4.23l-23.47 23.34zm92.09-65.92L173.78 0h49.63v66.05l-24.88 24.11H148.9zm47.97 47.97c1.71 0 3.23-.68 4.55-2.05s1.99-3.03 1.99-5v-47.2h-27.96c-1.71 0-3.23.71-4.55 2.12-1.33 1.41-1.99 3.1-1.99 5.07v47.07h27.96Zm44.24 17.95V0h20.01v14.11c0 2.14.81 4.02 2.44 5.64 5.39 5.22 10.73 10.41 16.03 15.58s10.65 10.37 16.03 15.58V0h20.01v90.16h-20.01V76.31c0-2.22-.77-4.02-2.31-5.39l-32.19-31.29v50.53zm119.41 0V22.57c0-1.45-.43-2.58-1.28-3.4-.86-.81-1.75-1.22-2.69-1.22h-23.21V0h74.52v17.96h-23.21c-.94 0-1.84.41-2.69 1.22-.86.81-1.28 1.95-1.28 3.4v67.59h-20.14Zm65.02-65.92L450.42 0h24.75l24.88 24.24v65.92h-20.01V54.12h-30.65c-.86 0-1.71.38-2.56 1.15-.86.77-1.28 1.88-1.28 3.33v31.55h-20.01zm48.48 15.77q2.31 0 4.17-1.92c1.24-1.28 1.86-2.86 1.86-4.75v-7.57c0-2.14-.71-3.98-2.12-5.51s-3.1-2.31-5.07-2.31h-20.14c-1.97 0-3.65.77-5.07 2.31-1.41 1.54-2.12 3.38-2.12 5.51v14.24H474Zm43.61 50.15V24.24L542.51 0h49.76v27.57h-20.14v-9.62h-26.55c-2.22 0-4.08.86-5.58 2.57s-2.24 3.68-2.24 5.9v45.79h29.88v-9.62h24.62v4.23l-23.47 23.34h-51.17Zm119.27 0V22.57c0-1.45-.43-2.58-1.28-3.4-.86-.81-1.75-1.22-2.69-1.22h-23.21V0h74.52v17.96h-23.21c-.94 0-1.84.41-2.69 1.22-.86.81-1.28 1.95-1.28 3.4v67.59h-20.14Zm64.9 0 17.7-18.6c1.11-1.28 1.67-2.65 1.67-4.1V22.7c0-1.54-.56-2.86-1.67-3.98L701.8 0h23.09l16.29 17.31v55.66l-16.29 17.19z" 
-                        data-name="Layer 2"
-                        fill="currentColor"
-                      />
-                    </svg>
-                  </Link>
-                )}
+                    <path 
+                      d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm43.02 0 6.27 6.27v6.27h-6.27V6.27H47.37v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H47.37l-6.27-6.27V6.27L47.37 0zm33.6 0 6.27 6.27v18.82l-6.27 6.27H80.97l-6.27-6.27V6.27L80.97 0zM80.97 25.09h18.82V6.27H80.97zM139.68 0v31.37h-6.27v-2.29l-18.82-18.82v21.11h-6.27V0h6.27v2.29l18.82 18.82V0zm33.61 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81H181.8v12.55h-6.27V6.27L181.8 0zM181.8 12.55h18.82V6.28H181.8zM234.23 0l6.27 6.27v6.27h-6.27V6.27h-18.82v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27h-18.82l-6.27-6.27V6.27L215.41 0zm39.88 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0z" 
+                      fill="#919191"
+                    />
+                  </svg>
+                </Link>
               </div>
             </div>
           </div>
         </div>
       </div>
+      
+      <style jsx>{`
+        .logo-hover-container {
+          position: relative;
+          display: inline-block;
+        }
+        
+        .logo-default {
+          display: block;
+          transition: opacity 0s ease;
+        }
+        
+        .logo-hover {
+          position: absolute;
+          top: 0;
+          left: 0;
+          opacity: 0;
+          transition: opacity 0s ease;
+        }
+        
+        .logo-hover-container:hover .logo-default {
+          opacity: 0;
+        }
+        
+        .logo-hover-container:hover .logo-hover {
+          opacity: 1;
+        }
+        
+        .search-container {
+          height: 45px;
+          width: 400px;
+          background-color:rgb(0, 0, 0);
+          display: flex;
+          align-items: center;
+        }
+        
+        .search-input {
+          width: 100%;
+          height: 100%;
+          padding: 0 10px;
+          border: none;
+          outline: none;
+          background: transparent;
+          color: #fff;
+          font-size: 16px;
+        }
+        
+        .search-input::placeholder {
+          color: #000;
+        }
+        
+        .svg-clickable {
+          cursor: pointer;
+          transition: opacity 0.3s ease;
+        }
+        
+        .svg-clickable:hover {
+          opacity: 0.7;
+        }
+      `}</style>
     </>
   );
 }
