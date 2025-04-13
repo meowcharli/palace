@@ -12,11 +12,10 @@ const PostFeaturedVideo: React.FC<PostFeaturedVideoProps> = ({ videoUrl, title }
   return (
     <div className="post-featured-video">
       <VimeoEmbed 
-        url={videoUrl} 
-        caption={title} 
-        showThumbnail={true} 
-        className="mb-8" 
-      />
+        url={videoUrl}
+        caption={title}
+        showThumbnail={true}
+        className="mb-8" aspectRatio={''}      />
     </div>
   );
 };
