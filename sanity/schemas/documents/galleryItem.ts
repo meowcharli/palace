@@ -66,6 +66,20 @@ export default defineType({
           description: "Optional: Paste custom Vimeo embed code instead of URL for more control"
         },
         {
+          name: "aspectRatio",
+          title: "Aspect Ratio",
+          type: "string",
+          options: {
+            list: [
+              { title: "16:9 (Widescreen)", value: "16:9" },
+              { title: "1:1 (Square)", value: "1:1" },
+            ],
+            layout: "dropdown"
+          },
+          initialValue: "16:9",
+          validation: (Rule) => Rule.required()
+        },
+        {
           name: "hideControls",
           type: "boolean",
           title: "Hide Controls",

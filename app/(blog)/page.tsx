@@ -8,30 +8,29 @@ import { urlForImage } from '@/sanity/lib/utils';
 import type { GalleryItem } from '@/utils/types';
 import Onboarding from "./onboarding";
 
-// Gallery Item Component - Moved outside of Page component
 function GalleryItemComponent({ item }: { item: GalleryItem }) {
   return (
     <Link 
       href={`/posts/${item.articleSlug}`} 
       className="gallery-item block mb-2 w-full relative group"
+      style={{ display: 'block' }}
     >
       {item.videoEmbed?.url ? (
-        // Video content - With explicit isClickable flag for overlay
         <div className="gallery-video-container w-full">
           <VimeoEmbed 
-            url={item.videoEmbed.url} 
+            url={item.videoEmbed.url}
             embedCode={item.videoEmbed.embedCode}
             hideControls={true}
             autoplay={true}
             loop={true}
             showThumbnail={false}
-            isClickable={true} // This enables the invisible overlay
+            isClickable={true}
             hideCaption={true}
+            aspectRatio={item.videoEmbed?.aspectRatio || "16:9"}
           />
-          <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-7 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-300"></div>
         </div>
       ) : item.image?.asset?._ref ? (
-        // Image content
         <div className="gallery-image-container w-full relative">
           <Image
             src={urlForImage(item.image)?.url() || ''}
@@ -47,7 +46,6 @@ function GalleryItemComponent({ item }: { item: GalleryItem }) {
           <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-7 transition-opacity duration-300"></div>
         </div>
       ) : (
-        // Fallback for items without image or video
         <div className="gallery-placeholder w-full h-64 bg-gray-800 flex items-center justify-center relative">
           <span className="text-gray-400">Image</span>
           <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-7 transition-opacity duration-300"></div>
@@ -57,18 +55,15 @@ function GalleryItemComponent({ item }: { item: GalleryItem }) {
   );
 }
 
-// Main Page Component
 export default function Page() {
   const [settings, setSettings] = useState<any>(null);
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [shuffledItems, setShuffledItems] = useState<GalleryItem[]>([]);
 
-  // Fetch data on the client side
   useEffect(() => {
     async function fetchData() {
       try {
-        // Using fetch to get data from API routes
         const settingsResponse = await fetch('/api/settings');
         const galleryResponse = await fetch('/api/gallery');
         
@@ -78,8 +73,6 @@ export default function Page() {
           
           setSettings(settingsData);
           setGalleryItems(galleryData);
-          
-          // Shuffle the gallery items
           setShuffledItems(shuffleArray(galleryData));
         }
       } catch (error) {
@@ -91,8 +84,7 @@ export default function Page() {
     
     fetchData();
   }, []);
-  
-  // Shuffle array function
+
   const shuffleArray = (array: GalleryItem[]) => {
     const newArray = [...array];
     for (let i = newArray.length - 1; i > 0; i--) {
@@ -101,8 +93,7 @@ export default function Page() {
     }
     return newArray;
   };
-  
-  // Show loading state
+
   if (loading) {
     return (
       <div className="container mx-auto px-5">
@@ -113,8 +104,7 @@ export default function Page() {
       </div>
     );
   }
-  
-  // Show onboarding if no gallery items
+
   if (!galleryItems || galleryItems.length === 0) {
     return (
       <div className="container mx-auto px-5">
@@ -122,32 +112,27 @@ export default function Page() {
       </div>
     );
   }
-  
-  // Split the shuffled items into three columns
+
   const leftColumnItems = shuffledItems.filter((_, index) => index % 3 === 0);
   const middleColumnItems = shuffledItems.filter((_, index) => index % 3 === 1);
   const rightColumnItems = shuffledItems.filter((_, index) => index % 3 === 2);
 
   return (
     <div className="container mx-auto px-5">
-      {/* Gallery layout */}
       <div className="gallery-vertical-columns mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-x-0 gap-y-1">
-          {/* Left Column */}
           <div className="gallery-column flex flex-col space-y-0">
             {leftColumnItems.map((item) => (
               <GalleryItemComponent key={item._id} item={item} />
             ))}
           </div>
           
-          {/* Middle Column */}
           <div className="gallery-column flex flex-col space-y-0">
             {middleColumnItems.map((item) => (
               <GalleryItemComponent key={item._id} item={item} />
             ))}
           </div>
           
-          {/* Right Column */}
           <div className="gallery-column flex flex-col space-y-0">
             {rightColumnItems.map((item) => (
               <GalleryItemComponent key={item._id} item={item} />

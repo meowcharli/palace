@@ -90,6 +90,7 @@ export type GalleryItem = {
   videoEmbed?: {
     url?: string;
     embedCode?: string;
+    aspectRatio?: "16:9" | "1:1";
     hideControls?: boolean;
     autoplay?: boolean;
     loop?: boolean;
@@ -745,6 +746,7 @@ export type GalleryItemsQueryResult = Array<{
   videoEmbed: {
     url?: string;
     embedCode?: string;
+    aspectRatio?: "1:1" | "16:9";
     hideControls?: boolean;
     autoplay?: boolean;
     loop?: boolean;

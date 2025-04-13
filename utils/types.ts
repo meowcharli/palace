@@ -2,6 +2,7 @@
 
 // Types for Vimeo embedding
 export interface VimeoEmbedProps {
+  aspectRatio: '1:1' | '16:9' | string; // Allow the two specific values plus string for backward compatibility
   url?: string;
   embedCode?: string;
   hideControls?: boolean;
