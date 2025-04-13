@@ -13,10 +13,9 @@ const components: PortableTextComponents = {
     video: ({ value }: { value: VideoValue }) => {
       return (
         <VimeoEmbed 
-          url={value.url} 
-          caption={value.caption} 
-          showThumbnail={value.showThumbnail} 
-        />
+          url={value.url}
+          caption={value.caption}
+          showThumbnail={value.showThumbnail} aspectRatio={''}        />
       );
     },
     // your other custom components
