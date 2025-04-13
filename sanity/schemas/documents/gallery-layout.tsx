@@ -64,14 +64,13 @@ function GalleryItemComponent({ item }: { item: GalleryItem }) {
         // Video content
         <div className="gallery-video-container w-full">
           <VimeoEmbed 
-            url={item.videoEmbed.url} 
+            url={item.videoEmbed.url}
             embedCode={item.videoEmbed.embedCode}
             hideControls={item.videoEmbed.hideControls}
             autoplay={false}
             loop={item.videoEmbed.loop}
             showThumbnail={true}
-            isClickable={true}
-          />
+            isClickable={true} aspectRatio={''}          />
           {item.title && (
             <h3 className="mt-3 text-xl font-medium text-white">{item.title}</h3>
           )}
