@@ -21,7 +21,7 @@ type Props = {
 };
 
 const postSlugs = defineQuery(
-  `*[_type == "post" && defined(slug.current)]{"slug": slug.current}`,
+  `*[_type == "post" && defined(slug.current)]{"slug": slug.current}`
 );
 
 export async function generateStaticParams() {
@@ -34,7 +34,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(
   { params }: Props,
-  parent: ResolvingMetadata,
+  parent: ResolvingMetadata
 ): Promise<Metadata> {
   const post = await sanityFetch({
     query: postQuery,
@@ -78,7 +78,15 @@ export default async function PostPage({ params }: Props) {
           )}
         </div>
         <div className="mb-8 sm:mx-0 md:mb-16">
-          <CoverImage image={post.coverImage} videoEmbed={post.videoEmbed || undefined} priority />
+          <CoverImage
+            image={post.coverImage}
+            videoEmbed={
+              post.videoEmbed
+                ? { aspectRatio: "16:9", ...post.videoEmbed }
+                : undefined
+            }
+            priority
+          />
         </div>
         <div className="mx-auto max-w-2xl">
           <div className="mb-6 block md:hidden">
@@ -86,7 +94,6 @@ export default async function PostPage({ params }: Props) {
               <Avatar name={post.author.name} picture={post.author.picture} />
             )}
           </div>
-          
         </div>
         {post.content?.length && (
           <PortableText
@@ -99,7 +106,7 @@ export default async function PostPage({ params }: Props) {
         <hr className="border-gray-800 mb-24 mt-28" />
         {/* Changed heading to "All Posts" and made it smaller */}
         <h2 className="mb-8 text-3xl font-bold leading-tight tracking-tighter text-white md:text-4xl">
-        all posts ▾
+          all posts ▾
         </h2>
         <Suspense>
           {/* Removing the parameters since MoreStories now shows all posts */}
