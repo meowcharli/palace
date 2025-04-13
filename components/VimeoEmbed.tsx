@@ -20,36 +20,59 @@ export default function VimeoEmbed({
   isClickable = false,
   hideCaption = false,
   customHeight,
+  // although an aspectRatio prop is provided, we’ll calculate it automatically.
   aspectRatio = '16:9',
 }: ComponentProps) {
   const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null);
   const [thumbnailLoaded, setThumbnailLoaded] = useState(false);
   const [playing, setPlaying] = useState(!showThumbnail || autoplay);
   const [error, setError] = useState(false);
+  // We'll store the detected aspect ratio as a string ("1:1" or "16:9")
+  const [computedAspectRatio, setComputedAspectRatio] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const vimeoId = getVimeoId(embedCode || url || '');
 
+  // Fetch Vimeo oEmbed data to derive the aspect ratio (and thumbnail if needed)
   useEffect(() => {
-    if (!vimeoId || !(showThumbnail && !autoplay)) return;
-    
-    const fetchThumbnail = async () => {
+    if (!vimeoId) return;
+
+    async function fetchData() {
       try {
         const response = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${vimeoId}`);
-        if (!response.ok) throw new Error('Failed to fetch thumbnail');
-        
+        if (!response.ok) throw new Error('Failed to fetch Vimeo data');
+
         const data = await response.json();
-        const highResThumb = data.thumbnail_url?.replace('_640', '_1280') || data.thumbnail_url;
-        setThumbnailUrl(highResThumb);
+
+        // If thumbnails are desired and autoplay is off, get the high-res thumbnail.
+        if (showThumbnail && !autoplay) {
+          const highResThumb = data.thumbnail_url?.replace('_640', '_1280') || data.thumbnail_url;
+          setThumbnailUrl(highResThumb);
+        }
+
+        // Determine the aspect ratio based on returned video dimensions.
+        if (data.width && data.height) {
+          const ratio = data.width / data.height;
+          // If the video is roughly square, use 1:1 (threshold 0.15), else 16:9.
+          if (Math.abs(ratio - 1) < 0.15) {
+            setComputedAspectRatio("1:1");
+          } else {
+            setComputedAspectRatio("16:9");
+          }
+        } else {
+          setComputedAspectRatio(aspectRatio);
+        }
         setError(false);
       } catch (err) {
-        console.error('Error fetching Vimeo thumbnail:', err);
+        console.error('Error fetching Vimeo data:', err);
         setError(true);
+        // Fallback to the provided aspectRatio
+        setComputedAspectRatio(aspectRatio);
       }
-    };
-    
-    fetchThumbnail();
-  }, [vimeoId, showThumbnail, autoplay]);
+    }
+
+    fetchData();
+  }, [vimeoId, showThumbnail, autoplay, aspectRatio]);
 
   const handleThumbnailClick = (e: React.MouseEvent) => {
     if (isClickable) return;
@@ -85,6 +108,10 @@ export default function VimeoEmbed({
     );
   }
 
+  // Use the computed aspect ratio if available, otherwise fallback.
+  const appliedAspectRatio = (computedAspectRatio || aspectRatio).replace(':', '/');
+
+  // Thumbnail branch if needed
   if (showThumbnail && !autoplay && !playing) {
     return (
       <div 
@@ -99,7 +126,7 @@ export default function VimeoEmbed({
             <div 
               className="relative w-full overflow-hidden rounded-lg"
               style={{
-                aspectRatio: aspectRatio.replace(':', '/')
+                aspectRatio: appliedAspectRatio
               }}
             >
               <img 
@@ -139,7 +166,7 @@ export default function VimeoEmbed({
           <div 
             className="bg-gray-800 rounded-lg flex items-center justify-center"
             style={{
-              aspectRatio: aspectRatio.replace(':', '/')
+              aspectRatio: appliedAspectRatio
             }}
           >
             <span className="text-gray-400">Video unavailable</span>
@@ -148,7 +175,7 @@ export default function VimeoEmbed({
           <div 
             className="bg-gray-800 animate-pulse rounded-lg flex items-center justify-center"
             style={{
-              aspectRatio: aspectRatio.replace(':', '/')
+              aspectRatio: appliedAspectRatio
             }}
           >
             <span className="text-gray-400">Loading...</span>
@@ -159,6 +186,7 @@ export default function VimeoEmbed({
     );
   }
 
+  // Build the Vimeo embed URL with options.
   const embedUrl = buildVimeoEmbedUrl(vimeoId, {
     autoplay: autoplay || playing,
     loop,
@@ -180,7 +208,7 @@ export default function VimeoEmbed({
         borderRadius: '8px',
         overflow: 'hidden',
         position: 'relative',
-        aspectRatio: aspectRatio.replace(':', '/')
+        aspectRatio: appliedAspectRatio
       }}
     >
       <div 

@@ -76,7 +76,7 @@ export default defineType({
             ],
             layout: "dropdown"
           },
-          initialValue: "16:9",
+          initialValue: "1:1",
           validation: (Rule) => Rule.required()
         },
         {

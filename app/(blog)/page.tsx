@@ -1,23 +1,24 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from "next/link";
+import Image from "next/image";
 import VimeoEmbed from "@/components/VimeoEmbed";
-import { urlForImage } from '@/sanity/lib/utils';
-import type { GalleryItem } from '@/utils/types';
+import { urlForImage } from "@/sanity/lib/utils";
+import type { GalleryItem } from "@/utils/types";
 import Onboarding from "./onboarding";
 
 function GalleryItemComponent({ item }: { item: GalleryItem }) {
   return (
-    <Link 
-      href={`/posts/${item.articleSlug}`} 
+    <Link
+      href={`/posts/${item.articleSlug}`}
       className="gallery-item block mb-2 w-full relative group"
-      style={{ display: 'block' }}
+      style={{ display: "block" }}
     >
       {item.videoEmbed?.url ? (
-        <div className="gallery-video-container w-full">
-          <VimeoEmbed 
+        // For video items, we now let VimeoEmbed handle its own aspect ratio.
+        <div className="gallery-video-container w-full relative">
+          <VimeoEmbed
             url={item.videoEmbed.url}
             embedCode={item.videoEmbed.embedCode}
             hideControls={true}
@@ -33,14 +34,14 @@ function GalleryItemComponent({ item }: { item: GalleryItem }) {
       ) : item.image?.asset?._ref ? (
         <div className="gallery-image-container w-full relative">
           <Image
-            src={urlForImage(item.image)?.url() || ''}
-            alt={item.image.alt || item.title || 'Gallery image'}
+            src={urlForImage(item.image)?.url() || ""}
+            alt={item.image.alt || item.title || "Gallery image"}
             width={2000}
             height={0}
             quality={100}
             sizes="(max-width: 768px) 100vw, 100vw"
             className="w-full h-auto shadow-lg"
-            style={{ aspectRatio: 'auto' }}
+            style={{ aspectRatio: "auto" }}
             priority={true}
           />
           <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-7 transition-opacity duration-300"></div>
@@ -64,24 +65,24 @@ export default function Page() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const settingsResponse = await fetch('/api/settings');
-        const galleryResponse = await fetch('/api/gallery');
-        
+        const settingsResponse = await fetch("/api/settings");
+        const galleryResponse = await fetch("/api/gallery");
+
         if (settingsResponse.ok && galleryResponse.ok) {
           const settingsData = await settingsResponse.json();
           const galleryData = await galleryResponse.json();
-          
+
           setSettings(settingsData);
           setGalleryItems(galleryData);
           setShuffledItems(shuffleArray(galleryData));
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     }
-    
+
     fetchData();
   }, []);
 
@@ -126,13 +127,13 @@ export default function Page() {
               <GalleryItemComponent key={item._id} item={item} />
             ))}
           </div>
-          
+
           <div className="gallery-column flex flex-col space-y-0">
             {middleColumnItems.map((item) => (
               <GalleryItemComponent key={item._id} item={item} />
             ))}
           </div>
-          
+
           <div className="gallery-column flex flex-col space-y-0">
             {rightColumnItems.map((item) => (
               <GalleryItemComponent key={item._id} item={item} />
