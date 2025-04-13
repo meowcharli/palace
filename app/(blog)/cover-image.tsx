@@ -16,11 +16,15 @@ export default function CoverImage({
 }: CoverImageProps) {
   // If we have a valid video embed, render it instead of the image
   if (videoEmbed) {
-    // Handle string format for backward compatibility
-    const videoProps = typeof videoEmbed === 'string' 
-      ? { url: videoEmbed } 
-      : videoEmbed;
-      
+    // Handle string format for backward compatibility.
+    // Ensure that an aspectRatio is always passed
+    const videoProps: VimeoEmbedProps = typeof videoEmbed === 'string' 
+      ? { url: videoEmbed, aspectRatio: "16:9" }
+      : { 
+          ...videoEmbed, 
+          aspectRatio: videoEmbed.aspectRatio || "16:9" 
+        };
+        
     return (
       <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0 relative">
         {/* The actual video embed */}
