@@ -115,18 +115,34 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         </div>
       )}
       
-      {/* Regular floating buttons */}
+      {/* Logo section */}
       <div className="fixed top-0 left-0 w-full z-50 pointer-events-none p-4">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-start">
             {/* Logo with hover effect */}
             <Link href="/" className="pointer-events-auto">
               <div className="logo-hover-container">
-                <svg width="111.11" height="57.39" viewBox="0 0 111.11 57.39" className="logo-default">
-                  <path d="M27.68 0v5.54H16.61v22.14h-5.54V5.54H0V0zm29.66 0v8.26L46.27 19.33v8.34h-5.54v-8.34L29.66 8.26V0h5.54v6.72l8.3 8.3 8.3-8.3V0zm24.12 0L87 5.54v5.54l-5.54 5.54H64.85v11.07h-5.54V0h22.14ZM64.85 11.07h16.61V5.53H64.85zM111.11 0v5.54H94.5v5.54h11.07v5.54H94.5v5.54h16.61v5.54H88.97V0zM27.68 29.71v5.54H16.61v22.14h-5.54V35.25H0v-5.54zm24.12 0 5.54 5.54v22.14H51.8V46.32H35.19v11.07h-5.54V35.25l5.54-5.54zM35.19 40.78H51.8v-5.54H35.19zm51.8-11.07v5.54h-3.16l-8.3 8.3 8.3 8.3h3.16v5.54H75.05v-5.06h2.17l-4.07-4.07-9.13 9.13h-4.71v-5.54h3.16l8.3-8.3-8.3-8.3h-3.16v-5.54h11.94v5.06h-2.17l4.07 4.07 9.13-9.13z" fill="#919191" />
+                {/* Default Logo */}
+                <svg 
+                  width="120" 
+                  height="60" 
+                  viewBox="0 0 392.9 181.59" 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  className="logo-default"
+                >
+                  <path fill="#919191" d="M87.59 0v17.52H52.55v70.07H35.03V17.52H0V0zm93.84 0v26.15l-35.04 35.04v26.4h-17.52v-26.4L93.83 26.15V0h17.52v21.27l26.28 26.28 26.28-26.28V0zm76.33 0 17.52 17.52v17.52l-17.52 17.52h-52.55V87.6h-17.52V0zm-52.55 35.04h52.55V17.52h-52.55zM369.12 0v17.52h-70.07v17.52h52.55v17.52h-52.55v17.52h70.07V87.6h-87.59V0zM87.59 94v17.52H52.55v70.07H35.03v-70.07H0V94zm76.32 0 17.52 17.52v70.07h-17.52v-35.04h-52.55v35.04H93.84v-70.07L111.36 94zm-52.55 35.04h52.55v-17.52h-52.55zM275.28 94v17.52h-10.01l-26.28 26.28 26.28 26.28h10.01v17.52h-37.79v-16.02h6.88l-12.89-12.89-28.9 28.9h-14.89v-17.52h10.01l26.28-26.28-26.28-26.28h-10.01V93.99h37.79v16.02h-6.88l12.89 12.89 28.9-28.9z" />
+                  <path fill="#919191" d="M392.9 0v146.55h-92.16l35.03 35.04h-20.89l-43.8-43.8L314.88 94h20.89l-35.03 35.04h74.64V0z" />
                 </svg>
-                <svg width="123.25" height="57.39" viewBox="0 0 123.25 57.39" className="logo-hover">
-                  <path d="M27.68 0v5.54H16.61v22.14h-5.54V5.54H0V0zm29.66 0v8.26L46.27 19.33v8.34h-5.54v-8.34L29.66 8.26V0h5.54v6.72l8.3 8.3 8.3-8.3V0zm24.12 0L87 5.54v5.54l-5.54 5.54H64.85v11.07h-5.54V0h22.14ZM64.85 11.07h16.61V5.53H64.85zM111.11 0v5.54H94.5v5.54h11.07v5.54H94.5v5.54h16.61v5.54H88.97V0zM27.68 29.71v5.54H16.61v22.14h-5.54V35.25H0v-5.54zm24.12 0 5.54 5.54v22.14H51.8V46.32H35.19v11.07h-5.54V35.25l5.54-5.54zM35.19 40.78H51.8v-5.54H35.19zm51.8-11.07v5.54h-3.16l-8.3 8.3 8.3 8.3h3.16v5.54H75.05v-5.06h2.17l-4.07-4.07-9.13 9.13h-4.71v-5.54h3.16l8.3-8.3-8.3-8.3h-3.16v-5.54h11.94v5.06h-2.17l4.07 4.07 9.13-9.13zm22.42 0L98.34 40.78h24.91v5.54H98.34l11.07 11.07h-6.6L88.97 43.55l13.84-13.84z" fill="#9f9f9f" />
+                
+                {/* Hover Logo */}
+                <svg 
+                  width="120" 
+                  height="60" 
+                  viewBox="0 0 392.89 181.59" 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  className="logo-hover"
+                >
+                  <path fill="#2E2E30" d="M392.89 0v108.95H61.39l72.64 72.64H90.79L0 90.79 90.79 0h43.24L61.39 72.64h295.2V0z" />
                 </svg>
               </div>
             </Link>
@@ -155,14 +171,14 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
                 <svg 
                   data-name="Layer 2" 
                   xmlns="http://www.w3.org/2000/svg" 
-                  viewBox="-19 0 234.23 31.37" 
+                  viewBox="0 0 207.2 31.37" 
                   height="20"
                   className="svg-clickable"
                   onClick={toggleSearch}
                   aria-label="Search"
                 >
                   <path 
-                    d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm48.17 0v6.27H47.37v6.27h18.82l6.27 6.27v6.27l-6.27 6.27H42.22v-6.27h23.97v-6.27H47.37l-6.27-6.27V6.27L47.37 0zm28.45 0v6.27H80.97v6.27h12.55v6.27H80.97v6.27h18.82v6.27H74.7V0zm27.34 0 6.27 6.27v25.09h-6.27V18.81h-18.82v12.55h-6.27V6.27L108.31 0zm-18.82 12.55h18.82V6.28h-18.82zM160.74 0l6.27 6.27v6.27l-5.42 5.42 5.42 5.42v7.98h-6.27v-6.27l-6.27-6.27h-12.55v12.55h-6.27V0zm-18.82 12.55h18.82V6.28h-18.82zM194.35 0l6.27 6.27v6.27h-6.27V6.27h-18.82v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27h-18.82l-6.27-6.27V6.27L175.53 0zm39.88 0v31.37h-6.27V18.82h-18.82v12.55h-6.27V0h6.27v12.55h18.82V0z" 
+                    d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm48.17 0v6.27H47.37v6.27h18.82l6.27 6.27v6.27l-6.27 6.27H42.22v-6.27h23.97v-6.27H47.37l-6.27-6.27V6.27L47.37 0zm34.73 0v6.27H80.98v6.27H99.8v6.27H80.98v6.27h25.09v6.27H74.7V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81h-18.82v12.55h-6.27V6.27L114.58 0zm-18.82 12.55h18.82V6.28h-18.82zM167.01 0l6.27 6.27v6.27l-5.42 5.42 5.42 5.42v7.98h-6.27v-6.27l-6.27-6.27h-12.55v12.55h-6.27V0zm-18.82 12.55h18.82V6.28h-18.82zM200.62 0l6.27 6.27v6.27h-6.27V6.27H181.8v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H181.8l-6.27-6.27V6.27L181.8 0zm39.88 0v31.37h-6.27V18.82h-18.82v12.55h-6.27V0h6.27v12.55h18.82V0z"
                     fill="#919191"
                   />
                 </svg>
@@ -197,7 +213,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         
         .logo-default {
           display: block;
-          transition: opacity 0s ease;
+          transition: opacity 0.1s ease;
         }
         
         .logo-hover {
@@ -205,7 +221,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           top: 0;
           left: 0;
           opacity: 0;
-          transition: opacity 0s ease;
+          transition: opacity 0.1s ease;
         }
         
         .logo-hover-container:hover .logo-default {
