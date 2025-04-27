@@ -498,3 +498,54 @@ body::after {
   height: auto;
   max-height: none;
 }
+
+/* Add these styles to your globals.css file */
+
+/* Featured content container on homepage */
+.featured-content {
+  margin: 2rem auto 4rem;
+}
+
+/* Featured item styling */
+.featured-item {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  transition: opacity 0.3s ease;
+}
+
+.featured-item:hover {
+  opacity: 0.85;
+}
+
+.featured-content-container {
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background-color: #000000;
+}
+
+/* Featured image styling */
+.featured-content-container img {
+  object-fit: cover;
+}
+
+/* Featured placeholder */
+.featured-placeholder {
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+/* Gallery link styling */
+.gallery-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.gallery-link:hover {
+  text-decoration: underline;
+}
+
