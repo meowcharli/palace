@@ -26,7 +26,7 @@ function FeaturedItemComponent({ item }: { item: GalleryItem }) {
                 showThumbnail={true}
                 isClickable
                 hideCaption
-                aspectRatio="16:9"
+                aspectRatio="1:1"
                 className="object-contain w-full h-full"
               />
             </div>
