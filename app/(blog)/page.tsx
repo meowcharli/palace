@@ -76,10 +76,12 @@ export default function Page() {
       <div
         className="featured-content max-w-4xl mx-auto mb-8"
         style={{
-          paddingTop: '12px',
+          paddingTop: '6px', // Reduced from 12px
           paddingBottom: '200px',
-          paddingLeft: '0px', // Adjust the left padding
-          paddingRight: '0px', // Adjust the right padding
+          paddingLeft: '0px',
+          paddingRight: '0px',
+          width: '35%', // Making it smaller by 15%
+          margin: '0 auto', // Centering the reduced-size component
         }}
       >
         {activeItem && (
