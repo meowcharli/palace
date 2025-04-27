@@ -46,7 +46,7 @@ export default function Page() {
       setCurrentFeaturedIndex((prevIndex) =>
         prevIndex === featuredItems.length - 1 ? 0 : prevIndex + 1
       );
-    }, 6000);
+    }, 7000);
 
     return () => clearInterval(interval);
   }, [featuredItems]);
