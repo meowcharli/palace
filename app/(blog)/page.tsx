@@ -106,10 +106,10 @@ export default function Page() {
           <span className="text-base text-gray-400 absolute top-3 left-3">→ about us</span>
           <div className="mt-6 text-gray-200">
             <p className="text-xl">
-            type.tax is a design studio primarily based in serbia, working with creatives from all over the world. primarily focusing on visually creative projects in symbols and typography.
+              type.tax is a design studio primarily based in serbia, working with creatives from all over the world. primarily focusing on visually creative projects in symbols and typography.
             </p>
             <p className="mt-8 text-xl">
-              let's get in touch via c@type.tax!
+              let&apos;s get in touch via c@type.tax!
             </p>
           </div>
         </div>
