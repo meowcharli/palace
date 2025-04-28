@@ -8,16 +8,24 @@ interface BlogFooterProps {
 export default function BlogFooter({ footer, description }: BlogFooterProps) {
   return (
     <div style={{ backgroundColor: "#111111" }} className="border-t border-gray-800">
-      <div className="container mx-auto px-5 py-12">
-        <div className="flex flex-col items-end text-right">
-          <div className="mb-8">
+      <div style={{ 
+        maxWidth: "1200px", 
+        margin: "0 auto",
+        padding: "3rem 5%", 
+      }}>
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "flex-start", // Changed to align items to the left
+          textAlign: "left" // Changed to left-align text
+        }}>
+          <div style={{ marginBottom: "2rem" }}>
             <svg 
               width="141" 
               height="60" 
               viewBox="0 0 392.89 181.59" 
               preserveAspectRatio="xMidYMid meet"
               xmlns="http://www.w3.org/2000/svg"
-              className="h-[60px] w-[141px]" // Explicit dimensions
             >
               <path
                 fill="#9CA3AF"
@@ -25,27 +33,50 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
               />
             </svg>
           </div>
-          <div className="flex flex-col items-end space-y-3 mb-3"> {/* Reduced space-y-4 to space-y-3 and mb-4 to mb-3 */}
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start", // Changed to align items to the left
+            marginBottom: "1.5rem",
+          }}>
             <a
               href="https://bsky.app/profile/4sigs.com"
-              className="text-white hover:text-white transition-colors duration-200 text-lg" // Reduced text-xl to text-lg
+              style={{
+                color: "white",
+                marginBottom: "0.4rem",
+                fontSize: "1.125rem",
+                transition: "color 0.2s ease"
+              }}
             >
               → bluesky
             </a>
             <a
               href="mailto:hello@4sigs.com?subject=*Loud%20honk*%20This%20is%20me--%20contacting%20you!"
-              className="text-white hover:text-white transition-colors duration-200 text-lg"
+              style={{
+                color: "white",
+                marginBottom: "0.4rem",
+                fontSize: "1.125rem",
+                transition: "color 0.2s ease"
+              }}
             >
               → email us
             </a>
             <Link
               href="/about"
-              className="text-white hover:text-white transition-colors duration-200 text-lg"
+              style={{
+                color: "white",
+                fontSize: "1.125rem",
+                transition: "color 0.2s ease"
+              }}
             >
               → about us
             </Link>
           </div>
-          <p className="text-gray-400 text-xs mt-2"> {/* Added mt-2 for small top margin */}
+          <p style={{ 
+            color: "#9CA3AF", 
+            fontSize: "0.75rem", 
+            marginTop: "0.3rem" 
+          }}>
             Designed with 🍺 in Serbia.
           </p>
         </div>

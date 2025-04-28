@@ -7,7 +7,6 @@ import type { GalleryItem } from "@/utils/types";
 import Onboarding from "./onboarding";
 
 export default function Page() {
-  const [settings, setSettings] = useState<any>(null);
   const [allGalleryItems, setAllGalleryItems] = useState<GalleryItem[]>([]);
   const [featuredItems, setFeaturedItems] = useState<GalleryItem[]>([]);
   const [currentFeaturedIndex, setCurrentFeaturedIndex] = useState(0);
@@ -16,14 +15,13 @@ export default function Page() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const settingsResponse = await fetch("/api/settings");
-        const galleryResponse = await fetch("/api/gallery");
+        const [settingsResponse, galleryResponse] = await Promise.all([
+          fetch("/api/settings"),
+          fetch("/api/gallery")
+        ]);
 
         if (settingsResponse.ok && galleryResponse.ok) {
-          const settingsData = await settingsResponse.json();
           const galleryData = await galleryResponse.json();
-
-          setSettings(settingsData);
           setAllGalleryItems(galleryData);
 
           const featured = galleryData.filter((item: GalleryItem) => item.featured);
@@ -71,19 +69,18 @@ export default function Page() {
 
   const activeItem = featuredItems[currentFeaturedIndex];
 
+  // Define CSS classes for responsive behavior with transitions
+  const featuredContentClass = `
+    featured-content max-w-4xl mx-auto mb-8 transition-all duration-300 ease-in-out
+    w-full px-2 pb-12 pt-1
+    sm:w-11/12 sm:px-4
+    md:w-3/4 md:px-6 md:pb-28
+    lg:w-3/5 lg:px-8
+  `;
+
   return (
     <div className="container mx-auto px-5">
-      <div
-        className="featured-content max-w-4xl mx-auto mb-8"
-        style={{
-          paddingTop: '6px', // Reduced from 12px
-          paddingBottom: '200px',
-          paddingLeft: '0px',
-          paddingRight: '0px',
-          width: '35%', // Making it smaller by 15%
-          margin: '0 auto', // Centering the reduced-size component
-        }}
-      >
+      <div className={featuredContentClass}>
         {activeItem && (
           <div className="relative">
             <FeaturedItemComponent item={activeItem} />
@@ -99,6 +96,40 @@ export default function Page() {
           </Link>
         </div>
       </div>
+
+      {/* About Us Card - Fixed Size Business Card */}
+      <div className="flex justify-center mb-16">
+        <div 
+          className="about-us-card bg-black border border-gray-800 rounded-xl p-3 relative w-full max-w-md" 
+          style={{ aspectRatio: '3.5/2', width: '500px' }}
+        >
+          <span className="text-base text-gray-400 absolute top-3 left-3">→ about us</span>
+          <div className="mt-6 text-gray-200">
+            <p className="text-xl">
+            type.tax is a design studio primarily based in serbia, working with creatives from all over the world. primarily focusing on visually creative projects in symbols and typography.
+            </p>
+            <p className="mt-8 text-xl">
+              let's get in touch via c@type.tax!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <style jsx>{`
+        .featured-content {
+          transition: all 0.3s ease-in-out;
+        }
+        .about-us-card {
+          transition: all 0.3s ease-in-out;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          max-width: 80%; /* Ensures it won't overflow on small screens */
+        }
+        @media (max-width: 400px) {
+          .about-us-card {
+            width: 50% !important; /* Overrides the fixed width on very small screens */
+          }
+        }
+      `}</style>
     </div>
   );
 }
