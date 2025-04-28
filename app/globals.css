@@ -503,7 +503,7 @@ body::after {
 
 /* Featured content container on homepage */
 .featured-content {
-  margin: 2rem auto 2rem;
+  margin: -6rem auto 0rem;
 }
 
 /* Featured item styling */

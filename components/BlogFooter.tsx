@@ -9,7 +9,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
   return (
     <div style={{ backgroundColor: "#111111" }} className="border-t border-gray-800">
       <div style={{ 
-        maxWidth: "1200px", 
+        maxWidth: "12000px", 
         margin: "0 auto",
         padding: "3rem 5%", 
       }}>
@@ -48,10 +48,10 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
                 transition: "color 0.2s ease"
               }}
             >
-              → bluesky
+              → visit our bluesky
             </a>
             <a
-              href="mailto:hello@4sigs.com?subject=*Loud%20honk*%20This%20is%20me--%20contacting%20you!"
+              href="mailto:c@type.tax?subject=Hi%20there!%20Let's%20make%20something%20new!&body=(Your%20creative%20outlet%20goes%20here)"
               style={{
                 color: "white",
                 marginBottom: "0.4rem",
@@ -59,7 +59,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
                 transition: "color 0.2s ease"
               }}
             >
-              → email us
+              → click to email us
             </a>
             <Link
               href="/about"
@@ -69,7 +69,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
                 transition: "color 0.2s ease"
               }}
             >
-              → about us
+              → more about us
             </Link>
           </div>
           <p style={{ 

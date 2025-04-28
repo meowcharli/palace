@@ -10,7 +10,7 @@ import type { GalleryItem } from "@/utils/types";
 function FeaturedItemComponent({ item }: { item: GalleryItem }) {
   return (
     <Link
-      href={`/posts/${item.articleSlug}`}
+      href="/gallery"
       className="featured-item block w-full relative group"
     >
       <div className="w-full aspect-square bg-black flex items-center justify-center overflow-hidden relative">
