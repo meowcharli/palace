@@ -69,13 +69,13 @@ export default function Page() {
 
   const activeItem = featuredItems[currentFeaturedIndex];
 
-  // Define CSS classes for responsive behavior with transitions
+  // Updated CSS classes with smaller desktop size and better mobile padding
   const featuredContentClass = `
-    featured-content max-w-4xl mx-auto mb-8 transition-all duration-300 ease-in-out
-    w-full px-2 pb-12 pt-1
-    sm:w-11/12 sm:px-4
-    md:w-3/4 md:px-6 md:pb-28
-    lg:w-3/5 lg:px-8
+    featured-content mx-auto mb-8 transition-all duration-300 ease-in-out
+    w-full px-1 pb-12 pt-6
+    sm:w-11/12 sm:px-2 sm:pt-4
+    md:w-4/5 md:px-5 md:pb-24
+    lg:w-1/2 lg:px-6
   `;
 
   return (
@@ -100,8 +100,8 @@ export default function Page() {
       {/* About Us Card - Fixed Size Business Card */}
       <div className="flex justify-center mb-16">
         <div 
-          className="about-us-card bg-black border border-gray-800 rounded-xl p-3 relative w-full max-w-md" 
-          style={{ aspectRatio: '3.5/2', width: '500px' }}
+          className="about-us-card bg-black border border-gray-900 rounded-xl p-3 relative w-full max-w-md" 
+          style={{ aspectRatio: '3.5/1', width: '700px' }}
         >
           <span className="text-base text-gray-400 absolute top-3 left-3">→ about us</span>
           <div className="mt-6 text-gray-200">
