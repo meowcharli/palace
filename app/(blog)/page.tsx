@@ -97,10 +97,10 @@ export default function Page() {
         </div>
       </div>
 
-{/* About Us Card - Responsive */}
-<div className="flex justify-center mb-16">
+{/* About Us Card - Responsive with better sizing */}
+<div className="flex justify-center mb-36 mt-7 px-1">
   <div 
-    className="about-us-card bg-black border border-gray-900 rounded-xl p-3 relative w-full max-w-md"
+    className="about-us-card bg-black border border-gray-900 rounded-xl p-4 relative w-full"
   >
     <span className="text-base text-gray-400 absolute top-3 left-3">→ about us</span>
     <div className="mt-6 text-gray-200">
@@ -122,7 +122,19 @@ export default function Page() {
     transition: all 0.3s ease-in-out;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
-    padding: 1.5rem;
+    max-width: 700px;
+  }
+  @media (min-width: 768px) {
+    .about-us-card {
+      padding: 1.5rem;
+      min-height: 200px;
+    }
+  }
+  @media (max-width: 767px) {
+    .about-us-card {
+      padding: 1.5rem 1rem;
+      margin: 0 1rem;
+    }
   }
 `}</style>
     </div>
