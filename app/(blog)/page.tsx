@@ -97,39 +97,34 @@ export default function Page() {
         </div>
       </div>
 
-      {/* About Us Card - Fixed Size Business Card */}
-      <div className="flex justify-center mb-16">
-        <div 
-          className="about-us-card bg-black border border-gray-900 rounded-xl p-3 relative w-full max-w-md" 
-          style={{ aspectRatio: '3.5/1', width: '700px' }}
-        >
-          <span className="text-base text-gray-400 absolute top-3 left-3">→ about us</span>
-          <div className="mt-6 text-gray-200">
-            <p className="text-xl">
-              type.tax is a design studio primarily based in serbia, working with creatives from all over the world. primarily focusing on visually creative projects in symbols and typography.
-            </p>
-            <p className="mt-8 text-xl">
-              let&apos;s get in touch via c@type.tax!
-            </p>
-          </div>
-        </div>
-      </div>
+{/* About Us Card - Responsive */}
+<div className="flex justify-center mb-16">
+  <div 
+    className="about-us-card bg-black border border-gray-900 rounded-xl p-3 relative w-full max-w-md"
+  >
+    <span className="text-base text-gray-400 absolute top-3 left-3">→ about us</span>
+    <div className="mt-6 text-gray-200">
+      <p className="text-xl">
+        type.tax is a design studio primarily based in serbia, working with creatives from all over the world. primarily focusing on visually creative projects in symbols and typography.
+      </p>
+      <p className="mt-8 text-xl">
+        let&apos;s get in touch via c@type.tax!
+      </p>
+    </div>
+  </div>
+</div>
 
-      <style jsx>{`
-        .featured-content {
-          transition: all 0.3s ease-in-out;
-        }
-        .about-us-card {
-          transition: all 0.3s ease-in-out;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-          max-width: 80%; /* Ensures it won't overflow on small screens */
-        }
-        @media (max-width: 400px) {
-          .about-us-card {
-            width: 50% !important; /* Overrides the fixed width on very small screens */
-          }
-        }
-      `}</style>
+<style jsx>{`
+  .featured-content {
+    transition: all 0.3s ease-in-out;
+  }
+  .about-us-card {
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 1.5rem;
+  }
+`}</style>
     </div>
   );
 }
