@@ -511,7 +511,7 @@ body::after {
 @media screen and (max-width: 1024px) {
   .featured-content {
     /* Calculate margin dynamically based on viewport width */
-    margin-top: calc(-6rem + (110 * (1024px - 100vw) / 1024));
+    margin-top: calc(-6rem + (50 * (1024px - 100vw) / 1024));
   }
 }
 
