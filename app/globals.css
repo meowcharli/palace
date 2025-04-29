@@ -504,15 +504,6 @@ body::after {
 .featured-content {
   /* Base styling */
   margin: -6rem auto 0rem;
-  transition: margin-top 0.3s ease;
-}
-
-/* Create a smooth transition using a media query */
-@media screen and (max-width: 1024px) {
-  .featured-content {
-    /* Calculate margin dynamically based on viewport width */
-    margin-top: calc(-6rem + (15 * (1024px - 100vw) / 1024));
-  }
 }
 
 /* Mobile viewport */
