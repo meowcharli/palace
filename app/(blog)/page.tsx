@@ -90,7 +90,7 @@ export default function Page() {
         <div className="text-center mt-6">
           <Link
             href="/gallery"
-            className="gallery-link text-white hover:underline text-lg"
+            className="gallery-link text-gray-700 hover:underline text-lg"
           >
             Check out the entire gallery!
           </Link>
@@ -100,10 +100,10 @@ export default function Page() {
 {/* About Us Card - Responsive with better sizing */}
 <div className="flex justify-center mb-36 mt-7 px-1">
   <div 
-    className="about-us-card bg-black border border-gray-900 rounded-xl p-4 relative w-full"
+    className="about-us-card bg-white border border-gray-100 rounded-xl p-4 relative w-full"
   >
     <span className="text-base text-gray-400 absolute top-3 left-3">→ about us</span>
-    <div className="mt-6 text-gray-200">
+    <div className="mt-6 text-gray-700">
       <p className="text-xl">
         type.tax is a design studio primarily based in serbia, working with creatives from all over the world. primarily focusing on visually creative projects in symbols and typography.
       </p>

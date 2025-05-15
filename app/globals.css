@@ -4,8 +4,8 @@
 
 /* ========== Base Styles ========== */
 html, body {
-  background-color: #000000 !important;
-  color: #ffffff !important;
+  background-color: #F5F5F7 !important;
+  color: #1D1D1F !important;
   font-size: 18px;
 }
 
@@ -45,19 +45,19 @@ header.site-header {
   justify-content: center;
   align-items: center;
   transition: all 0.2s ease-in-out;
-  border: 1px solid #ffffff;
+  border: 1px solid #1D1D1F;
 }
 
 .floating-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  border-color: #dedede;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-color: #000000;
 }
 
 /* ========== Pill Button Styling ========== */
 .pill-container {
-  background-color: #000000;
-  border: 1px solid #313131;
+  background-color: #F5F5F7;
+  border: 1px solid #D1D1D6;
   border-radius: 0px;
   display: flex;
   align-items: center;
@@ -92,17 +92,17 @@ header.site-header {
 }
 
 .pill-button:hover {
-  background-color: #cecbcb !important;
+  background-color: #E5E5EA !important;
 }
 
 .pill-button:hover .pill-icon {
-  color: #d0cccc;
+  color: #1D1D1F;
 }
 
 .pill-icon {
   width: 0.8rem; /* 16px - 25% bigger than 12.8px */
   height: 0.8rem; /* 16px - 25% bigger than 12.8px */
-  color: #ffffff;
+  color: #1D1D1F;
   transition: color 0.3s ease;
 }
 
@@ -115,7 +115,7 @@ header.site-header {
 
 /* Black pill inside the white pill for search */
 .search-pill {
-  background-color: #000000;
+  background-color: #F5F5F7;
   border-radius: 0px;
   padding: 0.3rem 1.5rem;
   width: calc(100% + 1.1rem);
@@ -128,7 +128,7 @@ header.site-header {
 /* Update search input styling */
 .search-input {
   background-color: transparent !important;
-  color: #FFFFFF !important;
+  color: #1D1D1F !important;
   border: none !important;
   outline: none !important;
   padding: 0.25rem 0.5rem;
@@ -141,7 +141,7 @@ header.site-header {
 
 /* Adjust placeholder color */
 .search-input::placeholder {
-  color: #AAAAAA !important;
+  color: #8E8E93 !important;
   opacity: 0.7;
 }
 
@@ -153,11 +153,11 @@ input[type="text"].search-input {
 
 /* ========== Overrides for buttons and logo ========== */
 .group:hover .group-hover\:\!text-black {
-  color: #ffffff !important;
+  color: #1D1D1F !important;
 }
 
 .hover\:bg-white:hover {
-  background-color: #ffffff !important;
+  background-color: #F5F5F7 !important;
 }
 
 /* ========== Logo Styles ========== */
@@ -190,8 +190,8 @@ input[type="text"].search-input {
 
 /* Path styling for the black logo (behind) */
 .logo-path-black {
-  fill: black;
-  stroke: black;
+  fill: #1D1D1F;
+  stroke: #1D1D1F;
   stroke-width: 25;
   transition: stroke-width 0.3s ease;
   paint-order: stroke fill; /* Ensures stroke is behind fill */
@@ -199,8 +199,8 @@ input[type="text"].search-input {
 
 /* Path styling for the white logo (in front) */
 .logo-path-white {
-  fill: white;
-  stroke: white;
+  fill: #F5F5F7;
+  stroke: #F5F5F7;
   stroke-width: 0.1;
   transition: stroke-width 0.3s ease;
   paint-order: stroke fill; /* Ensures stroke is behind fill */
@@ -267,22 +267,22 @@ article p {
   max-width: none;
   font-size: 1.125rem;
   line-height: 1.8;
-  color: #ffffff;
+  color: #1D1D1F;
 }
 
-/* Adjust prose text colors for dark mode */
+/* Adjust prose text colors for light mode */
 .prose h1, .prose h2, .prose h3,
 .prose h4, .prose h5, .prose h6,
 .prose p, .prose li, .prose blockquote {
-  color: #ffffff;
+  color: #1D1D1F;
 }
 
 .prose a {
-  color: #90caf9;
+  color: #0066CC;
 }
 
 .prose strong {
-  color: #ffffff;
+  color: #1D1D1F;
 }
 
 /* ========== Components ========== */
@@ -295,15 +295,15 @@ article {
 footer {
   margin-top: 4rem;
   padding-top: 2rem;
-  background-color: #111111 !important;
+  background-color: #E5E5EA !important;
 }
 
 footer * {
-  color: #999999 !important;
+  color: #636366 !important;
 }
 
 footer [class*="bg-"] {
-  background-color: #111111 !important;
+  background-color: #E5E5EA !important;
 }
 
 /* Video and Iframe Containers */
@@ -315,7 +315,7 @@ footer [class*="bg-"] {
   width: 100%;
   margin-bottom: 1.5rem;
   border-radius: 0.5rem;
-  background-color: #000000;
+  background-color: #F5F5F7;
 }
 
 .responsive-iframe-container iframe {
@@ -325,14 +325,14 @@ footer [class*="bg-"] {
   width: 100%;
   height: 100%;
   border-radius: 0.5rem;
-  background-color: #000000;
+  background-color: #F5F5F7;
 }
 
 .video-caption {
   text-align: center;
   font-style: italic;
   margin-top: 0.75rem;
-  color: var(--text-muted, #aaaaaa);
+  color: var(--text-muted, #8E8E93);
   font-size: 1.05rem;
 }
 
@@ -389,40 +389,40 @@ footer [class*="bg-"] {
   border-radius: 0.5rem;
 }
 
-/* Dark mode search bar */
+/* Light mode search bar */
 input[type="text"] {
-  background-color: #111111 !important;
-  color: #ffffff !important;
-  border-color: #333333 !important;
+  background-color: #FFFFFF !important;
+  color: #1D1D1F !important;
+  border-color: #D1D1D6 !important;
 }
 
-/* Dark mode buttons - OVERRIDE THESE FOR PILL BUTTONS */
+/* Light mode buttons */
 button, 
 .inline-flex {
-  background-color: #111111 !important;
-  color: #ffffff !important;
-  border-color: #333333 !important;
+  background-color: #FFFFFF !important;
+  color: #1D1D1F !important;
+  border-color: #D1D1D6 !important;
 }
 
 button:hover,
 .inline-flex:hover {
-  background-color: #222222 !important;
-  color: #ffffff !important;
+  background-color: #F2F2F7 !important;
+  color: #1D1D1F !important;
 }
 
 /* Specific overrides for pill buttons */
 .pill-button {
-  background-color: #000000 !important;
-  color: #dfdfdf !important;
+  background-color: #F5F5F7 !important;
+  color: #1D1D1F !important;
   border: none !important;
 }
 
 .pill-button:hover {
-  background-color: #000000 !important;
-  color: #ffffff !important;
+  background-color: #E5E5EA !important;
+  color: #1D1D1F !important;
 }
 
-/* Background decoration (remove or adjust for dark mode) */
+/* Background decoration */
 body::after {
   display: none; /* Remove decoration */
 }
@@ -474,13 +474,13 @@ body::after {
 .gallery-video-container {
   border-radius: 0.5rem;
   overflow: hidden;
-  background-color: #000000;
+  background-color: #F5F5F7;
 }
 
 /* Placeholder */
 .gallery-placeholder {
-  background-color: #222222;
-  color: #666666;
+  background-color: #F2F2F7;
+  color: #8E8E93;
   font-weight: 500;
   font-size: 1.2rem;
   border-radius: 0.5rem;
@@ -528,7 +528,7 @@ body::after {
 .featured-content-container {
   overflow: hidden;
   border-radius: 0.5rem;
-  background-color: #000000;
+  background-color: #F5F5F7;
 }
 
 /* Featured image styling */
@@ -555,4 +555,3 @@ body::after {
 .gallery-link:hover {
   text-decoration: underline;
 }
-

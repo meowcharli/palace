@@ -9,32 +9,32 @@ export default {
         sans: ["var(--font-inter)"],
       },
       colors: {
-        background: "#000000", // Dark background
-        text: "#FFFFFF", // Light text for dark mode
+        background: "#F5F5F7", // Light background
+        text: "#1D1D1F", // Dark text for light mode
       },
       typography: {
         DEFAULT: {
           css: {
-            color: '#ffffff',
+            color: '#1D1D1F',
             h1: {
-              color: '#ffffff',
+              color: '#1D1D1F',
             },
             h2: {
-              color: '#ffffff',
+              color: '#1D1D1F',
             },
             h3: {
-              color: '#ffffff',
+              color: '#1D1D1F',
             },
             h4: {
-              color: '#ffffff',
+              color: '#1D1D1F',
             },
             strong: {
-              color: '#ffffff',
+              color: '#1D1D1F',
             },
             a: {
-              color: '#90CAF9',
+              color: '#0066CC',
               '&:hover': {
-                color: '#64B5F6',
+                color: '#004499',
               },
             },
           },
