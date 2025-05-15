@@ -112,7 +112,7 @@ export default function Page() {
               <div className="card bg-white rounded-xl shadow-md flex flex-col h-full">
                 <div className="p-6 flex-grow">
                   <h3 className="text-2xl font-semibold text-[#1D1D1F]">Contact us</h3>
-                  <p className="text-[#919191] mt-2 text-lg">click this card and let's make something new!</p>
+                  <p className="text-[#919191] mt-2 text-lg">click this card and let&apos;s make something new!</p>
                 </div>
                 <div className="illustration-container p-0 pb-14 flex justify-center items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 495.44 440.32" className="w-3/5 h-auto">
