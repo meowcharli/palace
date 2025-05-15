@@ -65,7 +65,7 @@ export default async function PostPage({ params }: Props) {
   return (
     <div className="max-w-5xl mx-auto my-8">
       <article className="space-y-12">
-        <h1 className="text-balance text-3xl font-bold leading-tight tracking-tighter text-white md:text-3xl md:leading-none lg:text-3xl px-8 md:px-16">
+        <h1 className="text-balance text-3xl font-bold leading-tight tracking-tighter text-gray-800 md:text-3xl md:leading-none lg:text-3xl px-8 md:px-16">
           {post.title}
         </h1>
         <div className="hidden md:block px-8 md:px-16">
@@ -101,8 +101,8 @@ export default async function PostPage({ params }: Props) {
         )}
       </article>
       <div className="flex justify-center mt-32 mb-16 px-8 md:px-16">
-        <Link href="/" className="bg-black-500 px-8 py-4 font-semibold text-white hover:bg-black-600 transition-colors text-lg">
-          Return to Homepage
+        <Link href="/gallery" className="bg-black-500 px-8 py-4 font-semibold text-gray-700 hover:bg-black-600 transition-colors text-lg">
+          (Click to return to the gallery!)
         </Link>
       </div>
     </div>
