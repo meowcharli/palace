@@ -124,7 +124,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
               <div className="logo-hover-container">
                 {/* Default Logo */}
                 <svg 
-                  width="200" 
+                  width="127" 
                   height="30" 
                   viewBox="0 0 276.14 65.52" 
                   xmlns="http://www.w3.org/2000/svg" 
@@ -138,7 +138,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
                 
                 {/* Hover Logo */}
                 <svg 
-                  width="200" 
+                  width="127" 
                   height="30" 
                   viewBox="0 0 276.14 65.52" 
                   xmlns="http://www.w3.org/2000/svg" 

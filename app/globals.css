@@ -499,23 +499,34 @@ body::after {
   max-height: none;
 }
 
-/* Add these styles to your globals.css file */
+/* ############################################## */
 
 .featured-content {
-  /* Base styling */
-  margin: -6rem auto 0rem;
+  /* Base styling with relative sizing */
+  max-width: 37rem; /* Using rem for better scaling with user preferences */
+  width: 90%; /* Percentage for responsiveness */
+  margin: -2rem auto 0; /* Auto margins for horizontal centering */
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
 }
 
-/* Mobile viewport */
-@media screen and (max-width: 480px) {
+/* Responsive breakpoints based on viewport width */
+@media screen and (max-width: 48em) {
   .featured-content {
-    margin-top: 4rem;
+    max-width: 100%; /* Full width on smaller screens */
+    width: 95%; /* Slightly wider on smaller screens */
+  }
+}
+
+@media screen and (max-width: 30em) {
+  .featured-content {
+    margin-top: -1rem;
   }
 }
 
 /* Featured item styling */
 .featured-item {
   width: 100%;
+  height: auto;
   overflow: hidden;
   border-radius: 0.5rem;
   transition: opacity 0.3s ease;
@@ -529,12 +540,18 @@ body::after {
   overflow: hidden;
   border-radius: 0.5rem;
   background-color: #F5F5F7;
+  width: 100%; /* Ensures container fills parent */
 }
 
 /* Featured image styling */
 .featured-content-container img {
+  width: 100%; /* Makes image responsive to container */
+  height: auto;
   object-fit: cover;
+  display: block; /* Removes any default spacing */
 }
+
+/* ############################################## */
 
 /* Featured placeholder */
 .featured-placeholder {
