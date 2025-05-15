@@ -240,7 +240,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         .search-container {
           height: 45px;
           width: 400px;
-          background-color:rgb(0, 0, 0);
+          background-color: #F5F5F7;
           display: flex;
           align-items: center;
         }
@@ -252,12 +252,12 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           border: none;
           outline: none;
           background: transparent;
-          color: #fff;
-          font-size: 16px;
+          color: #050507;
+          font-size: 18px;
         }
         
         .search-input::placeholder {
-          color: #000;
+          color: #F5F5F7;
         }
         
         .svg-clickable {
