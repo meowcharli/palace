@@ -538,7 +538,7 @@ body::after {
 
 .featured-content-container {
   overflow: hidden;
-  border-radius: 0.5rem;
+  border-radius: 0rem;
   background-color: #F5F5F7;
   width: 100%; /* Ensures container fills parent */
 }

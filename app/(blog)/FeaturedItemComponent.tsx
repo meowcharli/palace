@@ -13,9 +13,9 @@ function FeaturedItemComponent({ item }: { item: GalleryItem }) {
       href="/gallery"
       className="featured-item block w-full relative group"
     >
-      <div className="w-full aspect-square bg-black flex items-center justify-center overflow-hidden relative">
+      <div className="w-full aspect-square bg-white flex items-center justify-center overflow-hidden relative">
         {item.videoEmbed?.url ? (
-          <div className="w-full h-full flex items-center justify-center bg-black">
+          <div className="w-full h-full flex items-center justify-center bg-white">
             <div className="w-full h-full max-w-full max-h-full flex items-center justify-center overflow-hidden">
               <VimeoEmbed
                 url={item.videoEmbed.url}
