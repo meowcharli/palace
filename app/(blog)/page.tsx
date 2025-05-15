@@ -133,8 +133,8 @@ export default function Page() {
                   <p className="text-[#919191] mt-2 text-lg">click this card to view all our stuff!</p>
                 </div>
                 <div className="illustration-container p-0 pb-14 flex justify-center items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 554.39 393.39" className="w-3/5 h-auto">
-                    <path fill="#DAFF00" d="M554.39 0v158.99h-209.2v234.4H0v-234.4h209.19V0z"/>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 554.39 475.39" className="w-3/5 h-auto">
+                    <path fill="#DAFF00" d="M554.39 162.09v158.99h-209.2v234.4H0v-234.4h209.19V162.09H92.61V0H298.4v162.09z"/>
                   </svg>
                 </div>
               </div>
