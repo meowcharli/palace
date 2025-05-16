@@ -8,8 +8,7 @@ import Onboarding from "./onboarding";
 
 export default function Page() {
   const [allGalleryItems, setAllGalleryItems] = useState<GalleryItem[]>([]);
-  const [featuredItems, setFeaturedItems] = useState<GalleryItem[]>([]);
-  const [currentFeaturedIndex, setCurrentFeaturedIndex] = useState(0);
+  const [featuredItem, setFeaturedItem] = useState<GalleryItem | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,8 +23,15 @@ export default function Page() {
           const galleryData = await galleryResponse.json();
           setAllGalleryItems(galleryData);
 
+          // Find featured items
           const featured = galleryData.filter((item: GalleryItem) => item.featured);
-          setFeaturedItems(featured.length > 0 ? featured : galleryData);
+          
+          // Randomly select one featured item and keep it
+          const itemsToChooseFrom = featured.length > 0 ? featured : galleryData;
+          if (itemsToChooseFrom.length > 0) {
+            const randomIndex = Math.floor(Math.random() * itemsToChooseFrom.length);
+            setFeaturedItem(itemsToChooseFrom[randomIndex]);
+          }
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -36,18 +42,6 @@ export default function Page() {
 
     fetchData();
   }, []);
-
-  useEffect(() => {
-    if (featuredItems.length <= 1) return;
-
-    const interval = setInterval(() => {
-      setCurrentFeaturedIndex((prevIndex) =>
-        prevIndex === featuredItems.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 7000);
-
-    return () => clearInterval(interval);
-  }, [featuredItems]);
 
   if (loading) {
     return (
@@ -67,8 +61,6 @@ export default function Page() {
     );
   }
 
-  const activeItem = featuredItems[currentFeaturedIndex];
-
   // Updated CSS classes with reduced bottom padding
   const featuredContentClass = `
     featured-content mx-auto transition-all duration-300 ease-in-out
@@ -81,9 +73,9 @@ export default function Page() {
   return (
     <div className="container mx-auto px-5">
       <div className={featuredContentClass}>
-        {activeItem && (
+        {featuredItem && (
           <div className="relative">
-            <FeaturedItemComponent item={activeItem} />
+            <FeaturedItemComponent item={featuredItem} />
           </div>
         )}
       </div>
@@ -156,6 +148,42 @@ export default function Page() {
         </div>
       </div>
 
+{/* Blog Post Card - 16:9 aspect ratio that spans the entire width */}
+<div className="mb-16">
+  <div className="flex justify-center">
+    <div className="w-full md:w-4/5 lg:w-3/4 xl:w-2/3">
+      <Link href="/posts/signal-social-media-advertisement" className="blog-card-wrapper">
+        <div className="blog-card-scalable">
+          <div className="relative w-full aspect-video overflow-hidden rounded-lg">
+            {/* Using the same media rendering approach as FeaturedItemComponent */}
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-200/70 via-transparent to-transparent z-10"></div>
+            
+            {/* Media content - Using a sample image URL but this would be dynamically set based on the post */}
+            <div className="media-container w-full h-full">
+              {/* This simulates a video embed using an iframe, similar to how FeaturedItemComponent would handle it */}
+              <iframe 
+                src="https://player.vimeo.com/video/1058300684?h=d8c9b8f8c3&autoplay=1&muted=1&loop=1&controls=0&title=0&byline=0&portrait=0"
+                className="w-full h-full absolute inset-0" 
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+                  
+            {/* Title overlay with properly sized text */}
+            <div className="absolute bottom-4 left-4 right-4 z-20">
+              <h2 className="text-black text-xl md:text-2xl font-semibold leading-tight">
+                View a recent project of ours!
+              </h2>
+            </div>
+          </div>
+        </div>
+      </Link>
+    </div>
+  </div>
+</div>
+
+
       <style jsx>{`
         .featured-content {
           transition: all 0.3s ease-in-out;
@@ -166,7 +194,12 @@ export default function Page() {
           display: block;
           position: relative;
         }
-        .card-scalable {
+        .blog-card-wrapper {
+          display: block;
+          position: relative;
+          width: 100%;
+        }
+        .card-scalable, .blog-card-scalable {
           width: 100%;
           position: relative;
           transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -179,7 +212,7 @@ export default function Page() {
           width: 100%;
           height: auto;
         }
-        .card-scalable:hover {
+        .card-scalable:hover, .blog-card-scalable:hover {
           transform: translateY(-3px);
           box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
         }

@@ -106,28 +106,28 @@ export default function CustomPortableText({
   const components: PortableTextComponents = {
     block: {
       h1: ({children}) => (
-        <h1 className="mb-4 text-3xl font-bold text-white">{children}</h1>
+        <h1 className="mb-4 text-3xl font-bold text-black">{children}</h1>
       ),
       h2: ({children}) => (
-        <h2 className="mb-4 text-2xl font-bold text-white">{children}</h2>
+        <h2 className="mb-4 text-2xl font-bold text-black">{children}</h2>
       ),
       h3: ({children}) => (
-        <h3 className="mb-4 text-xl font-bold text-white">{children}</h3>
+        <h3 className="mb-4 text-xl font-bold text-black">{children}</h3>
       ),
       h4: ({children}) => (
-        <h4 className="mb-4 text-lg font-bold text-white">{children}</h4>
+        <h4 className="mb-4 text-lg font-bold text-black">{children}</h4>
       ),
       h5: ({ children }) => (
-        <h5 className="mb-2 text-sm font-semibold text-white">{children}</h5>
+        <h5 className="mb-2 text-sm font-semibold text-black">{children}</h5>
       ),
       h6: ({ children }) => (
-        <h6 className="mb-1 text-xs font-semibold text-white">{children}</h6>
+        <h6 className="mb-1 text-xs font-semibold text-black">{children}</h6>
       ),
       normal: ({children}) => (
-        <p className="mb-4 text-lg text-gray-300">{children}</p>
+        <p className="mb-4 text-lg text-black">{children}</p>
       ),
       blockquote: ({children}) => (
-        <blockquote className="border-l-4 border-gray-700 pl-4 my-4 italic text-gray-400">{children}</blockquote>
+        <blockquote className="border-l-4 border-gray-700 pl-4 my-4 italic text-black">{children}</blockquote>
       ),
     },
     marks: {
@@ -141,8 +141,8 @@ export default function CustomPortableText({
           {children}
         </a>
       ),
-      strong: ({children}) => <strong className="font-bold text-white">{children}</strong>,
-      em: ({children}) => <em className="italic text-gray-300">{children}</em>,
+      strong: ({children}) => <strong className="font-bold text-black">{children}</strong>,
+      em: ({children}) => <em className="italic text-gray-600">{children}</em>,
     },
     types: {
       video: ({ value }) => {
