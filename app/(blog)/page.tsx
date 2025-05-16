@@ -100,9 +100,9 @@ export default function Page() {
                   <rect width="300" height="420" rx="12" fill="white" />
                   
                   {/* Text Content */}
-                  <text x="24" y="45" fontFamily="sans-serif" fontSize="25" fontWeight="600" fill="#1D1D1F">About us</text>
-                  <text x="24" y="73" fontFamily="sans-serif" fontSize="20" fill="#919191">click this card to learn more</text>
-                  <text x="24" y="95" fontFamily="sans-serif" fontSize="20" fill="#919191">about us!</text>
+                  <text x="24" y="45" fontFamily="sans-serif" fontSize="28" fontWeight="600" fill="#1D1D1F">About us</text>
+                  <text x="24" y="74" fontFamily="sans-serif" fontSize="23" fill="#919191">click this card to learn</text>
+                  <text x="24" y="96" fontFamily="sans-serif" fontSize="23" fill="#919191">more about us!</text>
                   
                   {/* Image/Illustration */}
                   <g transform="translate(25, 198) scale(0.45)">
@@ -120,9 +120,9 @@ export default function Page() {
                   <rect width="300" height="420" rx="12" fill="#2393e8" />
                   
                   {/* Text Content */}
-                  <text x="24" y="45" fontFamily="sans-serif" fontSize="25" fontWeight="600" fill="#ffffff">Contact us</text>
-                  <text x="24" y="73" fontFamily="sans-serif" fontSize="20" fill="#e4eff7">click this card and let&apos;s make</text>
-                  <text x="24" y="95" fontFamily="sans-serif" fontSize="20" fill="#e4eff7">something new!</text>
+                  <text x="24" y="45" fontFamily="sans-serif" fontSize="28" fontWeight="600" fill="#ffffff">Contact us</text>
+                  <text x="24" y="74" fontFamily="sans-serif" fontSize="23" fill="#e4eff7">click this card and let&apos;s</text>
+                  <text x="24" y="96" fontFamily="sans-serif" fontSize="23" fill="#e4eff7">make something new!</text>
                   
                   {/* Image/Illustration */}
                   <g transform="translate(26, 175) scale(0.50)">
@@ -141,9 +141,9 @@ export default function Page() {
                   <rect width="300" height="420" rx="12" fill="white" />
                   
                   {/* Text Content */}
-                  <text x="24" y="45" fontFamily="sans-serif" fontSize="25" fontWeight="600" fill="#1D1D1F">Full Gallery</text>
-                  <text x="24" y="73" fontFamily="sans-serif" fontSize="20" fill="#919191">click this card to view all</text>
-                  <text x="24" y="95" fontFamily="sans-serif" fontSize="20" fill="#919191">our stuff!</text>
+                  <text x="24" y="45" fontFamily="sans-serif" fontSize="28" fontWeight="600" fill="#1D1D1F">Full Gallery</text>
+                  <text x="24" y="74" fontFamily="sans-serif" fontSize="23" fill="#919191">click this card to view all</text>
+                  <text x="24" y="96" fontFamily="sans-serif" fontSize="23" fill="#919191">our stuff!</text>
                   
                   {/* Image/Illustration */}
                   <g transform="translate(25, 221) scale(0.45)">
