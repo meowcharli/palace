@@ -121,7 +121,7 @@ export default function Page() {
                   
                   {/* Text Content */}
                   <text x="24" y="45" fontFamily="sans-serif" fontSize="25" fontWeight="600" fill="#ffffff">Contact us</text>
-                  <text x="24" y="73" fontFamily="sans-serif" fontSize="20" fill="#e4eff7">click this card and let's make</text>
+                  <text x="24" y="73" fontFamily="sans-serif" fontSize="20" fill="#e4eff7">click this card and let&apos;s make</text>
                   <text x="24" y="95" fontFamily="sans-serif" fontSize="20" fill="#e4eff7">something new!</text>
                   
                   {/* Image/Illustration */}
