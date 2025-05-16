@@ -8,7 +8,8 @@ import Onboarding from "./onboarding";
 
 export default function Page() {
   const [allGalleryItems, setAllGalleryItems] = useState<GalleryItem[]>([]);
-  const [featuredItem, setFeaturedItem] = useState<GalleryItem | null>(null);
+  const [featuredItems, setFeaturedItems] = useState<GalleryItem[]>([]);
+  const [currentFeaturedIndex, setCurrentFeaturedIndex] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,15 +24,8 @@ export default function Page() {
           const galleryData = await galleryResponse.json();
           setAllGalleryItems(galleryData);
 
-          // Find featured items
           const featured = galleryData.filter((item: GalleryItem) => item.featured);
-          
-          // Randomly select one featured item and keep it
-          const itemsToChooseFrom = featured.length > 0 ? featured : galleryData;
-          if (itemsToChooseFrom.length > 0) {
-            const randomIndex = Math.floor(Math.random() * itemsToChooseFrom.length);
-            setFeaturedItem(itemsToChooseFrom[randomIndex]);
-          }
+          setFeaturedItems(featured.length > 0 ? featured : galleryData);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -42,6 +36,18 @@ export default function Page() {
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (featuredItems.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentFeaturedIndex((prevIndex) =>
+        prevIndex === featuredItems.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 7000);
+
+    return () => clearInterval(interval);
+  }, [featuredItems]);
 
   if (loading) {
     return (
@@ -61,6 +67,8 @@ export default function Page() {
     );
   }
 
+  const activeItem = featuredItems[currentFeaturedIndex];
+
   // Updated CSS classes with reduced bottom padding
   const featuredContentClass = `
     featured-content mx-auto transition-all duration-300 ease-in-out
@@ -73,9 +81,9 @@ export default function Page() {
   return (
     <div className="container mx-auto px-5">
       <div className={featuredContentClass}>
-        {featuredItem && (
+        {activeItem && (
           <div className="relative">
-            <FeaturedItemComponent item={featuredItem} />
+            <FeaturedItemComponent item={activeItem} />
           </div>
         )}
       </div>
