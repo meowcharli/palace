@@ -6,11 +6,30 @@ import FeaturedItemComponent from './FeaturedItemComponent';
 import type { GalleryItem } from '@/utils/types';
 import Onboarding from './onboarding';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 export default function Page() {
   const [allGalleryItems, setAllGalleryItems] = useState<GalleryItem[]>([]);
   const [activeItem, setActiveItem] = useState<GalleryItem | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if the device is mobile on mount and when resizing
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    checkMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkMobile);
+    
+    // Clean up
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -29,6 +48,17 @@ export default function Page() {
     }
     fetchData();
   }, []);
+
+  // Handle page transitions
+  const handlePageTransition = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    setIsTransitioning(true);
+    
+    // Delay navigation to allow transition animation
+    setTimeout(() => {
+      window.location.href = href;
+    }, 400);
+  };
 
   if (loading) {
     return (
@@ -49,8 +79,8 @@ export default function Page() {
   }
 
   return (
-    <div className="container mx-auto px-5">
-      <div className="featured-content mx-auto w-full px-1 pb-1.5 pt-6 sm:w-11/12 sm:px-2 sm:pt-4 md:w-4/5 md:px-5 md:pb-1.5 lg:w-1/2 lg:px-6">
+    <div className={`container mx-auto px-0 md:px-5 transition-opacity duration-400 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+      <div className="featured-content mx-auto w-full px-0 pb-3 pt-4 sm:w-11/12 sm:px-2 sm:pt-4 md:w-4/5 md:px-5 md:pb-1.5 lg:w-1/2 lg:px-6">
         {activeItem && (
           <div className="relative">
             <FeaturedItemComponent item={activeItem} />
@@ -59,14 +89,18 @@ export default function Page() {
       </div>
 
       {/* Cards */}
-      <div className="mt-0 mb-7">
+      <div className="mt-4 md:mt-0 mb-8 md:mb-7">
         <div className="flex justify-center">
-          <div className="w-full md:w-4/5 lg:w-3/4 xl:w-2/3 flex overflow-x-auto scrollbar-hide md:overflow-visible pb-4 md:pb-0 md:grid md:grid-cols-3 md:gap-6 snap-x snap-mandatory">
+          <div className="w-full md:w-4/5 lg:w-3/4 xl:w-2/3 flex overflow-x-auto scrollbar-hide md:overflow-visible pb-4 md:pb-0 md:grid md:grid-cols-3 md:gap-6 snap-x snap-mandatory px-4 md:px-0">
             {/* About */}
-            <Link href="/about" className="card-wrapper min-w-[210px] md:min-w-0 mr-4 md:mr-0 snap-center">
-              <div className="card-scalable">
+            <Link 
+              href="/about" 
+              className="card-wrapper min-w-[250px] md:min-w-0 mr-4 md:mr-0 snap-center"
+              onClick={(e) => handlePageTransition(e, '/about')}
+            >
+              <div className={`card-scalable ${isMobile ? 'mobile-card' : ''}`}>
                 <svg viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                  <image href="https://i.imgur.com/duWh9AI.png" width="300" height="420" preserveAspectRatio="xMidYMid slice" />
+                  <image href="https://i.imgur.com/QX9A5Ih.jpg" width="300" height="420" preserveAspectRatio="xMidYMid slice" />
                   <rect width="300" height="420" rx="12" fill="transparent" />
                   <text x="24" y="45" fontFamily="sans-serif" fontSize="28" fontWeight="600" fill="#1D1D1F">About us</text>
                   <text x="24" y="74" fontFamily="sans-serif" fontSize="23" fill="#1D1D1F">click this card to learn</text>
@@ -76,8 +110,12 @@ export default function Page() {
             </Link>
 
             {/* Contact */}
-            <Link href="/contact" className="card-wrapper min-w-[210px] md:min-w-0 mr-4 md:mr-0 snap-center">
-              <div className="card-scalable">
+            <Link 
+              href="/contact" 
+              className="card-wrapper min-w-[250px] md:min-w-0 mr-4 md:mr-0 snap-center"
+              onClick={(e) => handlePageTransition(e, '/contact')}
+            >
+              <div className={`card-scalable ${isMobile ? 'mobile-card' : ''}`}>
                 <svg viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg" className="card-svg">
                   <image href="https://i.imgur.com/KqZk8F8.png" width="300" height="420" preserveAspectRatio="xMidYMid slice" />
                   <rect width="300" height="420" rx="12" fill="transparent" />
@@ -89,8 +127,12 @@ export default function Page() {
             </Link>
 
             {/* Gallery */}
-            <Link href="/gallery" className="card-wrapper min-w-[210px] md:min-w-0 snap-center">
-              <div className="card-scalable">
+            <Link 
+              href="/gallery" 
+              className="card-wrapper min-w-[250px] md:min-w-0 snap-center"
+              onClick={(e) => handlePageTransition(e, '/gallery')}
+            >
+              <div className={`card-scalable ${isMobile ? 'mobile-card' : ''}`}>
                 <svg viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg" className="card-svg">
                   <image href="https://i.imgur.com/EZLr9cU.jpeg" width="300" height="420" preserveAspectRatio="xMidYMid slice" />
                   <rect width="300" height="420" rx="12" fill="transparent" />
@@ -105,20 +147,24 @@ export default function Page() {
       </div>
 
       {/* Blog teaser - now with image */}
-      <div className="mb-10 md:mb-12"> {/* Reduced vertical padding */}
-        <div className="flex justify-center px-4 md:px-0"> {/* Added horizontal padding on mobile */}
+      <div className="mb-10 md:mb-12">
+        <div className="flex justify-center px-4 md:px-0">
           <div className="w-full md:w-4/5 lg:w-3/4 xl:w-2/3">
-            <Link href="/posts/signal-social-media-advertisement" className="blog-card-wrapper">
-              <div className="blog-card-scalable">
+            <Link 
+              href="/posts/signal-social-media-advertisement" 
+              className="blog-card-wrapper"
+              onClick={(e) => handlePageTransition(e, '/posts/signal-social-media-advertisement')}
+            >
+              <div className={`blog-card-scalable ${isMobile ? 'mobile-card' : ''}`}>
                 {/* Container with responsive aspect ratio */}
                 <div className="relative w-full aspect-square md:aspect-video overflow-hidden rounded-lg">
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-200/70 via-transparent to-transparent z-10"></div>
                   <img
                     src="https://i.imgur.com/AuOmVsO.png"
                     alt="Recent project"
-                    className="absolute inset-0 w-full h-full object-cover object-center transition-transformduration-500 ease-in-out transform"
+                    className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 ease-in-out transform"
                   />
-                  <div className="absolute bottom-3 left-3 right-3 md:bottom-4 md:left-4 md:right-4 z-20"> {/* Reduced text padding */}
+                  <div className="absolute bottom-3 left-3 right-3 md:bottom-4 md:left-4 md:right-4 z-20">
                     <h2 className="text-black text-lg md:text-xl lg:text-2xl font-semibold leading-tight">
                       View a recent project of ours!
                     </h2>
@@ -129,8 +175,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-
-      
 
       <style jsx>{`
         .card-wrapper {
@@ -158,21 +202,32 @@ export default function Page() {
           transform: translateZ(0); /* Force GPU acceleration */
           filter: grayscale(90%); /* Apply grayscale by default */
         }
+        .mobile-card {
+          filter: grayscale(0%) !important; /* Always show in full color on mobile */
+        }
         .card-svg {
           display: block;
           width: 100%;
           height: auto;
           border-radius: 12px;
         }
-        .card-scalable:hover {
-          transform: translateY(-3px) rotate(1deg);
-          box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-          filter: grayscale(0%); /* Remove grayscale on hover */
-        }
-        .blog-card-scalable:hover {
-          transform: translateY(-3px) rotate(0.5deg);
-          box-shadow: 0 10px 15px rgba(255, 255, 255, 0.1);
-          filter: grayscale(0%); /* Remove grayscale on hover */
+        /* Apply hover effects only on non-mobile devices */
+        @media (min-width: 768px) {
+          .card-scalable:hover {
+            transform: translateY(-3px) rotate(1deg);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            filter: grayscale(0%); /* Remove grayscale on hover */
+          }
+          .blog-card-scalable:hover {
+            transform: translateY(-3px) rotate(0.5deg);
+            box-shadow: 0 10px 15px rgba(255, 255, 255, 0.1);
+            filter: grayscale(0%); /* Remove grayscale on hover */
+          }
+          .card-scalable:hover img,
+          .blog-card-scalable:hover img,
+          .card-scalable:hover .card-svg image {
+            transform: scale(1.06);
+          }
         }
         .card-scalable img,
         .blog-card-scalable img,
@@ -180,9 +235,8 @@ export default function Page() {
           transition: transform 0.3s ease, filter 0.3s ease;
           transform-origin: center center;
         }
-        .card-scalable:hover img,
-        .blog-card-scalable:hover img,
-        .card-scalable:hover .card-svg image {
+        /* Increase the blog teaser image size to 101% */
+        .blog-card-scalable img {
           transform: scale(1.03);
         }
         .scrollbar-hide::-webkit-scrollbar {
@@ -194,7 +248,16 @@ export default function Page() {
         }
         @media (max-width: 767px) {
           .card-wrapper {
-            width: 80%;
+            width: 90%;
+            margin-right: 15px;
+          }
+          .card-wrapper:last-child {
+            margin-right: 0;
+          }
+          .featured-content {
+            padding: 0;
+            margin: 0;
+            width: 100%;
           }
         }
       `}</style>
