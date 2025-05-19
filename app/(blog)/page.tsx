@@ -50,7 +50,7 @@ export default function Page() {
 
   return (
     <div className="container mx-auto px-5">
-      <div className="featured-content mx-auto w-full px-1 pb-4 pt-6 sm:w-11/12 sm:px-2 sm:pt-4 md:w-4/5 md:px-5 md:pb-8 lg:w-1/2 lg:px-6">
+      <div className="featured-content mx-auto w-full px-1 pb-1.5 pt-6 sm:w-11/12 sm:px-2 sm:pt-4 md:w-4/5 md:px-5 md:pb-1.5 lg:w-1/2 lg:px-6">
         {activeItem && (
           <div className="relative">
             <FeaturedItemComponent item={activeItem} />
@@ -59,7 +59,7 @@ export default function Page() {
       </div>
 
       {/* Cards */}
-      <div className="mt-8 mb-7">
+      <div className="mt-0 mb-7">
         <div className="flex justify-center">
           <div className="w-full md:w-4/5 lg:w-3/4 xl:w-2/3 flex overflow-x-auto scrollbar-hide md:overflow-visible pb-4 md:pb-0 md:grid md:grid-cols-3 md:gap-6 snap-x snap-mandatory">
             {/* About */}
