@@ -19,11 +19,11 @@ export default function ContactPage() {
       {/* Page header */}
       <div className="mb-3 gap-6 text-left max-w-6xl">
         <p className="text-3xl max-w-2xl mx-auto">
-          Let's get in touch and make something memorable!
+          Let&apos;s get in touch and make something memorable!
         </p>
       </div>
 
-            {/* Page header desc */}
+      {/* Page header desc */}
       <div className="mb-12 gap-2 text-left max-w-6xl">
         <p className="text-xl max-w-2xl mx-auto">
           Send us an email at c@type.tax to start something fresh.
@@ -34,7 +34,7 @@ export default function ContactPage() {
       <div className="max-w-4xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Primary Contact */}
-                <div className="bg-[#202020] p-6 rounded-lg">
+          <div className="bg-[#202020] p-6 rounded-lg">
             <h3 className="text-xl font-semibold mb-3 text-gray-100">Primary Contact</h3>
             <p className="text-gray-100 mb-2">
               <span className="font-medium">All-Purpose Email:</span> c@type.tax
@@ -48,7 +48,7 @@ export default function ContactPage() {
           <div className="bg-gray-200 p-6 rounded-lg">
             <h3 className="text-xl font-semibold mb-3">Availability</h3>
             <p className="text-gray-700 mb-2">
-              <span className="font-medium">We're always open!</span> Monday - Sunday 24/7
+              <span className="font-medium">We&apos;re always open!</span> Monday - Sunday 24/7
             </p>
             <p className="text-gray-700">
               <span className="font-medium">Our standard time zone is</span> CEST/CET.
@@ -73,7 +73,7 @@ export default function ContactPage() {
               <span className="font-medium">🦋 Bluesky:</span> @type.tax
             </p>
             <p className="text-gray-700">
-              <span className="font-medium">-</span> We've stopped using Meta's services.
+              <span className="font-medium">-</span> We&apos;ve stopped using Meta&apos;s services.
             </p>
           </div>
         </div>
