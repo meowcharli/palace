@@ -59,7 +59,7 @@ export default function Page() {
       </div>
 
       {/* Cards */}
-      <div className="mt-8 mb-8">
+      <div className="mt-8 mb-7">
         <div className="flex justify-center">
           <div className="w-full md:w-4/5 lg:w-3/4 xl:w-2/3 flex overflow-x-auto scrollbar-hide md:overflow-visible pb-4 md:pb-0 md:grid md:grid-cols-3 md:gap-6 snap-x snap-mandatory">
             {/* About */}
@@ -116,7 +116,7 @@ export default function Page() {
                   <img
                     src="https://i.imgur.com/AuOmVsO.png"
                     alt="Recent project"
-                    className="absolute inset-0 w-full h-full object-cover object-center scale-105"
+                    className="absolute inset-0 w-full h-full object-cover object-center transition-transformduration-500 ease-in-out transform"
                   />
                   <div className="absolute bottom-3 left-3 right-3 md:bottom-4 md:left-4 md:right-4 z-20"> {/* Reduced text padding */}
                     <h2 className="text-black text-lg md:text-xl lg:text-2xl font-semibold leading-tight">
@@ -130,26 +130,33 @@ export default function Page() {
         </div>
       </div>
 
+      
+
       <style jsx>{`
         .card-wrapper {
           flex-shrink: 0;
           width: 100%;
           display: block;
           position: relative;
+          transform-origin: center center;
         }
         .blog-card-wrapper {
           display: block;
           position: relative;
           width: 100%;
+          transform-origin: center center;
         }
         .card-scalable,
         .blog-card-scalable {
           width: 100%;
           position: relative;
-          transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+          transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.2, 0, 0.2, 1), filter 0.4s ease;
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
           border-radius: 12px;
           overflow: hidden;
+          will-change: transform, filter; /* Optimize for animation */
+          transform: translateZ(0); /* Force GPU acceleration */
+          filter: grayscale(90%); /* Apply grayscale by default */
         }
         .card-svg {
           display: block;
@@ -157,10 +164,26 @@ export default function Page() {
           height: auto;
           border-radius: 12px;
         }
-        .card-scalable:hover,
+        .card-scalable:hover {
+          transform: translateY(-3px) rotate(1deg);
+          box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+          filter: grayscale(0%); /* Remove grayscale on hover */
+        }
         .blog-card-scalable:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+          transform: translateY(-3px) rotate(0.5deg);
+          box-shadow: 0 10px 15px rgba(255, 255, 255, 0.1);
+          filter: grayscale(0%); /* Remove grayscale on hover */
+        }
+        .card-scalable img,
+        .blog-card-scalable img,
+        .card-svg image {
+          transition: transform 0.3s ease, filter 0.3s ease;
+          transform-origin: center center;
+        }
+        .card-scalable:hover img,
+        .blog-card-scalable:hover img,
+        .card-scalable:hover .card-svg image {
+          transform: scale(1.03);
         }
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
