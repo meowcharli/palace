@@ -70,7 +70,7 @@ export default function Page() {
     return (
       <div className="container mx-auto px-5">
         <div className="text-center py-20">
-          <div className="animate-spin h-12 w-12 border-t-2 border-b-2 border-l-2 border-r-2 border-black mx-auto"></div>
+          <div className="animate-spin h-24 w-24 border-t-4 border-b-4 border-l-4 border-r-4 border-black mx-auto"></div>
         </div>
       </div>
     );
