@@ -11,6 +11,7 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isAboutHovered, setIsAboutHovered] = useState(false);
 
   // Check if the device is mobile on mount and when resizing
   useEffect(() => {
@@ -95,10 +96,18 @@ export default function Page() {
               href="/about" 
               className="card-wrapper w-full mb-1 md:mb-0"
               onClick={(e) => handlePageTransition(e, '/about')}
+              onMouseEnter={() => setIsAboutHovered(true)}
+              onMouseLeave={() => setIsAboutHovered(false)}
             >
               <div className={`card-scalable about-card ${isMobile ? 'mobile-card' : ''}`}>
                 <svg viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                  <image href="https://i.imgur.com/Y8z5ivw.gif" width="300" height="420" preserveAspectRatio="xMidYMid slice" className="about-image" />
+                  <image 
+                    href={isAboutHovered ? "https://i.imgur.com/CRpeERR.gif" : "https://i.imgur.com/o1Vonsi.gif"} 
+                    width="300" 
+                    height="420" 
+                    preserveAspectRatio="xMidYMid slice" 
+                    className="about-image" 
+                  />
                   <rect width="300" height="420" fill="transparent" />
                   <text x="24" y="45" fontFamily="sans-serif" fontSize="28" fontWeight="600" fill="#1D1D1F">+</text>
                   <text x="24" y="74" fontFamily="sans-serif" fontSize="23" fill="#1D1D1F">About</text>
@@ -206,6 +215,9 @@ export default function Page() {
           width: 100%;
           height: auto;
         }
+        .about-image {
+          transition: opacity 0.3s ease;
+        }
         /* Apply hover effects only on non-mobile devices */
         @media (min-width: 768px) {
           .card-scalable:hover {
@@ -226,10 +238,6 @@ export default function Page() {
         .blog-card-scalable img {
           transition: transform 0.3s ease, filter 0.3s ease;
           transform-origin: center center;
-        }
-        /* About card image should not have transition for transform */
-        .about-card .about-image {
-          transition: filter 0.3s ease;
         }
         /* Increase the blog teaser image size to 101% */
         .blog-card-scalable img {
