@@ -153,35 +153,55 @@ export default function Page() {
         </div>
       </div>
 
-      {/* Blog teaser - now with image */}
-      <div className="mb-4 md:mb-10">
-        <div className="flex justify-center px-4 md:px-0">
-          <div className="w-full md:w-4/5 lg:w-3/4 xl:w-2/3">
+      {/* Mobile Card */}
+            {isMobile && (
+      <div className="mb-4 md:mb-10 mt-2 md:mt-4">
+        <div className="flex justify-center">
+          <div className="w-full md:w-5/7 lg:w-3/4 xl:w-2/3">
             <Link 
               href="/posts/signal-social-media-advertisement" 
-              className="blog-card-wrapper"
+              className="card-wrapper w-full"
               onClick={(e) => handlePageTransition(e, '/posts/signal-social-media-advertisement')}
             >
-              <div className={`blog-card-scalable ${isMobile ? 'mobile-card' : ''}`}>
-                {/* Container with responsive aspect ratio */}
-                <div className="relative w-full aspect-square md:aspect-video overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-200/70 via-transparent to-transparent z-10"></div>
-                  <img
-                    src="https://i.imgur.com/AuOmVsO.png"
-                    alt="Recent project"
-                    className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 ease-in-out transform"
-                  />
-                  <div className="absolute bottom-3 left-3 right-3 md:bottom-4 md:left-4 md:right-4 z-20">
-                    <h2 className="text-black text-lg md:text-xl lg:text-2xl font-semibold leading-tight">
-                      View a recent project of ours!
-                    </h2>
-                  </div>
-                </div>
+              <div className={`card-scalable ${isMobile ? 'mobile-card' : ''}`}>
+                <svg viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg" className="card-svg">
+                  <image href="https://i.imgur.com/AuOmVsO.png" width="300" height="420" preserveAspectRatio="xMidYMid slice" />
+                  <rect width="300" height="420" fill="transparent" />
+                  <text x="24" y="45" fontFamily="sans-serif" fontSize="28" fontWeight="600" fill="#1D1D1F">+</text>
+                  <text x="24" y="74" fontFamily="sans-serif" fontSize="23" fill="#1D1D1F">Featured</text>
+                  <text x="24" y="90" fontFamily="sans-serif" fontSize="11" fill="#3D3D3F">Signal | Ad</text>
+                </svg>
               </div>
             </Link>
           </div>
         </div>
       </div>
+            )}
+
+      {/* Desktop Card (hide this one on mobile) */}
+      {!isMobile && (
+      <div className="mb-4 md:mb-10 mt-2 md:mt-4">
+        <div className="flex justify-center">
+          <div className="w-full md:w-5/7 lg:w-3/4 xl:w-2/3">
+            <Link 
+              href="/posts/signal-social-media-advertisement" 
+              className="card-wrapper w-full"
+              onClick={(e) => handlePageTransition(e, '/posts/signal-social-media-advertisement')}
+            >
+              <div className={`card-scalable ${isMobile ? 'mobile-card' : ''}`}>
+                <svg viewBox="0 0 420 235" xmlns="http://www.w3.org/2000/svg" className="card-svg">
+                  <image href="https://i.imgur.com/AuOmVsO.png" width="420" height="245" preserveAspectRatio="xMidYMid slice" />
+                  <rect width="420" height="235" fill="transparent" />
+                  <text x="17" y="25" fontFamily="sans-serif" fontSize="14" fontWeight="600" fill="#1D1D1F">+</text>
+                  <text x="17" y="39" fontFamily="sans-serif" fontSize="11" fill="#1D1D1F">Featured</text>
+                  <text x="17" y="48" fontFamily="sans-serif" fontSize="6.5" fill="#3D3D3F">Signal | Ad</text>
+                </svg>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </div>
+      )}
 
       <style jsx>{`
         .card-wrapper {
@@ -191,14 +211,7 @@ export default function Page() {
           position: relative;
           transform-origin: center center;
         }
-        .blog-card-wrapper {
-          display: block;
-          position: relative;
-          width: 100%;
-          transform-origin: center center;
-        }
-        .card-scalable,
-        .blog-card-scalable {
+        .card-scalable {
           width: 100%;
           position: relative;
           transition: transform 0.4s cubic-bezier(0.2, 0, 0.2, 1), filter 0.4s ease;
@@ -224,24 +237,14 @@ export default function Page() {
             transform: translateY(-3px) rotate(1deg);
             filter: grayscale(0%); /* Remove grayscale on hover */
           }
-          .blog-card-scalable:hover {
-            transform: translateY(-3px) rotate(0.5deg);
-            filter: grayscale(0%); /* Remove grayscale on hover */
-          }
           /* Apply zoom effect to all cards except the about card */
-          .card-scalable:not(.about-card):hover .card-svg image,
-          .blog-card-scalable:hover img {
+          .card-scalable:not(.about-card):hover .card-svg image {
             transform: scale(1.06);
           }
         }
-        .card-scalable .card-svg image:not(.about-image),
-        .blog-card-scalable img {
+        .card-scalable .card-svg image:not(.about-image) {
           transition: transform 0.3s ease, filter 0.3s ease;
           transform-origin: center center;
-        }
-        /* Increase the blog teaser image size to 101% */
-        .blog-card-scalable img {
-          transform: scale(1.03);
         }
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
