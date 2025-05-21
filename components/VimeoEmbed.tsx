@@ -83,7 +83,7 @@ export default function VimeoEmbed({
   if (!vimeoId) {
     if (process.env.NODE_ENV !== 'production') {
       return (
-        <div className={`my-4 p-4 border border-red-800 bg-red-900 rounded-lg text-red-300 ${className}`}>
+        <div className={`my-4 p-4 border border-red-800 bg-red-900 text-red-300 ${className}`}>
           <p>Invalid Vimeo URL or embed code</p>
         </div>
       );
@@ -205,7 +205,7 @@ export default function VimeoEmbed({
       style={{ 
         width: '100%',
         backgroundColor: '#000',
-        borderRadius: '8px',
+        borderRadius: '0px',
         overflow: 'hidden',
         position: 'relative',
         aspectRatio: appliedAspectRatio

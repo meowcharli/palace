@@ -66,15 +66,18 @@ export default function Page() {
     }, 400);
   }, []);
 
-  if (loading) {
-    return (
-      <div className="container mx-auto px-5">
-        <div className="text-center py-20">
-          <div className="animate-spin h-24 w-24 border-t-4 border-b-4 border-l-4 border-r-4 border-black mx-auto"></div>
-        </div>
+if (loading) {
+  return (
+    <div className="container mx-auto px-5">
+      <div className="text-center py-40">
+        <div 
+          className="h-12 w-12 rounded-full bg-[#151517] mx-auto"
+          style={{ animation: 'pulse 0.5s ease-in-out infinite' }}
+        ></div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   if (!allGalleryItems || allGalleryItems.length === 0) {
     return (
