@@ -66,14 +66,14 @@ export default function Template({ children }: { children: React.ReactNode }) {
     <AnimatePresence mode="wait" onExitComplete={() => setIsAnimating(true)}>
       <motion.div
         key={pathname}
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -40 }}
         animate={{ 
           opacity: isAnimating ? 1 : 0,
-          y: isAnimating ? 0 : -20 
+          y: isAnimating ? 0 : 40 
         }}
         exit={skipExitAnimation ? {} : { opacity: 0, y: 20 }} // Empty object = no exit animation
         transition={{ 
-          duration: 2, 
+          duration: 5, 
           ease: [0.22, 1, 0.36, 1],
         }}
         className="min-h-screen w-full"
