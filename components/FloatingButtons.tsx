@@ -99,7 +99,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             onClick={handleExitPreview}
             style={{
               backgroundColor: '000000',
-              color: 'white',
+              color: 'black',
               padding: '8px 24px',
               borderRadius: '9999px',
               fontWeight: '500',
@@ -238,9 +238,9 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         }
         
         .search-container {
-          height: 45px;
+          height: 30px;
           width: 400px;
-          background-color: #F5F5F7;
+          background-color: #E5E5E7;
           display: flex;
           align-items: center;
         }
@@ -257,7 +257,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         }
         
         .search-input::placeholder {
-          color: #F5F5F7;
+          color: #a5a5a7;
         }
         
         .svg-clickable {

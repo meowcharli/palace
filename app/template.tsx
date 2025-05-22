@@ -9,49 +9,46 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [isAnimating, setIsAnimating] = useState(false);
   const [nextPath, setNextPath] = useState<string | null>(null);
+  const [skipExitAnimation, setSkipExitAnimation] = useState(false);
 
   useEffect(() => {
-    // Make page visible after hydration
     document.documentElement.classList.add('visible');
-    
-    // Enable animations after initial load
     const timer = setTimeout(() => setIsAnimating(true), 100);
     return () => clearTimeout(timer);
   }, []);
 
-  // Handle route changes
   const handleRouteChange = (url: string) => {
     if (pathname !== url) {
-      setNextPath(url);
+      // Check if we're going from /posts/* to /
+      const isPostsToHome = pathname.startsWith('/posts/') && url === '/';
+      setSkipExitAnimation(isPostsToHome);
+      
       setIsAnimating(false);
+      setNextPath(url);
     }
   };
 
-  // Handle animation completion
   useEffect(() => {
     if (!isAnimating && nextPath) {
       const timer = setTimeout(() => {
         router.push(nextPath);
         setNextPath(null);
-      }, 1000); // Match with exit animation duration
+      }, skipExitAnimation ? 0 : 1000); // No delay if skipping exit animation
       return () => clearTimeout(timer);
     }
-  }, [isAnimating, nextPath, router]);
+  }, [isAnimating, nextPath, router, skipExitAnimation]);
 
-  // Intercept clicks on links
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const anchor = target.closest('a');
       
       if (anchor && anchor.href && anchor.href.startsWith(window.location.origin)) {
-        // Don't prevent default for external links or links with target="_blank"
         if (anchor.target === '_blank' || anchor.hasAttribute('download')) {
           return;
         }
         
-        // Don't prevent default if it's the same path
-        const href = anchor.href.replace(window.location.origin, '');
+        const href = new URL(anchor.href).pathname;
         if (href === pathname) {
           return;
         }
@@ -74,9 +71,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
           opacity: isAnimating ? 1 : 0,
           y: isAnimating ? 0 : -20 
         }}
-        exit={{ opacity: 0, y: 20 }}
+        exit={skipExitAnimation ? {} : { opacity: 0, y: 20 }} // Empty object = no exit animation
         transition={{ 
-          duration: 1.5, 
+          duration: 1, 
           ease: [0.22, 1, 0.36, 1],
         }}
         className="min-h-screen w-full"

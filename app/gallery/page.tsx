@@ -206,19 +206,6 @@ export default function GalleryPage() {
     fetchData();
   }, []);
 
-if (loading) {
-  return (
-    <div className="container mx-auto px-5">
-      <div className="text-center py-40">
-        <div 
-          className="h-12 w-12 rounded-full bg-[#151517] mx-auto"
-          style={{ animation: 'pulse 0.5s ease-in-out infinite' }}
-        ></div>
-      </div>
-    </div>
-  );
-}
-
   if (!galleryItems.length) {
     return (
       <div className="container mx-auto px-5">
