@@ -19,7 +19,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   const handleRouteChange = (url: string) => {
     if (pathname !== url) {
-      // Check if we're going from /posts/* to /
       const isPostsToHome = pathname.startsWith('/posts/') && url === '/';
       setSkipExitAnimation(isPostsToHome);
       
@@ -33,7 +32,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
       const timer = setTimeout(() => {
         router.push(nextPath);
         setNextPath(null);
-      }, skipExitAnimation ? 0 : 1000); // No delay if skipping exit animation
+      }, skipExitAnimation ? 0 : 300); // Reduced from 1000ms - too long for production
       return () => clearTimeout(timer);
     }
   }, [isAnimating, nextPath, router, skipExitAnimation]);
@@ -63,7 +62,13 @@ export default function Template({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   return (
-    <AnimatePresence mode="wait" onExitComplete={() => setIsAnimating(true)}>
+    <AnimatePresence 
+      mode="wait" 
+      onExitComplete={() => {
+        console.log('Exit animation completed'); // Debug log
+        setIsAnimating(true);
+      }}
+    >
       <motion.div
         key={pathname}
         initial={{ opacity: 0, y: -40 }}
@@ -71,9 +76,13 @@ export default function Template({ children }: { children: React.ReactNode }) {
           opacity: isAnimating ? 1 : 0,
           y: isAnimating ? 0 : 40 
         }}
-        exit={skipExitAnimation ? {} : { opacity: 0, y: 20 }} // Empty object = no exit animation
+        exit={skipExitAnimation ? undefined : { 
+          opacity: 0, 
+          y: 20,
+          transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] }
+        }}
         transition={{ 
-          duration: 5, 
+          duration: 2, // Reduced from 5 seconds
           ease: [0.22, 1, 0.36, 1],
         }}
         className="min-h-screen w-full"

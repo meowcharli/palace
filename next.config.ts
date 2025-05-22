@@ -20,6 +20,16 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    optimizeCss: false,
+  },
+  compiler: {
+    removeConsole: false,
+  },
+  // Ensure client-side animations aren't stripped
+  swcMinify: true,
+  // Keep framer-motion animations in production
+  transpilePackages: ['framer-motion'],
 };
 
 export default nextConfig;
