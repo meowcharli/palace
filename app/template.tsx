@@ -73,7 +73,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         }}
         exit={skipExitAnimation ? {} : { opacity: 0, y: 20 }} // Empty object = no exit animation
         transition={{ 
-          duration: 1, 
+          duration: 2, 
           ease: [0.22, 1, 0.36, 1],
         }}
         className="min-h-screen w-full"
