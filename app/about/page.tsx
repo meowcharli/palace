@@ -9,14 +9,14 @@ export default function AboutPage() {
       {/* Page header */}
       <div className="mb-3 gap-6 text-left max-w-8xl px-4 sm:px-0 font-semibold">
         <p className="text-3xl max-w-2xl mx-auto">
-          We're Typetax.
+          We&apos;re Typetax.
         </p>
       </div>
 
       {/* Page header desc */}
       <div className="mb-12 md:mb-20 gap-2 text-left max-w-8xl px-4 sm:px-0">
         <p className="text-xl max-w-2xl mx-auto">
-          We're dedicated to experimentation and innovation in all things shapes, glyphs, geometry and graphics. In other words; we just really really like shapes.
+          We&apos;re dedicated to experimentation and innovation in all things shapes, glyphs, geometry and graphics. In other words; we just really really like shapes.
         </p>
       </div>
 
@@ -24,16 +24,16 @@ export default function AboutPage() {
       <div className="max-w-4xl mx-auto mb-12">
         <div className="bg-[#202020] p-6 md:p-14">
           <h3 className="text-2xl font-semibold mb-6 text-gray-100">
-            What's the deal with shapes anyway?
+            What&apos;s the deal with shapes anyway?
           </h3>
           
           <div className="space-y-4 text-gray-100">
             <p>
-              The biggest challenge in design is modularity. A logo might look perfect in its primary spot, but put it on print or change the color, and suddenly it looks amateur. That's where our obsession with form starts shining the most.
+              The biggest challenge in design is modularity. A logo might look perfect in its primary spot, but put it on print or change the color, and suddenly it looks amateur. That&apos;s where our obsession with form starts shining the most.
             </p>
             
             <p>
-              Our team is always evolving. Nothing stays the same for long. What we do best is build teams of artists and experts who aren't just skilled, but genuinely excited about the work. These people then connect us with more amazing talent like themselves.
+              Our team is always evolving. Nothing stays the same for long. What we do best is build teams of artists and experts who aren&apos;t just skilled, but genuinely excited about the work. These people then connect us with more amazing talent like themselves.
             </p>
             
             <p>
