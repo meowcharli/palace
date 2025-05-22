@@ -55,27 +55,12 @@ export default function Page() {
     fetchData();
   }, []);
 
-  // Handle page transitions - memoized with useCallback
-  const handlePageTransition = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    setIsTransitioning(true);
-    
-    // Delay navigation to allow transition animation
-    setTimeout(() => {
-      window.location.href = href;
-    }, 400);
-  }, []);
-
 if (loading) {
   return (
-    <div className="container mx-auto px-5">
-      <div className="text-center py-40">
-        <div 
-          className="h-12 w-12 rounded-full bg-[#151517] mx-auto"
-          style={{ animation: 'pulse 0.5s ease-in-out infinite' }}
-        ></div>
-      </div>
-    </div>
+    <div
+      className="fixed inset-0 bg-white"
+      style={{ zIndex: 9999 }}
+    ></div>
   );
 }
 
@@ -98,7 +83,6 @@ if (loading) {
             <Link 
               href="/about" 
               className="card-wrapper w-full mb-1 md:mb-0"
-              onClick={(e) => handlePageTransition(e, '/about')}
               onMouseEnter={() => setIsAboutHovered(true)}
               onMouseLeave={() => setIsAboutHovered(false)}
             >
@@ -123,7 +107,6 @@ if (loading) {
             <Link 
               href="/contact" 
               className="card-wrapper w-full mb-1 md:mb-0"
-              onClick={(e) => handlePageTransition(e, '/contact')}
             >
               <div className={`card-scalable ${isMobile ? 'mobile-card' : ''}`}>
                 <svg viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg" className="card-svg">
@@ -140,7 +123,6 @@ if (loading) {
             <Link 
               href="/gallery" 
               className="card-wrapper w-full mb-1 md:mb-0"
-              onClick={(e) => handlePageTransition(e, '/gallery')}
             >
               <div className={`card-scalable ${isMobile ? 'mobile-card' : ''}`}>
                 <svg viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg" className="card-svg">
@@ -164,7 +146,6 @@ if (loading) {
             <Link 
               href="/posts/signal-social-media-advertisement" 
               className="card-wrapper w-full"
-              onClick={(e) => handlePageTransition(e, '/posts/signal-social-media-advertisement')}
             >
               <div className={`card-scalable ${isMobile ? 'mobile-card' : ''}`}>
                 <svg viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg" className="card-svg">
@@ -189,7 +170,6 @@ if (loading) {
             <Link 
               href="/posts/signal-social-media-advertisement" 
               className="card-wrapper w-full"
-              onClick={(e) => handlePageTransition(e, '/posts/signal-social-media-advertisement')}
             >
               <div className={`card-scalable ${isMobile ? 'mobile-card' : ''}`}>
                 <svg viewBox="0 0 420 235" xmlns="http://www.w3.org/2000/svg" className="card-svg">
