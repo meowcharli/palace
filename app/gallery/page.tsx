@@ -208,10 +208,10 @@ export default function GalleryPage() {
 
   if (!galleryItems.length) {
     return (
-      <div className="container mx-auto px-5">
-        <div className="text-center py-20">
-          <h2 className="text-2xl font-bold">No gallery items found</h2>
-          <p className="mt-4">Please add some gallery items in the Sanity Studio.</p>
+      <div className="container mx-auto px-40 py-40">
+        <div className="text-center py-40">
+          <h2 className="text-2xl font-bold"></h2>
+          <p className="mt-40"></p>
         </div>
       </div>
     );
