@@ -1,6 +1,6 @@
 "use client";
 
-// app/(blog)/portable-text.tsx - DARK MODE VERSION
+// app/(blog)/portable-text.tsx - UPDATED VERSION WITH PADDING AND NO CAPTIONS
 import {
   PortableText,
   type PortableTextComponents,
@@ -22,7 +22,7 @@ interface SanityImageValue {
   [key: string]: any;
 }
 
-// Simplified Sanity image component
+// Simplified Sanity image component with padding and 100% quality
 function SanityImage({ value }: { value: SanityImageValue }) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -36,8 +36,8 @@ function SanityImage({ value }: { value: SanityImageValue }) {
     }
     
     try {
-      // Generate image URL using urlForImage from your utils
-      const imgUrl = urlForImage(value)?.width(800).url();
+      // Generate image URL using urlForImage with 100% quality
+      const imgUrl = urlForImage(value)?.width(1200).quality(100).url();
       
       if (imgUrl) {
         setImageUrl(imgUrl);
@@ -50,7 +50,7 @@ function SanityImage({ value }: { value: SanityImageValue }) {
         if (id && format) {
           const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
           const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
-          const directUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${id}.${format}`;
+          const directUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/${id}.${format}?q=100`;
           
           setImageUrl(directUrl);
           setLoading(false);
@@ -68,8 +68,8 @@ function SanityImage({ value }: { value: SanityImageValue }) {
   
   if (loading) {
     return (
-      <div className="my-6 flex justify-center">
-        <div className="bg-gray-800 rounded-lg animate-pulse w-full h-64"></div>
+      <div className="my-8 px-8">
+        <div className="bg-gray-200 animate-pulse w-full h-64"></div>
       </div>
     );
   }
@@ -77,7 +77,7 @@ function SanityImage({ value }: { value: SanityImageValue }) {
   if (error || !imageUrl) {
     if (process.env.NODE_ENV !== 'production') {
       return (
-        <div className="my-4 p-4 border border-red-800 bg-red-900 rounded-lg text-red-300">
+        <div className="my-6 mx-8 p-4 border border-red-300 bg-red-50 rounded-lg text-red-700">
           <p>Image failed to load: {JSON.stringify(value, null, 2)}</p>
         </div>
       );
@@ -86,11 +86,11 @@ function SanityImage({ value }: { value: SanityImageValue }) {
   }
   
   return (
-    <div className="my-6 flex justify-center">
+    <div className="my-8 px-8">
       <img
         src={imageUrl}
         alt={value?.alt || "Article image"}
-        className="max-w-full h-auto rounded-lg shadow-md"
+        className="w-full h-auto object-cover"
       />
     </div>
   );
@@ -106,35 +106,51 @@ export default function CustomPortableText({
   const components: PortableTextComponents = {
     block: {
       h1: ({children}) => (
-        <h1 className="mb-4 text-3xl font-bold text-black">{children}</h1>
+        <div className="max-w-2xl px-8">
+          <h1 className="mb-4 text-3xl font-bold text-black">{children}</h1>
+        </div>
       ),
       h2: ({children}) => (
-        <h2 className="mb-4 text-2xl font-bold text-black">{children}</h2>
+        <div className="max-w-2xl px-8">
+          <h2 className="mb-4 text-2xl font-bold text-black">{children}</h2>
+        </div>
       ),
       h3: ({children}) => (
-        <h3 className="mb-4 text-xl font-bold text-black">{children}</h3>
+        <div className="max-w-2xl px-8">
+          <h3 className="mb-4 text-xl font-bold text-black">{children}</h3>
+        </div>
       ),
       h4: ({children}) => (
-        <h4 className="mb-4 text-lg font-bold text-black">{children}</h4>
+        <div className="max-w-2xl px-8">
+          <h4 className="mb-4 text-lg font-bold text-black">{children}</h4>
+        </div>
       ),
       h5: ({ children }) => (
-        <h5 className="mb-2 text-sm font-semibold text-black">{children}</h5>
+        <div className="max-w-2xl px-8">
+          <h5 className="mb-2 text-sm font-semibold text-black">{children}</h5>
+        </div>
       ),
       h6: ({ children }) => (
-        <h6 className="mb-1 text-xs font-semibold text-black">{children}</h6>
+        <div className="max-w-2xl px-8">
+          <h6 className="mb-1 text-xs font-semibold text-black">{children}</h6>
+        </div>
       ),
       normal: ({children}) => (
-        <p className="mb-4 text-lg text-black">{children}</p>
+        <div className="max-w-2xl px-8">
+          <p className="mb-4 text-lg text-black">{children}</p>
+        </div>
       ),
       blockquote: ({children}) => (
-        <blockquote className="border-l-4 border-gray-700 pl-4 my-4 italic text-black">{children}</blockquote>
+        <div className="max-w-2xl px-8">
+          <blockquote className="border-l-4 border-gray-700 pl-4 my-4 italic text-black">{children}</blockquote>
+        </div>
       ),
     },
     marks: {
       link: ({ children, value }) => (
         <a 
           href={value?.href} 
-          className="text-blue-400 hover:underline"
+          className="text-blue-600 hover:text-blue-800 hover:underline"
           rel="noreferrer noopener"
           target={value?.href?.startsWith('http') ? '_blank' : undefined}
         >
@@ -153,46 +169,46 @@ export default function CustomPortableText({
 
         if (isYouTube) {
           return (
-            <div className="my-6">
-              <div className="responsive-iframe-container">
+            <div className="my-8 px-8">
+              <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <iframe
+                  className="absolute top-0 left-0 w-full h-full"
                   src={value.url.replace("watch?v=", "embed/")}
                   title="YouTube Video"
                   frameBorder="0"
                   allowFullScreen
                 />
               </div>
-              {value.caption && <p className="text-center text-sm mt-2 text-gray-400">{value.caption}</p>}
             </div>
           );
         }
 
         if (isVimeo) {
           return (
-            <div className="my-6">
-              <div className="responsive-iframe-container">
+            <div className="my-8 px-8">
+              <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <iframe
+                  className="absolute top-0 left-0 w-full h-full"
                   src={`https://player.vimeo.com/video/${value.url.split("/").pop()}`}
                   title="Vimeo Video"
                   frameBorder="0"
                   allowFullScreen
                 />
               </div>
-              {value.caption && <p className="text-center text-sm mt-2 text-gray-400">{value.caption}</p>}
             </div>
           );
         }
 
-        return <a href={value.url} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Watch Video</a>;
+        return <a href={value.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline">Watch Video</a>;
       },
       
-      // Use our simplified image component
+      // Use our updated image component
       image: ({ value }) => <SanityImage value={value} />
     },
   };
 
   return (
-    <div className={["prose lg:prose-xl max-w-none text-white", className].filter(Boolean).join(" ")}>
+    <div className={["prose lg:prose-xl max-w-none", className].filter(Boolean).join(" ")}>
       <PortableText components={components} value={value} />
     </div>
   );

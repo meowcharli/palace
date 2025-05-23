@@ -63,28 +63,21 @@ export default async function PostPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-[#f5f5f7]">
-      {/* Cover Image */}
-      {post.coverImage && (
-        <div className="relative">
-          <div className="w-full aspect-video overflow-hidden lg:px-[40px]">
-            <CoverImage image={post.coverImage} priority />
-          </div>
-        </div>
-      )}
-
+    <div className="bg-[#ffffff] min-h-screen">
       {/* Back Link */}
-      <div className="max-w-5xl mx-auto px-6 lg:px-8 pt-2 pb-0 text-center sm:pt-6">
+      <div className="max-w-7xl mx-auto px-6 pt-6">
+        <div className="max-w-6xl mx-auto">
         <Link
           href="/gallery"
           className="text-[#050507] hover:text-[#050507]/80 text-lg font-medium transition-colors duration-200"
         >
           ← Back to Gallery
         </Link>
+        </div>
       </div>
 
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-[#f5f5f7]">
+      <div className="relative overflow-hidden bg-[#ffffff]">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div
@@ -96,22 +89,23 @@ export default async function PostPage({ params }: Props) {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 py-0 bg-[#f5f5f7]">
-          <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center space-y-0 bg-[#f5f5f7] pt-4">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-medium text-[#050507]">
+        <div className="relative z-10 bg-[#ffffff]">
+          <div className="max-w-7xl mx-auto px-6 text-left bg-[#ffffff] pt-6 pb-8">
+            <div className="max-w-6xl mx-auto">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-medium text-[#050507] mb-4">
               {post.title}
             </h1>
 
             {post.excerpt && (
-              <p className="text-xl text-[#050507] max-w-4xl font-medium mx-auto leading-relaxed">
+              <p className="text-xl text-[#050507] max-w-4xl font-medium leading-relaxed mb-6">
                 {post.excerpt}
               </p>
             )}
 
             {post.author && (
-              <div className="flex items-center justify-center gap-6 pt-4">
+              <div className="flex items-center justify-start gap-6">
                 <div className="flex items-center gap-4">
-                  <div className="relative">
+                  <div className="relative p-2">
                     <Avatar
                       name={post.author.name}
                       picture={post.author.picture}
@@ -132,31 +126,31 @@ export default async function PostPage({ params }: Props) {
                 </div>
               </div>
             )}
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-0 sm:px-6 lg:px-8 py-12 bg-[#f5f5f7]">
-        {post.content?.length && (
-          <div className="prose prose-lg prose-slate max-w-none">
-            <div className="bg-white border-2 border-black p-4 sm:p-6 lg:p-8">
-              <PortableText
-                className="leading-relaxed text-[#050507]"
-                value={post.content as PortableTextBlock[]}
-              />
-            </div>
-          </div>
-        )}
-      </article>
+{/* Main Content */}
+<article className="max-w-7xl mx-auto px-0 sm:px-6 pb-8 bg-[#ffffff]">
+  {post.content?.length && (
+    <div className="prose prose-lg prose-slate max-w-none">
+      <div className="bg-white border-2 border-black p-4 sm:p-6 lg:p-8 sm:mx-6">
+        <PortableText
+          className="leading-relaxed text-[#050507]"
+          value={post.content as PortableTextBlock[]}
+        />
+      </div>
+    </div>
+  )}
+</article>
 
       {/* Author Bio Section */}
       {post.author && (
-        <section className="bg-[#f5f5f7] py-12">
-          <div className="max-w-4xl mx-auto px-6 lg:px-8">
-            <div className="bg-white border-2 border-black p-6 lg:p-8">
+        <section className="bg-[#ffffff] pb-8">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="bg-black border-2 border-black p-6 lg:p-8 max-w-2xl">
               <div className="flex flex-col md:flex-row items-center gap-6">
-                <div className="relative flex-shrink-0">
+                <div className="relative flex-shrink-0 p-3">
                   <div className="w-20 h-20 overflow-hidden">
                     <Avatar
                       name={post.author.name}

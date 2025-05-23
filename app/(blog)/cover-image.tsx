@@ -42,7 +42,7 @@ export default function CoverImage({
   // If we have an image, render it
   if (image?.asset?._ref) {
     return (
-      <div className="shadow-md transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
+      <div className="transition-shadow duration-200 group-hover:shadow-lg sm:mx-0">
         <Image
           className="h-auto w-full"
           width={2000}
