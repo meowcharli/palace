@@ -8,6 +8,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
 
+  // Skip animation for Sanity Studio routes
+  const isSanityStudio = pathname.startsWith('/studio');
+
   useEffect(() => {
     document.documentElement.classList.add('visible');
     // Force re-mount to ensure animation always plays
@@ -17,6 +20,11 @@ export default function Template({ children }: { children: React.ReactNode }) {
   // Don't render until mounted to ensure fresh animation
   if (!isMounted) {
     return <div className="min-h-screen w-full opacity-0" />;
+  }
+
+  // Return children without animation wrapper for Sanity Studio
+  if (isSanityStudio) {
+    return <div className="min-h-screen w-full">{children}</div>;
   }
 
   return (
