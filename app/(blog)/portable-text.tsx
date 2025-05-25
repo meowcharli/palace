@@ -1,6 +1,6 @@
 "use client";
 
-// app/(blog)/portable-text.tsx - UPDATED VERSION WITH PADDING AND NO CAPTIONS
+// app/(blog)/portable-text.tsx - UPDATED VERSION WITH RESPONSIVE PADDING
 import {
   PortableText,
   type PortableTextComponents,
@@ -22,7 +22,7 @@ interface SanityImageValue {
   [key: string]: any;
 }
 
-// Simplified Sanity image component with padding and 100% quality
+// Simplified Sanity image component with responsive padding and 100% quality
 function SanityImage({ value }: { value: SanityImageValue }) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -68,7 +68,7 @@ function SanityImage({ value }: { value: SanityImageValue }) {
   
   if (loading) {
     return (
-      <div className="my-8 px-8">
+      <div className="my-8 px-4 md:px-12">
         <div className="bg-gray-200 animate-pulse w-full h-64"></div>
       </div>
     );
@@ -77,7 +77,7 @@ function SanityImage({ value }: { value: SanityImageValue }) {
   if (error || !imageUrl) {
     if (process.env.NODE_ENV !== 'production') {
       return (
-        <div className="my-6 mx-8 p-4 border border-red-300 bg-red-50 rounded-lg text-red-700">
+        <div className="my-6 mx-6 md:mx-10 p-4 border border-red-300 bg-red-50 rounded-lg text-red-700">
           <p>Image failed to load: {JSON.stringify(value, null, 2)}</p>
         </div>
       );
@@ -86,7 +86,7 @@ function SanityImage({ value }: { value: SanityImageValue }) {
   }
   
   return (
-    <div className="my-8 px-8">
+    <div className="my-8 px-4 md:px-12">
       <img
         src={imageUrl}
         alt={value?.alt || "Article image"}
@@ -106,42 +106,42 @@ export default function CustomPortableText({
   const components: PortableTextComponents = {
     block: {
       h1: ({children}) => (
-        <div className="max-w-2xl px-8">
+        <div className="max-w-2xl px-4 md:px-12">
           <h1 className="mb-4 text-3xl font-bold text-black">{children}</h1>
         </div>
       ),
       h2: ({children}) => (
-        <div className="max-w-2xl px-8">
+        <div className="max-w-2xl px-4 md:px-12">
           <h2 className="mb-4 text-2xl font-bold text-black">{children}</h2>
         </div>
       ),
       h3: ({children}) => (
-        <div className="max-w-2xl px-8">
+        <div className="max-w-2xl px-4 md:px-12">
           <h3 className="mb-4 text-xl font-bold text-black">{children}</h3>
         </div>
       ),
       h4: ({children}) => (
-        <div className="max-w-2xl px-8">
+        <div className="max-w-2xl px-4 md:px-12">
           <h4 className="mb-4 text-lg font-bold text-black">{children}</h4>
         </div>
       ),
       h5: ({ children }) => (
-        <div className="max-w-2xl px-8">
+        <div className="max-w-2xl px-4 md:px-12">
           <h5 className="mb-2 text-sm font-semibold text-black">{children}</h5>
         </div>
       ),
       h6: ({ children }) => (
-        <div className="max-w-2xl px-8">
+        <div className="max-w-2xl px-4 md:px-12">
           <h6 className="mb-1 text-xs font-semibold text-black">{children}</h6>
         </div>
       ),
       normal: ({children}) => (
-        <div className="max-w-2xl px-8">
+        <div className="max-w-2xl px-4 md:px-12">
           <p className="mb-4 text-lg text-black">{children}</p>
         </div>
       ),
       blockquote: ({children}) => (
-        <div className="max-w-2xl px-8">
+        <div className="max-w-2xl px-4 md:px-12">
           <blockquote className="border-l-4 border-gray-700 pl-4 my-4 italic text-black">{children}</blockquote>
         </div>
       ),
@@ -169,7 +169,7 @@ export default function CustomPortableText({
 
         if (isYouTube) {
           return (
-            <div className="my-8 px-8">
+            <div className="my-8 px-4 md:px-12">
               <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
@@ -184,15 +184,19 @@ export default function CustomPortableText({
         }
 
         if (isVimeo) {
+          // Extract video ID from various Vimeo URL formats
+          const videoId = value.url.split("/").pop()?.split("?")[0];
+          
           return (
-            <div className="my-8 px-8">
+            <div className="my-8 px-4 md:px-12">
               <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
-                  src={`https://player.vimeo.com/video/${value.url.split("/").pop()}`}
+                  src={`https://player.vimeo.com/video/${videoId}?autoplay=1&loop=1&controls=0&title=0&byline=0&portrait=0&background=1&muted=1`}
                   title="Vimeo Video"
                   frameBorder="0"
                   allowFullScreen
+                  allow="autoplay; fullscreen"
                 />
               </div>
             </div>
