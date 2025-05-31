@@ -98,14 +98,14 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             <div className="flex justify-between items-start">
               {/* Logo with hover effect */}
               <Link href="/" className="pointer-events-auto">
-                <div className="logo-hover-container">
+                <div className="floating-buttons-logo-hover-container">
                   {/* Default Logo */}
                   <svg 
                     width="127" 
                     height="30" 
                     viewBox="0 0 276.14 65.52" 
                     xmlns="http://www.w3.org/2000/svg" 
-                    className="logo-default"
+                    className="floating-buttons-logo-default"
                   >
                     <path 
                       d="M0 0h13.1v26.21h52.42v13.1H13.1v26.21H0zm135.73 0v19.56l-26.21 26.21v19.75h-13.1V45.77L70.21 19.56V0h13.1v15.91l19.66 19.66 19.66-19.66V0zm70.2 52.42-13.1 13.1h-13.1l-13.1-13.1V13.1h-26.21V0h65.52v52.42ZM179.72 13.1v39.31h13.1V13.1zm30.89 52.42v-13.1h52.42v-13.1h-39.31v-13.1h39.31v-13.1h-52.42V0h65.52v65.52z" 
@@ -119,7 +119,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
                     height="30" 
                     viewBox="0 0 276.14 65.52" 
                     xmlns="http://www.w3.org/2000/svg" 
-                    className="logo-hover"
+                    className="floating-buttons-logo-hover"
                   >
                     <path 
                       d="M65.52 0v13.1H39.31v52.42h-13.1V13.1H0V0zm70.21 65.52h-19.56L89.96 39.31H70.21v-13.1h19.75L116.16 0h19.56v13.1h-15.91l-19.66 19.66 19.66 19.66h15.91v13.1Zm17.78 0-13.1-13.1v-13.1l13.1-13.1h39.31V.01h13.1v65.52H153.5Zm39.32-26.21h-39.31v13.1h39.31zM210.61 0h13.1v52.42h13.1V13.11h13.1v39.31h13.1V0h13.1v65.52h-65.52V0Z" 
@@ -219,9 +219,9 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           }
           
           .svg-button:focus {
-            outline: 0px solid #007AFF;
-            outline-offset: 0px;
-            border-radius: 0px;
+            outline: 2px solid #007AFF;
+            outline-offset: 2px;
+            border-radius: 2px;
           }
         `}</style>
       </>
@@ -303,10 +303,21 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             </Link>
             
             {/* Right Side - SVGs and Search */}
-            <div className="flex items-start pointer-events-auto">
+            <div className="flex items-start pointer-events-auto" style={{ gap: '0.2rem' }}>
               {/* Search Container (Only appears when search is open) */}
               {isSearchOpen && (
-                <div className="search-container mr-4" ref={searchContainerRef}>
+                <div 
+                  className="floating-buttons-search-container mr-4" 
+                  ref={searchContainerRef}
+                  style={{
+                    height: '30px',
+                    width: '400px',
+                    backgroundColor: '#E5E5E7',
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginRight: '1rem'
+                  }}
+                >
                   <form onSubmit={handleSubmit} className="w-full">
                     <input
                       ref={searchInputRef}
@@ -314,7 +325,17 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search..."
-                      className="search-input"
+                      className="floating-buttons-search-input"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        padding: '0 10px',
+                        border: 'none',
+                        outline: 'none',
+                        background: 'transparent',
+                        color: '#050507',
+                        fontSize: '18px'
+                      }}
                     />
                   </form>
                 </div>
@@ -325,16 +346,31 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
                 {/* Search Button SVG - Fixed with complete "SEARCH" text */}
                 <button 
                   onClick={toggleSearch}
-                  className="svg-button"
+                  className="floating-buttons-svg-button"
                   aria-label="Search"
                   type="button"
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    padding: '0',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    outline: 'none'
+                  }}
                 >
                   <svg 
                     data-name="Layer 2" 
                     xmlns="http://www.w3.org/2000/svg" 
                     viewBox="0 0 240.5 31.37" 
                     height="18" 
-                    className="svg-clickable"
+                    className="floating-buttons-svg-clickable"
+                    style={{
+                      cursor: 'pointer',
+                      transition: 'opacity 0.3s ease',
+                      pointerEvents: 'auto'
+                    }}
                   >
                     <path 
                       d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm48.17 0v6.27H47.37v6.27h18.82l6.27 6.27v6.27l-6.27 6.27H42.22v-6.27h23.97v-6.27H47.37l-6.27-6.27V6.27L47.37 0zm34.73 0v6.27H80.98v6.27H99.8v6.27H80.98v6.27h25.09v6.27H74.7V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81h-18.82v12.55h-6.27V6.27L114.58 0zm-18.82 12.55h18.82V6.28h-18.82zM167.01 0l6.27 6.27v6.27l-5.42 5.42 5.42 5.42v7.98h-6.27v-6.27l-6.27-6.27h-12.55v12.55h-6.27V0zm-18.82 12.55h18.82V6.28h-18.82zM200.62 0l6.27 6.27v6.27h-6.27V6.27H181.8v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H181.8l-6.27-6.27V6.27L181.8 0zm39.88 0v31.37h-6.27V18.82h-18.82v12.55h-6.27V0h6.27v12.55h18.82V0z"
@@ -344,14 +380,33 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
                 </button>
                 
                 {/* Contact Button SVG */}
-                <Link href="/contact" className="svg-button">
+                <Link 
+                  href="/contact" 
+                  className="floating-buttons-svg-button"
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    padding: '0',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    outline: 'none',
+                    textDecoration: 'none'
+                  }}
+                >
                   <svg 
                     data-name="Layer 2" 
                     xmlns="http://www.w3.org/2000/svg" 
                     viewBox="0 0 274.11 31.37" 
                     height="18"
-                    className="svg-clickable"
+                    className="floating-buttons-svg-clickable"
                     aria-label="Contact"
+                    style={{
+                      cursor: 'pointer',
+                      transition: 'opacity 0.3s ease',
+                      pointerEvents: 'auto'
+                    }}
                   >
                     <path 
                       d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm43.02 0 6.27 6.27v6.27h-6.27V6.27H47.37v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H47.37l-6.27-6.27V6.27L47.37 0zm33.6 0 6.27 6.27v18.82l-6.27 6.27H80.97l-6.27-6.27V6.27L80.97 0zM80.97 25.09h18.82V6.27H80.97zM139.68 0v31.37h-6.27v-2.29l-18.82-18.82v21.11h-6.27V0h6.27v2.29l18.82 18.82V0zm33.61 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81H181.8v12.55h-6.27V6.27L181.8 0zM181.8 12.55h18.82V6.28H181.8zM234.23 0l6.27 6.27v6.27h-6.27V6.27h-18.82v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27h-18.82l-6.27-6.27V6.27L215.41 0zm39.88 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0z" 
@@ -438,9 +493,9 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         }
         
         .svg-button:focus {
-          outline: 0px solid #007AFF;
-          outline-offset: 0px;
-          border-radius: 0px;
+          outline: 2px solid #007AFF;
+          outline-offset: 2px;
+          border-radius: 2px;
         }
       `}</style>
     </>
