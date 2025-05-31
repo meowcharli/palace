@@ -6,7 +6,6 @@ import { Inter } from "next/font/google";
 import { draftMode } from "next/headers";
 import { toPlainText } from "@portabletext/react"; // Add this import
 
-import FloatingButtons from "@/components/FloatingButtons";
 import BlogFooter from "@/components/BlogFooter";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { settingsQuery } from "@/sanity/lib/queries";
@@ -61,7 +60,6 @@ export default async function BlogLayout({
 
   return (
     <>
-      <FloatingButtons isDraftMode={isDraftMode} />
       <main className="flex-grow mt-16">
         {children}
       </main>

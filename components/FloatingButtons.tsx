@@ -98,8 +98,8 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           <button
             onClick={handleExitPreview}
             style={{
-              backgroundColor: '#000000', // Fixed: was missing '#'
-              color: 'white', // Fixed: changed to white for visibility
+              backgroundColor: '#000000',
+              color: 'white',
               padding: '8px 24px',
               borderRadius: '9999px',
               fontWeight: '500',
@@ -172,7 +172,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
               
               {/* SVG Buttons - Stacked Vertically */}
               <div className="flex flex-col items-end" style={{ gap: '0.2rem' }}>
-                {/* Search Button SVG */}
+                {/* Search Button SVG - Fixed with complete "SEARCH" text */}
                 <button 
                   onClick={toggleSearch}
                   className="svg-button"
@@ -182,7 +182,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
                   <svg 
                     data-name="Layer 2" 
                     xmlns="http://www.w3.org/2000/svg" 
-                    viewBox="0 0 207.2 31.37" 
+                    viewBox="0 0 240.5 31.37" 
                     height="18" 
                     className="svg-clickable"
                   >

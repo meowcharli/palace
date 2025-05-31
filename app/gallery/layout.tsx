@@ -9,7 +9,6 @@ import { settingsQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import * as demo from "@/sanity/lib/demo";
 
-import FloatingButtons from "@/components/FloatingButtons";
 import BlogFooter from "@/components/BlogFooter";
 
 export const metadata: Metadata = {
@@ -29,7 +28,6 @@ export default async function GalleryLayout({
 
   return (
     <>
-      <FloatingButtons isDraftMode={isDraftMode} />
       <main className="flex-grow mt-16">
         {children}
       </main>
