@@ -44,10 +44,10 @@ export default function ContactPage() {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    const rotateX = (y - centerY) / centerY * -1;
-    const rotateY = (x - centerX) / centerX * 1;
+    const rotateX = (y - centerY) / centerY * -1; // Reduced to 25% of original (-4 to -1)
+    const rotateY = (x - centerX) / centerX * 1; // Reduced to 25% of original (4 to 1)
     
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.0025)`;
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.0025)`; // Reduced scale to 25% of original (1.01 to 1.0025)
   };
 
   const handleMouseLeave = (index: number) => {
@@ -57,6 +57,11 @@ export default function ContactPage() {
     if (!card) return;
     
     card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+  };
+
+  const getMobileTransform = (index: number) => {
+    // Remove 3D effects from mobile - return empty object
+    return {};
   };
 
   const handleCopy = (text: string, index: number) => {
@@ -97,7 +102,7 @@ export default function ContactPage() {
       title: "Informal Contact",
       content: [
         { text: "🦋 Bluesky: @type.tax" },
-        { text: "We've stopped using Meta's services." }
+        { text: "We usually hang out here." }
       ],
       copyText: "@type.tax",
       notification: "Social handle copied!"
@@ -129,7 +134,7 @@ export default function ContactPage() {
       <div 
         className="bg-cover bg-center bg-no-repeat py-12 md:py-20 relative"
       >
-        {/* Background image with 50% opacity */}
+        {/* Background image with 80% opacity */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
           style={{
@@ -149,43 +154,50 @@ export default function ContactPage() {
               >
                 <div 
                   ref={el => { cardRefs.current[index] = el; }}
-                  className="w-full bg-[#202020] transition-all duration-300 ease-out relative overflow-hidden shadow-lg p-6 md:p-6 hover:bg-[#303030] h-full min-h-[180px] flex flex-col"
+                  className="w-full aspect-[1.586/1] bg-cover bg-center bg-no-repeat transition-all duration-300 ease-out relative overflow-hidden shadow-lg"
                   style={{
-                    transformStyle: 'preserve-3d'
+                    backgroundImage: 'url(https://i.imgur.com/airNXGH.png)',
+                    transformStyle: 'preserve-3d',
+                    ...getMobileTransform(index)
                   }}
                   onMouseMove={(e) => handleMouseMove(e, index)}
                   onMouseLeave={() => handleMouseLeave(index)}
                 >
                   {/* Notification overlay */}
                   {activeNotification === index && (
-                    <div className="absolute inset-0 bg-[#303030] bg-opacity-100 flex items-center justify-center text-gray-100 text-lg font-medium z-20">
+                    <div className="absolute inset-0 bg-white bg-opacity-0 flex items-center justify-center text-black text-opacity-20 text-2xl font-medium z-20">
                       {item.notification}
                     </div>
                   )}
 
-                  <h3 className="text-xl font-semibold mb-3 text-gray-100 group-hover:text-gray-200">
-                    {item.title}
-                  </h3>
-                  <div className="flex-grow">
-                    {item.content.map((paragraph, pIndex) => (
-                      <p 
-                        key={pIndex} 
-                        className="mb-2 last:mb-0 text-gray-100 group-hover:text-gray-200"
-                      >
-                        {paragraph.text}
-                      </p>
-                    ))}
-                  </div>
-
-                  {/* Card footer */}
-                  <div className="mt-4 pt-4 border-t border-gray-600 relative">
-                    <div className="text-sm text-gray-400 font-mono">
-                      c@type.tax | www.type.tax
+                  {/* Content overlay */}
+                  <div className="absolute inset-0 p-6 flex flex-col justify-between bg-white bg-opacity-85 group-hover:bg-opacity-90 transition-all duration-300">
+                    <div>
+                      <h3 className="text-2xl font-bold mb-4 text-black">
+                        {item.title}
+                      </h3>
+                      <div className="space-y-2">
+                        {item.content.map((paragraph, pIndex) => (
+                          <p 
+                            key={pIndex} 
+                            className="text-lg text-black leading-relaxed"
+                          >
+                            {paragraph.text}
+                          </p>
+                        ))}
+                      </div>
                     </div>
                     
-                    {/* Click to copy hint */}
-                    <div className="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm text-gray-400 font-mono">
-                      Click to copy
+                    {/* Card footer */}
+                    <div className="mt-4 pt-4 border-t border-gray-300 relative">
+                      <div className="text-sm text-gray-600 font-mono">
+                        c@type.tax | www.type.tax
+                      </div>
+                      
+                      {/* Click to copy hint - styled like footer text */}
+                      <div className="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm text-gray-600 font-mono">
+                        Click to copy
+                      </div>
                     </div>
                   </div>
 

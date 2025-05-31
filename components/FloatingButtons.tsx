@@ -98,8 +98,8 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           <button
             onClick={handleExitPreview}
             style={{
-              backgroundColor: '000000',
-              color: 'black',
+              backgroundColor: '#000000', // Fixed: was missing '#'
+              color: 'white', // Fixed: changed to white for visibility
               padding: '8px 24px',
               borderRadius: '9999px',
               fontWeight: '500',
@@ -171,25 +171,30 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
               )}
               
               {/* SVG Buttons - Stacked Vertically */}
-              <div className="flex flex-col items-end" style={{ gap: `${0.2}rem` }}>
+              <div className="flex flex-col items-end" style={{ gap: '0.2rem' }}>
                 {/* Search Button SVG */}
-                <svg 
-                  data-name="Layer 2" 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  viewBox="0 0 207.2 31.37" 
-                  height="18" 
-                  className="svg-clickable"
+                <button 
                   onClick={toggleSearch}
+                  className="svg-button"
                   aria-label="Search"
+                  type="button"
                 >
-                  <path 
-                    d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm48.17 0v6.27H47.37v6.27h18.82l6.27 6.27v6.27l-6.27 6.27H42.22v-6.27h23.97v-6.27H47.37l-6.27-6.27V6.27L47.37 0zm34.73 0v6.27H80.98v6.27H99.8v6.27H80.98v6.27h25.09v6.27H74.7V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81h-18.82v12.55h-6.27V6.27L114.58 0zm-18.82 12.55h18.82V6.28h-18.82zM167.01 0l6.27 6.27v6.27l-5.42 5.42 5.42 5.42v7.98h-6.27v-6.27l-6.27-6.27h-12.55v12.55h-6.27V0zm-18.82 12.55h18.82V6.28h-18.82zM200.62 0l6.27 6.27v6.27h-6.27V6.27H181.8v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H181.8l-6.27-6.27V6.27L181.8 0zm39.88 0v31.37h-6.27V18.82h-18.82v12.55h-6.27V0h6.27v12.55h18.82V0z"
-                    fill="#919191"
-                  />
-                </svg>
+                  <svg 
+                    data-name="Layer 2" 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 207.2 31.37" 
+                    height="18" 
+                    className="svg-clickable"
+                  >
+                    <path 
+                      d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm48.17 0v6.27H47.37v6.27h18.82l6.27 6.27v6.27l-6.27 6.27H42.22v-6.27h23.97v-6.27H47.37l-6.27-6.27V6.27L47.37 0zm34.73 0v6.27H80.98v6.27H99.8v6.27H80.98v6.27h25.09v6.27H74.7V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81h-18.82v12.55h-6.27V6.27L114.58 0zm-18.82 12.55h18.82V6.28h-18.82zM167.01 0l6.27 6.27v6.27l-5.42 5.42 5.42 5.42v7.98h-6.27v-6.27l-6.27-6.27h-12.55v12.55h-6.27V0zm-18.82 12.55h18.82V6.28h-18.82zM200.62 0l6.27 6.27v6.27h-6.27V6.27H181.8v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H181.8l-6.27-6.27V6.27L181.8 0zm39.88 0v31.37h-6.27V18.82h-18.82v12.55h-6.27V0h6.27v12.55h18.82V0z"
+                      fill="#919191"
+                    />
+                  </svg>
+                </button>
                 
                 {/* Contact Button SVG */}
-                <Link href="/contact">
+                <Link href="/contact" className="svg-button">
                   <svg 
                     data-name="Layer 2" 
                     xmlns="http://www.w3.org/2000/svg" 
@@ -260,13 +265,32 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           color: #a5a5a7;
         }
         
+        .svg-button {
+          background: none;
+          border: none;
+          padding: 0;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          outline: none;
+        }
+        
         .svg-clickable {
           cursor: pointer;
           transition: opacity 0.3s ease;
+          pointer-events: auto;
         }
         
-        .svg-clickable:hover {
+        .svg-clickable:hover,
+        .svg-button:hover .svg-clickable {
           opacity: 0.7;
+        }
+        
+        .svg-button:focus {
+          outline: 2px solid #007AFF;
+          outline-offset: 2px;
+          border-radius: 2px;
         }
       `}</style>
     </>

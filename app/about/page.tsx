@@ -43,10 +43,10 @@ export default function AboutPage() {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     
-    const rotateX = (y - centerY) / centerY * -0.5;
-    const rotateY = (x - centerX) / centerX * 0.5;
+    const rotateX = (y - centerY) / centerY * -0.5; // Reduced to half potency (-1 to -0.5)
+    const rotateY = (x - centerX) / centerX * 0.5; // Reduced to half potency (1 to 0.5)
     
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.00125)`;
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.00125)`; // Reduced scale to half potency (1.0025 to 1.00125)
   };
 
   const handleMouseLeave = () => {
@@ -99,18 +99,18 @@ export default function AboutPage() {
           >
             <div 
               ref={cardRef}
-              className="w-full bg-[#202020] transition-all duration-300 ease-out relative overflow-hidden shadow-lg p-6 md:p-14"
+              className="w-full bg-white transition-all duration-300 ease-out relative overflow-hidden shadow-lg p-6 md:p-12"
               style={{
                 transformStyle: 'preserve-3d'
               }}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
             >
-              <h3 className="text-2xl font-semibold mb-6 text-gray-100">
+              <h3 className="text-2xl font-semibold mb-6 text-gray-900">
                 What&apos;s the deal with shapes anyway?
               </h3>
               
-              <div className="space-y-4 text-gray-100">
+              <div className="space-y-4 text-gray-700">
                 <p>
                   The biggest challenge in design is modularity. A logo might look perfect in its primary spot, but put it on print or change the color, and suddenly it looks amateur. That&apos;s where our obsession with form starts shining the most.
                 </p>
@@ -123,7 +123,7 @@ export default function AboutPage() {
                   We stand behind our work with pride, and we know our results inspire more than just our own creative drive.
                 </p>
 
-                <h4 className="text-xl font-medium mt-8 mb-4 text-gray-100">
+                <h4 className="text-xl font-medium mt-8 mb-4 text-gray-900">
                   Our Values
                 </h4>
                 
@@ -136,8 +136,8 @@ export default function AboutPage() {
               </div>
 
               {/* Card footer */}
-              <div className="mt-8 pt-4 border-t border-gray-600">
-                <div className="text-sm text-gray-400 font-mono">
+              <div className="mt-8 pt-4 border-t border-gray-300">
+                <div className="text-sm text-gray-600 font-mono">
                   c@type.tax | www.type.tax
                 </div>
               </div>
