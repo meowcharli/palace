@@ -166,10 +166,3 @@ footer [class*="bg-"] {
   border-radius: 0rem;
   background-color: #ffffff;
 }
-
-html {
-  visibility: hidden;
-}
-html.visible {
-  visibility: visible;
-}
