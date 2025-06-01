@@ -134,7 +134,7 @@ export default async function PostPage({ params }: Props) {
 <article className="max-w-7xl mx-auto px-0 sm:px-6 pb-8 bg-[#ffffff]">
   {post.content?.length && (
     <div className="prose prose-lg prose-slate max-w-none">
-      <div className="bg-white border-2 border-black p-4 sm:p-6 lg:p-8 sm:mx-6">
+      <div className="bg-white border-2 border-white sm:mx-6">
         <PortableText
           className="leading-relaxed text-[#050507]"
           value={post.content as PortableTextBlock[]}

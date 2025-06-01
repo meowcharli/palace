@@ -1,6 +1,6 @@
 "use client";
 
-// app/(blog)/portable-text.tsx - UPDATED VERSION WITH RESPONSIVE PADDING
+// app/(blog)/portable-text.tsx - UPDATED VERSION WITH CONDITIONAL PADDING
 import {
   PortableText,
   type PortableTextComponents,
@@ -22,11 +22,13 @@ interface SanityImageValue {
   [key: string]: any;
 }
 
-// Simplified Sanity image component with responsive padding and 100% quality
+// Simplified Sanity image component
 function SanityImage({ value }: { value: SanityImageValue }) {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [isVertical, setIsVertical] = useState(false);
+  const [isSquare, setIsSquare] = useState(false);
   
   useEffect(() => {
     if (!value?.asset?._ref) {
@@ -36,6 +38,18 @@ function SanityImage({ value }: { value: SanityImageValue }) {
     }
     
     try {
+      // Extract dimensions from asset reference
+      const ref = value.asset._ref;
+      const [, id, dimensions, format] = ref.split('-');
+      
+      if (dimensions) {
+        const [width, height] = dimensions.split('x').map(Number);
+        // Check if image is vertical (height > width)
+        setIsVertical(height > width);
+        // Check if image is square (height === width)
+        setIsSquare(height === width);
+      }
+      
       // Generate image URL using urlForImage with 100% quality
       const imgUrl = urlForImage(value)?.width(1200).quality(100).url();
       
@@ -44,9 +58,6 @@ function SanityImage({ value }: { value: SanityImageValue }) {
         setLoading(false);
       } else {
         // Fallback to direct URL construction
-        const ref = value.asset._ref;
-        const [, id, dimensions, format] = ref.split('-');
-        
         if (id && format) {
           const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
           const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
@@ -66,9 +77,22 @@ function SanityImage({ value }: { value: SanityImageValue }) {
     }
   }, [value]);
   
+  // Determine padding class based on aspect ratio
+  const getPaddingClass = () => {
+    if (isVertical) return 'md:px-60';
+    if (isSquare) return 'md:px-40';
+    return '';
+  };
+  
+  // Determine margin class - only vertical and square images get top margin on desktop
+  const getMarginClass = () => {
+    if (isVertical || isSquare) return 'my-0';
+    return 'mb-8'; // Only bottom margin for landscape/horizontal images
+  };
+  
   if (loading) {
     return (
-      <div className="my-8 px-4 md:px-12">
+      <div className={`${getMarginClass()} ${getPaddingClass()}`}>
         <div className="bg-gray-200 animate-pulse w-full h-64"></div>
       </div>
     );
@@ -77,7 +101,7 @@ function SanityImage({ value }: { value: SanityImageValue }) {
   if (error || !imageUrl) {
     if (process.env.NODE_ENV !== 'production') {
       return (
-        <div className="my-6 mx-6 md:mx-10 p-4 border border-red-300 bg-red-50 rounded-lg text-red-700">
+        <div className="my-0 mx-6 md:mx-10 p-4 border border-red-300 bg-red-50 rounded-lg text-red-700">
           <p>Image failed to load: {JSON.stringify(value, null, 2)}</p>
         </div>
       );
@@ -86,7 +110,7 @@ function SanityImage({ value }: { value: SanityImageValue }) {
   }
   
   return (
-    <div className="my-8 px-4 md:px-12">
+    <div className={`${getMarginClass()} ${getPaddingClass()}`}>
       <img
         src={imageUrl}
         alt={value?.alt || "Article image"}
@@ -142,7 +166,7 @@ export default function CustomPortableText({
       ),
       blockquote: ({children}) => (
         <div className="max-w-2xl px-4 md:px-12">
-          <blockquote className="border-l-4 border-gray-700 pl-4 my-4 italic text-black">{children}</blockquote>
+          <blockquote className="border-l-4 border-gray-700 pl-4 my-0 italic text-black">{children}</blockquote>
         </div>
       ),
     },
@@ -169,7 +193,7 @@ export default function CustomPortableText({
 
         if (isYouTube) {
           return (
-            <div className="my-8 px-4 md:px-12">
+            <div className="my-0">
               <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
@@ -188,7 +212,7 @@ export default function CustomPortableText({
           const videoId = value.url.split("/").pop()?.split("?")[0];
           
           return (
-            <div className="my-8 px-4 md:px-12">
+            <div className="my-0">
               <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
