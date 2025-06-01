@@ -22,7 +22,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       setSearchQuery('');
       setTimeout(() => {
         searchInputRef.current?.focus();
-      }, 100);
+      }, 200); // Slightly longer delay to account for animation
     }
   };
 
@@ -116,12 +116,30 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         </div>
       )}
       
-      {/* Logo in left margin */}
+      {/* Mobile Full-Width Search Bar */}
       <div 
+        className={`mobile-search-overlay ${isSearchOpen ? 'mobile-search-active' : ''}`}
+        ref={searchContainerRef}
+      >
+        <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%' }}>
+          <input
+            ref={searchInputRef}
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search..."
+            className="mobile-search-input"
+          />
+        </form>
+      </div>
+
+      {/* Logo in left margin - Hidden on mobile when search is open */}
+      <div 
+        className={`desktop-logo ${isSearchOpen ? 'logo-hidden-mobile' : ''}`}
         style={{ 
           position: 'fixed', 
-          top: '16px', 
-          left: '16px', 
+          top: '20px', 
+          left: '20px', 
           zIndex: 999998,
           pointerEvents: 'auto'
         }}
@@ -165,37 +183,35 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         </Link>
       </div>
       
-      {/* Search and Contact buttons in right margin */}
+      {/* Search and Contact buttons in right margin - Hidden on mobile when search is open */}
       <div 
+        className={`desktop-buttons ${isSearchOpen ? 'buttons-hidden-mobile' : ''}`}
         style={{ 
           position: 'fixed', 
-          top: '16px', 
-          right: '16px', 
+          top: '20px', 
+          right: '20px', 
           zIndex: 999998,
           pointerEvents: 'auto',
           display: 'flex',
           alignItems: 'flex-start'
         }}
       >
-        {/* Search Container (Only appears when search is open) */}
-        {isSearchOpen && (
-          <div 
-            className="search-container" 
-            ref={searchContainerRef}
-            style={{ marginRight: '16px' }}
-          >
-            <form onSubmit={handleSubmit} style={{ width: '100%' }}>
-              <input
-                ref={searchInputRef}
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search..."
-                className="search-input"
-              />
-            </form>
-          </div>
-        )}
+        {/* Search Container - Desktop only */}
+        <div 
+          className={`search-container desktop-search ${isSearchOpen ? 'search-open' : 'search-closed'}`}
+          ref={searchContainerRef}
+          style={{ marginRight: '16px' }}
+        >
+          <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%' }}>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search..."
+              className="search-input"
+            />
+          </form>
+        </div>
         
         {/* SVG Buttons - Stacked Vertically */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3.2px' }}>
@@ -263,12 +279,65 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           opacity: 1;
         }
         
+        /* Mobile full-width search overlay */
+        .mobile-search-overlay {
+          position: fixed;
+          top: 20px;
+          left: 20px;
+          right: 20px;
+          height: 50px;
+          background-color: #E5E5E7;
+          z-index: 999999;
+          display: none;
+          align-items: center;
+          padding: 0 20px;
+          opacity: 0;
+          transform: translateY(-20px);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          pointer-events: none;
+        }
+        
+        .mobile-search-active {
+          opacity: 1;
+          transform: translateY(0);
+          pointer-events: auto;
+        }
+        
+        .mobile-search-input {
+          width: 100%;
+          height: 100%;
+          border: none;
+          outline: none;
+          background: transparent;
+          color: #050507;
+          font-size: 18px;
+        }
+        
+        .mobile-search-input::placeholder {
+          color: #a5a5a7;
+        }
+        
+        /* Desktop search container */
         .search-container {
-          height: 30px;
-          width: 400px;
+          height: 40px;
           background-color: #E5E5E7;
           display: flex;
           align-items: center;
+          overflow: hidden;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          transform-origin: right center;
+        }
+        
+        .search-closed {
+          width: 0;
+          opacity: 0;
+          transform: scaleX(0);
+        }
+        
+        .search-open {
+          width: 380px;
+          opacity: 1;
+          transform: scaleX(1);
         }
         
         .search-input {
@@ -280,6 +349,15 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           background: transparent;
           color: #050507;
           font-size: 18px;
+          transition: opacity 0.2s ease;
+        }
+        
+        .search-closed .search-input {
+          opacity: 0;
+        }
+        
+        .search-open .search-input {
+          opacity: 1;
         }
         
         .search-input::placeholder {
@@ -293,6 +371,42 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         
         .svg-clickable:hover {
           opacity: 0.7;
+        }
+        
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
+          .mobile-search-overlay {
+            display: flex;
+          }
+          
+          .desktop-search {
+            display: none !important;
+          }
+          
+          .logo-hidden-mobile {
+            transform: translateY(-20px);
+            opacity: 0;
+            pointer-events: none;
+          }
+          
+          .buttons-hidden-mobile {
+            transform: translateY(-20px);
+            opacity: 0;
+            pointer-events: none;
+          }
+          
+          .desktop-logo,
+          .desktop-buttons {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+        }
+        
+        /* Larger mobile adjustments */
+        @media (max-width: 480px) {
+          .mobile-search-overlay {
+            left: 16px;
+            right: 16px;
+          }
         }
       `}</style>
     </>
