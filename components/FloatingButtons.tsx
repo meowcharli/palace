@@ -219,7 +219,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           ref={searchContainerRef}
           style={{ marginRight: '16px' }}
         >
-          <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%' }}>
+          <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
             <input
               type="text"
               value={searchQuery}
@@ -227,11 +227,25 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
               placeholder="Search..."
               className="search-input"
             />
+            <button
+              type="button"
+              onClick={closeSearch}
+              className="desktop-close-button"
+              aria-label="Close search"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
           </form>
         </div>
         
         {/* SVG Buttons - Stacked Vertically */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3.2px' }}>
+        <div 
+          className={`svg-buttons-container ${isSearchOpen ? 'buttons-slide-out' : ''}`}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3.2px' }}
+        >
           {/* Search Button SVG */}
           <svg 
             data-name="Layer 2" 
@@ -351,6 +365,34 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           color: #333;
         }
         
+        .desktop-close-button {
+          background: none;
+          border: none;
+          padding: 6px;
+          margin-left: 8px;
+          cursor: pointer;
+          color: #666;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: color 0.2s ease;
+        }
+        
+        .desktop-close-button:hover {
+          color: #333;
+        }
+        
+        /* Desktop button slide animation */
+        .svg-buttons-container {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          transform-origin: right center;
+        }
+        
+        .buttons-slide-out {
+          transform: translateX(100px);
+          opacity: 0.3;
+        }
+        
         /* Desktop search container */
         .search-container {
           height: 40px;
@@ -375,7 +417,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         }
         
         .search-input {
-          width: 100%;
+          flex: 1;
           height: 100%;
           padding: 0 10px;
           border: none;
