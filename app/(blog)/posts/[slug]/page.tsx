@@ -96,12 +96,6 @@ export default async function PostPage({ params }: Props) {
               {post.title}
             </h1>
 
-            {post.excerpt && (
-              <p className="text-xl text-[#050507] max-w-4xl font-medium leading-relaxed mb-6">
-                {post.excerpt}
-              </p>
-            )}
-
             {post.author && (
               <div className="flex items-center justify-start gap-6">
                 <div className="flex items-center gap-4">
