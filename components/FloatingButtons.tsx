@@ -26,6 +26,11 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
     }
   };
 
+  // Close search
+  const closeSearch = () => {
+    setIsSearchOpen(false);
+  };
+
   // Handle search submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,12 +53,13 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       });
   };
 
-  // Close search when clicking outside
+  // Close search when clicking outside (desktop only)
   useEffect(() => {
     if (!isSearchOpen) return;
 
     const handleClickOutside = (e: MouseEvent) => {
-      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+      // Only apply click-outside logic on desktop
+      if (window.innerWidth > 768 && searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
         setIsSearchOpen(false);
       }
     };
@@ -121,7 +127,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         className={`mobile-search-overlay ${isSearchOpen ? 'mobile-search-active' : ''}`}
         ref={searchContainerRef}
       >
-        <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%' }}>
+        <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
           <input
             ref={searchInputRef}
             type="text"
@@ -130,6 +136,17 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             placeholder="Search..."
             className="mobile-search-input"
           />
+          <button
+            type="button"
+            onClick={closeSearch}
+            className="mobile-close-button"
+            aria-label="Close search"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
         </form>
       </div>
 
@@ -304,7 +321,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         }
         
         .mobile-search-input {
-          width: 100%;
+          flex: 1;
           height: 100%;
           border: none;
           outline: none;
@@ -315,6 +332,23 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         
         .mobile-search-input::placeholder {
           color: #a5a5a7;
+        }
+        
+        .mobile-close-button {
+          background: none;
+          border: none;
+          padding: 8px;
+          margin-left: 8px;
+          cursor: pointer;
+          color: #666;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: color 0.2s ease;
+        }
+        
+        .mobile-close-button:hover {
+          color: #333;
         }
         
         /* Desktop search container */
