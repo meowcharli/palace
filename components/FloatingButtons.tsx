@@ -217,7 +217,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         <div 
           className={`search-container desktop-search ${isSearchOpen ? 'search-open' : 'search-closed'}`}
           ref={searchContainerRef}
-          style={{ marginRight: '16px' }}
+          style={{ marginRight: '-85px' }}
         >
           <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
             <input
