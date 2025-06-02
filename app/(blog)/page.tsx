@@ -73,16 +73,16 @@ if (loading) {
   }
 
   return (
-    <div className={`container mx-auto px-4 md:px-0 transition-opacity duration-400 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+    <div className={`px-0 md:px-2 transition-opacity duration-400 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
 
       {/* Cards */}
-      <div className="mt-3 mb-3 md:mt-8 md:mb-8">
+      <div className="mt-0 mb-0 md:mt-2 md:mb-2">
         <div className="flex justify-center">
-          <div className="w-full md:w-5/7 lg:w-3/4 xl:w-2/3 flex flex-col-reverse md:flex-row md:grid md:grid-cols-3 md:gap-6">
+          <div className="w-full flex flex-col-reverse md:flex-row md:grid md:grid-cols-3 gap-0 md:gap-2">
             {/* About */}
             <Link 
               href="/about" 
-              className="card-wrapper w-full mb-1 md:mb-0"
+              className="card-wrapper w-full mb-0 md:mb-0"
               onMouseEnter={() => setIsAboutHovered(true)}
               onMouseLeave={() => setIsAboutHovered(false)}
             >
@@ -106,7 +106,7 @@ if (loading) {
             {/* Contact */}
             <Link 
               href="/contact" 
-              className="card-wrapper w-full mb-1 md:mb-0"
+              className="card-wrapper w-full mb-0 md:mb-0"
             >
               <div className={`card-scalable ${isMobile ? 'mobile-card' : ''}`}>
                 <svg viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg" className="card-svg">
@@ -122,7 +122,7 @@ if (loading) {
             {/* Gallery */}
             <Link 
               href="/gallery" 
-              className="card-wrapper w-full mb-1 md:mb-0"
+              className="card-wrapper w-full mb-0 md:mb-0"
             >
               <div className={`card-scalable ${isMobile ? 'mobile-card' : ''}`}>
                 <svg viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg" className="card-svg">
@@ -140,9 +140,9 @@ if (loading) {
 
       {/* Mobile Card */}
             {isMobile && (
-      <div className="mb-4 md:mb-10 mt-2 md:mt-4">
+      <div className="mb-0 md:mb-2 mt-0 md:mt-2">
         <div className="flex justify-center">
-          <div className="w-full md:w-5/7 lg:w-3/4 xl:w-2/3">
+          <div className="w-full">
             <Link 
               href="/posts/signal-social-media-advertisement" 
               className="card-wrapper w-full"
@@ -164,9 +164,9 @@ if (loading) {
 
       {/* Desktop Card (hide this one on mobile) */}
       {!isMobile && (
-      <div className="mb-4 md:mb-10 mt-2 md:mt-4">
+      <div className="mb-0 md:mb-4 mt-0 md:mt-4">
         <div className="flex justify-center">
-          <div className="w-full md:w-5/7 lg:w-3/4 xl:w-2/3">
+          <div className="w-full">
             <Link 
               href="/posts/signal-social-media-advertisement" 
               className="card-wrapper w-full"
@@ -217,12 +217,12 @@ if (loading) {
         /* Apply hover effects only on non-mobile devices */
         @media (min-width: 768px) {
           .card-scalable:hover {
-            transform: translateY(-3px) rotate(1deg);
+            transform: translateY(-3px) rotate(0deg);
             filter: grayscale(0%); /* Remove grayscale on hover */
           }
           /* Apply zoom effect to all cards except the about card */
           .card-scalable:not(.about-card):hover .card-svg image {
-            transform: scale(1.06);
+            transform: scale(1.06) rotate(1deg);
           }
         }
         .card-scalable .card-svg image:not(.about-image) {
@@ -240,7 +240,7 @@ if (loading) {
           .card-wrapper {
             width: 100%;
             margin-right: 0;
-            margin-bottom: 1px;
+            margin-bottom: 0;
           }
           .featured-content {
             padding: 0;
@@ -253,7 +253,7 @@ if (loading) {
             width: 100%; /* Use 100% width instead of viewport calculation */
           }
           .card-wrapper:last-child {
-            margin-bottom: 8px;
+            margin-bottom: 0;
           }
         }
       `}</style>

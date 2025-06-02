@@ -12,6 +12,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const desktopSearchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -21,8 +22,17 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
     if (!isSearchOpen) {
       setSearchQuery('');
       setTimeout(() => {
-        searchInputRef.current?.focus();
-      }, 200); // Slightly longer delay to account for animation
+        // Focus mobile input
+        if (searchInputRef.current) {
+          searchInputRef.current.focus();
+          searchInputRef.current.select();
+        }
+        // Focus desktop input
+        if (desktopSearchInputRef.current) {
+          desktopSearchInputRef.current.focus();
+          desktopSearchInputRef.current.select();
+        }
+      }, 300); // Increased delay to ensure animation completes
     }
   };
 
@@ -83,6 +93,26 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       window.removeEventListener('keydown', handleEsc);
     };
   }, []);
+
+  // Auto-focus and select when search opens (additional effect)
+  useEffect(() => {
+    if (isSearchOpen) {
+      const timer = setTimeout(() => {
+        // Focus mobile input
+        if (searchInputRef.current) {
+          searchInputRef.current.focus();
+          searchInputRef.current.select();
+        }
+        // Focus desktop input
+        if (desktopSearchInputRef.current) {
+          desktopSearchInputRef.current.focus();
+          desktopSearchInputRef.current.select();
+        }
+      }, 300);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [isSearchOpen]);
 
   return (
     <>
@@ -221,6 +251,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         >
           <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
             <input
+              ref={desktopSearchInputRef}
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -313,9 +344,9 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         /* Mobile full-width search overlay */
         .mobile-search-overlay {
           position: fixed;
-          top: 20px;
-          left: 20px;
-          right: 20px;
+          top: 15px;
+          left: 15px;
+          right: 15px;
           height: 50px;
           background-color: #E5E5E7;
           z-index: 999999;
@@ -460,13 +491,13 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           }
           
           .logo-hidden-mobile {
-            transform: translateY(-20px);
+            transform: translateX(-100px);
             opacity: 0;
             pointer-events: none;
           }
           
           .buttons-hidden-mobile {
-            transform: translateY(-20px);
+            transform: translateX(100px);
             opacity: 0;
             pointer-events: none;
           }
