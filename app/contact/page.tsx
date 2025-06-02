@@ -171,16 +171,16 @@ export default function ContactPage() {
                   )}
 
                   {/* Content overlay */}
-                  <div className="absolute inset-0 p-6 flex flex-col justify-between bg-white bg-opacity-85 group-hover:bg-opacity-90 transition-all duration-300">
-                    <div>
-                      <h3 className="text-2xl font-bold mb-4 text-black">
+                  <div className="absolute inset-0 p-3 md:p-6 flex flex-col justify-between bg-white bg-opacity-85 group-hover:bg-opacity-90 transition-all duration-300">
+                    <div className="flex-1">
+                      <h3 className="text-2xl md:text-2xl font-bold mb-2 md:mb-2 text-black">
                         {item.title}
                       </h3>
-                      <div className="space-y-2">
+                      <div className="space-y-1 md:space-y-2">
                         {item.content.map((paragraph, pIndex) => (
                           <p 
                             key={pIndex} 
-                            className="text-lg text-black leading-relaxed"
+                            className="text-lg md:text-lg text-black leading-snug md:leading-relaxed"
                           >
                             {paragraph.text}
                           </p>
@@ -189,13 +189,13 @@ export default function ContactPage() {
                     </div>
                     
                     {/* Card footer */}
-                    <div className="mt-4 pt-4 border-t border-gray-300 relative">
-                      <div className="text-sm text-gray-600 font-mono">
+                    <div className="mt-2 md:mt-4 pt-2 md:pt-4 border-t border-gray-300 relative">
+                      <div className="text-xs md:text-sm text-gray-600 font-mono">
                         c@type.tax | www.type.tax
                       </div>
                       
                       {/* Click to copy hint - styled like footer text */}
-                      <div className="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm text-gray-600 font-mono">
+                      <div className="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-xs md:text-sm text-gray-600 font-mono">
                         Click to copy
                       </div>
                     </div>
