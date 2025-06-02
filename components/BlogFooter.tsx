@@ -41,7 +41,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
             marginBottom: "1.5rem",
           }}>
             <a
-              href="https://bsky.app/profile/4sigs.com"
+              href="https://bsky.app/profile/type.tax"
               style={{
                 color: "#1D1D1F",
                 marginBottom: "0.4rem",
@@ -52,7 +52,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
               → visit our bluesky
             </a>
             <a
-              href="mailto:c@type.tax?subject=Hi%20there!%20Let's%20make%20something%20new!&body=(Your%20creative%20outlet%20goes%20here)"
+              href="/contact"
               style={{
                 color: "#1D1D1F",
                 marginBottom: "0.4rem",
@@ -60,7 +60,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
                 transition: "color 0.2s ease"
               }}
             >
-              → click to email us
+              → contact us
             </a>
             <Link
               href="/about"
