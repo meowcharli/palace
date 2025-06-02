@@ -173,14 +173,14 @@ export default function ContactPage() {
                   {/* Content overlay */}
                   <div className="absolute inset-0 p-3 md:p-6 flex flex-col justify-between bg-white bg-opacity-85 group-hover:bg-opacity-90 transition-all duration-300">
                     <div className="flex-1">
-                      <h3 className="text-2xl md:text-2xl font-bold mb-2 md:mb-2 text-black">
+                      <h3 className="text-lg md:text-2xl font-bold mb-2 md:mb-4 text-black">
                         {item.title}
                       </h3>
                       <div className="space-y-1 md:space-y-2">
                         {item.content.map((paragraph, pIndex) => (
                           <p 
                             key={pIndex} 
-                            className="text-lg md:text-lg text-black leading-snug md:leading-relaxed"
+                            className="text-sm md:text-lg text-black leading-snug md:leading-relaxed"
                           >
                             {paragraph.text}
                           </p>
