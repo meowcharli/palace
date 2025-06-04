@@ -7,7 +7,7 @@ interface BlogFooterProps {
 
 export default function BlogFooter({ footer, description }: BlogFooterProps) {
   return (
-    <div style={{ backgroundColor: "#EAEAEA" }} className="border-t border-gray-200">
+    <div style={{ backgroundColor: "#fff" }} className="border-t border-gray-200">
       <div style={{ 
         maxWidth: "12000px", 
         margin: "0 auto",
