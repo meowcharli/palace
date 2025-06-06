@@ -99,7 +99,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
               fontSize: "0.75rem",
               margin: 0
             }}>
-              Designed with 🍺 in Serbia.
+              © 2025 Typetax. All rights reserved. Designed with 🍺 in Serbia.
             </p>
           </div>
 
@@ -162,7 +162,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
               margin: 0,
               textAlign: "center"
             }}>
-              Designed with 🍺 in Serbia.
+              © 2025 Typetax. All rights reserved. Designed with 🍺 in Serbia.
             </p>
           </div>
         </div>
