@@ -1,6 +1,6 @@
 "use client";
 
-// app/(blog)/portable-text.tsx - UPDATED VERSION WITH CONDITIONAL PADDING
+// app/(blog)/portable-text.tsx - UPDATED VERSION WITH CENTERED TEXT BLOCKS
 import {
   PortableText,
   type PortableTextComponents,
@@ -130,43 +130,59 @@ export default function CustomPortableText({
   const components: PortableTextComponents = {
     block: {
       h1: ({children}) => (
-        <div className="max-w-2xl px-4 md:px-12">
-          <h1 className="mb-4 text-3xl font-bold text-black">{children}</h1>
+        <div className="w-full flex justify-center">
+          <div className="max-w-4xl px-4 md:px-12">
+            <h1 className="mb-4 text-3xl md:text-4xl font-bold text-black">{children}</h1>
+          </div>
         </div>
       ),
       h2: ({children}) => (
-        <div className="max-w-2xl px-4 md:px-12">
-          <h2 className="mb-4 text-2xl font-bold text-black">{children}</h2>
+        <div className="w-full flex justify-center">
+          <div className="max-w-4xl px-4 md:px-12">
+            <h2 className="mb-4 text-2xl md:text-3xl font-bold text-black">{children}</h2>
+          </div>
         </div>
       ),
       h3: ({children}) => (
-        <div className="max-w-2xl px-4 md:px-12">
-          <h3 className="mb-4 text-xl font-bold text-black">{children}</h3>
+        <div className="w-full flex justify-center">
+          <div className="max-w-4xl px-4 md:px-12">
+            <h3 className="mb-4 text-xl md:text-2xl font-bold text-black">{children}</h3>
+          </div>
         </div>
       ),
       h4: ({children}) => (
-        <div className="max-w-2xl px-4 md:px-12">
-          <h4 className="mb-4 text-lg font-bold text-black">{children}</h4>
+        <div className="w-full flex justify-center">
+          <div className="max-w-4xl px-4 md:px-12">
+            <h4 className="mb-4 text-lg md:text-xl font-bold text-black">{children}</h4>
+          </div>
         </div>
       ),
       h5: ({ children }) => (
-        <div className="max-w-2xl px-4 md:px-12">
-          <h5 className="mb-2 text-sm font-semibold text-black">{children}</h5>
+        <div className="w-full flex justify-center">
+          <div className="max-w-3xl px-4 md:px-12">
+            <h5 className="mb-2 text-sm md:text-base font-semibold text-black">{children}</h5>
+          </div>
         </div>
       ),
       h6: ({ children }) => (
-        <div className="max-w-2xl px-4 md:px-12">
-          <h6 className="mb-1 text-xs font-semibold text-black">{children}</h6>
+        <div className="w-full flex justify-center">
+          <div className="max-w-3xl px-4 md:px-12">
+            <h6 className="mb-1 text-xs md:text-sm font-semibold text-black">{children}</h6>
+          </div>
         </div>
       ),
       normal: ({children}) => (
-        <div className="max-w-2xl px-4 md:px-12">
-          <p className="mb-4 text-lg text-black">{children}</p>
+        <div className="w-full flex justify-center">
+          <div className="max-w-4xl px-4 md:px-12">
+            <p className="mb-4 text-lg md:text-xl text-black">{children}</p>
+          </div>
         </div>
       ),
       blockquote: ({children}) => (
-        <div className="max-w-2xl px-4 md:px-12">
-          <blockquote className="border-l-4 border-gray-700 pl-4 my-0 italic text-black">{children}</blockquote>
+        <div className="w-full flex justify-center">
+          <div className="max-w-3xl px-4 md:px-12">
+            <blockquote className="border-l-4 border-gray-700 pl-4 my-0 italic text-black">{children}</blockquote>
+          </div>
         </div>
       ),
     },
