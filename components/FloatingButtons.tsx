@@ -188,7 +188,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           top: '25px', 
           left: '13px', 
           zIndex: 999998,
-          pointerEvents: 'auto',
           display: 'flex',
           alignItems: 'center',
           height: '27px' // Keep the container height to align with buttons
@@ -227,7 +226,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           top: '20px', 
           right: '20px', 
           zIndex: 999998,
-          pointerEvents: 'auto',
           display: 'flex',
           alignItems: 'flex-start'
         }}
@@ -487,18 +485,42 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           .logo-hidden-mobile {
             transform: translateX(-100px);
             opacity: 0;
-            pointer-events: none;
           }
           
           .buttons-hidden-mobile {
             transform: translateX(100px);
             opacity: 0;
-            pointer-events: none;
           }
           
           .desktop-logo,
           .desktop-buttons {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          
+          /* Fix for mobile touch issues - ensure proper pointer events */
+          .desktop-logo {
+            pointer-events: auto;
+          }
+          
+          .desktop-logo a {
+            pointer-events: auto;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+          }
+          
+          .logo-hover-container {
+            pointer-events: auto;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+          }
+          
+          /* Disable pointer events when hidden to prevent ghost clicks */
+          .logo-hidden-mobile {
+            pointer-events: none !important;
+          }
+          
+          .logo-hidden-mobile * {
+            pointer-events: none !important;
           }
         }
         
