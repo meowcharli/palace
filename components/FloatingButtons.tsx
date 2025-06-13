@@ -11,6 +11,7 @@ interface FloatingButtonsProps {
 export default function FloatingButtons({ isDraftMode = false }: FloatingButtonsProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLogoHovered, setIsLogoHovered] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const desktopSearchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
@@ -193,36 +194,28 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           height: '27px' // Keep the container height to align with buttons
         }}
       >
-        {/* Visual logo container - not clickable */}
-        <div className="logo-hover-container">
+        {/* Clickable logo container with hover handling */}
+        <Link 
+          href="/" 
+          className="logo-link"
+          onMouseEnter={() => setIsLogoHovered(true)}
+          onMouseLeave={() => setIsLogoHovered(false)}
+          aria-label="Go to homepage"
+        >
           {/* Default Logo */}
           <img
             src="/images/logo-default.svg"
             alt="Logo"
-            className="logo-default"
+            className={`logo-default ${isLogoHovered ? 'logo-fade-out' : 'logo-fade-in'}`}
           />
           
           {/* Hover Logo */}
           <img
             src="/images/logo-hover.svg"
             alt="Logo Hover"
-            className="logo-hover"
+            className={`logo-hover ${isLogoHovered ? 'logo-fade-in' : 'logo-fade-out'}`}
           />
-        </div>
-        
-        {/* Invisible clickable area covering the logo */}
-        <Link 
-          href="/" 
-          style={{ 
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            zIndex: 1
-          }}
-          aria-label="Go to homepage"
-        />
+        </Link>
       </div>
       
       {/* Search and Contact buttons in right margin - Hidden on mobile when search is open */}
@@ -309,35 +302,34 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       </div>
       
       <style jsx>{`
-        .logo-hover-container {
+        .logo-link {
           position: relative;
           display: inline-block;
-          height: 55px; /* Increased from 39.2px to make logo bigger */
+          height: 65px;
+          text-decoration: none;
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
         }
         
         .logo-default,
         .logo-hover {
-          height: 65px; /* Increased from 39.2px to make logo bigger */
-          width: auto; /* Maintain aspect ratio */
+          height: 65px;
+          width: auto;
           display: block;
-          transition: opacity 0.3s ease-in-out;
-          backface-visibility: hidden; /* Prevents flickering */
-          transform: translateZ(0); /* Hardware acceleration to prevent flickering */
-        }
-        
-        .logo-hover {
           position: absolute;
           top: 0;
           left: 0;
-          opacity: 0;
+          transition: opacity 0.3s ease-in-out;
+          backface-visibility: hidden;
+          transform: translateZ(0);
         }
         
-        .logo-hover-container:hover .logo-default {
-          opacity: 0;
-        }
-        
-        .logo-hover-container:hover .logo-hover {
+        .logo-fade-in {
           opacity: 1;
+        }
+        
+        .logo-fade-out {
+          opacity: 0;
         }
         
         /* Mobile full-width search overlay */
@@ -504,23 +496,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           }
           
-          /* Fix for mobile touch issues - ensure proper pointer events */
-          .desktop-logo {
-            pointer-events: auto;
-          }
-          
-          .desktop-logo a {
-            pointer-events: auto;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-          }
-          
-          .logo-hover-container {
-            pointer-events: auto;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-          }
-          
           /* Disable pointer events when hidden to prevent ghost clicks */
           .logo-hidden-mobile {
             pointer-events: none !important;
@@ -528,6 +503,23 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           
           .logo-hidden-mobile * {
             pointer-events: none !important;
+          }
+          
+          /* Mobile touch optimization */
+          .logo-link {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+          }
+          
+          /* Disable hover effects on mobile to prevent double-tap issues */
+          @media (hover: none) {
+            .logo-link:hover .logo-default {
+              opacity: 1 !important;
+            }
+            
+            .logo-link:hover .logo-hover {
+              opacity: 0 !important;
+            }
           }
         }
         
