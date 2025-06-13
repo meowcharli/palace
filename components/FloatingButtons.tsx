@@ -11,11 +11,9 @@ interface FloatingButtonsProps {
 export default function FloatingButtons({ isDraftMode = false }: FloatingButtonsProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [logoHovered, setLogoHovered] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const desktopSearchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   // Toggle search input
@@ -50,16 +48,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
       setIsSearchOpen(false);
     }
-  };
-
-  // Handle logo touch/click interactions
-  const handleLogoInteraction = (e: React.MouseEvent | React.TouchEvent) => {
-    // Show hover effect briefly on touch devices
-    if ('ontouchstart' in window) {
-      setLogoHovered(true);
-      setTimeout(() => setLogoHovered(false), 150);
-    }
-    // Let the Link handle navigation
   };
 
   // Handle exit preview mode
@@ -205,34 +193,36 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           height: '27px' // Keep the container height to align with buttons
         }}
       >
+        {/* Visual logo container - not clickable */}
+        <div className="logo-hover-container">
+          {/* Default Logo */}
+          <img
+            src="/images/logo-default.svg"
+            alt="Logo"
+            className="logo-default"
+          />
+          
+          {/* Hover Logo */}
+          <img
+            src="/images/logo-hover.svg"
+            alt="Logo Hover"
+            className="logo-hover"
+          />
+        </div>
+        
+        {/* Invisible clickable area covering the logo */}
         <Link 
           href="/" 
           style={{ 
-            display: 'inline-block',
-            position: 'relative'
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            zIndex: 1
           }}
-          onTouchStart={handleLogoInteraction}
-          onClick={handleLogoInteraction}
-        >
-          <div 
-            className={`logo-hover-container ${logoHovered ? 'logo-force-hover' : ''}`}
-            ref={logoRef}
-          >
-            {/* Default Logo */}
-            <img
-              src="/images/logo-default.svg"
-              alt="Logo"
-              className="logo-default"
-            />
-            
-            {/* Hover Logo */}
-            <img
-              src="/images/logo-hover.svg"
-              alt="Logo Hover"
-              className="logo-hover"
-            />
-          </div>
-        </Link>
+          aria-label="Go to homepage"
+        />
       </div>
       
       {/* Search and Contact buttons in right margin - Hidden on mobile when search is open */}
@@ -342,13 +332,11 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           opacity: 0;
         }
         
-        .logo-hover-container:hover .logo-default,
-        .logo-force-hover .logo-default {
+        .logo-hover-container:hover .logo-default {
           opacity: 0;
         }
         
-        .logo-hover-container:hover .logo-hover,
-        .logo-force-hover .logo-hover {
+        .logo-hover-container:hover .logo-hover {
           opacity: 1;
         }
         
