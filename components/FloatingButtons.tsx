@@ -185,13 +185,13 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         className={`desktop-logo ${isSearchOpen ? 'logo-hidden-mobile' : ''}`}
         style={{ 
           position: 'fixed', 
-          top: '20px', 
-          left: '20px', 
+          top: '25px', 
+          left: '13px', 
           zIndex: 999998,
           pointerEvents: 'auto',
           display: 'flex',
           alignItems: 'center',
-          height: '37px' // Keep the container height to align with buttons
+          height: '27px' // Keep the container height to align with buttons
         }}
       >
         <Link 
