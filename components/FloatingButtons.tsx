@@ -11,9 +11,11 @@ interface FloatingButtonsProps {
 export default function FloatingButtons({ isDraftMode = false }: FloatingButtonsProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [logoHovered, setLogoHovered] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const desktopSearchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   // Toggle search input
@@ -48,6 +50,16 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
       setIsSearchOpen(false);
     }
+  };
+
+  // Handle logo touch/click interactions
+  const handleLogoInteraction = (e: React.MouseEvent | React.TouchEvent) => {
+    // Show hover effect briefly on touch devices
+    if ('ontouchstart' in window) {
+      setLogoHovered(true);
+      setTimeout(() => setLogoHovered(false), 150);
+    }
+    // Let the Link handle navigation
   };
 
   // Handle exit preview mode
@@ -199,8 +211,13 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             display: 'inline-block',
             position: 'relative'
           }}
+          onTouchStart={handleLogoInteraction}
+          onClick={handleLogoInteraction}
         >
-          <div className="logo-hover-container">
+          <div 
+            className={`logo-hover-container ${logoHovered ? 'logo-force-hover' : ''}`}
+            ref={logoRef}
+          >
             {/* Default Logo */}
             <img
               src="/images/logo-default.svg"
@@ -325,11 +342,13 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           opacity: 0;
         }
         
-        .logo-hover-container:hover .logo-default {
+        .logo-hover-container:hover .logo-default,
+        .logo-force-hover .logo-default {
           opacity: 0;
         }
         
-        .logo-hover-container:hover .logo-hover {
+        .logo-hover-container:hover .logo-hover,
+        .logo-force-hover .logo-hover {
           opacity: 1;
         }
         

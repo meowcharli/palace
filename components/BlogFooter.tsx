@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface BlogFooterProps {
   footer: any[];
@@ -23,19 +24,14 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
               alignItems: 'center',
               gap: '2rem'
             }}>
-              <svg 
-                width='100' 
-                height='46' 
-                viewBox='0 0 276.14 65.52' 
-                preserveAspectRatio='xMidYMid meet'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                <path
-                  d='M0 0h13.1v26.21h52.42v13.1H13.1v26.21H0zm135.73 0v19.56l-26.21 26.21v19.75h-13.1V45.77L70.21 19.56V0h13.1v15.91l19.66 19.66 19.66-19.66V0zm70.2 52.42-13.1 13.1h-13.1l-13.1-13.1V13.1h-26.21V0h65.52v52.42ZM179.72 13.1v39.31h13.1V13.1zm30.89 52.42v-13.1h52.42v-13.1h-39.31v-13.1h39.31v-13.1h-52.42V0h65.52v65.52z'
-                  style={{ fill: '#5d5d5f' }}
-                  data-name='Layer 2'
-                />
-              </svg>
+              <Image
+                src="/images/logo-default.svg"
+                alt="Typetax Logo"
+                width={100}
+                height={46}
+                priority={false}
+                style={{ filter: 'brightness(0) saturate(100%) invert(38%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(98%) contrast(99%)' }}
+              />
 
               <div style={{
                 display: 'flex',
@@ -83,19 +79,14 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
               alignItems: 'center',
               marginBottom: '1rem'
             }}>
-              <svg 
-                width='80' 
-                height='37' 
-                viewBox='0 0 276.14 65.52' 
-                preserveAspectRatio='xMidYMid meet'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                <path 
-                  d='M0 0h13.1v26.21h52.42v13.1H13.1v26.21H0zm135.73 0v19.56l-26.21 26.21v19.75h-13.1V45.77L70.21 19.56V0h13.1v15.91l19.66 19.66 19.66-19.66V0zm70.2 52.42-13.1 13.1h-13.1l-13.1-13.1V13.1h-26.21V0h65.52v52.42ZM179.72 13.1v39.31h13.1V13.1zm30.89 52.42v-13.1h52.42v-13.1h-39.31v-13.1h39.31v-13.1h-52.42V0h65.52v65.52z' 
-                  style={{ fill: '#5d5d5f' }} 
-                  data-name='Layer 2'
-                />
-              </svg>
+              <Image
+                src="/images/logo-default.svg"
+                alt="Typetax Logo"
+                width={80}
+                height={37}
+                priority={false}
+                style={{ filter: 'brightness(0) saturate(100%) invert(38%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(98%) contrast(99%)' }}
+              />
               
               <div style={{
                 display: 'flex',
