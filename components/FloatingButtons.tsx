@@ -11,7 +11,6 @@ interface FloatingButtonsProps {
 export default function FloatingButtons({ isDraftMode = false }: FloatingButtonsProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isLogoHovered, setIsLogoHovered] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const desktopSearchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
@@ -194,27 +193,28 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           height: '27px' // Keep the container height to align with buttons
         }}
       >
-        {/* Clickable logo container with hover handling */}
         <Link 
           href="/" 
-          className="logo-link"
-          onMouseEnter={() => setIsLogoHovered(true)}
-          onMouseLeave={() => setIsLogoHovered(false)}
-          aria-label="Go to homepage"
+          style={{ 
+            display: 'inline-block',
+            position: 'relative'
+          }}
         >
-          {/* Default Logo */}
-          <img
-            src="/images/logo-default.svg"
-            alt="Logo"
-            className={`logo-default ${isLogoHovered ? 'logo-fade-out' : 'logo-fade-in'}`}
-          />
-          
-          {/* Hover Logo */}
-          <img
-            src="/images/logo-hover.svg"
-            alt="Logo Hover"
-            className={`logo-hover ${isLogoHovered ? 'logo-fade-in' : 'logo-fade-out'}`}
-          />
+          <div className="logo-hover-container">
+            {/* Default Logo */}
+            <img
+              src="/images/logo-default.svg"
+              alt="Logo"
+              className="logo-default"
+            />
+            
+            {/* Hover Logo */}
+            <img
+              src="/images/logo-hover.svg"
+              alt="Logo Hover"
+              className="logo-hover"
+            />
+          </div>
         </Link>
       </div>
       
@@ -302,34 +302,38 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       </div>
       
       <style jsx>{`
-        .logo-link {
+        .logo-hover-container {
           position: relative;
           display: inline-block;
-          height: 65px;
-          text-decoration: none;
-          -webkit-tap-highlight-color: transparent;
-          touch-action: manipulation;
+          height: 55px; /* Increased from 39.2px to make logo bigger */
         }
         
         .logo-default,
         .logo-hover {
-          height: 65px;
-          width: auto;
+          height: 65px; /* Increased from 39.2px to make logo bigger */
+          width: auto; /* Maintain aspect ratio */
           display: block;
+          transition: opacity 0.3s ease-in-out;
+          backface-visibility: hidden; /* Prevents flickering */
+          transform: translateZ(0); /* Hardware acceleration to prevent flickering */
+        }
+        
+        .logo-hover {
           position: absolute;
           top: 0;
           left: 0;
-          transition: opacity 0.3s ease-in-out;
-          backface-visibility: hidden;
-          transform: translateZ(0);
-        }
-        
-        .logo-fade-in {
-          opacity: 1;
-        }
-        
-        .logo-fade-out {
           opacity: 0;
+        }
+        
+        /* Only apply hover effects on devices that support hover */
+        @media (hover: hover) and (pointer: fine) {
+          .logo-hover-container:hover .logo-default {
+            opacity: 0;
+          }
+          
+          .logo-hover-container:hover .logo-hover {
+            opacity: 1;
+          }
         }
         
         /* Mobile full-width search overlay */
@@ -496,6 +500,23 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           }
           
+          /* Fix for mobile touch issues - ensure proper pointer events */
+          .desktop-logo {
+            pointer-events: auto;
+          }
+          
+          .desktop-logo a {
+            pointer-events: auto;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+          }
+          
+          .logo-hover-container {
+            pointer-events: auto;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+          }
+          
           /* Disable pointer events when hidden to prevent ghost clicks */
           .logo-hidden-mobile {
             pointer-events: none !important;
@@ -503,23 +524,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           
           .logo-hidden-mobile * {
             pointer-events: none !important;
-          }
-          
-          /* Mobile touch optimization */
-          .logo-link {
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-          }
-          
-          /* Disable hover effects on mobile to prevent double-tap issues */
-          @media (hover: none) {
-            .logo-link:hover .logo-default {
-              opacity: 1 !important;
-            }
-            
-            .logo-link:hover .logo-hover {
-              opacity: 0 !important;
-            }
           }
         }
         
