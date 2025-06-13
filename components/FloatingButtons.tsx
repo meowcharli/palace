@@ -188,7 +188,10 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           top: '20px', 
           left: '20px', 
           zIndex: 999998,
-          pointerEvents: 'auto'
+          pointerEvents: 'auto',
+          display: 'flex',
+          alignItems: 'center',
+          height: '37px' // Keep the container height to align with buttons
         }}
       >
         <Link 
@@ -200,32 +203,18 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         >
           <div className="logo-hover-container">
             {/* Default Logo */}
-            <svg 
-              width="127" 
-              height="30" 
-              viewBox="0 0 276.14 65.52" 
-              xmlns="http://www.w3.org/2000/svg" 
+            <img
+              src="/images/logo-default.svg"
+              alt="Logo"
               className="logo-default"
-            >
-              <path 
-                d="M0 0h13.1v26.21h52.42v13.1H13.1v26.21H0zm135.73 0v19.56l-26.21 26.21v19.75h-13.1V45.77L70.21 19.56V0h13.1v15.91l19.66 19.66 19.66-19.66V0zm70.2 52.42-13.1 13.1h-13.1l-13.1-13.1V13.1h-26.21V0h65.52v52.42ZM179.72 13.1v39.31h13.1V13.1zm30.89 52.42v-13.1h52.42v-13.1h-39.31v-13.1h39.31v-13.1h-52.42V0h65.52v65.52z" 
-                fill="#1D1D1F"
-              />
-            </svg>
+            />
             
             {/* Hover Logo */}
-            <svg 
-              width="127" 
-              height="30" 
-              viewBox="0 0 276.14 65.52" 
-              xmlns="http://www.w3.org/2000/svg" 
+            <img
+              src="/images/logo-hover.svg"
+              alt="Logo Hover"
               className="logo-hover"
-            >
-              <path 
-                d="M65.52 0v13.1H39.31v52.42h-13.1V13.1H0V0zm70.21 65.52h-19.56L89.96 39.31H70.21v-13.1h19.75L116.16 0h19.56v13.1h-15.91l-19.66 19.66 19.66 19.66h15.91v13.1Zm17.78 0-13.1-13.1v-13.1l13.1-13.1h39.31V.01h13.1v65.52H153.5Zm39.32-26.21h-39.31v13.1h39.31zM210.61 0h13.1v52.42h13.1V13.11h13.1v39.31h13.1V0h13.1v65.52h-65.52V0Z" 
-                fill="#1D1D1F"
-              />
-            </svg>
+            />
           </div>
         </Link>
       </div>
@@ -318,11 +307,17 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         .logo-hover-container {
           position: relative;
           display: inline-block;
+          height: 55px; /* Increased from 39.2px to make logo bigger */
         }
         
-        .logo-default {
+        .logo-default,
+        .logo-hover {
+          height: 65px; /* Increased from 39.2px to make logo bigger */
+          width: auto; /* Maintain aspect ratio */
           display: block;
-          transition: opacity 0.3s ease;
+          transition: opacity 0.3s ease-in-out;
+          backface-visibility: hidden; /* Prevents flickering */
+          transform: translateZ(0); /* Hardware acceleration to prevent flickering */
         }
         
         .logo-hover {
@@ -330,7 +325,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           top: 0;
           left: 0;
           opacity: 0;
-          transition: opacity 0.3s ease;
         }
         
         .logo-hover-container:hover .logo-default {
