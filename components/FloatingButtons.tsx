@@ -14,26 +14,32 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
   const searchInputRef = useRef<HTMLInputElement>(null);
   const desktopSearchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const desktopSearchContainerRef = useRef<HTMLDivElement>(null);
+  const searchButtonRef = useRef<SVGSVGElement>(null);
   const router = useRouter();
 
   // Toggle search input
   const toggleSearch = () => {
-    setIsSearchOpen(!isSearchOpen);
-    if (!isSearchOpen) {
-      setSearchQuery('');
-      setTimeout(() => {
-        // Focus mobile input
-        if (searchInputRef.current) {
-          searchInputRef.current.focus();
-          searchInputRef.current.select();
-        }
-        // Focus desktop input
-        if (desktopSearchInputRef.current) {
-          desktopSearchInputRef.current.focus();
-          desktopSearchInputRef.current.select();
-        }
-      }, 300); // Increased delay to ensure animation completes
-    }
+    setIsSearchOpen(prev => {
+      const newState = !prev;
+      if (newState) {
+        // Opening search
+        setSearchQuery('');
+        setTimeout(() => {
+          // Focus mobile input
+          if (searchInputRef.current) {
+            searchInputRef.current.focus();
+            searchInputRef.current.select();
+          }
+          // Focus desktop input
+          if (desktopSearchInputRef.current) {
+            desktopSearchInputRef.current.focus();
+            desktopSearchInputRef.current.select();
+          }
+        }, 300);
+      }
+      return newState;
+    });
   };
 
   // Close search
@@ -68,14 +74,32 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
     if (!isSearchOpen) return;
 
     const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Node;
+      
       // Only apply click-outside logic on desktop
-      if (window.innerWidth > 768 && searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+      if (window.innerWidth > 768) {
+        // Don't close if clicking on the search button
+        if (searchButtonRef.current && searchButtonRef.current.contains(target)) {
+          return;
+        }
+        
+        // Don't close if clicking anywhere inside the desktop search container
+        if (desktopSearchContainerRef.current && desktopSearchContainerRef.current.contains(target)) {
+          return;
+        }
+        
+        // Close search if clicking outside both the button and search container
         setIsSearchOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    // Use a small delay to prevent immediate closing when opening
+    const timer = setTimeout(() => {
+      document.addEventListener('mousedown', handleClickOutside);
+    }, 100);
+
     return () => {
+      clearTimeout(timer);
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isSearchOpen]);
@@ -93,26 +117,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       window.removeEventListener('keydown', handleEsc);
     };
   }, []);
-
-  // Auto-focus and select when search opens (additional effect)
-  useEffect(() => {
-    if (isSearchOpen) {
-      const timer = setTimeout(() => {
-        // Focus mobile input
-        if (searchInputRef.current) {
-          searchInputRef.current.focus();
-          searchInputRef.current.select();
-        }
-        // Focus desktop input
-        if (desktopSearchInputRef.current) {
-          desktopSearchInputRef.current.focus();
-          desktopSearchInputRef.current.select();
-        }
-      }, 300);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [isSearchOpen]);
 
   return (
     <>
@@ -233,7 +237,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         {/* Search Container - Desktop only */}
         <div 
           className={`search-container desktop-search ${isSearchOpen ? 'search-open' : 'search-closed'}`}
-          ref={searchContainerRef}
+          ref={desktopSearchContainerRef}
           style={{ marginRight: '-85px' }}
         >
           <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
@@ -266,6 +270,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         >
           {/* Search Button SVG */}
           <svg 
+            ref={searchButtonRef}
             data-name="Layer 2" 
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 240.5 31.37"
@@ -305,17 +310,18 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         .logo-hover-container {
           position: relative;
           display: inline-block;
-          height: 55px; /* Increased from 39.2px to make logo bigger */
+          height: 55px;
+          perspective: 50px;
         }
         
         .logo-default,
         .logo-hover {
-          height: 65px; /* Increased from 39.2px to make logo bigger */
-          width: auto; /* Maintain aspect ratio */
+          height: 65px;
+          width: auto;
           display: block;
-          transition: opacity 0.3s ease-in-out;
-          backface-visibility: hidden; /* Prevents flickering */
-          transform: translateZ(0); /* Hardware acceleration to prevent flickering */
+          transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+          backface-visibility: hidden;
+          transform: translateZ(0) rotateX(0deg);
         }
         
         .logo-hover {
@@ -329,10 +335,12 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         @media (hover: hover) and (pointer: fine) {
           .logo-hover-container:hover .logo-default {
             opacity: 0;
+            transform: translateZ(-15) rotateX(10deg);
           }
           
           .logo-hover-container:hover .logo-hover {
-            opacity: 1;
+            opacity: 0.9;
+            transform: translateZ(-15) rotateX(10deg);
           }
         }
         
@@ -511,7 +519,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             touch-action: manipulation;
           }
           
-          .logo-hover-container {
+          .logo-flip-container {
             pointer-events: auto;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
