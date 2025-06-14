@@ -306,7 +306,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         </div>
       </div>
       
-      <style jsx>{`
+      <style jsx global>{`
         .logo-hover-container {
           position: relative;
           display: inline-block;
@@ -335,12 +335,12 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         @media (hover: hover) and (pointer: fine) {
           .logo-hover-container:hover .logo-default {
             opacity: 0;
-            transform: translateZ(-15) rotateX(10deg);
+            transform: translateZ(-15px) rotateX(10deg);
           }
           
           .logo-hover-container:hover .logo-hover {
             opacity: 0.9;
-            transform: translateZ(-15) rotateX(10deg);
+            transform: translateZ(-15px) rotateX(10deg);
           }
         }
         
@@ -519,7 +519,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             touch-action: manipulation;
           }
           
-          .logo-flip-container {
+          .logo-hover-container {
             pointer-events: auto;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
