@@ -194,7 +194,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           zIndex: 999998,
           display: 'flex',
           alignItems: 'center',
-          height: '27px' // Keep the container height to align with buttons
+          height: '36px' // Keep the container height to align with buttons
         }}
       >
         <Link 
@@ -310,8 +310,9 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         .logo-hover-container {
           position: relative;
           display: inline-block;
-          height: 55px;
-          perspective: 50px;
+          height: 65px;
+          width: auto;
+          overflow: hidden;
         }
         
         .logo-default,
@@ -319,9 +320,10 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           height: 65px;
           width: auto;
           display: block;
-          transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-          backface-visibility: hidden;
-          transform: translateZ(0) rotateX(0deg);
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transform-origin: center center;
+          transform: scale(1) rotate(0deg);
+          will-change: transform, opacity;
         }
         
         .logo-hover {
@@ -334,13 +336,13 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         /* Only apply hover effects on devices that support hover */
         @media (hover: hover) and (pointer: fine) {
           .logo-hover-container:hover .logo-default {
-            opacity: 0;
-            transform: translateZ(-15px) rotateX(10deg);
+            opacity: 1;
+            transform: scale(1.20) rotate(4deg);
           }
           
           .logo-hover-container:hover .logo-hover {
-            opacity: 0.9;
-            transform: translateZ(-15px) rotateX(10deg);
+            opacity: 0.4;
+            transform: scale(1.20) rotate(20deg);
           }
         }
         
