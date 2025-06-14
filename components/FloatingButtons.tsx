@@ -184,17 +184,17 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         </form>
       </div>
 
-      {/* Logo in left margin - Hidden on mobile when search is open */}
+      {/* Icon in left margin - Hidden on mobile when search is open */}
       <div 
         className={`desktop-logo ${isSearchOpen ? 'logo-hidden-mobile' : ''}`}
         style={{ 
           position: 'fixed', 
           top: '25px', 
-          left: '13px', 
+          left: '5px', 
           zIndex: 999998,
           display: 'flex',
           alignItems: 'center',
-          height: '36px' // Keep the container height to align with buttons
+          height: '27px' // Keep the container height to align with buttons
         }}
       >
         <Link 
@@ -204,20 +204,16 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             position: 'relative'
           }}
         >
-          <div className="logo-hover-container">
-            {/* Default Logo */}
+          <div className="icon-hover-container">
+            {/* Icon GIF */}
             <img
-              src="/images/logo-default.svg"
-              alt="Logo"
-              className="logo-default"
+              src="/images/icon.gif"
+              alt="Home"
+              className="home-icon"
             />
             
-            {/* Hover Logo */}
-            <img
-              src="/images/logo-hover.svg"
-              alt="Logo Hover"
-              className="logo-hover"
-            />
+            {/* Home text that slides out on hover */}
+            <span className="home-text">home</span>
           </div>
         </Link>
       </div>
@@ -307,42 +303,45 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       </div>
       
       <style jsx global>{`
-        .logo-hover-container {
+        .icon-hover-container {
           position: relative;
-          display: inline-block;
-          height: 65px;
-          width: auto;
+          display: flex;
+          align-items: center;
+          height: 60px;
           overflow: hidden;
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
-        .logo-default,
-        .logo-hover {
-          height: 65px;
+        .home-icon {
+          height: 70px;
           width: auto;
           display: block;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          transform-origin: center center;
-          transform: scale(1) rotate(0deg);
-          will-change: transform, opacity;
+          flex-shrink: 0;
         }
         
-        .logo-hover {
-          position: absolute;
-          top: 0;
-          left: 0;
+        .home-text {
+          color: #919191;
+          font-size: 30px;
+          font-weight: 500;
+          margin-left: 0;
           opacity: 0;
+          transform: translateX(-20px);
+          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          white-space: nowrap;
+          pointer-events: none;
         }
         
         /* Only apply hover effects on devices that support hover */
         @media (hover: hover) and (pointer: fine) {
-          .logo-hover-container:hover .logo-default {
-            opacity: 1;
-            transform: scale(1.20) rotate(4deg);
+          .icon-hover-container:hover {
+            width: auto;
           }
           
-          .logo-hover-container:hover .logo-hover {
-            opacity: 0.4;
-            transform: scale(1.20) rotate(20deg);
+          .icon-hover-container:hover .home-text {
+            opacity: 1;
+            transform: translateX(0);
+            margin-left: -6px;
           }
         }
         
@@ -521,7 +520,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             touch-action: manipulation;
           }
           
-          .logo-hover-container {
+          .icon-hover-container {
             pointer-events: auto;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
