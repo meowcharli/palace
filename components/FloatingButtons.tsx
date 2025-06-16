@@ -11,12 +11,24 @@ interface FloatingButtonsProps {
 export default function FloatingButtons({ isDraftMode = false }: FloatingButtonsProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const desktopSearchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const desktopSearchContainerRef = useRef<HTMLDivElement>(null);
   const searchButtonRef = useRef<SVGSVGElement>(null);
   const router = useRouter();
+
+  // Prevent flash on load by waiting 1 second
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Toggle search input
   const toggleSearch = () => {
@@ -196,26 +208,74 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           alignItems: 'center',
           height: '27px' // Keep the container height to align with buttons
         }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => {
+          setIsHovered(false);
+          setIsFocused(false); // Reset focus state when mouse leaves
+        }}
       >
-        <Link 
-          href="/" 
-          style={{ 
-            display: 'inline-block',
-            position: 'relative'
-          }}
-        >
-          <div className="icon-hover-container">
-            {/* Icon GIF */}
+        <div className={`icon-hover-container ${isLoaded ? 'loaded' : ''} ${(isHovered || isFocused) ? 'show-access' : ''}`}>
+          {/* Icon GIF - Home link */}
+          <Link 
+            href="/" 
+            style={{ 
+              display: 'inline-block',
+              position: 'relative'
+            }}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            onMouseDown={() => {
+              // Reset states on mouse down to prevent sticky behavior
+              setIsHovered(false);
+              setIsFocused(false);
+            }}
+          >
             <img
               src="/images/icon.gif"
               alt="Home"
               className="home-icon"
+              style={{
+                height: '70px',
+                width: 'auto',
+                display: 'block',
+                transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                flexShrink: 0
+              }}
             />
-            
-            {/* Home text that slides out on hover */}
-            <span className="home-text">home</span>
+          </Link>
+          
+          {/* Access icon that slides out on hover */}
+          <div 
+            className="access-link"
+            onClick={() => window.location.href = '/accessible.html'}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                window.location.href = '/accessible.html';
+              }
+            }}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            onMouseDown={() => {
+              // Reset states on mouse down to prevent sticky behavior
+              setIsHovered(false);
+              setIsFocused(false);
+            }}
+          >
+            <img
+              src="/images/access.svg"
+              alt="Accessibility"
+              className="access-icon"
+              style={{
+                height: '24px',
+                width: 'auto',
+                display: 'block'
+              }}
+            />
           </div>
-        </Link>
+        </div>
       </div>
       
       {/* Search and Contact buttons in right margin - Hidden on mobile when search is open */}
@@ -320,29 +380,40 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           flex-shrink: 0;
         }
         
-        .home-text {
-          color: #919191;
-          font-size: 30px;
-          font-weight: 500;
+        .access-link {
+          display: flex;
+          align-items: center;
           margin-left: 0;
           opacity: 0;
           transform: translateX(-20px);
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          white-space: nowrap;
           pointer-events: none;
+          cursor: pointer;
         }
         
-        /* Only apply hover effects on devices that support hover */
-        @media (hover: hover) and (pointer: fine) {
-          .icon-hover-container:hover {
-            width: auto;
-          }
-          
-          .icon-hover-container:hover .home-text {
-            opacity: 1;
-            transform: translateX(0);
-            margin-left: -6px;
-          }
+        .access-icon {
+          height: 24px;
+          width: auto;
+          display: block;
+        }
+        
+        /* Hide access icon until loaded to prevent flash */
+        .icon-hover-container:not(.loaded) .access-link {
+          visibility: hidden !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+        }
+        
+        .icon-hover-container.loaded .access-link {
+          visibility: visible;
+        }
+        
+        /* Show accessibility button only when explicitly requested */
+        .icon-hover-container.show-access .access-link {
+          opacity: 1;
+          transform: translateX(0);
+          margin-left: -6px;
+          pointer-events: auto;
         }
         
         /* Mobile full-width search overlay */
