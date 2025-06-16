@@ -208,18 +208,10 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           alignItems: 'center',
           height: '27px' // Keep the container height to align with buttons
         }}
-        onMouseEnter={() => {
-          // Only enable hover on desktop
-          if (window.innerWidth > 768) {
-            setIsHovered(true);
-          }
-        }}
+        onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => {
-          // Only handle mouse leave on desktop
-          if (window.innerWidth > 768) {
-            setIsHovered(false);
-            setIsFocused(false); // Reset focus state when mouse leaves
-          }
+          setIsHovered(false);
+          setIsFocused(false); // Reset focus state when mouse leaves
         }}
       >
         <div className={`icon-hover-container ${isLoaded ? 'loaded' : ''} ${(isHovered || isFocused) ? 'show-access' : ''}`}>
@@ -230,24 +222,12 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
               display: 'inline-block',
               position: 'relative'
             }}
-            onFocus={() => {
-              // Only enable focus effects on desktop
-              if (window.innerWidth > 768) {
-                setIsFocused(true);
-              }
-            }}
-            onBlur={() => {
-              // Only handle blur on desktop
-              if (window.innerWidth > 768) {
-                setIsFocused(false);
-              }
-            }}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             onMouseDown={() => {
-              // Reset states on mouse down to prevent sticky behavior (desktop only)
-              if (window.innerWidth > 768) {
-                setIsHovered(false);
-                setIsFocused(false);
-              }
+              // Reset states on mouse down to prevent sticky behavior
+              setIsHovered(false);
+              setIsFocused(false);
             }}
           >
             <img
@@ -264,41 +244,24 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             />
           </Link>
           
-          {/* Access icon that slides out on hover - Desktop only */}
+          {/* Access icon that slides out on hover */}
           <div 
             className="access-link"
-            onClick={() => {
-              // Only allow accessibility link clicks on desktop
-              if (window.innerWidth > 768) {
-                window.location.href = '/accessible.html';
-              }
-            }}
+            onClick={() => window.location.href = '/accessible.html'}
             role="button"
-            tabIndex={window.innerWidth > 768 ? 0 : -1}
+            tabIndex={0}
             onKeyDown={(e) => {
-              if (window.innerWidth > 768 && (e.key === 'Enter' || e.key === ' ')) {
+              if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 window.location.href = '/accessible.html';
               }
             }}
-            onFocus={() => {
-              // Only enable focus effects on desktop
-              if (window.innerWidth > 768) {
-                setIsFocused(true);
-              }
-            }}
-            onBlur={() => {
-              // Only handle blur on desktop
-              if (window.innerWidth > 768) {
-                setIsFocused(false);
-              }
-            }}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             onMouseDown={() => {
-              // Reset states on mouse down to prevent sticky behavior (desktop only)
-              if (window.innerWidth > 768) {
-                setIsHovered(false);
-                setIsFocused(false);
-              }
+              // Reset states on mouse down to prevent sticky behavior
+              setIsHovered(false);
+              setIsFocused(false);
             }}
           >
             <img
@@ -617,21 +580,52 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           }
           
-          /* Fix for mobile touch issues - ensure proper pointer events */
+          /* Mobile icon simplification - disable all hover/accessibility effects */
+          .icon-hover-container {
+            /* Remove hover behavior on mobile */
+            pointer-events: auto;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+          }
+          
+          /* Completely disable hover effects on mobile */
+          .desktop-logo:hover .icon-hover-container,
+          .icon-hover-container:hover {
+            /* Force no hover effects */
+          }
+          
+          /* Hide accessibility button completely on mobile */
+          .access-link {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+          }
+          
+          /* Disable all hover states and interactions for icon container on mobile */
           .desktop-logo {
             pointer-events: auto;
           }
           
-          .desktop-logo a {
+          .desktop-logo * {
             pointer-events: auto;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
           }
           
-          .icon-hover-container {
-            pointer-events: auto;
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
+          /* Override any hover/focus states on mobile */
+          .desktop-logo:hover,
+          .desktop-logo:focus,
+          .desktop-logo:active,
+          .icon-hover-container:hover,
+          .icon-hover-container:focus,
+          .icon-hover-container:active {
+            /* Reset any hover/focus effects */
+          }
+          
+          /* Ensure icon stays simple on mobile */
+          .home-icon {
+            transition: none !important;
           }
           
           /* Disable pointer events when hidden to prevent ghost clicks */
