@@ -178,16 +178,16 @@ export default function AboutPage() {
         ></div>
         
         {/* Sticky card container */}
-        <div className="sticky top-20 max-w-8xl mx-auto relative z-10 px-4 md:px-8">
-          <div className="flex justify-center items-center min-h-[60vh]">
+        <div className="sticky top-16 md:top-20 max-w-7xl mx-auto relative z-10 px-2 md:px-8">
+          <div className="flex justify-center items-start md:items-center min-h-[60vh] pt-4 md:pt-0">
             {/* Single card that changes content */}
             <div 
-              className="relative max-w-md md:max-w-3xl transition-all duration-700 ease-out"
+              className="relative w-full max-w-lg md:max-w-3xl transition-all duration-700 ease-out"
               style={getDynamicTransform()}
             >
               <div className="w-full bg-white relative overflow-hidden shadow-lg flex flex-col md:flex-row">
                 {/* Square image section */}
-                <div className="aspect-square md:w-80 md:flex-shrink-0 overflow-hidden">
+                <div className="aspect-square w-80 md:w-80 md:flex-shrink-0 overflow-hidden mx-auto md:mx-0">
                   <img 
                     key={currentCardIndex} // Force re-render for smooth transitions
                     src={cardData[currentCardIndex].image}
@@ -197,13 +197,13 @@ export default function AboutPage() {
                 </div>
 
                 {/* Content section */}
-                <div className="p-5 md:p-8 flex-1">
-                  <h3 className="text-xl md:text-3xl font-semibold mb-4 text-gray-900 transition-all duration-500 ease-in-out">
+                <div className="p-4 md:p-8 flex-1">
+                  <h3 className="text-2xl md:text-3xl font-semibold mb-4 md:mb-6 text-gray-900 transition-all duration-500 ease-in-out">
                     {cardData[currentCardIndex].title}
                   </h3>
                   
-                  <div className="text-gray-700 text-sm md:text-lg leading-relaxed transition-all duration-500 ease-in-out">
-                    <p className="mb-6">
+                  <div className="text-gray-700 text-md md:text-lg leading-relaxed transition-all duration-500 ease-in-out">
+                    <p className="mb-4 md:mb-6">
                       {cardData[currentCardIndex].content}
                     </p>
                     
