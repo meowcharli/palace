@@ -180,14 +180,14 @@ export default function AboutPage() {
         {/* Sticky card container */}
         <div className="sticky top-16 md:top-20 max-w-7xl mx-auto relative z-10 px-2 md:px-8">
           <div className="flex justify-center items-start md:items-center min-h-[60vh] pt-4 md:pt-0">
-            {/* Single card that changes content */}
+            {/* Single card that changes content - made 20% wider on mobile */}
             <div 
-              className="relative w-full max-w-lg md:max-w-3xl transition-all duration-700 ease-out"
+              className="relative w-full max-w-2xl md:max-w-3xl transition-all duration-700 ease-out"
               style={getDynamicTransform()}
             >
               <div className="w-full bg-white relative overflow-hidden shadow-lg flex flex-col md:flex-row">
                 {/* Square image section */}
-                <div className="aspect-square w-80 md:w-80 md:flex-shrink-0 overflow-hidden mx-auto md:mx-0">
+                <div className="aspect-square w-60 md:w-80 md:flex-shrink-0 overflow-hidden mx-auto md:mx-0">
                   <img 
                     key={currentCardIndex} // Force re-render for smooth transitions
                     src={cardData[currentCardIndex].image}
