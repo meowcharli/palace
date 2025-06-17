@@ -32,8 +32,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase,
     title: {
-      template: `Contact | ${title}`,  // Changed to contact-specific
-      default: `Contact - ${title}`,   // Changed to contact-specific
+      template: `About us | ${title}`,  // Changed to contact-specific
+      default: `About us - ${title}`,   // Changed to contact-specific
     },
     description: toPlainText(description),
     openGraph: {

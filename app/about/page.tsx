@@ -2,11 +2,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function AboutPage() {
   const [scrollY, setScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  const cardRef = useRef<HTMLDivElement | null>(null);
+  const [isHoveringTypetax, setIsHoveringTypetax] = useState(false);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -30,50 +32,80 @@ export default function AboutPage() {
     };
   }, [isMobile]);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isMobile) return;
-    
-    const card = cardRef.current;
-    if (!card) return;
 
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    const rotateX = (y - centerY) / centerY * -0.5; // Reduced to half potency (-1 to -0.5)
-    const rotateY = (x - centerX) / centerX * 0.5; // Reduced to half potency (1 to 0.5)
-    
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.00125)`; // Reduced scale to half potency (1.0025 to 1.00125)
-  };
 
-  const handleMouseLeave = () => {
-    if (isMobile) return;
-    
-    const card = cardRef.current;
-    if (!card) return;
-    
-    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
-  };
+  const cardData = [
+    {
+      title: "What's the deal with shapes anyway?",
+      content: "The biggest challenge in design is modularity. A logo might look perfect in its primary spot, but put it on print or change the color, and suddenly it looks amateur. That's where our obsession with form starts shining the most.",
+      position: "md:translate-x-[-40px] md:translate-y-[20px]",
+      rotation: "rotate(-10deg)",
+      image: "https://i.imgur.com/9TXGHIk.png"
+    },
+    {
+      title: "Science is awesome!",
+      content: "Science isn't just awesome; it's fundamental to everything we do. We skip the guesswork and dive deep into research, analyzing existing data and mapping evidence-based insights to ensure every decision is grounded in solid scientific principles rather than fleeting trends or hunches.",
+      position: "md:translate-x-[20px] md:translate-y-[-30px]",
+      rotation: "rotate(10deg)",
+      image: "https://i.imgur.com/ITj3Osr.jpeg"
+    },
+    {
+      title: "Team & Values",
+      content: "Our team is always evolving, our network is always growing. Here's what stays the same:",
+      values: [
+        "The goal of form is to improve function, always.",
+        "We never guess; we research, prove and only then deliver.",
+        "A seriously refreshing level of transparency and clarity."
+      ],
+      position: "md:translate-x-[-10px] md:translate-y-[-90px]",
+      rotation: "rotate(-10deg)",
+      image: "https://i.imgur.com/yFUikdU.png"
+    }
+  ];
 
   return (
     <div className="min-h-screen">
       {/* Top section with white background */}
       <div className="bg-white">
-        <div className="container mx-auto px-5 py-8">
+        <div className="container mx-auto px-5 py-3">
           {/* Page header */}
           <div className="mb-3 gap-6 text-left max-w-8xl px-4 sm:px-0 font-semibold">
             <p className="text-3xl max-w-2xl mx-auto text-black">
-              We&apos;re Typetax.
+              We&apos;re{' '}
+              <span 
+                className="relative inline-block cursor-pointer transition-all duration-300 ease-in-out"
+                onMouseEnter={() => setIsHoveringTypetax(true)}
+                onMouseLeave={() => setIsHoveringTypetax(false)}
+              >
+                <span 
+                  className={`transition-opacity duration-200 ${
+                    isHoveringTypetax ? 'opacity-0' : 'opacity-100'
+                  }`}
+                >
+                  Typetax
+                </span>
+                <span 
+                  className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${
+                    isHoveringTypetax ? 'opacity-100' : 'opacity-0'
+                  }`}
+                >
+                  <Image
+                    src="/images/logo-default.svg"
+                    alt="Typetax Logo"
+                    width={120}
+                    height={40}
+                    className="h-auto w-auto max-h-[1.2em]"
+                  />
+                </span>
+              </span>
+              .
             </p>
           </div>
 
           {/* Page header desc */}
-          <div className="mb-12 md:mb-20 gap-2 text-left max-w-8xl px-4 sm:px-0">
+          <div className="mb-4 md:mb-6 gap-2 text-left max-w-8xl px-4 sm:px-0">
             <p className="text-xl max-w-2xl mx-auto text-black">
-              We&apos;re dedicated to experimentation and innovation in all things shapes, glyphs, geometry and graphics. In other words; we just really really like shapes.
+              We&apos;re dedicated to experimentation and innovation in all things type-design, glyphs, geometry and graphics. In other words; we just really really like shapes.
             </p>
           </div>
         </div>
@@ -81,70 +113,60 @@ export default function AboutPage() {
 
       {/* Main content section with background image */}
       <div 
-        className="bg-cover bg-center bg-no-repeat py-12 md:py-20 relative"
+        className="bg-cover bg-center bg-no-repeat py-8 md:py-12 relative min-h-[800px] -mt-4 md:-mt-8"
       >
-        {/* Background image with 50% opacity */}
+        {/* Background image with opacity */}
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-50"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-100"
           style={{
-            backgroundImage: 'url(https://i.imgur.com/S7a69iW.png)'
+            backgroundImage: 'url(LINK GOES HERE)'
           }}
         ></div>
 
-        {/* About content card */}
-        <div className="max-w-3xl mx-auto relative z-10 px-4 md:px-0">
-          <div 
-            className="group relative cursor-pointer"
-            style={{ perspective: '1000px' }}
-          >
-            <div 
-              ref={cardRef}
-              className="w-full bg-white transition-all duration-300 ease-out relative overflow-hidden shadow-lg p-6 md:p-12"
-              style={{
-                transformStyle: 'preserve-3d'
-              }}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-            >
-              <h3 className="text-2xl font-semibold mb-6 text-gray-900">
-                What&apos;s the deal with shapes anyway?
-              </h3>
-              
-              <div className="space-y-4 text-gray-700">
-                <p>
-                  The biggest challenge in design is modularity. A logo might look perfect in its primary spot, but put it on print or change the color, and suddenly it looks amateur. That&apos;s where our obsession with form starts shining the most.
-                </p>
-                
-                <p>
-                  Our team is always evolving. Nothing stays the same for long. What we do best is build teams of artists and experts who aren&apos;t just skilled, but genuinely excited about the work. These people then connect us with more amazing talent like themselves.
-                </p>
-                
-                <p>
-                  We stand behind our work with pride, and we know our results inspire more than just our own creative drive.
-                </p>
+        {/* Scattered cards container */}
+        <div className="max-w-7xl mx-auto relative z-10 px-4 md:px-8">
+          <div className="space-y-8 md:space-y-16">
+            {cardData.map((card, index) => (
+              <div 
+                key={index}
+                className={`relative ${card.position} transform ${card.rotation} max-w-md md:max-w-3xl mx-auto`}
+              >
+                <div 
+                  ref={el => { cardRefs.current[index] = el; }}
+                  className="w-full bg-white relative overflow-hidden shadow-lg flex flex-col md:flex-row"
+                >
+                  {/* Square image section */}
+                  <div className="aspect-square md:w-80 md:flex-shrink-0 overflow-hidden">
+                    <img 
+                      src={card.image}
+                      alt="Design showcase"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
 
-                <h4 className="text-xl font-medium mt-8 mb-4 text-gray-900">
-                  Our Values
-                </h4>
-                
-                <ul className="list-disc pl-5 space-y-2">
-                  <li>Design that works no matter what.</li>
-                  <li>Analytical and scientific approach to everything.</li>
-                  <li>More is less, no need to overcomplicate anything.</li>
-                  <li>Things being accessible and human-centered.</li>
-                </ul>
-              </div>
-
-              {/* Card footer */}
-              <div className="mt-8 pt-4 border-t border-gray-300">
-                <div className="text-sm text-gray-600 font-mono">
-                  c@type.tax | www.type.tax
+                  {/* Content section */}
+                  <div className="p-6 md:p-8 flex-1">
+                    <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-900">
+                      {card.title}
+                    </h3>
+                    
+                    <div className="text-gray-700 text-base md:text-lg leading-relaxed">
+                      <p className="mb-6">
+                        {card.content}
+                      </p>
+                      
+                      {card.values && (
+                        <ul className="list-disc pl-4 space-y-2 text-sm md:text-base">
+                          {card.values.map((value, valueIndex) => (
+                            <li key={valueIndex}>{value}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              {/* 3D depth effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none"></div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

@@ -32,17 +32,13 @@ const styles = {
     display: 'block',
     objectFit: 'cover' as const,
     transition: 'all 0.4s ease',
-    filter: 'grayscale(100%)',
-    opacity: '0.95',
     borderRadius: '0',
   },
   videoContainer: {
     overflow: 'hidden',
     backgroundColor: '#FFFFFF',
     borderRadius: '0',
-    filter: 'grayscale(100%)',
-    opacity: '0.95',
-    transition: 'filter 0.4s ease, opacity 0.4s ease',
+    transition: 'all 0.4s ease',
   },
   placeholder: {
     backgroundColor: '#FFFFFF',
@@ -52,33 +48,46 @@ const styles = {
     borderRadius: '0',
     textAlign: 'center' as const,
     padding: '1rem 1rem',
-    filter: 'grayscale(100%)',
-    opacity: '0.95',
-    transition: 'filter 0.4s ease, opacity 0.4s ease',
+    transition: 'all 0.4s ease',
   },
-  arrow: {
+  plusIcon: {
     position: 'absolute' as const,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%) scale(0.3)',
+    top: '16px',
+    left: '16px',
     width: '40px',
     height: '40px',
-    backgroundColor: 'white',
-    borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     opacity: '0',
-    transition: 'opacity 0.4s ease, transform 0.4s ease',
+    transition: 'opacity 0.2s ease, transform 0.2s ease',
     zIndex: '10',
     pointerEvents: 'none' as const,
+    transform: 'scale(0.8)',
     mixBlendMode: 'difference' as const,
   },
-  arrowIcon: {
-    width: '40px',
-    height: '40px',
-    color: '#ffffff',
-    mixBlendMode: 'difference' as const,
+  plus: {
+    width: '32px',
+    height: '32px',
+    position: 'relative' as const,
+  },
+  plusHorizontal: {
+    position: 'absolute' as const,
+    top: '50%',
+    left: '0',
+    width: '32px',
+    height: '4px',
+    backgroundColor: '#ffffff',
+    transform: 'translateY(-50%)',
+  },
+  plusVertical: {
+    position: 'absolute' as const,
+    top: '0',
+    left: '50%',
+    width: '4px',
+    height: '32px',
+    backgroundColor: '#ffffff',
+    transform: 'translateX(-50%)',
   }
 };
 
@@ -157,42 +166,29 @@ function GalleryItemComponent({ item, width }: { item: GalleryItem; width: strin
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Arrow overlay that appears on hover (desktop only) */}
+      {/* Plus icon overlay that appears on hover (desktop only) */}
       {!isMobile && (
         <div 
-          className="arrow-overlay"
+          className="plus-overlay"
           style={{
-            ...styles.arrow,
+            ...styles.plusIcon,
             ...(isHovered && { 
               opacity: '1', 
-              transform: 'translate(-50%, -50%) scale(1)'
+              transform: 'scale(1)'
             })
           }}
         >
-          <svg 
-            className="arrow-icon" 
-            style={styles.arrowIcon}
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
-            strokeLinejoin="round"
-          >
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
+          <div style={styles.plus}>
+            <div style={styles.plusHorizontal}></div>
+            <div style={styles.plusVertical}></div>
+          </div>
         </div>
       )}
       
       {item.videoEmbed?.url ? (
         <div 
           className="gallery-video-container w-full relative"
-          style={{
-            ...styles.videoContainer,
-            ...((isHovered && !isMobile) && { filter: 'grayscale(0%)', opacity: '1' }),
-            ...(isMobile && { filter: 'grayscale(0%)', opacity: '1' })
-          }}
+          style={styles.videoContainer}
         >
           <VimeoEmbed
             url={item.videoEmbed.url}
@@ -218,9 +214,7 @@ function GalleryItemComponent({ item, width }: { item: GalleryItem; width: strin
             className="w-full h-auto shadow-lg"
             style={{ 
               aspectRatio: "auto",
-              ...styles.image,
-              ...((isHovered && !isMobile) && { filter: 'grayscale(0%)', opacity: '1' }),
-              ...(isMobile && { filter: 'grayscale(0%)', opacity: '1' })
+              ...styles.image
             }}
             priority={true}
           />
@@ -228,11 +222,7 @@ function GalleryItemComponent({ item, width }: { item: GalleryItem; width: strin
       ) : (
         <div 
           className="gallery-placeholder w-full h-64 flex items-center justify-center"
-          style={{
-            ...styles.placeholder,
-            ...((isHovered && !isMobile) && { filter: 'grayscale(0%)', opacity: '1' }),
-            ...(isMobile && { filter: 'grayscale(0%)', opacity: '1' })
-          }}
+          style={styles.placeholder}
         >
           <span className="text-gray-400">Image</span>
         </div>
