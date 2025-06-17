@@ -33,7 +33,7 @@ export default function AboutPage() {
 
   const cardData = [
     {
-      title: "What&apos;s the deal with shapes anyway?",
+      title: "What\'s the deal with shapes anyway?",
       content: "The biggest challenge in design is modularity. A logo might look perfect in its primary spot, but put it on print or change the color, and suddenly it looks amateur. That&apos;s where our obsession with form starts shining the most.",
       position: "md:translate-x-[-40px] md:translate-y-[20px]",
       rotation: "rotate-[-2deg] md:rotate-[-2deg]",
