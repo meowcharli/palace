@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function AboutPage() {
   const [scrollY, setScrollY] = useState(0);
@@ -32,22 +34,22 @@ export default function AboutPage() {
 
   const cardData = [
     {
-      title: "What's the deal with shapes anyway?",
-      content: "The biggest challenge in design is modularity. A logo might look perfect in its primary spot, but put it on print or change the color, and suddenly it looks amateur. That's where our obsession with form starts shining the most.",
+      title: "What&apos;s the deal with shapes anyway?",
+      content: "The biggest challenge in design is modularity. A logo might look perfect in its primary spot, but put it on print or change the color, and suddenly it looks amateur. That&apos;s where our obsession with form starts shining the most.",
       position: "md:translate-x-[-40px] md:translate-y-[20px]",
       rotation: "rotate-[-2deg] md:rotate-[-2deg]",
       image: "https://i.imgur.com/9TXGHIk.png"
     },
     {
       title: "Science is awesome!",
-      content: "Science isn't just awesome; it's fundamental to everything we do. We skip the guesswork and dive deep into research, analyzing existing data and mapping evidence-based insights to ensure every decision is grounded in solid scientific principles rather than fleeting trends or hunches.",
+      content: "Science isn&apos;t just awesome; it&apos;s fundamental to everything we do. We skip the guesswork and dive deep into research, analyzing existing data and mapping evidence-based insights to ensure every decision is grounded in solid scientific principles rather than fleeting trends or hunches.",
       position: "md:translate-x-[20px] md:translate-y-[-30px]",
       rotation: "rotate-[2deg] md:rotate-[2deg]",
       image: "https://i.imgur.com/ITj3Osr.jpeg"
     },
     {
       title: "Team & Values",
-      content: "Our team is always evolving, our network is always growing. Here's what stays the same:",
+      content: "Our team is always evolving, our network is always growing. Here&apos;s what stays the same:",
       values: [
         "The goal of form is to improve function, always.",
         "We never guess; we research, prove and only then deliver.",
@@ -67,7 +69,7 @@ export default function AboutPage() {
           {/* Page header */}
           <div className="mb-3 gap-6 text-left max-w-8xl px-4 sm:px-0 font-semibold">
             <div className="text-3xl max-w-2xl mx-auto text-black">
-              We're{' '}
+              We&apos;re{' '}
               <span 
                 className="relative inline-block cursor-pointer transition-all duration-300 ease-in-out"
                 onMouseEnter={() => setIsHoveringTypetax(true)}
@@ -85,7 +87,7 @@ export default function AboutPage() {
                     isHoveringTypetax ? 'opacity-100' : 'opacity-0'
                   }`}
                 >
-                  <img
+                  <Image
                     src="/images/logo-default.svg"
                     alt="Typetax Logo"
                     width={120}
@@ -101,7 +103,7 @@ export default function AboutPage() {
           {/* Page header desc */}
           <div className="mb-4 md:mb-6 gap-2 text-left max-w-8xl px-4 sm:px-0">
             <div className="text-xl max-w-2xl mx-auto text-black">
-              We're dedicated to experimentation and innovation in all things type-design, glyphs, geometry and graphics. In other words; we just really really like shapes.
+              We&apos;re dedicated to experimentation and innovation in all things type-design, glyphs, geometry and graphics. In other words; we just really really like shapes.
             </div>
           </div>
         </div>
@@ -135,9 +137,11 @@ export default function AboutPage() {
                 >
                   {/* Square image section */}
                   <div className="aspect-square md:w-80 md:flex-shrink-0 overflow-hidden">
-                    <img 
+                    <Image 
                       src={card.image}
                       alt="Design showcase"
+                      width={320}
+                      height={320}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -176,12 +180,12 @@ export default function AboutPage() {
           <div className="text-center space-y-4">
             {/* Gallery button */}
             <div>
-              <a href="/" className="text-black inline-flex items-center font-medium">
+              <Link href="/" className="text-black inline-flex items-center font-medium">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
 <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
                 </svg>
                 Back to Home
-              </a>
+              </Link>
             </div>
           </div>
         </div>
