@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export default function AboutPage() {
@@ -87,7 +86,7 @@ export default function AboutPage() {
                     isHoveringTypetax ? 'opacity-100' : 'opacity-0'
                   }`}
                 >
-                  <Image
+                  <img
                     src="/images/logo-default.svg"
                     alt="Typetax Logo"
                     width={120}
@@ -137,11 +136,9 @@ export default function AboutPage() {
                 >
                   {/* Square image section */}
                   <div className="aspect-square md:w-80 md:flex-shrink-0 overflow-hidden">
-                    <Image 
+                    <img 
                       src={card.image}
                       alt="Design showcase"
-                      width={320}
-                      height={320}
                       className="w-full h-full object-cover"
                     />
                   </div>
