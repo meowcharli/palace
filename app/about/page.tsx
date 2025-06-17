@@ -178,7 +178,7 @@ export default function AboutPage() {
         ></div>
         
         {/* Sticky card container */}
-        <div className="sticky top-20 max-w-7xl mx-auto relative z-10 px-4 md:px-8">
+        <div className="sticky top-20 max-w-8xl mx-auto relative z-10 px-4 md:px-8">
           <div className="flex justify-center items-center min-h-[60vh]">
             {/* Single card that changes content */}
             <div 
@@ -197,12 +197,12 @@ export default function AboutPage() {
                 </div>
 
                 {/* Content section */}
-                <div className="p-6 md:p-8 flex-1">
-                  <h3 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-900 transition-all duration-500 ease-in-out">
+                <div className="p-5 md:p-8 flex-1">
+                  <h3 className="text-xl md:text-3xl font-semibold mb-4 text-gray-900 transition-all duration-500 ease-in-out">
                     {cardData[currentCardIndex].title}
                   </h3>
                   
-                  <div className="text-gray-700 text-base md:text-lg leading-relaxed transition-all duration-500 ease-in-out">
+                  <div className="text-gray-700 text-sm md:text-lg leading-relaxed transition-all duration-500 ease-in-out">
                     <p className="mb-6">
                       {cardData[currentCardIndex].content}
                     </p>
