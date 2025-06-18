@@ -10,6 +10,7 @@ import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import * as demo from "@/sanity/lib/demo";
 
 import BlogFooter from "@/components/BlogFooter";
+import FloatingButtons from "@/components/FloatingButtons";
 
 export const metadata: Metadata = {
   title: "Showcase | type.tax",
@@ -28,6 +29,7 @@ export default async function ShowcaseLayout({
 
   return (
     <>
+      <FloatingButtons isDraftMode={isDraftMode} />
       <main className="flex-grow mt-16">
         {children}
       </main>

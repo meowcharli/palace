@@ -68,6 +68,44 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type ShowcaseItem = {
+  _id: string;
+  _type: "showcaseItem";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  videoEmbed?: {
+    url?: string;
+    embedCode?: string;
+    aspectRatio?: "16:9" | "1:1";
+    hideControls?: boolean;
+    autoplay?: boolean;
+    loop?: boolean;
+  };
+  article?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "post";
+  };
+  order?: number;
+  featured?: boolean;
+};
+
 export type GalleryItem = {
   _id: string;
   _type: "galleryItem";
@@ -450,7 +488,7 @@ export type SanityAssistSchemaTypeField = {
   } & SanityAssistInstruction>;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | GalleryItem | Post | Author | Slug | Settings | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | ShowcaseItem | GalleryItem | Post | Author | Slug | Settings | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./app/(blog)/posts/[slug]/page.tsx
 // Variable: postSlugs
@@ -773,7 +811,34 @@ export type GalleryItemsQueryResult = Array<{
 }>;
 // Variable: showcaseQuery
 // Query: *[_type == "showcaseItem" && defined(article) && defined(article->slug.current)] | order(order asc) {    _id,    title,    image {      asset-> {        _ref,        metadata {          dimensions {            width,            height          }        }      },      alt    },    videoEmbed,    "articleSlug": article->slug.current,    "articleTitle": article->title,    order,    featured  }
-export type ShowcaseQueryResult = Array<never>;
+export type ShowcaseQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  image: {
+    asset: {
+      _ref: null;
+      metadata: {
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    alt: string | null;
+  } | null;
+  videoEmbed: {
+    url?: string;
+    embedCode?: string;
+    aspectRatio?: "1:1" | "16:9";
+    hideControls?: boolean;
+    autoplay?: boolean;
+    loop?: boolean;
+  } | null;
+  articleSlug: string | null;
+  articleTitle: string | null;
+  order: number | null;
+  featured: boolean | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";

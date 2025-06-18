@@ -132,17 +132,14 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
 
   return (
     <>
-      {/* Draft mode exit button - HIGHEST Z-INDEX */}
+      {/* Draft mode exit button - HIGHEST Z-INDEX - Only shown in preview mode */}
       {isDraftMode && (
         <div 
           style={{ 
             position: 'fixed', 
-            top: '16px', 
-            left: '0', 
-            width: '100%', 
-            display: 'flex', 
-            justifyContent: 'center', 
-            alignItems: 'center',
+            top: '20px', 
+            left: '50%',
+            transform: 'translateX(-50%)',
             zIndex: 999999, 
             pointerEvents: 'none'
           }}
@@ -150,20 +147,31 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           <button
             onClick={handleExitPreview}
             style={{
-              backgroundColor: '#000000',
+              backgroundColor: '#dc2626',
               color: 'white',
-              padding: '8px 24px',
-              borderRadius: '9999px',
-              fontWeight: '500',
+              padding: '12px 32px',
+              borderRadius: '8px',
+              fontWeight: '600',
               fontSize: '16px',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              boxShadow: '0 10px 25px rgba(220, 38, 38, 0.3)',
               cursor: 'pointer',
               border: 'none',
               outline: 'none',
-              pointerEvents: 'auto'
+              pointerEvents: 'auto',
+              transition: 'all 0.2s ease',
+              minWidth: '200px',
+              textAlign: 'center'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#b91c1c';
+              e.currentTarget.style.transform = 'scale(1.05)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#dc2626';
+              e.currentTarget.style.transform = 'scale(1)';
             }}
           >
-            Exit Preview Mode
+            🔴 EXIT PREVIEW MODE
           </button>
         </div>
       )}
@@ -201,17 +209,18 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         className={`desktop-logo ${isSearchOpen ? 'logo-hidden-mobile' : ''}`}
         style={{ 
           position: 'fixed', 
-          top: '25px', 
+          top: isDraftMode ? '80px' : '25px', // Push down when preview mode is active
           left: '5px', 
           zIndex: 999998,
           display: 'flex',
           alignItems: 'center',
-          height: '27px' // Keep the container height to align with buttons
+          height: '27px',
+          transition: 'top 0.3s ease'
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => {
           setIsHovered(false);
-          setIsFocused(false); // Reset focus state when mouse leaves
+          setIsFocused(false);
         }}
       >
         <div className={`icon-hover-container ${isLoaded ? 'loaded' : ''} ${(isHovered || isFocused) ? 'show-access' : ''}`}>
@@ -225,7 +234,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             onMouseDown={() => {
-              // Reset states on mouse down to prevent sticky behavior
               setIsHovered(false);
               setIsFocused(false);
             }}
@@ -259,7 +267,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             onMouseDown={() => {
-              // Reset states on mouse down to prevent sticky behavior
               setIsHovered(false);
               setIsFocused(false);
             }}
@@ -278,16 +285,17 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         </div>
       </div>
       
-      {/* Search and Contact buttons in right margin - Hidden on mobile when search is open */}
+      {/* Search and Contact buttons in right margin */}
       <div 
         className={`desktop-buttons ${isSearchOpen ? 'buttons-hidden-mobile' : ''}`}
         style={{ 
           position: 'fixed', 
-          top: '20px', 
+          top: isDraftMode ? '80px' : '20px', // Push down when preview mode is active
           right: '20px', 
           zIndex: 999998,
           display: 'flex',
-          alignItems: 'flex-start'
+          alignItems: 'flex-start',
+          transition: 'top 0.3s ease'
         }}
       >
         {/* Search Container - Desktop only */}
@@ -580,18 +588,11 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           }
           
-          /* Mobile icon simplification - disable all hover/accessibility effects */
+          /* Mobile icon simplification */
           .icon-hover-container {
-            /* Remove hover behavior on mobile */
             pointer-events: auto;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
-          }
-          
-          /* Completely disable hover effects on mobile */
-          .desktop-logo:hover .icon-hover-container,
-          .icon-hover-container:hover {
-            /* Force no hover effects */
           }
           
           /* Hide accessibility button completely on mobile */
@@ -602,7 +603,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             pointer-events: none !important;
           }
           
-          /* Disable all hover states and interactions for icon container on mobile */
           .desktop-logo {
             pointer-events: auto;
           }
@@ -613,22 +613,10 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             touch-action: manipulation;
           }
           
-          /* Override any hover/focus states on mobile */
-          .desktop-logo:hover,
-          .desktop-logo:focus,
-          .desktop-logo:active,
-          .icon-hover-container:hover,
-          .icon-hover-container:focus,
-          .icon-hover-container:active {
-            /* Reset any hover/focus effects */
-          }
-          
-          /* Ensure icon stays simple on mobile */
           .home-icon {
             transition: none !important;
           }
           
-          /* Disable pointer events when hidden to prevent ghost clicks */
           .logo-hidden-mobile {
             pointer-events: none !important;
           }
