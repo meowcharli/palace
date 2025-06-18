@@ -138,35 +138,35 @@ export default function ContactPage() {
             >
               {/* Notification overlay */}
               {activeNotification && (
-                <div className="absolute inset-0 bg-white bg-opacity-0 flex items-center justify-center text-black text-opacity-20 text-2xl font-medium z-20">
+                <div className="absolute inset-0 bg-white bg-opacity-0 flex items-center justify-center text-black text-opacity-20 text-lg md:text-2xl font-medium z-20">
                   Email copied!
                 </div>
               )}
 
               {/* Content overlay */}
-              <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between bg-white bg-opacity-85 group-hover:bg-opacity-90 transition-all duration-300">
+              <div className="absolute inset-0 p-4 md:p-8 flex flex-col justify-between bg-white bg-opacity-85 group-hover:bg-opacity-90 transition-all duration-300">
                 <div className="flex-1">
-                  <h3 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-black">
+                  <h3 className="text-lg md:text-3xl font-bold mb-2 md:mb-6 text-black">
                     Primary Contact
                   </h3>
-                  <div className="space-y-2 md:space-y-3">
-                    <p className="text-lg md:text-xl text-black leading-relaxed">
+                  <div className="space-y-1 md:space-y-3">
+                    <p className="text-sm md:text-xl text-black leading-relaxed">
                       All-Purpose Email: c@type.tax
                     </p>
-                    <p className="text-lg md:text-xl text-black leading-relaxed">
+                    <p className="text-sm md:text-xl text-black leading-relaxed">
                       We usually respond fast, though you may wait up to 48 hours.
                     </p>
                   </div>
                 </div>
                 
                 {/* Card footer */}
-                <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-gray-300 relative">
-                  <div className="text-sm md:text-base text-gray-600 font-mono">
+                <div className="mt-2 md:mt-6 pt-2 md:pt-6 border-t border-gray-300 relative">
+                  <div className="text-xs md:text-base text-gray-600 font-mono">
                     c@type.tax | www.type.tax
                   </div>
                   
                   {/* Click to copy hint */}
-                  <div className="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm md:text-base text-gray-600 font-mono">
+                  <div className="absolute bottom-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-xs md:text-base text-gray-600 font-mono">
                     Click to copy
                   </div>
                 </div>
