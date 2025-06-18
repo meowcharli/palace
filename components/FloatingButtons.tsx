@@ -21,11 +21,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
   const searchButtonRef = useRef<SVGSVGElement>(null);
   const router = useRouter();
 
-  // Debug logging to check if isDraftMode is being received
-  useEffect(() => {
-    console.log('FloatingButtons isDraftMode:', isDraftMode);
-  }, [isDraftMode]);
-
   // Prevent flash on load by waiting 1 second
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -73,22 +68,65 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
     }
   };
 
-  // Handle exit preview mode via double click
+  // Handle exit preview mode (for right-click on logo)
   const handleExitPreview = async () => {
-    console.log("Exit Preview Mode via double click");
     try {
-      const response = await fetch('/api/draft-mode/disable', { method: 'GET' });
-      if (response.ok) {
-        window.location.href = '/';
-      } else {
-        console.error('Error response:', response.status, response.statusText);
-        // Force redirect even if API fails
-        window.location.href = '/';
+      // First, disable draft mode via API
+      await fetch('/api/draft-mode/disable', { method: 'GET' });
+      
+      // Force Sanity to refresh by clearing all caches and doing a hard reload
+      // This mimics what happens when you update a file
+      if ('caches' in window) {
+        const cacheNames = await caches.keys();
+        await Promise.all(
+          cacheNames.map(cacheName => caches.delete(cacheName))
+        );
       }
+      
+      // Clear any stored data
+      sessionStorage.clear();
+      
+      // Force a hard reload with cache bypass
+      window.location.href = window.location.href + (window.location.href.includes('?') ? '&' : '?') + '_t=' + Date.now();
+      
     } catch (err) {
-      console.error('Error disabling draft mode:', err);
-      // Force redirect even if API fails
-      window.location.href = '/';
+      console.error('Error exiting preview mode:', err);
+      // Fallback: force hard reload anyway
+      window.location.href = window.location.href + (window.location.href.includes('?') ? '&' : '?') + '_t=' + Date.now();
+    }
+  };
+
+  // Handle right-click on logo (desktop only)
+  const handleLogoRightClick = (e: React.MouseEvent) => {
+    // Prevent context menu
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Flash the logo to show the event is working
+    const logoElement = e.currentTarget.querySelector('.home-icon') as HTMLImageElement;
+    if (logoElement) {
+      logoElement.style.transition = 'opacity 0.1s ease';
+      logoElement.style.opacity = '0.3';
+      setTimeout(() => {
+        logoElement.style.opacity = '1';
+        setTimeout(() => {
+          logoElement.style.opacity = '0.3';
+          setTimeout(() => {
+            logoElement.style.opacity = '1';
+            // Reset transition back to original
+            setTimeout(() => {
+              logoElement.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            }, 100);
+          }, 100);
+        }, 100);
+      }, 100);
+    }
+    
+    // Only handle right-click on desktop (screen width > 768px) and in draft mode
+    if (window.innerWidth > 768 && isDraftMode) {
+      setTimeout(() => {
+        handleExitPreview();
+      }, 500); // Delay to see the flash first
     }
   };
 
@@ -143,7 +181,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
 
   return (
     <>
-      
       {/* Mobile Full-Width Search Bar */}
       <div 
         className={`mobile-search-overlay ${isSearchOpen ? 'mobile-search-active' : ''}`}
@@ -173,17 +210,16 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       </div>
 
       {/* Icon in left margin - Hidden on mobile when search is open */}
-              <div 
+      <div 
         className={`desktop-logo ${isSearchOpen ? 'logo-hidden-mobile' : ''}`}
         style={{ 
           position: 'fixed', 
-          top: '25px', // Fixed top position since no exit button
+          top: '25px',
           left: '5px', 
           zIndex: 999998,
           display: 'flex',
           alignItems: 'center',
-          height: '27px',
-          transition: 'top 0.3s ease'
+          height: '27px'
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => {
@@ -192,41 +228,48 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         }}
       >
         <div className={`icon-hover-container ${isLoaded ? 'loaded' : ''} ${(isHovered || isFocused) ? 'show-access' : ''}`}>
-          {/* Icon GIF - Home link */}
-          <Link 
-            href="/" 
-            style={{ 
-              display: 'inline-block',
-              position: 'relative'
-            }}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            onMouseDown={() => {
-              setIsHovered(false);
-              setIsFocused(false);
-            }}
-            onDoubleClick={(e) => {
-              if (isDraftMode) {
+          {/* Icon GIF - Home link with right-click wrapper */}
+          <div 
+            onContextMenu={handleLogoRightClick}
+            onMouseDown={(e) => {
+              // Only prevent default navigation on right-click
+              if (e.button === 2) {
                 e.preventDefault();
-                handleExitPreview();
               }
             }}
+            style={{ 
+              display: 'inline-block', 
+              position: 'relative',
+              marginTop: '6px'
+            }}
           >
-            <img
-              src="/images/icon.gif"
-              alt="Home"
-              className="home-icon"
-              style={{
-                height: '70px',
-                width: 'auto',
-                display: 'block',
-                transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                flexShrink: 0,
-                cursor: isDraftMode ? 'pointer' : 'default'
+            <Link 
+              href="/" 
+              style={{ 
+                display: 'inline-block',
+                position: 'relative'
               }}
-              title={isDraftMode ? "Double-click to exit preview mode" : "Go to home"}
-            />
-          </Link>
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              onMouseDown={() => {
+                setIsHovered(false);
+                setIsFocused(false);
+              }}
+            >
+              <img
+                src="/images/icon.gif"
+                alt="Home"
+                className="home-icon"
+                style={{
+                  height: '70px',
+                  width: 'auto',
+                  display: 'block',
+                  transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                  flexShrink: 0
+                }}
+              />
+            </Link>
+          </div>
           
           {/* Access icon that slides out on hover */}
           <div 
@@ -262,16 +305,15 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       </div>
       
       {/* Search and Contact buttons in right margin */}
-              <div 
+      <div 
         className={`desktop-buttons ${isSearchOpen ? 'buttons-hidden-mobile' : ''}`}
         style={{ 
           position: 'fixed', 
-          top: '20px', // Fixed top position since no exit button
+          top: '20px',
           right: '20px', 
           zIndex: 999998,
           display: 'flex',
-          alignItems: 'flex-start',
-          transition: 'top 0.3s ease'
+          alignItems: 'flex-start'
         }}
       >
         {/* Search Container - Desktop only */}
