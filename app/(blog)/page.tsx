@@ -12,6 +12,8 @@ export default function Page() {
   const [isAboutHovered, setIsAboutHovered] = useState(false);
   const [cardsLoaded, setCardsLoaded] = useState(false);
   const [containerDimensions, setContainerDimensions] = useState({ width: 1920, height: 1080 });
+  const [dragPosition, setDragPosition] = useState({ x: 160, y: 870 });
+  const [isDragging, setIsDragging] = useState(false);
 
   // Check if the device is mobile and calculate container dimensions
   useEffect(() => {
@@ -82,6 +84,31 @@ export default function Page() {
     fetchData();
   }, []);
 
+  // Handle drag functionality
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (isMobile) return;
+    
+    setIsDragging(true);
+    const startX = e.clientX - dragPosition.x;
+    const startY = e.clientY - dragPosition.y;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      setDragPosition({
+        x: e.clientX - startX,
+        y: e.clientY - startY
+      });
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
   // Calculate responsive positions based on container dimensions
   const getResponsivePosition = (basePosition: any) => {
     if (isMobile) return basePosition.mobile;
@@ -96,22 +123,26 @@ export default function Page() {
     };
   };
 
-  // Card positions configuration
+  // Card positions configuration - Swapped About and Gallery positions
   const cardPositions = {
-    gallery: {
-      desktop: { top: 60, left: 100 },
+    about: {
+      desktop: { top: 40, left: 65 }, // Moved to former Gallery position (Slot 2)
       mobile: { top: 0, left: 0 }
     },
-    about: {
-      desktop: { top: 120, right: 90 },
+    gallery: {
+      desktop: { top: -40, left: 680 }, // Moved to former About position (Slot 1)
+      mobile: { top: 0, left: 0 }
+    },
+    galleryDuplicate: {
+      desktop: { top: 10, left: 1290 }, // Slot 3 - unchanged
       mobile: { top: 0, left: 0 }
     },
     contact: {
-      desktop: { top: 0, left: 850 },
+      desktop: { top: 870, left: 90 }, // Business Card - unchanged
       mobile: { top: 0, left: 0 }
     },
     featured: {
-      desktop: { top: 690, right: 240 },
+      desktop: { top: 790, right: 90 }, // 16:9 - unchanged
       mobile: { top: 0, left: 0 }
     }
   };
@@ -130,8 +161,9 @@ export default function Page() {
     );
   }
 
-  const galleryPos = getResponsivePosition(cardPositions.gallery);
   const aboutPos = getResponsivePosition(cardPositions.about);
+  const galleryPos = getResponsivePosition(cardPositions.gallery);
+  const galleryDuplicatePos = getResponsivePosition(cardPositions.galleryDuplicate);
   const contactPos = getResponsivePosition(cardPositions.contact);
   const featuredPos = getResponsivePosition(cardPositions.featured);
 
@@ -159,14 +191,58 @@ export default function Page() {
         } : {}}
       >
         
-        {/* Gallery Card */}
+        {/* Draggable Image - Desktop Only */}
+        {!isMobile && (
+          <div 
+            className="absolute draggable-image"
+            style={{
+              left: `${dragPosition.x}px`,
+              top: `${dragPosition.y}px`,
+              zIndex: 20,
+              cursor: isDragging ? 'grabbing' : 'grab'
+            }}
+            onMouseDown={handleMouseDown}
+          >
+            <img 
+              src="https://i.imgur.com/JqD6tLw.png" 
+              alt="Draggable item"
+              className="draggable-img"
+              draggable={false}
+            />
+          </div>
+        )}
+
+        {/* Visuals */}
+        <div className={`absolute card-container card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ 
+          top: `${galleryDuplicatePos.top}px`, 
+          left: galleryDuplicatePos.left !== undefined ? `${galleryDuplicatePos.left}px` : undefined,
+          right: galleryDuplicatePos.right !== undefined ? `${galleryDuplicatePos.right}px` : undefined,
+          transform: isMobile ? 'none' : 'rotate(0deg)',
+          zIndex: 2, // Increased z-index to be above SWAP ME card
+          animationDelay: '0.1s',
+          order: isMobile ? 2 : 'unset'
+        }}>
+          <Link href="/showcase" className="card-wrapper">
+            <div className={`card-scalable ${isMobile ? 'mobile-card' : ''}`}>
+              <svg viewBox="0 0 345 483" xmlns="http://www.w3.org/2000/svg" className="card-svg">
+                <image href="https://i.imgur.com/U2gmmAY.gif" width="345" height="483" preserveAspectRatio="xMidYMid slice" />
+                <rect width="345" height="483" fill="transparent" />
+                <text x="28" y="52" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#fDfDfF">+</text>
+                <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#fDfDfF">Visuals</text>
+              </svg>
+            </div>
+          </Link>
+        </div>
+
+        {/* Typography Card */}
         <div className={`absolute card-container card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ 
           top: `${galleryPos.top}px`, 
           left: galleryPos.left !== undefined ? `${galleryPos.left}px` : undefined,
           right: galleryPos.right !== undefined ? `${galleryPos.right}px` : undefined,
-          transform: isMobile ? 'none' : 'rotate(3deg)',
-          zIndex: 1,
-          animationDelay: '0.1s'
+          transform: isMobile ? 'none' : 'rotate(0deg)', // Using About's original rotation
+          zIndex: 3, // Lower z-index to be below Gallery duplicate
+          animationDelay: '0.2s',
+          order: isMobile ? 1 : 'unset'
         }}>
           <Link href="/gallery" className="card-wrapper">
             <div className={`card-scalable ${isMobile ? 'mobile-card' : ''}`}>
@@ -174,20 +250,21 @@ export default function Page() {
                 <image href="https://i.imgur.com/FheUxPW.gif" width="345" height="483" preserveAspectRatio="xMidYMid slice" />
                 <rect width="345" height="483" fill="transparent" />
                 <text x="28" y="52" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#1D1D1F">+</text>
-                <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#1D1D1F">Gallery</text>
+                <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#1D1D1F">Typography</text>
               </svg>
             </div>
           </Link>
         </div>
 
-        {/* About Card */}
+        {/* About Card - Order 3 in mobile */}
         <div className={`absolute card-container card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ 
           top: `${aboutPos.top}px`, 
           left: aboutPos.left !== undefined ? `${aboutPos.left}px` : undefined,
           right: aboutPos.right !== undefined ? `${aboutPos.right}px` : undefined,
-          transform: isMobile ? 'none' : 'rotate(-8deg)',
-          zIndex: 9,
-          animationDelay: '0.2s'
+          transform: isMobile ? 'none' : 'rotate(0deg)', // Using Gallery's original rotation
+          zIndex: 2, // Using Gallery's original z-index
+          animationDelay: '0.3s',
+          order: isMobile ? 3 : 'unset'
         }}>
           <Link 
             href="/about"
@@ -211,35 +288,37 @@ export default function Page() {
           </Link>
         </div>
 
-        {/* Contact Card */}
-        <div className={`absolute card-container card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ 
+        {/* Business Card Style Contact Card - Order 4 in mobile */}
+        <div className={`absolute card-container business-card card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ 
           top: `${contactPos.top}px`, 
           left: contactPos.left !== undefined ? `${contactPos.left}px` : undefined,
           right: contactPos.right !== undefined ? `${contactPos.right}px` : undefined,
-          transform: isMobile ? 'none' : 'rotate(12deg)',
-          zIndex: 2,
-          animationDelay: '0.3s'
+          transform: isMobile ? 'none' : 'rotate(0deg)',
+          zIndex: 0,
+          animationDelay: '0.4s',
+          order: isMobile ? 4 : 'unset'
         }}>
           <Link href="/contact" className="card-wrapper">
             <div className={`card-scalable ${isMobile ? 'mobile-card' : ''}`}>
-              <svg viewBox="0 0 345 483" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                <image href="https://i.imgur.com/xVua8wQ.gif" width="345" height="483" preserveAspectRatio="xMidYMid slice" />
-                <rect width="345" height="483" fill="transparent" />
-                <text x="28" y="52" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#f5f5f7">+</text>
-                <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#f5f5f7">Contact</text>
+              <svg viewBox="0 0 483 270" xmlns="http://www.w3.org/2000/svg" className="card-svg">
+                <image href="https://i.imgur.com/xVua8wQ.gif" width="483" height="270" preserveAspectRatio="xMidYMid slice" />
+                <rect width="483" height="270" fill="transparent" />
+                <text x="20" y="35" fontFamily="sans-serif" fontSize="23" fontWeight="600" fill="#f5f5f7">+</text>
+                <text x="20" y="60" fontFamily="sans-serif" fontSize="18" fill="#f5f5f7">Contact</text>
               </svg>
             </div>
           </Link>
         </div>
 
-        {/* Featured Card - Mobile */}
+        {/* Featured Card - Mobile - Order 5 */}
         {isMobile && (
           <div className={`absolute card-container card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ 
             top: '0px', 
             left: '0px',
             transform: 'none',
             zIndex: 4,
-            animationDelay: '0.4s'
+            animationDelay: '0.5s',
+            order: 5
           }}>
             <Link href="/posts/signal-social-media-advertisement" className="card-wrapper">
               <div className="card-scalable mobile-card">
@@ -261,8 +340,8 @@ export default function Page() {
             top: `${featuredPos.top}px`, 
             left: featuredPos.left !== undefined ? `${featuredPos.left}px` : undefined,
             right: featuredPos.right !== undefined ? `${featuredPos.right}px` : undefined,
-            transform: 'rotate(-6deg)',
-            zIndex: 4,
+            transform: 'rotate(0deg)',
+            zIndex: 1,
             animationDelay: '0.4s'
           }}>
             <Link href="/posts/signal-social-media-advertisement" className="card-wrapper">
@@ -282,6 +361,23 @@ export default function Page() {
       </div>
 
       <style jsx>{`
+        .draggable-image {
+          user-select: none;
+          transition: transform 0.2s ease;
+        }
+        
+        .draggable-img {
+          width: 50px;
+          height: auto;
+          transition: transform 0.2s ease;
+          user-select: none;
+          pointer-events: none;
+        }
+        
+        .draggable-image:hover .draggable-img {
+          transform: rotate(5deg);
+        }
+        
         .card-container {
           width: ${isMobile ? '100%' : `${518 * (containerDimensions.width / 1820)}px`};
           height: auto;
@@ -289,13 +385,16 @@ export default function Page() {
         .card-container.featured-desktop {
           width: ${isMobile ? '100%' : `${1035 * (containerDimensions.width / 1720)}px`};
         }
+        .card-container.business-card {
+          width: ${isMobile ? '100%' : `${690 * (containerDimensions.width / 1720)}px`};
+        }
         
         .card-animate:not(.card-loaded) {
-          transform: translateY(-10px) rotate(1deg) !important;
+          transform: translateY(-10px) rotate(-1deg) !important;
         }
         
         .card-animate:not(.card-loaded)[style*="rotate(-8deg)"] {
-          transform: translateY(-10px) rotate(-6deg) !important;
+          transform: translateY(-10px) rotate(-6deg) !important; 
         }
         
         .card-animate:not(.card-loaded)[style*="rotate(12deg)"] {
@@ -304,6 +403,10 @@ export default function Page() {
         
         .card-animate:not(.card-loaded)[style*="rotate(-6deg)"] {
           transform: translateY(-10px) rotate(-4deg) !important;
+        }
+        
+        .card-animate:not(.card-loaded)[style*="rotate(-2deg)"] {
+          transform: translateY(-10px) rotate(0deg) !important;
         }
         
         .card-animate {
@@ -331,6 +434,10 @@ export default function Page() {
           border-radius: 0px;
         }
         
+        .about-card {
+          filter: grayscale(100%) brightness(0.98) !important;
+        }
+        
         .mobile-card {
           filter: grayscale(0%) !important;
         }
@@ -346,6 +453,9 @@ export default function Page() {
           .card-scalable:hover {
             transform: translateY(-3px) rotate(1deg);
             filter: grayscale(0%);
+          }
+          .about-card:hover {
+            filter: grayscale(0%) brightness(1) !important;
           }
           .card-scalable:not(.about-card):hover .card-svg image {
             transform: scale(1.06) rotate(1deg);

@@ -60,3 +60,15 @@ export interface GalleryItem {
   order: number;
   featured: boolean;
 }
+
+// Showcase Item type
+export interface showcaseItem {
+  _id: string;
+  title: string;
+  image?: any;
+  videoEmbed?: VimeoEmbedProps;
+  articleSlug: string;
+  articleTitle: string;
+  order: number;
+  featured: boolean;
+}

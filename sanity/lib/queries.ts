@@ -46,3 +46,27 @@ export const galleryItemsQuery = defineQuery(`
     featured
   }
 `);
+
+export const showcaseQuery = defineQuery(`
+  *[_type == "showcaseItem" && defined(article) && defined(article->slug.current)] | order(order asc) {
+    _id,
+    title,
+    image {
+      asset-> {
+        _ref,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      },
+      alt
+    },
+    videoEmbed,
+    "articleSlug": article->slug.current,
+    "articleTitle": article->title,
+    order,
+    featured
+  }
+`);
