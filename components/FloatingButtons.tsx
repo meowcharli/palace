@@ -21,6 +21,11 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
   const searchButtonRef = useRef<SVGSVGElement>(null);
   const router = useRouter();
 
+  // Debug logging to check if isDraftMode is being received
+  useEffect(() => {
+    console.log('FloatingButtons isDraftMode:', isDraftMode);
+  }, [isDraftMode]);
+
   // Prevent flash on load by waiting 1 second
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -69,16 +74,22 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
   };
 
   // Handle exit preview mode
-  const handleExitPreview = () => {
+  const handleExitPreview = async () => {
     console.log("Exit Preview Mode clicked");
-    fetch('/api/draft-mode/disable', { method: 'GET' })
-      .then(() => {
+    try {
+      const response = await fetch('/api/draft-mode/disable', { method: 'GET' });
+      if (response.ok) {
         window.location.href = '/';
-      })
-      .catch(err => {
-        console.error('Error disabling draft mode:', err);
+      } else {
+        console.error('Error response:', response.status, response.statusText);
+        // Force redirect even if API fails
         window.location.href = '/';
-      });
+      }
+    } catch (err) {
+      console.error('Error disabling draft mode:', err);
+      // Force redirect even if API fails
+      window.location.href = '/';
+    }
   };
 
   // Close search when clicking outside (desktop only)
@@ -135,17 +146,21 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       {/* Draft mode exit button - HIGHEST Z-INDEX - Only shown in preview mode */}
       {isDraftMode && (
         <div 
+          className="draft-mode-exit-container"
           style={{ 
             position: 'fixed', 
             top: '20px', 
             left: '50%',
             transform: 'translateX(-50%)',
             zIndex: 999999, 
-            pointerEvents: 'none'
+            pointerEvents: 'auto',
+            display: 'block !important' as any,
+            visibility: 'visible !important' as any
           }}
         >
           <button
             onClick={handleExitPreview}
+            className="draft-mode-exit-button"
             style={{
               backgroundColor: '#dc2626',
               color: 'white',
@@ -160,7 +175,9 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
               pointerEvents: 'auto',
               transition: 'all 0.2s ease',
               minWidth: '200px',
-              textAlign: 'center'
+              textAlign: 'center',
+              display: 'block',
+              visibility: 'visible'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = '#b91c1c';
@@ -371,6 +388,19 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       </div>
       
       <style jsx global>{`
+        /* Draft mode exit button styles */
+        .draft-mode-exit-container {
+          display: block !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+        }
+        
+        .draft-mode-exit-button {
+          display: block !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+        }
+        
         .icon-hover-container {
           position: relative;
           display: flex;
@@ -623,6 +653,12 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           
           .logo-hidden-mobile * {
             pointer-events: none !important;
+          }
+          
+          /* Ensure draft mode button shows on mobile too */
+          .draft-mode-exit-container {
+            display: block !important;
+            visibility: visible !important;
           }
         }
         
