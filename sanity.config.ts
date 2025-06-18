@@ -20,6 +20,7 @@ import { assistWithPresets } from "@/sanity/plugins/assist";
 import author from "@/sanity/schemas/documents/author";
 import post from "@/sanity/schemas/documents/post";
 import galleryItem from "@/sanity/schemas/documents/galleryItem";
+import showcaseItem from "@/sanity/schemas/documents/showcaseItem";
 import settings from "@/sanity/schemas/singletons/settings";
 import { resolveHref } from "@/sanity/lib/utils";
 
@@ -40,6 +41,7 @@ export default defineConfig({
       post,
       author,
       galleryItem,
+      showcaseItem,
     ],
   },
   plugins: [
@@ -75,6 +77,11 @@ export default defineConfig({
           galleryItem: defineLocations({
             locations: [homeLocation],
             message: "Gallery items are shown on the homepage",
+            tone: "positive",
+          }),
+          showcaseItem: defineLocations({
+            locations: [homeLocation],
+            message: "Showcase items are shown on the showcase page",
             tone: "positive",
           }),
         },
