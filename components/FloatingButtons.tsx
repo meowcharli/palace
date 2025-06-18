@@ -73,9 +73,9 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
     }
   };
 
-  // Handle exit preview mode
+  // Handle exit preview mode via double click
   const handleExitPreview = async () => {
-    console.log("Exit Preview Mode clicked");
+    console.log("Exit Preview Mode via double click");
     try {
       const response = await fetch('/api/draft-mode/disable', { method: 'GET' });
       if (response.ok) {
@@ -143,55 +143,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
 
   return (
     <>
-      {/* Draft mode exit button - HIGHEST Z-INDEX - Only shown in preview mode */}
-      {isDraftMode && (
-        <div 
-          className="draft-mode-exit-container"
-          style={{ 
-            position: 'fixed', 
-            top: '20px', 
-            left: '50%',
-            transform: 'translateX(-50%)',
-            zIndex: 999999, 
-            pointerEvents: 'auto',
-            display: 'block !important' as any,
-            visibility: 'visible !important' as any
-          }}
-        >
-          <button
-            onClick={handleExitPreview}
-            className="draft-mode-exit-button"
-            style={{
-              backgroundColor: '#dc2626',
-              color: 'white',
-              padding: '12px 32px',
-              borderRadius: '8px',
-              fontWeight: '600',
-              fontSize: '16px',
-              boxShadow: '0 10px 25px rgba(220, 38, 38, 0.3)',
-              cursor: 'pointer',
-              border: 'none',
-              outline: 'none',
-              pointerEvents: 'auto',
-              transition: 'all 0.2s ease',
-              minWidth: '200px',
-              textAlign: 'center',
-              display: 'block',
-              visibility: 'visible'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#b91c1c';
-              e.currentTarget.style.transform = 'scale(1.05)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#dc2626';
-              e.currentTarget.style.transform = 'scale(1)';
-            }}
-          >
-            🔴 EXIT PREVIEW MODE
-          </button>
-        </div>
-      )}
       
       {/* Mobile Full-Width Search Bar */}
       <div 
@@ -222,11 +173,11 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       </div>
 
       {/* Icon in left margin - Hidden on mobile when search is open */}
-      <div 
+              <div 
         className={`desktop-logo ${isSearchOpen ? 'logo-hidden-mobile' : ''}`}
         style={{ 
           position: 'fixed', 
-          top: isDraftMode ? '80px' : '25px', // Push down when preview mode is active
+          top: '25px', // Fixed top position since no exit button
           left: '5px', 
           zIndex: 999998,
           display: 'flex',
@@ -254,6 +205,12 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
               setIsHovered(false);
               setIsFocused(false);
             }}
+            onDoubleClick={(e) => {
+              if (isDraftMode) {
+                e.preventDefault();
+                handleExitPreview();
+              }
+            }}
           >
             <img
               src="/images/icon.gif"
@@ -264,8 +221,10 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
                 width: 'auto',
                 display: 'block',
                 transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                flexShrink: 0
+                flexShrink: 0,
+                cursor: isDraftMode ? 'pointer' : 'default'
               }}
+              title={isDraftMode ? "Double-click to exit preview mode" : "Go to home"}
             />
           </Link>
           
@@ -303,11 +262,11 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       </div>
       
       {/* Search and Contact buttons in right margin */}
-      <div 
+              <div 
         className={`desktop-buttons ${isSearchOpen ? 'buttons-hidden-mobile' : ''}`}
         style={{ 
           position: 'fixed', 
-          top: isDraftMode ? '80px' : '20px', // Push down when preview mode is active
+          top: '20px', // Fixed top position since no exit button
           right: '20px', 
           zIndex: 999998,
           display: 'flex',
@@ -388,19 +347,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       </div>
       
       <style jsx global>{`
-        /* Draft mode exit button styles */
-        .draft-mode-exit-container {
-          display: block !important;
-          visibility: visible !important;
-          opacity: 1 !important;
-        }
-        
-        .draft-mode-exit-button {
-          display: block !important;
-          visibility: visible !important;
-          opacity: 1 !important;
-        }
-        
         .icon-hover-container {
           position: relative;
           display: flex;
@@ -653,12 +599,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           
           .logo-hidden-mobile * {
             pointer-events: none !important;
-          }
-          
-          /* Ensure draft mode button shows on mobile too */
-          .draft-mode-exit-container {
-            display: block !important;
-            visibility: visible !important;
           }
         }
         
