@@ -810,21 +810,22 @@ export type GalleryItemsQueryResult = Array<{
   featured: boolean | null;
 }>;
 // Variable: showcaseQuery
-// Query: *[_type == "showcaseItem" && defined(article) && defined(article->slug.current)] | order(order asc) {    _id,    title,    image {      asset-> {        _ref,        metadata {          dimensions {            width,            height          }        }      },      alt    },    videoEmbed,    "articleSlug": article->slug.current,    "articleTitle": article->title,    order,    featured  }
+// Query: *[_type == "showcaseItem" && defined(article) && defined(article->slug.current)] | order(order asc) {    _id,    title,    image,    videoEmbed,    "articleSlug": article->slug.current,    "articleTitle": article->title,    order,    featured  }
 export type ShowcaseQueryResult = Array<{
   _id: string;
   title: string | null;
   image: {
-    asset: {
-      _ref: null;
-      metadata: {
-        dimensions: {
-          width: number | null;
-          height: number | null;
-        } | null;
-      } | null;
-    } | null;
-    alt: string | null;
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
   } | null;
   videoEmbed: {
     url?: string;
@@ -850,6 +851,6 @@ declare module "@sanity/client" {
     "\n  *[_type == \"post\" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  videoEmbed,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": MoreStoriesQueryResult;
     "\n  *[_type == \"post\" && slug.current == $slug] [0] {\n    content,\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  videoEmbed,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{\"name\": coalesce(name, \"Anonymous\"), picture},\n\n  }\n": PostQueryResult;
     "\n  *[_type == \"galleryItem\" && defined(article) && defined(article->slug.current)] | order(order asc) {\n    _id,\n    title,\n    image,\n    videoEmbed,\n    \"articleSlug\": article->slug.current,\n    \"articleTitle\": article->title,\n    order,\n    featured\n  }\n": GalleryItemsQueryResult;
-    "\n  *[_type == \"showcaseItem\" && defined(article) && defined(article->slug.current)] | order(order asc) {\n    _id,\n    title,\n    image {\n      asset-> {\n        _ref,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt\n    },\n    videoEmbed,\n    \"articleSlug\": article->slug.current,\n    \"articleTitle\": article->title,\n    order,\n    featured\n  }\n": ShowcaseQueryResult;
+    "\n  *[_type == \"showcaseItem\" && defined(article) && defined(article->slug.current)] | order(order asc) {\n    _id,\n    title,\n    image,\n    videoEmbed,\n    \"articleSlug\": article->slug.current,\n    \"articleTitle\": article->title,\n    order,\n    featured\n  }\n": ShowcaseQueryResult;
   }
 }
