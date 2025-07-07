@@ -21,7 +21,7 @@ async function CustomHeader() {
     });
 
     return (
-      <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm">
+      <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm fixed top-0 left-0 right-0 z-50">
         <div className="container-wide mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-3 md:space-x-6">
             {/* Logo with button background */}
@@ -106,7 +106,7 @@ async function CustomHeader() {
     console.error("Error in CustomHeader:", error);
     // Fallback header with just logo and basic links in case fetching posts fails
     return (
-      <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm">
+      <header className="site-header w-full bg-white border-b border-gray-100 shadow-sm fixed top-0 left-0 right-0 z-50">
         <div className="container-wide mx-auto flex justify-between items-center">
           {/* Logo with button background */}
           <Link href="/" className="flex items-center relative">
@@ -148,7 +148,10 @@ export default async function RootLayout({
     <html lang="en" className={inter.variable}>
       <body className="min-h-screen bg-background text-text"> 
         <CustomHeader />
-        {children}
+        {/* Add padding-top to account for fixed header */}
+        <main className="pt-16 md:pt-20">
+          {children}
+        </main>
       </body>
     </html>
   );
