@@ -76,7 +76,7 @@ export default function Page() {
         {/* Desktop: Featured Card at top, Mobile: Will be repositioned */}
         {!isMobile && (
           <div className={`featured-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.1s' }}>
-            <Link href="/posts/signal-social-media-advertisement" className="card-wrapper">
+            <Link href="/posts/banknote" className="card-wrapper">
               <div className="card-scalable featured-card">
                 <div className="vimeo-wrapper">
                   <iframe
