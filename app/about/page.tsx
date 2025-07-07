@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
+import { createPortal } from 'react-dom';
 
 export default function AboutPage() {
   const [scrollY, setScrollY] = useState(0);
@@ -10,7 +10,43 @@ export default function AboutPage() {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isInScrollSection, setIsInScrollSection] = useState(false);
+  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Update portal container visibility and progress bar
+    if (portalContainer) {
+      portalContainer.style.display = isInScrollSection ? 'flex' : 'none';
+    }
+  }, [isInScrollSection, portalContainer]);
+
+  useEffect(() => {
+    // Create a container that bypasses all CSS fuckery
+    const container = document.createElement('div');
+    container.style.cssText = `
+      position: fixed !important;
+      bottom: 2rem !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      z-index: 999999 !important;
+      background-color: rgba(255, 255, 255, 0.9) !important;
+      color: black !important;
+      border-radius: 9999px !important;
+      padding: 1rem !important;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+      pointer-events: none !important;
+      display: flex !important;
+      align-items: center !important;
+    `;
+    document.body.appendChild(container);
+    setPortalContainer(container);
+    
+    return () => {
+      if (container && document.body.contains(container)) {
+        document.body.removeChild(container);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -30,28 +66,37 @@ export default function AboutPage() {
         const windowHeight = window.innerHeight;
         
         // Calculate scroll progress through the cards section
-        const sectionTop = containerRect.top + window.scrollY - windowHeight;
-        const sectionHeight = container.offsetHeight + windowHeight;
-        const rawScrollProgress = Math.max(0, Math.min(1, (window.scrollY - sectionTop) / sectionHeight));
+        const containerTop = container.offsetTop;
+        const containerHeight = container.offsetHeight;
+        const viewportHeight = window.innerHeight;
         
-        // Check if we're in the scrolling section (show bar from 27% to 78% of scroll)
-        const inScrollSection = rawScrollProgress >= 0.27 && rawScrollProgress <= 0.78;
+        // Calculate when the container starts and ends being in view
+        const scrollTop = window.scrollY;
+        const containerStart = containerTop - viewportHeight;
+        const containerEnd = containerTop + containerHeight;
+        
+        // Raw progress from 0 to 1 through the entire scrollable section
+        const totalScrollableDistance = containerEnd - containerStart;
+        const currentScrollDistance = scrollTop - containerStart;
+        const rawScrollProgress = Math.max(0, Math.min(1, currentScrollDistance / totalScrollableDistance));
+        
+        // Show progress bar only between 20% and 80% of scroll through the section
+        const showBarStart = 0.2;
+        const showBarEnd = 0.8;
+        const inScrollSection = rawScrollProgress >= showBarStart && rawScrollProgress <= showBarEnd;
         setIsInScrollSection(inScrollSection);
         
         // Map the progress to 0-100% within the visible range
-        const mappedProgress = Math.max(0, Math.min(1, (rawScrollProgress - 0.27) / (0.78 - 0.27)));
+        const mappedProgress = Math.max(0, Math.min(1, (rawScrollProgress - showBarStart) / (showBarEnd - showBarStart)));
         setScrollProgress(mappedProgress);
         
         // Enhanced timing: give first and last cards more dwell time
         let cardIndex;
-        if (rawScrollProgress <= 0.4) {
-          // First 40% of scroll = first card
+        if (rawScrollProgress <= 0.35) {
           cardIndex = 0;
-        } else if (rawScrollProgress <= 0.6) {
-          // Next 20% of scroll = second card
+        } else if (rawScrollProgress <= 0.65) {
           cardIndex = 1;
         } else {
-          // Final 40% of scroll = third card
           cardIndex = 2;
         }
         
@@ -117,13 +162,35 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen">
+      {/* PORTAL PROGRESS BAR - RENDERS DIRECTLY TO BODY */}
+      {portalContainer && createPortal(
+        <div style={{ 
+          width: '6rem', 
+          height: '0.25rem', 
+          backgroundColor: '#e5e7eb', 
+          borderRadius: '9999px', 
+          overflow: 'hidden' 
+        }}>
+          <div 
+            style={{ 
+              height: '100%', 
+              backgroundColor: '#000000', 
+              borderRadius: '9999px', 
+              transition: 'width 100ms ease-out',
+              width: `${scrollProgress * 100}%`
+            }}
+          />
+        </div>,
+        portalContainer
+      )}
+
       {/* Top section with white background */}
       <div className="bg-white">
         <div className="container mx-auto px-5 py-3">
           {/* Page header */}
           <div className="mb-3 gap-6 text-left max-w-8xl px-4 sm:px-0 font-semibold">
             <div className="text-3xl max-w-2xl mx-auto text-black">
-              We&apos;re{' '}
+              We're{' '}
               <span 
                 className="relative inline-block cursor-pointer transition-all duration-300 ease-in-out"
                 onMouseEnter={() => setIsHoveringTypetax(true)}
@@ -141,13 +208,9 @@ export default function AboutPage() {
                     isHoveringTypetax ? 'opacity-100' : 'opacity-0'
                   }`}
                 >
-                  <img
-                    src="/images/logo-default.svg"
-                    alt="Typetax Logo"
-                    width={120}
-                    height={40}
-                    className="h-auto w-auto max-h-[1.2em]"
-                  />
+                  <div className="w-24 h-8 bg-gray-200 rounded flex items-center justify-center text-xs">
+                    LOGO
+                  </div>
                 </span>
               </span>
               .
@@ -157,7 +220,7 @@ export default function AboutPage() {
           {/* Page header desc */}
           <div className="mb-4 md:mb-6 gap-2 text-left max-w-8xl px-4 sm:px-0">
             <div className="text-xl max-w-2xl mx-auto text-black">
-              We&apos;re dedicated to experimentation and innovation in all things type-design, glyphs, geometry and graphics. In other words; we just really really like shapes.
+              We're dedicated to experimentation and innovation in all things type-design, glyphs, geometry and graphics. In other words; we just really really like shapes.
             </div>
           </div>
         </div>
@@ -180,7 +243,7 @@ export default function AboutPage() {
         {/* Sticky card container */}
         <div className="sticky top-16 md:top-20 max-w-7xl mx-auto relative z-10 px-2 md:px-8">
           <div className="flex justify-center items-start md:items-center min-h-[60vh] pt-4 md:pt-0">
-            {/* Single card that changes content - made 20% wider on mobile */}
+            {/* Single card that changes content */}
             <div 
               className="relative w-full max-w-2xl md:max-w-3xl transition-all duration-700 ease-out"
               style={getDynamicTransform()}
@@ -189,7 +252,7 @@ export default function AboutPage() {
                 {/* Square image section */}
                 <div className="aspect-square w-60 md:w-80 md:flex-shrink-0 overflow-hidden mx-auto md:mx-0">
                   <img 
-                    key={currentCardIndex} // Force re-render for smooth transitions
+                    key={currentCardIndex}
                     src={cardData[currentCardIndex].image}
                     alt="Design showcase"
                     className="w-full h-full object-cover transition-opacity duration-500 ease-in-out"
@@ -222,35 +285,19 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
-
-        {/* Scroll progress indicator - centered progress bar */}
-        {isInScrollSection && (
-          <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-20 bg-white bg-opacity-90 rounded-full px-4 py-2 shadow-lg">
-            <div className="flex items-center space-x-2">
-              <div className="w-24 h-1 bg-gray-200 rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-black rounded-full transition-all duration-100 ease-out"
-                  style={{ width: `${scrollProgress * 100}%` }}
-                />
-              </div>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Bottom section with white background */}
       <div className="bg-white">
         <div className="container mx-auto px-5 py-8">
-          {/* Navigation buttons */}
           <div className="text-center space-y-4">
-            {/* Gallery button */}
             <div>
-              <Link href="/" className="text-black inline-flex items-center font-medium">
+              <button className="text-black inline-flex items-center font-medium">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-<path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
+                  <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
                 </svg>
                 Back to Home
-              </Link>
+              </button>
             </div>
           </div>
         </div>

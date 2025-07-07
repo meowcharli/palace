@@ -201,7 +201,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             className="mobile-close-button"
             aria-label="Close search"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
@@ -214,12 +214,12 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         className={`desktop-logo ${isSearchOpen ? 'logo-hidden-mobile' : ''}`}
         style={{ 
           position: 'fixed', 
-          top: '25px',
-          left: '5px', 
+          top: '18px',  // 80% of 25px
+          left: '4px',  // 80% of 5px
           zIndex: 999998,
           display: 'flex',
           alignItems: 'center',
-          height: '27px'
+          height: '22px'  // 80% of 27px
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => {
@@ -240,7 +240,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             style={{ 
               display: 'inline-block', 
               position: 'relative',
-              marginTop: '6px'
+              marginTop: '5px'  // 80% of 6px
             }}
           >
             <Link 
@@ -261,7 +261,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
                 alt="Home"
                 className="home-icon"
                 style={{
-                  height: '70px',
+                  height: '56px',  // 80% of 70px
                   width: 'auto',
                   display: 'block',
                   transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
@@ -295,7 +295,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
               alt="Accessibility"
               className="access-icon"
               style={{
-                height: '24px',
+                height: '19px',  // 80% of 24px
                 width: 'auto',
                 display: 'block'
               }}
@@ -309,8 +309,8 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         className={`desktop-buttons ${isSearchOpen ? 'buttons-hidden-mobile' : ''}`}
         style={{ 
           position: 'fixed', 
-          top: '20px',
-          right: '20px', 
+          top: '12px',  // 80% of 20px
+          right: '16px',  // 80% of 20px
           zIndex: 999998,
           display: 'flex',
           alignItems: 'flex-start'
@@ -320,7 +320,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         <div 
           className={`search-container desktop-search ${isSearchOpen ? 'search-open' : 'search-closed'}`}
           ref={desktopSearchContainerRef}
-          style={{ marginRight: '-85px' }}
+          style={{  position: "fixed", right: '85px', top: "7px" }}  // 80% of -85px
         >
           <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
             <input
@@ -337,7 +337,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
               className="desktop-close-button"
               aria-label="Close search"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
               </svg>
@@ -348,7 +348,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         {/* SVG Buttons - Stacked Vertically */}
         <div 
           className={`svg-buttons-container ${isSearchOpen ? 'buttons-slide-out' : ''}`}
-          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3.2px' }}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2.5px' }}  // 80% of 3.2px
         >
           {/* Search Button SVG */}
           <svg 
@@ -356,7 +356,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             data-name="Layer 2" 
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 240.5 31.37"
-            height="18" 
+            height="14.4"  // 80% of 18
             className="svg-clickable"
             onClick={toggleSearch}
             aria-label="Search"
@@ -364,7 +364,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           >
             <path 
               d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm48.17 0v6.27H47.37v6.27h18.82l6.27 6.27v6.27l-6.27 6.27H42.22v-6.27h23.97v-6.27H47.37l-6.27-6.27V6.27L47.37 0zm34.73 0v6.27H80.98v6.27H99.8v6.27H80.98v6.27h25.09v6.27H74.7V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81h-18.82v12.55h-6.27V6.27L114.58 0zm-18.82 12.55h18.82V6.28h-18.82zM167.01 0l6.27 6.27v6.27l-5.42 5.42 5.42 5.42v7.98h-6.27v-6.27l-6.27-6.27h-12.55v12.55h-6.27V0zm-18.82 12.55h18.82V6.28h-18.82zM200.62 0l6.27 6.27v6.27h-6.27V6.27H181.8v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H181.8l-6.27-6.27V6.27L181.8 0zm39.88 0v31.37h-6.27V18.82h-18.82v12.55h-6.27V0h6.27v12.55h18.82V0z"
-              fill="#919191"
+              fill="rgb(0, 0, 0, 0.3)"
             />
           </svg>
           
@@ -374,14 +374,14 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
               data-name="Layer 2" 
               xmlns="http://www.w3.org/2000/svg" 
               viewBox="0 0 274.11 31.37" 
-              height="18"
+              height="14.4"  // 80% of 18
               className="svg-clickable"
               aria-label="Contact"
               style={{ cursor: 'pointer' }}
             >
               <path 
                 d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm43.02 0 6.27 6.27v6.27h-6.27V6.27H47.37v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H47.37l-6.27-6.27V6.27L47.37 0zm33.6 0 6.27 6.27v18.82l-6.27 6.27H80.97l-6.27-6.27V6.27L80.97 0zM80.97 25.09h18.82V6.27H80.97zM139.68 0v31.37h-6.27v-2.29l-18.82-18.82v21.11h-6.27V0h6.27v2.29l18.82 18.82V0zm33.61 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81H181.8v12.55h-6.27V6.27L181.8 0zM181.8 12.55h18.82V6.28H181.8zM234.23 0l6.27 6.27v6.27h-6.27V6.27h-18.82v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27h-18.82l-6.27-6.27V6.27L215.41 0zm39.88 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0z" 
-                fill="#919191"
+                fill="rgb(0, 0, 0, 0.3)"
               />
             </svg>
           </Link>
@@ -389,17 +389,19 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       </div>
       
       <style jsx global>{`
+        /* Remove backdrop styles since we're moving it to layout */
+        
         .icon-hover-container {
           position: relative;
           display: flex;
           align-items: center;
-          height: 60px;
+          height: 48px;
           overflow: hidden;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
         
         .home-icon {
-          height: 70px;
+          height: 54px;  /* 80% of 70px */
           width: auto;
           display: block;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -418,7 +420,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         }
         
         .access-icon {
-          height: 24px;
+          height: 19px;  /* 80% of 24px */
           width: auto;
           display: block;
         }
@@ -438,22 +440,22 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         .icon-hover-container.show-access .access-link {
           opacity: 1;
           transform: translateX(0);
-          margin-left: -6px;
+          margin-left: -5px;  /* 80% of -6px */
           pointer-events: auto;
         }
         
         /* Mobile full-width search overlay */
         .mobile-search-overlay {
           position: fixed;
-          top: 15px;
-          left: 15px;
-          right: 15px;
-          height: 50px;
-          background-color: #E5E5E7;
+          top: 8px;  /* 80% of 15px */
+          left: 8px;  /* 80% of 15px */
+          right: 8px;  /* 80% of 15px */
+          height: 40px;  /* 80% of 50px */
+          background-color: rgb(255, 255, 255, 0.5);
           z-index: 999999;
           display: none;
           align-items: center;
-          padding: 0 20px;
+          padding: 0 16px;  /* 80% of 20px */
           opacity: 0;
           transform: translateY(-20px);
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -473,7 +475,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           outline: none;
           background: transparent;
           color: #050507;
-          font-size: 18px;
+          font-size: 14.4px;  /* 80% of 18px */
         }
         
         .mobile-search-input::placeholder {
@@ -483,8 +485,8 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         .mobile-close-button {
           background: none;
           border: none;
-          padding: 8px;
-          margin-left: 8px;
+          padding: 6px;  /* 80% of 8px */
+          margin-left: 6px;  /* 80% of 8px */
           cursor: pointer;
           color: #666;
           display: flex;
@@ -500,8 +502,8 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         .desktop-close-button {
           background: none;
           border: none;
-          padding: 6px;
-          margin-left: 8px;
+          padding: 12px;  /* 80% of 6px */
+          margin-left: 6px;  /* 80% of 8px */
           cursor: pointer;
           color: #666;
           display: flex;
@@ -521,14 +523,14 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         }
         
         .buttons-slide-out {
-          transform: translateX(100px);
+          transform: translateX(80px);  /* 80% of 100px */
           opacity: 0.3;
         }
         
         /* Desktop search container */
         .search-container {
-          height: 40px;
-          background-color: #E5E5E7;
+          height: 40px;  /* 80% of 40px */
+          background-color:rgb(255, 255, 255, 0.5);
           display: flex;
           align-items: center;
           overflow: hidden;
@@ -543,7 +545,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         }
         
         .search-open {
-          width: 380px;
+          width: 304px;  /* 80% of 380px */
           opacity: 1;
           transform: scaleX(1);
         }
@@ -551,12 +553,12 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         .search-input {
           flex: 1;
           height: 100%;
-          padding: 0 10px;
+          padding: 0 8px;  /* 80% of 10px */
           border: none;
           outline: none;
           background: transparent;
           color: #050507;
-          font-size: 18px;
+          font-size: 14.4px;  /* 80% of 18px */
           transition: opacity 0.2s ease;
         }
         
@@ -592,12 +594,12 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           }
           
           .logo-hidden-mobile {
-            transform: translateX(-100px);
+            transform: translateX(-80px);  /* 80% of -100px */
             opacity: 0;
           }
           
           .buttons-hidden-mobile {
-            transform: translateX(100px);
+            transform: translateX(80px);  /* 80% of 100px */
             opacity: 0;
           }
           
@@ -647,8 +649,8 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         /* Larger mobile adjustments */
         @media (max-width: 480px) {
           .mobile-search-overlay {
-            left: 16px;
-            right: 16px;
+            left: 13px;  /* 80% of 16px */
+            right: 13px;  /* 80% of 16px */
           }
         }
       `}</style>

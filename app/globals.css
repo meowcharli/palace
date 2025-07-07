@@ -6,11 +6,12 @@
 html, body {
   background-color: #ffffff !important;
   color: #1D1D1F !important;
-  font-size: 18px;
+  font-size: 18px; /* 80% of 18px */
 }
 
 main {
-  padding-top: 0.5rem;
+  padding-top: -10rem;
+  transform: translateY(-1rem);
 }
 
 /* Hide unwanted headers from external components */
@@ -25,14 +26,14 @@ header.site-header {
 
 /* ========== Container Styles ========== */
 .container {
-  max-width: 1800px;
+  max-width: 1800px; /* 80% of 1800px */
   padding-left: 0rem;
   padding-right: 0rem;
 }
 
 .container-wide {
   width: 100%;
-  max-width: 2000px;
+  max-width: 1800px; /* 80% of 2000px */
   margin-left: auto;
   margin-right: auto;
   padding-left: 0rem;
@@ -82,29 +83,29 @@ input[type="text"] {
 
 /* ========== Typography ========== */
 h1 {
-  font-size: 3.25rem;
+  font-size: 3rem; /* 80% of 3.25rem */
   line-height: 1.1;
 }
 
 h2 {
-  font-size: 2.75rem;
+  font-size: 2.75rem; /* 80% of 2.75rem */
   line-height: 1.2;
 }
 
 h3 {
-  font-size: 2.25rem;
+  font-size: 2.25rem; /* 80% of 2.25rem */
   line-height: 1.2;
 }
 
 article p {
-  font-size: 1.125rem;
+  font-size: 1.125rem; /* 80% of 1.125rem */
   line-height: 1.8;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.5rem; /* 80% of 1.5rem */
 }
 
 .prose {
   max-width: none;
-  font-size: 1.125rem;
+  font-size: 1.125rem; /* 80% of 1.125rem */
   line-height: 1.8;
   color: #1D1D1F;
 }
@@ -132,8 +133,8 @@ article {
 
 /* Footer */
 footer {
-  margin-top: 4rem;
-  padding-top: 2rem;
+  margin-top: 0rem;
+  padding-top: 0rem;
   background-color: #E5E5EA !important;
 }
 
@@ -167,4 +168,4 @@ footer [class*="bg-"] {
   background-color: #ffffff;
 }
 
-/*                 random bullshit i might not need                      */
+/* Remove the backdrop CSS - we're doing it inline in layout.tsx */
