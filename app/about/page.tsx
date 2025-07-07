@@ -114,8 +114,8 @@ export default function AboutPage() {
 
   const cardData = [
     {
-      title: "What&apos;s the deal with shapes anyway?",
-      content: "The biggest challenge in design is modularity. A logo might look perfect in its primary spot, but put it on print or change the color, and suddenly it looks amateur. That&apos;s where our obsession with form starts shining the most.",
+      title: "What's the deal with shapes anyway?",
+      content: "The biggest challenge in design is modularity. A logo might look perfect in its primary spot, but put it on print or change the color, and suddenly it looks amateur. That's where our obsession with form starts shining the most.",
       translateX: { mobile: 0, desktop: -20 },
       translateY: { mobile: 0, desktop: 30 },
       rotation: -2,
@@ -123,7 +123,7 @@ export default function AboutPage() {
     },
     {
       title: "Science is awesome!",
-      content: "Science isn&apos;t just awesome; it&apos;s fundamental to everything we do. We skip the guesswork and dive deep into research, analyzing existing data and mapping evidence-based insights to ensure every decision is grounded in solid scientific principles rather than fleeting trends or hunches.",
+      content: "Science isn't just awesome; it's fundamental to everything we do. We skip the guesswork and dive deep into research, analyzing existing data and mapping evidence-based insights to ensure every decision is grounded in solid scientific principles rather than fleeting trends or hunches.",
       translateX: { mobile: 0, desktop: 10 },
       translateY: { mobile: 0, desktop: 60 },
       rotation: 2,
@@ -131,7 +131,7 @@ export default function AboutPage() {
     },
     {
       title: "Team & Values",
-      content: "Our team is always evolving, our network is always growing. Here&apos;s what stays the same:",
+      content: "Our team is always evolving, our network is always growing. Here's what stays the same:",
       values: [
         "The goal of form is to improve function, always.",
         "We never guess; we research, prove and only then deliver.",
@@ -190,7 +190,7 @@ export default function AboutPage() {
           {/* Page header */}
           <div className="mb-3 gap-6 text-left max-w-8xl px-4 sm:px-0 font-semibold">
             <div className="text-3xl max-w-2xl mx-auto text-black">
-              We&apos;re{' '}
+              {"We're"}{' '}
               <span 
                 className="relative inline-block cursor-pointer transition-all duration-300 ease-in-out"
                 onMouseEnter={() => setIsHoveringTypetax(true)}
@@ -220,7 +220,7 @@ export default function AboutPage() {
           {/* Page header desc */}
           <div className="mb-4 md:mb-6 gap-2 text-left max-w-8xl px-4 sm:px-0">
             <div className="text-xl max-w-2xl mx-auto text-black">
-              We're dedicated to experimentation and innovation in all things type-design, glyphs, geometry and graphics. In other words; we just really really like shapes.
+              {"We're"} dedicated to experimentation and innovation in all things type-design, glyphs, geometry and graphics. In other words; we just really really like shapes.
             </div>
           </div>
         </div>
