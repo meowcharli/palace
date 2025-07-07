@@ -220,7 +220,7 @@ export default function AboutPage() {
           {/* Page header desc */}
           <div className="mb-4 md:mb-6 gap-2 text-left max-w-8xl px-4 sm:px-0">
             <div className="text-xl max-w-2xl mx-auto text-black">
-              We&apos;re dedicated to experimentation and innovation in all things type-design, glyphs, geometry and graphics. In other words; we just really really like shapes.
+              We're dedicated to experimentation and innovation in all things type-design, glyphs, geometry and graphics. In other words; we just really really like shapes.
             </div>
           </div>
         </div>
