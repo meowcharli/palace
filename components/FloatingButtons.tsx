@@ -21,12 +21,9 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
   const searchButtonRef = useRef<SVGSVGElement>(null);
   const router = useRouter();
 
-  // Prevent flash on load by waiting 1 second
+  // Prevent flash on load
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 1000);
-
+    const timer = setTimeout(() => setIsLoaded(true), 1000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -35,20 +32,24 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
     setIsSearchOpen(prev => {
       const newState = !prev;
       if (newState) {
-        // Opening search
         setSearchQuery('');
-        setTimeout(() => {
-          // Focus mobile input
+        // iOS needs longer delay and requestAnimationFrame
+        const focusInput = () => {
           if (searchInputRef.current) {
             searchInputRef.current.focus();
             searchInputRef.current.select();
           }
-          // Focus desktop input
           if (desktopSearchInputRef.current) {
             desktopSearchInputRef.current.focus();
             desktopSearchInputRef.current.select();
           }
-        }, 300);
+        };
+        
+        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+          requestAnimationFrame(() => setTimeout(focusInput, 400));
+        } else {
+          setTimeout(focusInput, 300);
+        }
       }
       return newState;
     });
@@ -57,6 +58,9 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
   // Close search
   const closeSearch = () => {
     setIsSearchOpen(false);
+    // Blur inputs to hide iOS keyboard
+    if (searchInputRef.current) searchInputRef.current.blur();
+    if (desktopSearchInputRef.current) desktopSearchInputRef.current.blur();
   };
 
   // Handle search submission
@@ -64,45 +68,31 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
     e.preventDefault();
     if (searchQuery.trim()) {
       router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-      setIsSearchOpen(false);
+      closeSearch();
     }
   };
 
-  // Handle exit preview mode (for right-click on logo)
+  // Handle exit preview mode
   const handleExitPreview = async () => {
     try {
-      // First, disable draft mode via API
       await fetch('/api/draft-mode/disable', { method: 'GET' });
-      
-      // Force Sanity to refresh by clearing all caches and doing a hard reload
-      // This mimics what happens when you update a file
       if ('caches' in window) {
         const cacheNames = await caches.keys();
-        await Promise.all(
-          cacheNames.map(cacheName => caches.delete(cacheName))
-        );
+        await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
       }
-      
-      // Clear any stored data
       sessionStorage.clear();
-      
-      // Force a hard reload with cache bypass
       window.location.href = window.location.href + (window.location.href.includes('?') ? '&' : '?') + '_t=' + Date.now();
-      
     } catch (err) {
       console.error('Error exiting preview mode:', err);
-      // Fallback: force hard reload anyway
       window.location.href = window.location.href + (window.location.href.includes('?') ? '&' : '?') + '_t=' + Date.now();
     }
   };
 
   // Handle right-click on logo (desktop only)
   const handleLogoRightClick = (e: React.MouseEvent) => {
-    // Prevent context menu
     e.preventDefault();
     e.stopPropagation();
     
-    // Flash the logo to show the event is working
     const logoElement = e.currentTarget.querySelector('.home-icon') as HTMLImageElement;
     if (logoElement) {
       logoElement.style.transition = 'opacity 0.1s ease';
@@ -113,7 +103,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           logoElement.style.opacity = '0.3';
           setTimeout(() => {
             logoElement.style.opacity = '1';
-            // Reset transition back to original
             setTimeout(() => {
               logoElement.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
             }, 100);
@@ -122,11 +111,8 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
       }, 100);
     }
     
-    // Only handle right-click on desktop (screen width > 768px) and in draft mode
     if (window.innerWidth > 768 && isDraftMode) {
-      setTimeout(() => {
-        handleExitPreview();
-      }, 500); // Delay to see the flash first
+      setTimeout(() => handleExitPreview(), 500);
     }
   };
 
@@ -134,54 +120,40 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
   useEffect(() => {
     if (!isSearchOpen) return;
 
-    const handleClickOutside = (e: MouseEvent) => {
+    const handleClickOutside = (e: Event) => {
       const target = e.target as Node;
       
-      // Only apply click-outside logic on desktop
       if (window.innerWidth > 768) {
-        // Don't close if clicking on the search button
-        if (searchButtonRef.current && searchButtonRef.current.contains(target)) {
-          return;
-        }
-        
-        // Don't close if clicking anywhere inside the desktop search container
-        if (desktopSearchContainerRef.current && desktopSearchContainerRef.current.contains(target)) {
-          return;
-        }
-        
-        // Close search if clicking outside both the button and search container
+        if (searchButtonRef.current?.contains(target)) return;
+        if (desktopSearchContainerRef.current?.contains(target)) return;
         setIsSearchOpen(false);
       }
     };
 
-    // Use a small delay to prevent immediate closing when opening
     const timer = setTimeout(() => {
       document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
     }, 100);
 
     return () => {
       clearTimeout(timer);
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
     };
   }, [isSearchOpen]);
 
   // Close search with ESC key
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsSearchOpen(false);
-      }
+      if (e.key === 'Escape') closeSearch();
     };
-
     window.addEventListener('keydown', handleEsc);
-    return () => {
-      window.removeEventListener('keydown', handleEsc);
-    };
+    return () => window.removeEventListener('keydown', handleEsc);
   }, []);
 
   return (
     <>
-      {/* Mobile Full-Width Search Bar */}
+      {/* Mobile Search Bar */}
       <div 
         className={`mobile-search-overlay ${isSearchOpen ? 'mobile-search-active' : ''}`}
         ref={searchContainerRef}
@@ -194,13 +166,11 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search..."
             className="mobile-search-input"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
           />
-          <button
-            type="button"
-            onClick={closeSearch}
-            className="mobile-close-button"
-            aria-label="Close search"
-          >
+          <button type="button" onClick={closeSearch} className="mobile-close-button" aria-label="Close search">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -209,118 +179,61 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         </form>
       </div>
 
-      {/* Icon in left margin - Hidden on mobile when search is open */}
+      {/* Left Logo */}
       <div 
         className={`desktop-logo ${isSearchOpen ? 'logo-hidden-mobile' : ''}`}
-        style={{ 
-          position: 'fixed', 
-          top: '18px',  // 80% of 25px
-          left: '4px',  // 80% of 5px
-          zIndex: 999998,
-          display: 'flex',
-          alignItems: 'center',
-          height: '22px'  // 80% of 27px
-        }}
+        style={{ position: 'fixed', top: '18px', left: '4px', zIndex: 999998, display: 'flex', alignItems: 'center', height: '22px' }}
         onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => {
-          setIsHovered(false);
-          setIsFocused(false);
-        }}
+        onMouseLeave={() => { setIsHovered(false); setIsFocused(false); }}
       >
         <div className={`icon-hover-container ${isLoaded ? 'loaded' : ''} ${(isHovered || isFocused) ? 'show-access' : ''}`}>
-          {/* Icon GIF - Home link with right-click wrapper */}
           <div 
             onContextMenu={handleLogoRightClick}
-            onMouseDown={(e) => {
-              // Only prevent default navigation on right-click
-              if (e.button === 2) {
-                e.preventDefault();
-              }
-            }}
-            style={{ 
-              display: 'inline-block', 
-              position: 'relative',
-              marginTop: '5px'  // 80% of 6px
-            }}
+            onMouseDown={(e) => { if (e.button === 2) e.preventDefault(); }}
+            style={{ display: 'inline-block', position: 'relative', marginTop: '5px' }}
           >
             <Link 
               href="/" 
-              style={{ 
-                display: 'inline-block',
-                position: 'relative'
-              }}
+              style={{ display: 'inline-block', position: 'relative' }}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
-              onMouseDown={() => {
-                setIsHovered(false);
-                setIsFocused(false);
-              }}
+              onMouseDown={() => { setIsHovered(false); setIsFocused(false); }}
             >
               <img
                 src="/images/icon.gif"
                 alt="Home"
                 className="home-icon"
-                style={{
-                  height: '56px',  // 80% of 70px
-                  width: 'auto',
-                  display: 'block',
-                  transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                  flexShrink: 0
-                }}
+                style={{ height: '56px', width: 'auto', display: 'block', transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)', flexShrink: 0 }}
+                draggable={false}
               />
             </Link>
           </div>
           
-          {/* Access icon that slides out on hover */}
           <div 
             className="access-link"
             onClick={() => window.location.href = '/accessible.html'}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                window.location.href = '/accessible.html';
-              }
-            }}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.href = '/accessible.html'; } }}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
-            onMouseDown={() => {
-              setIsHovered(false);
-              setIsFocused(false);
-            }}
+            onMouseDown={() => { setIsHovered(false); setIsFocused(false); }}
           >
-            <img
-              src="/images/access.svg"
-              alt="Accessibility"
-              className="access-icon"
-              style={{
-                height: '19px',  // 80% of 24px
-                width: 'auto',
-                display: 'block'
-              }}
-            />
+            <img src="/images/access.svg" alt="Accessibility" className="access-icon" style={{ height: '19px', width: 'auto', display: 'block' }} draggable={false} />
           </div>
         </div>
       </div>
       
-      {/* Search and Contact buttons in right margin */}
+      {/* Right Buttons */}
       <div 
         className={`desktop-buttons ${isSearchOpen ? 'buttons-hidden-mobile' : ''}`}
-        style={{ 
-          position: 'fixed', 
-          top: '12px',  // 80% of 20px
-          right: '16px',  // 80% of 20px
-          zIndex: 999998,
-          display: 'flex',
-          alignItems: 'flex-start'
-        }}
+        style={{ position: 'fixed', top: '12px', right: '16px', zIndex: 999998, display: 'flex', alignItems: 'flex-start' }}
       >
-        {/* Search Container - Desktop only */}
+        {/* Desktop Search Container */}
         <div 
           className={`search-container desktop-search ${isSearchOpen ? 'search-open' : 'search-closed'}`}
           ref={desktopSearchContainerRef}
-          style={{  position: "fixed", right: '85px', top: "7px" }}  // 80% of -85px
+          style={{ position: "fixed", right: '85px', top: "7px" }}
         >
           <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
             <input
@@ -330,13 +243,11 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search..."
               className="search-input"
+              autoComplete="off"
+              autoCorrect="off"
+              autoCapitalize="off"
             />
-            <button
-              type="button"
-              onClick={closeSearch}
-              className="desktop-close-button"
-              aria-label="Close search"
-            >
+            <button type="button" onClick={closeSearch} className="desktop-close-button" aria-label="Close search">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -345,52 +256,34 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           </form>
         </div>
         
-        {/* SVG Buttons - Stacked Vertically */}
+        {/* SVG Buttons */}
         <div 
           className={`svg-buttons-container ${isSearchOpen ? 'buttons-slide-out' : ''}`}
-          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2.5px' }}  // 80% of 3.2px
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2.5px' }}
         >
-          {/* Search Button SVG */}
           <svg 
             ref={searchButtonRef}
             data-name="Layer 2" 
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 240.5 31.37"
-            height="14.4"  // 80% of 18
+            height="14.4"
             className="svg-clickable"
             onClick={toggleSearch}
             aria-label="Search"
             style={{ cursor: 'pointer' }}
           >
-            <path 
-              d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm48.17 0v6.27H47.37v6.27h18.82l6.27 6.27v6.27l-6.27 6.27H42.22v-6.27h23.97v-6.27H47.37l-6.27-6.27V6.27L47.37 0zm34.73 0v6.27H80.98v6.27H99.8v6.27H80.98v6.27h25.09v6.27H74.7V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81h-18.82v12.55h-6.27V6.27L114.58 0zm-18.82 12.55h18.82V6.28h-18.82zM167.01 0l6.27 6.27v6.27l-5.42 5.42 5.42 5.42v7.98h-6.27v-6.27l-6.27-6.27h-12.55v12.55h-6.27V0zm-18.82 12.55h18.82V6.28h-18.82zM200.62 0l6.27 6.27v6.27h-6.27V6.27H181.8v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H181.8l-6.27-6.27V6.27L181.8 0zm39.88 0v31.37h-6.27V18.82h-18.82v12.55h-6.27V0h6.27v12.55h18.82V0z"
-              fill="rgb(0, 0, 0, 0.3)"
-            />
+            <path d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm48.17 0v6.27H47.37v6.27h18.82l6.27 6.27v6.27l-6.27 6.27H42.22v-6.27h23.97v-6.27H47.37l-6.27-6.27V6.27L47.37 0zm34.73 0v6.27H80.98v6.27H99.8v6.27H80.98v6.27h25.09v6.27H74.7V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81h-18.82v12.55h-6.27V6.27L114.58 0zm-18.82 12.55h18.82V6.28h-18.82zM167.01 0l6.27 6.27v6.27l-5.42 5.42 5.42 5.42v7.98h-6.27v-6.27l-6.27-6.27h-12.55v12.55h-6.27V0zm-18.82 12.55h18.82V6.28h-18.82zM200.62 0l6.27 6.27v6.27h-6.27V6.27H181.8v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H181.8l-6.27-6.27V6.27L181.8 0zm39.88 0v31.37h-6.27V18.82h-18.82v12.55h-6.27V0h6.27v12.55h18.82V0z" fill="rgb(0, 0, 0, 0.3)" />
           </svg>
           
-          {/* Contact Button SVG */}
           <Link href="/contact">
-            <svg 
-              data-name="Layer 2" 
-              xmlns="http://www.w3.org/2000/svg" 
-              viewBox="0 0 274.11 31.37" 
-              height="14.4"  // 80% of 18
-              className="svg-clickable"
-              aria-label="Contact"
-              style={{ cursor: 'pointer' }}
-            >
-              <path 
-                d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm43.02 0 6.27 6.27v6.27h-6.27V6.27H47.37v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H47.37l-6.27-6.27V6.27L47.37 0zm33.6 0 6.27 6.27v18.82l-6.27 6.27H80.97l-6.27-6.27V6.27L80.97 0zM80.97 25.09h18.82V6.27H80.97zM139.68 0v31.37h-6.27v-2.29l-18.82-18.82v21.11h-6.27V0h6.27v2.29l18.82 18.82V0zm33.61 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81H181.8v12.55h-6.27V6.27L181.8 0zM181.8 12.55h18.82V6.28H181.8zM234.23 0l6.27 6.27v6.27h-6.27V6.27h-18.82v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27h-18.82l-6.27-6.27V6.27L215.41 0zm39.88 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0z" 
-                fill="rgb(0, 0, 0, 0.3)"
-              />
+            <svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 274.11 31.37" height="14.4" className="svg-clickable" aria-label="Contact" style={{ cursor: 'pointer' }}>
+              <path d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm43.02 0 6.27 6.27v6.27h-6.27V6.27H47.37v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H47.37l-6.27-6.27V6.27L47.37 0zm33.6 0 6.27 6.27v18.82l-6.27 6.27H80.97l-6.27-6.27V6.27L80.97 0zM80.97 25.09h18.82V6.27H80.97zM139.68 0v31.37h-6.27v-2.29l-18.82-18.82v21.11h-6.27V0h6.27v2.29l18.82 18.82V0zm33.61 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81H181.8v12.55h-6.27V6.27L181.8 0zM181.8 12.55h18.82V6.28H181.8zM234.23 0l6.27 6.27v6.27h-6.27V6.27h-18.82v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27h-18.82l-6.27-6.27V6.27L215.41 0zm39.88 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0z" fill="rgb(0, 0, 0, 0.3)" />
             </svg>
           </Link>
         </div>
       </div>
       
       <style jsx global>{`
-        /* Remove backdrop styles since we're moving it to layout */
-        
         .icon-hover-container {
           position: relative;
           display: flex;
@@ -398,14 +291,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           height: 48px;
           overflow: hidden;
           transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        
-        .home-icon {
-          height: 54px;  /* 80% of 70px */
-          width: auto;
-          display: block;
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          flex-shrink: 0;
         }
         
         .access-link {
@@ -419,13 +304,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           cursor: pointer;
         }
         
-        .access-icon {
-          height: 19px;  /* 80% of 24px */
-          width: auto;
-          display: block;
-        }
-        
-        /* Hide access icon until loaded to prevent flash */
         .icon-hover-container:not(.loaded) .access-link {
           visibility: hidden !important;
           opacity: 0 !important;
@@ -436,30 +314,32 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           visibility: visible;
         }
         
-        /* Show accessibility button only when explicitly requested */
         .icon-hover-container.show-access .access-link {
           opacity: 1;
           transform: translateX(0);
-          margin-left: -5px;  /* 80% of -6px */
+          margin-left: -5px;
           pointer-events: auto;
         }
         
-        /* Mobile full-width search overlay */
+        /* Mobile search overlay */
         .mobile-search-overlay {
           position: fixed;
-          top: 8px;  /* 80% of 15px */
-          left: 8px;  /* 80% of 15px */
-          right: 8px;  /* 80% of 15px */
-          height: 40px;  /* 80% of 50px */
+          top: 8px;
+          left: 8px;
+          right: 8px;
+          height: 40px;
           background-color: rgb(255, 255, 255, 0.5);
           z-index: 999999;
           display: none;
           align-items: center;
-          padding: 0 16px;  /* 80% of 20px */
+          padding: 0 16px;
           opacity: 0;
           transform: translateY(-20px);
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           pointer-events: none;
+          border-radius: 8px;
+          -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
         }
         
         .mobile-search-active {
@@ -475,67 +355,61 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           outline: none;
           background: transparent;
           color: #050507;
-          font-size: 14.4px;  /* 80% of 18px */
+          font-size: 16px; /* Prevent iOS zoom */
+          -webkit-appearance: none;
+          -webkit-tap-highlight-color: transparent;
         }
         
         .mobile-search-input::placeholder {
           color: #a5a5a7;
         }
         
-        .mobile-close-button {
+        .mobile-close-button, .desktop-close-button {
           background: none;
           border: none;
-          padding: 6px;  /* 80% of 8px */
-          margin-left: 6px;  /* 80% of 8px */
+          padding: 6px;
+          margin-left: 6px;
           cursor: pointer;
           color: #666;
           display: flex;
           align-items: center;
           justify-content: center;
           transition: color 0.2s ease;
-        }
-        
-        .mobile-close-button:hover {
-          color: #333;
+          -webkit-tap-highlight-color: transparent;
+          min-height: 44px; /* iOS touch target */
+          min-width: 44px;
         }
         
         .desktop-close-button {
-          background: none;
-          border: none;
-          padding: 12px;  /* 80% of 6px */
-          margin-left: 6px;  /* 80% of 8px */
-          cursor: pointer;
-          color: #666;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: color 0.2s ease;
+          padding: 12px;
         }
         
-        .desktop-close-button:hover {
+        .mobile-close-button:hover, .desktop-close-button:hover {
           color: #333;
         }
         
-        /* Desktop button slide animation */
         .svg-buttons-container {
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           transform-origin: right center;
         }
         
         .buttons-slide-out {
-          transform: translateX(80px);  /* 80% of 100px */
+          transform: translateX(80px);
           opacity: 0.3;
         }
         
-        /* Desktop search container */
+        /* Desktop search */
         .search-container {
-          height: 40px;  /* 80% of 40px */
-          background-color:rgb(255, 255, 255, 0.5);
+          height: 40px;
+          background-color: rgb(255, 255, 255, 0.5);
           display: flex;
           align-items: center;
           overflow: hidden;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           transform-origin: right center;
+          border-radius: 8px;
+          -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
         }
         
         .search-closed {
@@ -545,7 +419,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         }
         
         .search-open {
-          width: 304px;  /* 80% of 380px */
+          width: 304px;
           opacity: 1;
           transform: scaleX(1);
         }
@@ -553,13 +427,14 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         .search-input {
           flex: 1;
           height: 100%;
-          padding: 0 8px;  /* 80% of 10px */
+          padding: 0 8px;
           border: none;
           outline: none;
           background: transparent;
           color: #050507;
-          font-size: 14.4px;  /* 80% of 18px */
+          font-size: 16px; /* Prevent iOS zoom */
           transition: opacity 0.2s ease;
+          -webkit-appearance: none;
         }
         
         .search-closed .search-input {
@@ -577,13 +452,16 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         .svg-clickable {
           cursor: pointer;
           transition: opacity 0.3s ease;
+          -webkit-tap-highlight-color: transparent;
+          -webkit-user-select: none;
+          user-select: none;
         }
         
         .svg-clickable:hover {
           opacity: 0.7;
         }
         
-        /* Mobile-specific styles */
+        /* Mobile styles */
         @media (max-width: 768px) {
           .mobile-search-overlay {
             display: flex;
@@ -594,28 +472,25 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           }
           
           .logo-hidden-mobile {
-            transform: translateX(-80px);  /* 80% of -100px */
+            transform: translateX(-80px);
             opacity: 0;
           }
           
           .buttons-hidden-mobile {
-            transform: translateX(80px);  /* 80% of 100px */
+            transform: translateX(80px);
             opacity: 0;
           }
           
-          .desktop-logo,
-          .desktop-buttons {
+          .desktop-logo, .desktop-buttons {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           }
           
-          /* Mobile icon simplification */
           .icon-hover-container {
             pointer-events: auto;
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
           }
           
-          /* Hide accessibility button completely on mobile */
           .access-link {
             display: none !important;
             visibility: hidden !important;
@@ -625,6 +500,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           
           .desktop-logo {
             pointer-events: auto;
+            -webkit-tap-highlight-color: transparent;
           }
           
           .desktop-logo * {
@@ -646,11 +522,10 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           }
         }
         
-        /* Larger mobile adjustments */
         @media (max-width: 480px) {
           .mobile-search-overlay {
-            left: 13px;  /* 80% of 16px */
-            right: 13px;  /* 80% of 16px */
+            left: 13px;
+            right: 13px;
           }
         }
       `}</style>
