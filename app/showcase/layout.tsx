@@ -28,7 +28,7 @@ export default async function ShowcaseLayout({
 
   return (
     <>
-      <main className="flex-grow mt-16">
+      <main className="flex-grow mt-12">
         {children}
       </main>
       <BlogFooter footer={footer} description={description} />

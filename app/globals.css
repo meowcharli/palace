@@ -9,11 +9,6 @@ html, body {
   font-size: 18px; /* 80% of 18px */
 }
 
-main {
-  padding-top: -10rem;
-  transform: translateY(-1rem);
-}
-
 /* Hide unwanted headers from external components */
 header:not(.site-header), .banner, .navbar {
   display: none !important;

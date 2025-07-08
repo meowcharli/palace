@@ -70,9 +70,9 @@ export default function Page() {
   }
 
   return (
-    <div className="min-h-screen relative">
+    <div className="relative">
       {/* Grid Container */}
-      <div className="grid-container">
+      <div className={`grid-container ${cardsLoaded ? 'cards-loaded' : ''}`}>
         {/* Desktop: Featured Card at top, Mobile: Will be repositioned */}
         {!isMobile && (
           <div className={`featured-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.1s' }}>
@@ -174,8 +174,8 @@ export default function Page() {
           )}
         </div>
 
-        {/* Contact Card */}
-        <div className={`contact-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.5s' }}>
+        {        /* Contact Card */}
+        <div className={`contact-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.5s', marginBottom: 0 }}>
           <Link href="/contact" className="card-wrapper">
             <div className="card-scalable contact-card">
               {isMobile ? (
@@ -202,9 +202,14 @@ export default function Page() {
         .grid-container {
           display: flex;
           flex-direction: column;
-          min-height: 100vh;
           padding: 0;
           margin: 0;
+          margin-bottom: 0px;
+          transition: margin-bottom 0.6s ease-out;
+        }
+        
+        .grid-container.cards-loaded {
+          margin-bottom: 0;
         }
 
         .featured-item {
@@ -230,6 +235,7 @@ export default function Page() {
           width: 100%;
           padding: 0;
           margin: 0;
+          margin-bottom: 0 !important;
         }
 
         /* Improved Vimeo video container */
@@ -379,7 +385,7 @@ export default function Page() {
           }
           
           .card-scalable:not(.about-card):not(.featured-card):not(.visuals-card):not(.contact-card):hover .card-svg image {
-            transform: scale(1.06);
+            transform: scale(1.00);
           }
           
           /* Add slight zoom effect to contact card */
@@ -404,6 +410,11 @@ export default function Page() {
             padding: 0;
             gap: 0;
             margin: 0;
+            margin-bottom: -50px;
+          }
+          
+          .grid-container.cards-loaded {
+            margin-bottom: 0;
           }
 
           .three-cards-row {
@@ -430,7 +441,7 @@ export default function Page() {
           }
           
           .card-animate:not(.card-loaded) {
-            transform: translateY(140px) !important;
+            transform: translateY(50px) !important;
             opacity: 1 !important;
           }
 
