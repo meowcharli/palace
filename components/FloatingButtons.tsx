@@ -224,16 +224,16 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         </div>
       </div>
       
-      {/* Right Buttons */}
+      {/* Right Search Button */}
       <div 
         className={`desktop-buttons ${isSearchOpen ? 'buttons-hidden-mobile' : ''}`}
-        style={{ position: 'fixed', top: '12px', right: '16px', zIndex: 999998, display: 'flex', alignItems: 'flex-start' }}
+        style={{ position: 'fixed', top: '12px', right: '15px', zIndex: 999998, display: 'flex', alignItems: 'flex-start' }}
       >
         {/* Desktop Search Container */}
         <div 
           className={`search-container desktop-search ${isSearchOpen ? 'search-open' : 'search-closed'}`}
           ref={desktopSearchContainerRef}
-          style={{ position: "fixed", right: '85px', top: "7px" }}
+          style={{ position: "fixed", right: '12px', top: "7px" }}
         >
           <form onSubmit={handleSubmit} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
             <input
@@ -256,30 +256,24 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           </form>
         </div>
         
-        {/* SVG Buttons */}
+        {/* Search Button */}
         <div 
           className={`svg-buttons-container ${isSearchOpen ? 'buttons-slide-out' : ''}`}
-          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2.5px' }}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}
         >
           <svg 
             ref={searchButtonRef}
-            data-name="Layer 2" 
+            fill="none" 
             xmlns="http://www.w3.org/2000/svg" 
-            viewBox="0 0 240.5 31.37"
-            height="14.4"
+            viewBox="0 0 24 24"
+            height="29"
             className="svg-clickable"
             onClick={toggleSearch}
             aria-label="Search"
             style={{ cursor: 'pointer' }}
           >
-            <path d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm48.17 0v6.27H47.37v6.27h18.82l6.27 6.27v6.27l-6.27 6.27H42.22v-6.27h23.97v-6.27H47.37l-6.27-6.27V6.27L47.37 0zm34.73 0v6.27H80.98v6.27H99.8v6.27H80.98v6.27h25.09v6.27H74.7V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81h-18.82v12.55h-6.27V6.27L114.58 0zm-18.82 12.55h18.82V6.28h-18.82zM167.01 0l6.27 6.27v6.27l-5.42 5.42 5.42 5.42v7.98h-6.27v-6.27l-6.27-6.27h-12.55v12.55h-6.27V0zm-18.82 12.55h18.82V6.28h-18.82zM200.62 0l6.27 6.27v6.27h-6.27V6.27H181.8v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H181.8l-6.27-6.27V6.27L181.8 0zm39.88 0v31.37h-6.27V18.82h-18.82v12.55h-6.27V0h6.27v12.55h18.82V0z" fill="rgb(0, 0, 0, 0.3)" />
+            <path d="M6 2h8v2H6V2zM4 6V4h2v2H4zm0 8H2V6h2v8zm2 2H4v-2h2v2zm8 0v2H6v-2h8zm2-2h-2v2h2v2h2v2h2v2h2v-2h-2v-2h-2v-2h-2v-2zm0-8h2v8h-2V6zm0 0V4h-2v2h2z" fill="rgb(0, 0, 0, 0.3)" />
           </svg>
-          
-          <Link href="/contact">
-            <svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 274.11 31.37" height="14.4" className="svg-clickable" aria-label="Contact" style={{ cursor: 'pointer' }}>
-              <path d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm43.02 0 6.27 6.27v6.27h-6.27V6.27H47.37v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H47.37l-6.27-6.27V6.27L47.37 0zm33.6 0 6.27 6.27v18.82l-6.27 6.27H80.97l-6.27-6.27V6.27L80.97 0zM80.97 25.09h18.82V6.27H80.97zM139.68 0v31.37h-6.27v-2.29l-18.82-18.82v21.11h-6.27V0h6.27v2.29l18.82 18.82V0zm33.61 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81H181.8v12.55h-6.27V6.27L181.8 0zM181.8 12.55h18.82V6.28H181.8zM234.23 0l6.27 6.27v6.27h-6.27V6.27h-18.82v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27h-18.82l-6.27-6.27V6.27L215.41 0zm39.88 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0z" fill="rgb(0, 0, 0, 0.3)" />
-            </svg>
-          </Link>
         </div>
       </div>
       
