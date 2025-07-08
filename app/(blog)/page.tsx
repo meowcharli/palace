@@ -159,14 +159,14 @@ export default function Page() {
           {/* Featured Card - Mobile Only (appears after About card) */}
           {isMobile && (
             <div className={`card-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.4s' }}>
-              <Link href="/posts/signal-social-media-advertisement" className="card-wrapper">
+              <Link href="/posts/banknote" className="card-wrapper">
                 <div className="card-scalable featured-card">
                   <svg viewBox="0 0 345 483" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                    <image href="https://i.imgur.com/AuOmVsO.png" width="345" height="483" preserveAspectRatio="xMidYMid slice" />
+                    <image href="https://i.imgur.com/RaWGLkI.jpeg" width="345" height="483" preserveAspectRatio="xMidYMid slice" />
                     <rect width="345" height="483" fill="transparent" />
-                    <text x="28" y="52" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#1D1D1F">+</text>
-                    <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#1D1D1F">Featured</text>
-                    <text x="28" y="104" fontFamily="sans-serif" fontSize="13" fill="#3D3D3F">Signal | Ad</text>
+                    <text x="28" y="52" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#F4FFF4">+</text>
+                    <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#F4FFF4">Featured</text>
+                    <text x="28" y="104" fontFamily="sans-serif" fontSize="13" fill="#DEFFDE">NBS | Banknote</text>
                   </svg>
                 </div>
               </Link>
