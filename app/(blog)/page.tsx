@@ -186,9 +186,9 @@ export default function Page() {
                   <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#f5f5f7">Contact</text>
                 </svg>
               ) : (
-                <svg viewBox="0 0 483 270" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                  <image href="https://i.imgur.com/xVua8wQ.gif" width="483" height="282" preserveAspectRatio="xMidYMid slice" />
-                  <rect width="483" height="270" fill="transparent" />
+                <svg viewBox="0 0 483 200" xmlns="http://www.w3.org/2000/svg" className="card-svg">
+                  <image href="https://i.imgur.com/qZWh0Bt.png" width="483" height="282" preserveAspectRatio="xMidYMid slice" />
+                  <rect width="483" height="282" fill="transparent" />
                   <text x="11" y="20" fontFamily="sans-serif" fontSize="13" fontWeight="600" fill="#f5f5f7">+</text>
                   <text x="11" y="33" fontFamily="sans-serif" fontSize="11" fill="#f5f5f7">Contact</text>
                 </svg>
@@ -384,7 +384,7 @@ export default function Page() {
           
           /* Add slight zoom effect to contact card */
           .contact-card:hover .card-svg image {
-            transform: scale(1.01);
+            transform: scale(1.005);
           }
           
           /* Add rotation effect to typography card */
