@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import './globals.css';
+import '../globals.css';
 import FloatingButtons from '@/components/FloatingButtons';
 
 const inter = Inter({
@@ -28,6 +28,19 @@ export default function RootLayout({
               overflow: hidden;
               color: black;
               transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+            }
+            
+            /* Cross-platform glass distortion effect */
+            @keyframes liquid-flow {
+              0% { transform: translate3d(0, 0, 0) scale(1); }
+              25% { transform: translate3d(-2px, 1px, 0) scale(1.02); }
+              50% { transform: translate3d(1px, -1px, 0) scale(0.98); }
+              75% { transform: translate3d(-1px, 2px, 0) scale(1.01); }
+              100% { transform: translate3d(0, 0, 0) scale(1); }
+            }
+            
+            .glass-distortion-layer {
+              animation: liquid-flow 8s ease-in-out infinite;
             }
           `
         }} />
@@ -113,12 +126,26 @@ export default function RootLayout({
             background: 'rgba(0, 0, 0, 0.001)',
           }} />
           
+          {/* Additional iOS-compatible glass distortion */}
+          <div className="glass-distortion-layer" style={{
+            position: 'absolute',
+            zIndex: 0,
+            inset: '-2px',
+            backdropFilter: 'blur(12px) saturate(1.3) brightness(1.1)',
+            WebkitBackdropFilter: 'blur(12px) saturate(1.3) brightness(1.1)',
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.1) 100%)',
+            borderRadius: '0px',
+            transform: 'translate3d(0, 0, 0)',
+            WebkitTransform: 'translate3d(0, 0, 0)',
+            mixBlendMode: 'overlay',
+          }} />
+          
           {/* Tint Layer */}
           <div style={{
             zIndex: 1,
             position: 'absolute',
             inset: 0,
-            background: 'rgba(255, 255, 255, 0.62)',
+            background: 'hsla(0, 0.00%, 100.00%, 0.50)',
           }} />
           
           {/* Shine Layer */}
