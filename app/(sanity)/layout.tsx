@@ -23,120 +23,90 @@ export default function RootLayout({
       <head>
         <style dangerouslySetInnerHTML={{
           __html: `
-            .liquidGlass-wrapper {
-              font-weight: 600;
-              overflow: hidden;
-              color: black;
-              transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 2.2);
+            .glass-header {
+              position: fixed;
+              top: 0;
+              left: 0;
+              right: 0;
+              height: 55px;
+              z-index: 999997;
+              
+              /* Core glass effect - Safari compatible */
+              background: rgba(255, 255, 255, 0.5);
+              backdrop-filter: blur(20px) saturate(1.8);
+              -webkit-backdrop-filter: blur(20px) saturate(1.8);
+              
+              /* Subtle border for definition */
+              border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+              
+              /* Hardware acceleration */
+              transform: translateZ(0);
+              -webkit-transform: translateZ(0);
+              will-change: backdrop-filter;
+              
+              /* Smooth transitions */
+              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             }
             
-            /* Cross-platform glass distortion effect */
-            @keyframes liquid-flow {
-              0% { transform: translate3d(0, 0, 0) scale(1); }
-              25% { transform: translate3d(-2px, 1px, 0) scale(1.02); }
-              50% { transform: translate3d(1px, -1px, 0) scale(0.98); }
-              75% { transform: translate3d(-1px, 2px, 0) scale(1.01); }
-              100% { transform: translate3d(0, 0, 0) scale(1); }
+            /* Enhanced glass effect with gradient overlay */
+            .glass-header::before {
+              content: '';
+              position: absolute;
+              inset: 0;
+              background: linear-gradient(
+                180deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 50%,
+                rgba(255, 255, 255, 0.15) 100%
+              );
+              pointer-events: none;
+              mix-blend-mode: overlay;
             }
             
-            .glass-distortion-layer {
-              animation: liquid-flow 8s ease-in-out infinite;
+            /* Subtle shimmer effect */
+            .glass-header::after {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: -100%;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.2) 50%,
+                transparent 100%
+              );
+              animation: shimmer 3s ease-in-out infinite;
+              pointer-events: none;
+            }
+            
+            @keyframes shimmer {
+              0% { left: -100%; }
+              50% { left: 100%; }
+              100% { left: 100%; }
+            }
+            
+            /* iOS-specific optimizations */
+            @supports (-webkit-touch-callout: none) {
+              .glass-header {
+                background: rgba(255, 255, 255, 0.50);
+                backdrop-filter: blur(15px) saturate(1.5);
+                -webkit-backdrop-filter: blur(15px) saturate(1.5);
+              }
+            }
+            
+            /* Content spacing to account for fixed header */
+            body {
+              padding-top: 55px;
             }
           `
         }} />
       </head>
       <body className="min-h-screen">
-        {/* SVG Filter Definition - Safari Compatible */}
-        <svg 
-          width="0" 
-          height="0" 
-          style={{ 
-            position: 'absolute', 
-            pointerEvents: 'none'
-          }} 
-          aria-hidden="true"
-        >
-          <defs>
-            <filter id="glass-distortion" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
-              <feTurbulence
-                baseFrequency="0.01 0.01"
-                numOctaves="2"
-                result="turbulence"
-                type="turbulence"
-                seed="2"
-              />
-              <feDisplacementMap
-                in="SourceGraphic"
-                in2="turbulence"
-                scale="300"
-                xChannelSelector="R"
-                yChannelSelector="G"
-                result="displaced"
-              />
-            </filter>
-            <filter id="glass-distortion-subtle" x="-100%" y="-100%" width="300%" height="300%" filterUnits="objectBoundingBox">
-              <feTurbulence
-                baseFrequency="0.005 0.005"
-                numOctaves="3"
-                result="turbulence"
-                type="turbulence"
-                seed="10"
-              />
-              <feDisplacementMap
-                in="SourceGraphic"
-                in2="turbulence"
-                scale="15"
-                xChannelSelector="R"
-                yChannelSelector="G"
-                result="displaced"
-              />
-              <feOffset
-                in="displaced"
-                dx="0"
-                dy="0"
-                result="centered"
-              />
-            </filter>
-          </defs>
-        </svg>
-
-        {/* Liquid Glass Header */}
-        <div className="liquidGlass-wrapper" style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '55px',
-          zIndex: 999997,
-          borderRadius: 0,
-        }}>
-          {/* Glass Effect Layer - iOS Compatible */}
-          <div style={{
-            position: 'absolute',
-            zIndex: 0,
-            inset: 0,
-            backdropFilter: 'blur(20px) saturate(180%)',
-            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
-            background: 'rgba(255, 255, 255, 0.25)',
-            transform: 'translate3d(0, 0, 0)',
-            WebkitTransform: 'translate3d(0, 0, 0)',
-          }} />
-          
-          {/* Tint Layer */}
-          <div style={{
-            zIndex: 1,
-            position: 'absolute',
-            inset: 0,
-            background: 'rgba(255, 255, 255, 0.1)',
-          }} />
-          
-          {/* Shine Layer */}
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 2,
-            overflow: 'hidden',
-          }} />
+        {/* Simplified Glass Header */}
+        <div className="glass-header">
+          {/* Optional: Add your header content here */}
         </div>
 
         <FloatingButtons />
