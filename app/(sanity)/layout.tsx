@@ -110,34 +110,16 @@ export default function RootLayout({
           zIndex: 999997,
           borderRadius: 0,
         }}>
-          {/* Glass Effect Layer */}
+          {/* Glass Effect Layer - iOS Compatible */}
           <div style={{
             position: 'absolute',
             zIndex: 0,
             inset: 0,
-            backdropFilter: 'blur(0px)',
-            WebkitBackdropFilter: 'blur(0px)',
-            filter: 'url(#glass-distortion-subtle) blur(15px)',
-            WebkitFilter: 'url(#glass-distortion-subtle) blur(15px)',
-            overflow: 'hidden',
-            isolation: 'isolate',
+            backdropFilter: 'blur(20px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            background: 'rgba(255, 255, 255, 0.25)',
             transform: 'translate3d(0, 0, 0)',
             WebkitTransform: 'translate3d(0, 0, 0)',
-            background: 'rgba(0, 0, 0, 0.001)',
-          }} />
-          
-          {/* Additional iOS-compatible glass distortion */}
-          <div className="glass-distortion-layer" style={{
-            position: 'absolute',
-            zIndex: 0,
-            inset: '-2px',
-            backdropFilter: 'blur(12px) saturate(1.3) brightness(1.1)',
-            WebkitBackdropFilter: 'blur(12px) saturate(1.3) brightness(1.1)',
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.1) 100%)',
-            borderRadius: '0px',
-            transform: 'translate3d(0, 0, 0)',
-            WebkitTransform: 'translate3d(0, 0, 0)',
-            mixBlendMode: 'overlay',
           }} />
           
           {/* Tint Layer */}
@@ -145,7 +127,7 @@ export default function RootLayout({
             zIndex: 1,
             position: 'absolute',
             inset: 0,
-            background: 'hsla(0, 0.00%, 100.00%, 0.50)',
+            background: 'rgba(255, 255, 255, 0.1)',
           }} />
           
           {/* Shine Layer */}
