@@ -267,35 +267,17 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             xmlns="http://www.w3.org/2000/svg" 
             viewBox="0 0 240.5 31.37"
             height="14.4"
-            className="svg-clickable safari-svg"
+            className="svg-clickable"
             onClick={toggleSearch}
             aria-label="Search"
             style={{ cursor: 'pointer' }}
           >
-            <defs>
-              <filter id="glassFilter1" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="blur"/>
-                <feColorMatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.3 0"/>
-              </filter>
-            </defs>
-            <path d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm48.17 0v6.27H47.37v6.27h18.82l6.27 6.27v6.27l-6.27 6.27H42.22v-6.27h23.97v-6.27H47.37l-6.27-6.27V6.27L47.37 0zm34.73 0v6.27H80.98v6.27H99.8v6.27H80.98v6.27h25.09v6.27H74.7V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81h-18.82v12.55h-6.27V6.27L114.58 0zm-18.82 12.55h18.82V6.28h-18.82zM167.01 0l6.27 6.27v6.27l-5.42 5.42 5.42 5.42v7.98h-6.27v-6.27l-6.27-6.27h-12.55v12.55h-6.27V0zm-18.82 12.55h18.82V6.28h-18.82zM200.62 0l6.27 6.27v6.27h-6.27V6.27H181.8v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H181.8l-6.27-6.27V6.27L181.8 0zm39.88 0v31.37h-6.27V18.82h-18.82v12.55h-6.27V0h6.27v12.55h18.82V0z" 
-                  fill="rgba(0,0,0,0.3)" 
-                  filter="url(#glassFilter1)" 
-                  className="svg-path" />
+            <path d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm48.17 0v6.27H47.37v6.27h18.82l6.27 6.27v6.27l-6.27 6.27H42.22v-6.27h23.97v-6.27H47.37l-6.27-6.27V6.27L47.37 0zm34.73 0v6.27H80.98v6.27H99.8v6.27H80.98v6.27h25.09v6.27H74.7V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81h-18.82v12.55h-6.27V6.27L114.58 0zm-18.82 12.55h18.82V6.28h-18.82zM167.01 0l6.27 6.27v6.27l-5.42 5.42 5.42 5.42v7.98h-6.27v-6.27l-6.27-6.27h-12.55v12.55h-6.27V0zm-18.82 12.55h18.82V6.28h-18.82zM200.62 0l6.27 6.27v6.27h-6.27V6.27H181.8v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H181.8l-6.27-6.27V6.27L181.8 0zm39.88 0v31.37h-6.27V18.82h-18.82v12.55h-6.27V0h6.27v12.55h18.82V0z" fill="rgb(0, 0, 0, 0.3)" />
           </svg>
           
           <Link href="/contact">
-            <svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 274.11 31.37" height="14.4" className="svg-clickable safari-svg" aria-label="Contact" style={{ cursor: 'pointer' }}>
-              <defs>
-                <filter id="glassFilter2" x="-50%" y="-50%" width="200%" height="200%">
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" result="blur"/>
-                  <feColorMatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.3 0"/>
-                </filter>
-              </defs>
-              <path d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm43.02 0 6.27 6.27v6.27h-6.27V6.27H47.37v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H47.37l-6.27-6.27V6.27L47.37 0zm33.6 0 6.27 6.27v18.82l-6.27 6.27H80.97l-6.27-6.27V6.27L80.97 0zM80.97 25.09h18.82V6.27H80.97zM139.68 0v31.37h-6.27v-2.29l-18.82-18.82v21.11h-6.27V0h6.27v2.29l18.82 18.82V0zm33.61 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81H181.8v12.55h-6.27V6.27L181.8 0zM181.8 12.55h18.82V6.28H181.8zM234.23 0l6.27 6.27v6.27h-6.27V6.27h-18.82v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27h-18.82l-6.27-6.27V6.27L215.41 0zm39.88 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0z" 
-                    fill="rgba(0,0,0,0.3)" 
-                    filter="url(#glassFilter2)" 
-                    className="svg-path" />
+            <svg data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 274.11 31.37" height="14.4" className="svg-clickable" aria-label="Contact" style={{ cursor: 'pointer' }}>
+              <path d="m23.17 0 15.68 15.68-15.68 15.68h-7.48l12.55-12.55H0v-6.27h28.23L15.68 0h7.48Zm43.02 0 6.27 6.27v6.27h-6.27V6.27H47.37v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27H47.37l-6.27-6.27V6.27L47.37 0zm33.6 0 6.27 6.27v18.82l-6.27 6.27H80.97l-6.27-6.27V6.27L80.97 0zM80.97 25.09h18.82V6.27H80.97zM139.68 0v31.37h-6.27v-2.29l-18.82-18.82v21.11h-6.27V0h6.27v2.29l18.82 18.82V0zm33.61 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0zm27.33 0 6.27 6.27v25.09h-6.27V18.81H181.8v12.55h-6.27V6.27L181.8 0zM181.8 12.55h18.82V6.28H181.8zM234.23 0l6.27 6.27v6.27h-6.27V6.27h-18.82v18.82h18.82v-6.27h6.27v6.27l-6.27 6.27h-18.82l-6.27-6.27V6.27L215.41 0zm39.88 0v6.27h-12.55v25.09h-6.27V6.27h-12.55V0z" fill="rgb(0, 0, 0, 0.3)" />
             </svg>
           </Link>
         </div>
@@ -339,38 +321,14 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           pointer-events: auto;
         }
         
-        /* Safari-compatible SVG styling */
-        .safari-svg {
-          filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        
-        .safari-svg:hover {
-          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
-          transform: translateY(-0.5px);
-        }
-        
-        .svg-path {
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        
-        .safari-svg:hover .svg-path {
-          fill: rgba(0, 0, 0, 0.5);
-        }
-        
-        /* Mobile search overlay with liquid glass effect */
+        /* Mobile search overlay */
         .mobile-search-overlay {
           position: fixed;
           top: 8px;
           left: 8px;
           right: 8px;
           height: 40px;
-          background: rgba(255, 255, 255, 0.25);
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 100%);
-          border: 1px solid rgba(255, 255, 255, 0.3);
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 
-                      inset 0 1px 0 rgba(255, 255, 255, 0.8),
-                      0 2px 8px rgba(0, 0, 0, 0.05);
+          background-color: rgb(255, 255, 255, 0.5);
           z-index: 999999;
           display: none;
           align-items: center;
@@ -379,9 +337,9 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           transform: translateY(-20px);
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           pointer-events: none;
-          border-radius: 12px;
-          -webkit-backdrop-filter: blur(20px) saturate(180%);
-          backdrop-filter: blur(20px) saturate(180%);
+          border-radius: 8px;
+          -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
         }
         
         .mobile-search-active {
@@ -396,16 +354,14 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           border: none;
           outline: none;
           background: transparent;
-          color: rgba(0, 0, 0, 0.8);
+          color: #050507;
           font-size: 16px; /* Prevent iOS zoom */
-          font-weight: 500;
           -webkit-appearance: none;
           -webkit-tap-highlight-color: transparent;
         }
         
         .mobile-search-input::placeholder {
-          color: rgba(0, 0, 0, 0.4);
-          font-weight: 400;
+          color: #a5a5a7;
         }
         
         .mobile-close-button, .desktop-close-button {
@@ -414,15 +370,14 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           padding: 6px;
           margin-left: 6px;
           cursor: pointer;
-          color: rgba(0, 0, 0, 0.6);
+          color: #666;
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: all 0.2s ease;
+          transition: color 0.2s ease;
           -webkit-tap-highlight-color: transparent;
           min-height: 44px; /* iOS touch target */
           min-width: 44px;
-          border-radius: 6px;
         }
         
         .desktop-close-button {
@@ -430,8 +385,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         }
         
         .mobile-close-button:hover, .desktop-close-button:hover {
-          color: rgba(0, 0, 0, 0.8);
-          background: rgba(255, 255, 255, 0.3);
+          color: #333;
         }
         
         .svg-buttons-container {
@@ -444,23 +398,18 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           opacity: 0.3;
         }
         
-        /* Desktop search with liquid glass effect */
+        /* Desktop search */
         .search-container {
           height: 40px;
-          background: rgba(255, 255, 255, 0.25);
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 100%);
-          border: 1px solid rgba(255, 255, 255, 0.3);
-          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 
-                      inset 0 1px 0 rgba(255, 255, 255, 0.8),
-                      0 2px 8px rgba(0, 0, 0, 0.05);
+          background-color: rgb(255, 255, 255, 0.5);
           display: flex;
           align-items: center;
           overflow: hidden;
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           transform-origin: right center;
-          border-radius: 12px;
-          -webkit-backdrop-filter: blur(20px) saturate(180%);
-          backdrop-filter: blur(20px) saturate(180%);
+          border-radius: 8px;
+          -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
         }
         
         .search-closed {
@@ -482,9 +431,8 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           border: none;
           outline: none;
           background: transparent;
-          color: rgba(0, 0, 0, 0.8);
+          color: #050507;
           font-size: 16px; /* Prevent iOS zoom */
-          font-weight: 500;
           transition: opacity 0.2s ease;
           -webkit-appearance: none;
         }
@@ -498,25 +446,19 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         }
         
         .search-input::placeholder {
-          color: rgba(0, 0, 0, 0.4);
-          font-weight: 400;
+          color: #a5a5a7;
         }
         
         .svg-clickable {
           cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transition: opacity 0.3s ease;
           -webkit-tap-highlight-color: transparent;
           -webkit-user-select: none;
           user-select: none;
         }
         
         .svg-clickable:hover {
-          opacity: 0.8;
-          transform: translateY(-0.5px);
-        }
-        
-        .svg-clickable:active {
-          transform: translateY(0);
+          opacity: 0.7;
         }
         
         /* Mobile styles */
@@ -584,22 +526,6 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           .mobile-search-overlay {
             left: 13px;
             right: 13px;
-          }
-        }
-        
-        /* Enhanced Safari compatibility */
-        @supports (-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px)) {
-          .mobile-search-overlay, .search-container {
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            backdrop-filter: blur(20px) saturate(180%);
-          }
-        }
-        
-        /* Fallback for older browsers */
-        @supports not ((-webkit-backdrop-filter: blur(20px)) or (backdrop-filter: blur(20px))) {
-          .mobile-search-overlay, .search-container {
-            background: rgba(255, 255, 255, 0.85);
-            border: 1px solid rgba(200, 200, 200, 0.3);
           }
         }
       `}</style>
