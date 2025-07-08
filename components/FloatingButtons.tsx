@@ -328,7 +328,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           left: 8px;
           right: 8px;
           height: 40px;
-          background-color: rgb(255, 255, 255, 0.5);
+          background-color: rgb(255, 255, 255, 0.4);
           z-index: 999999;
           display: none;
           align-items: center;
@@ -401,7 +401,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         /* Desktop search */
         .search-container {
           height: 40px;
-          background-color: rgb(255, 255, 255, 0.5);
+          background-color: rgb(255, 255, 255, 0.4);
           display: flex;
           align-items: center;
           overflow: hidden;
