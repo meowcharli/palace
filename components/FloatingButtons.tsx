@@ -279,8 +279,8 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
               aria-label="Search"
               style={{ cursor: 'pointer', margin: '0 4px' }}
             >
-              <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2" fill="none"/>
-              <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              <circle cx="11" cy="10" r="8" stroke="currentColor" strokeWidth="2" fill="none"/>
+              <path d="M21 20l-4.35-4.35" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
             </svg>
             
             <Link href="/about" className="nav-link">About</Link>
