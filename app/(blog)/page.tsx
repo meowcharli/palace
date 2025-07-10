@@ -174,7 +174,7 @@ export default function Page() {
           )}
         </div>
 
-        {        /* Contact Card */}
+        {/* Contact Card */}
         <div className={`contact-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.5s', marginBottom: 0 }}>
           <Link href="/contact" className="card-wrapper">
             <div className="card-scalable contact-card">
@@ -186,9 +186,9 @@ export default function Page() {
                   <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#f5f5f7">Contact</text>
                 </svg>
               ) : (
-                <svg viewBox="0 0 483 200" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                  <image href="https://i.imgur.com/qZWh0Bt.png" width="483" height="282" preserveAspectRatio="xMidYMid slice" />
-                  <rect width="483" height="282" fill="transparent" />
+                <svg viewBox="0 0 483 145" xmlns="http://www.w3.org/2000/svg" className="card-svg">
+                  <image href="https://i.imgur.com/HqniqiX.png" width="483" height="145" preserveAspectRatio="xMidYMid slice" />
+                  <rect width="483" height="100" fill="transparent" />
                   <text x="11" y="20" fontFamily="sans-serif" fontSize="13" fontWeight="600" fill="#f5f5f7">+</text>
                   <text x="11" y="33" fontFamily="sans-serif" fontSize="11" fill="#f5f5f7">Contact</text>
                 </svg>
@@ -196,6 +196,53 @@ export default function Page() {
             </div>
           </Link>
         </div>
+
+        {/* Three Squares - Desktop Only */}
+        {!isMobile && (
+          <div className="three-squares-row">
+            <div className={`square-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.6s' }}>
+              <Link href="/posts/portrait-series-or-1" className="card-wrapper">
+                <div className="card-scalable square-card">
+                  <svg viewBox="0 0 345 345" xmlns="http://www.w3.org/2000/svg" className="card-svg">
+                    <image href="https://i.imgur.com/m4Bwkvf.gif" width="345" height="345" preserveAspectRatio="xMidYMid slice" />
+                    <rect width="345" height="345" fill="transparent" />
+                    <text x="20" y="37" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#303030">+</text>
+                    <text x="20" y="59" fontFamily="sans-serif" fontSize="20" fill="#303030"></text>
+                    <text x="20" y="84" fontFamily="sans-serif" fontSize="13" fill="#303030"></text>
+                  </svg>
+                </div>
+              </Link>
+            </div>
+
+            <div className={`square-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.7s' }}>
+              <Link href="/posts/secret-zoo" className="card-wrapper">
+                <div className="card-scalable square-card">
+                  <svg viewBox="0 0 345 345" xmlns="http://www.w3.org/2000/svg" className="card-svg">
+                    <image href="https://cdn.sanity.io/images/cl4twyq2/production/153a9621d38b0f978c2b02257022e34d53f6d5e6-2480x3508.jpg?w=1200&q=100&fit=max&auto=format" width="345" height="345" preserveAspectRatio="xMidYMid slice" />
+                    <rect width="345" height="345" fill="transparent" />
+                    <text x="20" y="37" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#ffffff">+</text>
+                    <text x="20" y="59" fontFamily="sans-serif" fontSize="20" fill="#303030"></text>
+                    <text x="20" y="84" fontFamily="sans-serif" fontSize="13" fill="#303030"></text>
+                  </svg>
+                </div>
+              </Link>
+            </div>
+
+            <div className={`square-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.8s' }}>
+              <Link href="/posts/signal-social-media-advertisement" className="card-wrapper">
+                <div className="card-scalable square-card">
+                  <svg viewBox="0 0 345 345" xmlns="http://www.w3.org/2000/svg" className="card-svg">
+                    <image href="https://i.imgur.com/KJLLfx6.gif" width="345" height="345" preserveAspectRatio="xMidYMid slice" />
+                    <rect width="345" height="345" fill="transparent" />
+                    <text x="20" y="37" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#ffffff">+</text>
+                    <text x="20" y="59" fontFamily="sans-serif" fontSize="20" fill="#303030"></text>
+                    <text x="20" y="84" fontFamily="sans-serif" fontSize="13" fill="#303030"></text>
+                  </svg>
+                </div>
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
 
       <style jsx>{`
@@ -236,6 +283,24 @@ export default function Page() {
           padding: 0;
           margin: 0;
           margin-bottom: 0 !important;
+        }
+
+        /* Three Squares Row - Desktop Only */
+        .three-squares-row {
+          display: flex;
+          width: 100%;
+          padding: 0;
+          margin: 0;
+        }
+
+        .square-item {
+          flex: 1;
+          padding: 0;
+          margin: 0;
+        }
+
+        .square-card {
+          filter: grayscale(100%);
         }
 
         /* Improved Vimeo video container */
@@ -320,9 +385,21 @@ export default function Page() {
             gap: 0;
           }
 
+          .three-squares-row {
+            gap: 0;
+          }
+
           /* Adjust aspect ratio for desktop featured card */
           .featured-item .vimeo-wrapper {
             padding-bottom: calc(271.7 / 483 * 100%); /* Match your original dimensions */
+          }
+
+          .square-card:hover {
+            filter: grayscale(0%);
+          }
+
+          .square-card:hover .card-svg image {
+            transform: scale(1.00);
           }
         }
         
@@ -366,7 +443,7 @@ export default function Page() {
         }
 
         .contact-card {
-          filter: grayscale(0%) !important;
+          filter: grayscale(100%);
         }
         
         .card-svg {
@@ -384,13 +461,8 @@ export default function Page() {
             filter: grayscale(0%) brightness(1) !important;
           }
           
-          .card-scalable:not(.about-card):not(.featured-card):not(.visuals-card):not(.contact-card):hover .card-svg image {
+          .card-scalable:not(.about-card):not(.featured-card):not(.visuals-card):hover .card-svg image {
             transform: scale(1.00);
-          }
-          
-          /* Add slight zoom effect to contact card */
-          .contact-card:hover .card-svg image {
-            transform: scale(1.005);
           }
           
           /* Add rotation effect to typography card */
@@ -447,6 +519,11 @@ export default function Page() {
 
           /* Hide vimeo wrapper on mobile since you're using static image */
           .vimeo-wrapper {
+            display: none;
+          }
+
+          /* Hide three squares on mobile */
+          .three-squares-row {
             display: none;
           }
         }
