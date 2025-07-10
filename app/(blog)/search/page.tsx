@@ -45,11 +45,11 @@ function SearchResults() {
   return (
     <div className="container mx-auto px-5 py-12">
       {query ? (
-        <h1 className="text-2xl mb-8 text-gray-400">
+        <h1 className="text-2xl mb-8 text-gray-400 px-5">
           Showing results for: {queryDisplay}
         </h1>
       ) : (
-        <p className="text-xl mb-8 text-gray-400">
+        <p className="text-xl mb-8 text-gray-400 px-5">
           Please enter a search term to find articles.
         </p>
       )}
@@ -61,17 +61,17 @@ function SearchResults() {
       ) : results.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {results.map((result) => (
-            <div key={result._id} className="p-6 rounded-2xl bg-white">
+            <div key={result._id} className="p-6 bg-white">
               {result.mainImage?.asset?._ref && (
-                <div className="mb-4">
+                <Link href={`/posts/${result.slug}`} className="block mb-4">
                   <Image
-                    src={urlForImage(result.mainImage)?.width(600).height(300).url() || ''}
+                    src={urlForImage(result.mainImage)?.width(1920).height(1380).url() || ''}
                     alt={result.title}
-                    width={600}
-                    height={300}
-                    className="w-full h-40 object-cover rounded-md"
+                    width={1920}
+                    height={1380}
+                    className="w-full h-full object-cover hover:opacity-90 transition-opacity"
                   />
-                </div>
+                </Link>
               )}
               <h2 className="text-2xl font-bold mb-2 text-gray-900">
                 <Link href={`/posts/${result.slug}`} className="hover:underline">
@@ -83,7 +83,7 @@ function SearchResults() {
               )}
               <Link 
                 href={`/posts/${result.slug}`}
-                className="text-blue-400 hover:underline"
+                className="text-[#999999] hover:underline"
               >
                 Read more →
               </Link>
@@ -96,7 +96,7 @@ function SearchResults() {
           <p className="mt-1 text-gray-600">Try another search term or browse our recent articles.</p>
           <Link 
             href="/"
-            className="inline-block mt-6 px-6 py-3 rounded-full bg-white text-gray-600 hover:bg-gray-200 transition-colors"
+            className="inline-block mt-6 px-6 py-3 bg-white text-gray-600 hover:bg-gray-200 transition-colors"
           >
             Back to Home
           </Link>
