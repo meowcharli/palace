@@ -256,17 +256,17 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           </form>
         </div>
         
-        {/* Navigation Links and Search Button */}
+        {        /* Navigation Links and Search Button */}
         <div 
           className={`svg-buttons-container ${isSearchOpen ? 'buttons-slide-out' : ''}`}
-          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px', position: 'relative' }}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', position: 'relative' }}
         >
-          {/* Navigation Links */}
+          {/* Navigation Links - Desktop Only */}
           <div className="nav-links" style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '4px' }}>
             <Link href="/gallery" className="nav-link">Type</Link>
             <Link href="/showcase" className="nav-link">Visuals</Link>
             
-            {/* Search Button inline */}
+            {/* Search Button inline - Desktop */}
             <svg 
               ref={searchButtonRef}
               fill="none" 
@@ -274,7 +274,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
               viewBox="0 0 24 24"
               height="24"
               width="24"
-              className="svg-clickable"
+              className="svg-clickable desktop-search-btn"
               onClick={toggleSearch}
               aria-label="Search"
               style={{ cursor: 'pointer', margin: '0 4px' }}
@@ -286,8 +286,22 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
             <Link href="/about" className="nav-link">About</Link>
           </div>
           
-          {/* Search Button */}
-          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: '26px' }}>
+          {/* Mobile Search Button */}
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <svg 
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 24 24"
+              height="29"
+              width="29"
+              className="svg-clickable mobile-search-btn"
+              onClick={toggleSearch}
+              aria-label="Search"
+              style={{ cursor: 'pointer' }}
+            >
+              <circle cx="11" cy="10" r="8" stroke="currentColor" strokeWidth="2" fill="none"/>
+              <path d="M21 20l-4.35-4.35" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
           </div>
         </div>
       </div>
@@ -490,8 +504,21 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           color: rgba(5, 5, 7, 1);
         }
         
+        /* Search button visibility */
+        .mobile-search-btn {
+          display: none;
+        }
+        
+        .desktop-search-btn {
+          display: block;
+        }
+        
         /* Mobile styles */
         @media (max-width: 768px) {
+          .svg-buttons-container {
+            align-items: center !important;
+          }
+          
           .mobile-search-overlay {
             display: flex;
           }
@@ -502,6 +529,14 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           
           .nav-links {
             display: none !important;
+          }
+          
+          .mobile-search-btn {
+            display: block;
+          }
+          
+          .desktop-search-btn {
+            display: none;
           }
           
           .logo-hidden-mobile {
