@@ -203,7 +203,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
                 src="/images/icon.gif"
                 alt="Home"
                 className="home-icon"
-                style={{ height: '56px', width: 'auto', display: 'block', transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)', flexShrink: 0 }}
+                style={{ height: '50px', width: 'auto', display: 'block', transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)', flexShrink: 0 }}
                 draggable={false}
               />
             </Link>
@@ -224,10 +224,10 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         </div>
       </div>
       
-      {/* Right Search Button */}
+      {/* Right Navigation and Search */}
       <div 
         className={`desktop-buttons ${isSearchOpen ? 'buttons-hidden-mobile' : ''}`}
-        style={{ position: 'fixed', top: '12px', right: '15px', zIndex: 999998, display: 'flex', alignItems: 'flex-start' }}
+        style={{ position: 'fixed', top: '13.5px', right: '22px', zIndex: 999998, display: 'flex', alignItems: 'flex-start' }}
       >
         {/* Desktop Search Container */}
         <div 
@@ -256,24 +256,39 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           </form>
         </div>
         
-        {/* Search Button */}
+        {/* Navigation Links and Search Button */}
         <div 
           className={`svg-buttons-container ${isSearchOpen ? 'buttons-slide-out' : ''}`}
-          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px', position: 'relative' }}
         >
-          <svg 
-            ref={searchButtonRef}
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg" 
-            viewBox="0 0 24 24"
-            height="29"
-            className="svg-clickable"
-            onClick={toggleSearch}
-            aria-label="Search"
-            style={{ cursor: 'pointer' }}
-          >
-            <path d="M6 2h8v2H6V2zM4 6V4h2v2H4zm0 8H2V6h2v8zm2 2H4v-2h2v2zm8 0v2H6v-2h8zm2-2h-2v2h2v2h2v2h2v2h2v-2h-2v-2h-2v-2h-2v-2zm0-8h2v8h-2V6zm0 0V4h-2v2h2z" fill="rgb(0, 0, 0, 0.3)" />
-          </svg>
+          {/* Navigation Links */}
+          <div className="nav-links" style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '4px' }}>
+            <Link href="/gallery" className="nav-link">Type</Link>
+            <Link href="/showcase" className="nav-link">Visuals</Link>
+            
+            {/* Search Button inline */}
+            <svg 
+              ref={searchButtonRef}
+              fill="none" 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 24 24"
+              height="24"
+              width="24"
+              className="svg-clickable"
+              onClick={toggleSearch}
+              aria-label="Search"
+              style={{ cursor: 'pointer', margin: '0 4px' }}
+            >
+              <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2" fill="none"/>
+              <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+            
+            <Link href="/about" className="nav-link">About</Link>
+          </div>
+          
+          {/* Search Button */}
+          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: '26px' }}>
+          </div>
         </div>
       </div>
       
@@ -313,6 +328,25 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           transform: translateX(0);
           margin-left: -5px;
           pointer-events: auto;
+        }
+        
+        /* Navigation Links */
+        .nav-links {
+          transition: opacity 0.3s ease;
+        }
+        
+        .nav-link {
+          color: #050507;
+          text-decoration: none;
+          font-size: 17px;
+          font-weight: 400;
+          font-variation-settings: 'wght' 400;
+          transition: font-variation-settings 0.2s ease;
+          -webkit-tap-highlight-color: transparent;
+        }
+        
+        .nav-link:hover {
+          font-variation-settings: 'wght' 600;
         }
         
         /* Mobile search overlay */
@@ -389,7 +423,7 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
         
         .buttons-slide-out {
           transform: translateX(80px);
-          opacity: 0.3;
+          opacity: 0;
         }
         
         /* Desktop search */
@@ -449,10 +483,11 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           -webkit-tap-highlight-color: transparent;
           -webkit-user-select: none;
           user-select: none;
+          color: rgba(5, 5, 7, 0.7);
         }
         
         .svg-clickable:hover {
-          opacity: 0.7;
+          color: rgba(5, 5, 7, 1);
         }
         
         /* Mobile styles */
@@ -462,6 +497,10 @@ export default function FloatingButtons({ isDraftMode = false }: FloatingButtons
           }
           
           .desktop-search {
+            display: none !important;
+          }
+          
+          .nav-links {
             display: none !important;
           }
           

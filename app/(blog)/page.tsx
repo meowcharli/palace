@@ -104,7 +104,7 @@ export default function Page() {
 
         {/* Three Cards Row */}
         <div className="three-cards-row">
-          {/* Typography Card */}
+          {/* Type Card */}
           <div className={`card-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: isMobile ? '0.1s' : '0.3s' }}>
             <Link href="/gallery" className="card-wrapper">
               <div className="card-scalable typography-card">
@@ -112,7 +112,7 @@ export default function Page() {
                   <image href="https://i.imgur.com/FheUxPW.gif" width="345" height="483" preserveAspectRatio="xMidYMid slice" />
                   <rect width="345" height="483" fill="transparent" />
                   <text x="28" y="52" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#1D1D1F">+</text>
-                  <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#1D1D1F">Typography</text>
+                  <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#1D1D1F">Type</text>
                 </svg>
               </div>
             </Link>
