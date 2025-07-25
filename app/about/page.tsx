@@ -16,7 +16,7 @@ export default function AboutPage() {
   useEffect(() => {
     // Update portal container visibility and progress bar
     if (portalContainer) {
-      portalContainer.style.display = isInScrollSection ? 'flex' : 'none';
+      portalContainer.style.opacity = isInScrollSection ? '1' : '0';
     }
   }, [isInScrollSection, portalContainer]);
 
@@ -32,11 +32,13 @@ export default function AboutPage() {
       background-color: rgba(255, 255, 255, 0.9) !important;
       color: black !important;
       border-radius: 9999px !important;
-      padding: 1rem !important;
+      padding: 0.6rem !important;
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
       pointer-events: none !important;
       display: flex !important;
       align-items: center !important;
+      opacity: 0 !important;
+      transition: opacity 300ms ease-in-out !important;
     `;
     document.body.appendChild(container);
     setPortalContainer(container);
@@ -80,9 +82,9 @@ export default function AboutPage() {
         const currentScrollDistance = scrollTop - containerStart;
         const rawScrollProgress = Math.max(0, Math.min(1, currentScrollDistance / totalScrollableDistance));
         
-        // Show progress bar only between 20% and 80% of scroll through the section
+        // Show progress bar only between 20% and 75% of scroll through the section (disappear before footer)
         const showBarStart = 0.2;
-        const showBarEnd = 0.8;
+        const showBarEnd = 0.75;
         const inScrollSection = rawScrollProgress >= showBarStart && rawScrollProgress <= showBarEnd;
         setIsInScrollSection(inScrollSection);
         
@@ -208,9 +210,11 @@ export default function AboutPage() {
                     isHoveringTypetax ? 'opacity-100' : 'opacity-0'
                   }`}
                 >
-                  <div className="w-24 h-8 bg-gray-200 rounded flex items-center justify-center text-xs">
-                    LOGO
-                  </div>
+                  <img 
+                    src="/images/logo-default.svg" 
+                    alt="Typetax Logo" 
+                    className="h-8 object-contain"
+                  />
                 </span>
               </span>
               .
