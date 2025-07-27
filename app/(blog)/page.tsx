@@ -187,7 +187,7 @@ export default function Page() {
                 </svg>
               ) : (
                 <svg viewBox="0 0 483 145" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                  <image href="https://i.imgur.com/HqniqiX.png" width="483" height="145" preserveAspectRatio="xMidYMid slice" />
+                  <image href="https://i.imgur.com/pobQT3u.png" width="483" height="145" preserveAspectRatio="xMidYMid slice" />
                   <rect width="483" height="100" fill="transparent" />
                   <text x="11" y="20" fontFamily="sans-serif" fontSize="13" fontWeight="600" fill="#f5f5f7">+</text>
                   <text x="11" y="33" fontFamily="sans-serif" fontSize="11" fill="#f5f5f7">Contact</text>
