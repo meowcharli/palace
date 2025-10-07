@@ -198,7 +198,7 @@ export default function CustomPortableText({
         </a>
       ),
       strong: ({children}) => <strong className="font-bold text-black">{children}</strong>,
-      em: ({children}) => <em className="italic text-gray-600">{children}</em>,
+      em: ({children}) => <em className="italic text-gray-300">{children}</em>,
     },
     types: {
       video: ({ value }) => {

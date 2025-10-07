@@ -9,79 +9,115 @@
 import Link from "next/link";
 
 export default function Onboarding() {
-  // Use a simple constant for the target
-  const target = "_blank"; // Default to opening in a new tab
-
   return (
-    <div className="grid grid-flow-row gap-6 py-60 text-center">
-      <svg
-        className="mx-auto h-10 w-10 text-gray-400"
-        aria-hidden="true"
-        width="512"
-        height="512"
-        viewBox="0 0 512 512"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <rect width="512" height="512" fill="#F03E2F" rx="30" />
-        <path
-          d="M161.527 136.723C161.527 179.76 187.738 205.443 240.388 219.095L296 232.283C345.687 243.852 376 272.775 376 319.514C376 341.727 369.162 360.931 357.538 375.971C357.538 329.232 333.607 303.78 276.171 288.74L221.47 276.246C177.709 266.065 143.977 242.464 143.977 191.56C143.977 170.505 150.359 151.994 161.527 136.723Z"
-          fill="white"
-        />
-        <path
-          opacity="0.5"
-          d="M323.35 308.176C347.054 323.679 357.538 345.197 357.538 376.202C337.709 401.654 303.293 416 262.724 416C194.575 416 146.484 381.756 136 322.753H201.641C210.074 350.056 232.41 362.551 262.268 362.551C298.735 362.32 322.895 342.652 323.35 308.176Z"
-          fill="white"
-        />
-        <path
-          opacity="0.5"
-          d="M195.715 200.816C172.923 186.007 161.527 165.183 161.527 136.954C180.672 111.503 213.493 96 253.835 96C323.35 96 363.692 133.252 373.721 185.776H310.359C303.293 165.183 285.971 148.986 254.291 148.986C220.33 148.986 197.311 169.116 195.715 200.816Z"
-          fill="white"
-        />
-      </svg>
-      <div>
-        <h3 className="text-sm font-semibold text-gray-300">No content</h3>
-        <p className="mt-1 text-sm text-gray-400">
-          Get started by creating posts and gallery items.
+    <div className="grid grid-flow-row gap-8 py-40 text-center">
+      <div className="mx-auto max-w-3xl">
+        <h1 className="text-5xl font-bold tracking-tight mb-6 text-black">Welcome to Palace</h1>
+        <p className="text-xl text-gray-600 mb-12">
+          A beautifully crafted digital experience
         </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          {/* Card 1 */}
+          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+            <div className="mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-indigo-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">Gallery</h3>
+            <p className="text-gray-600 mb-4">
+              Explore our curated collection of visual experiences
+            </p>
+            <Link 
+              href="/gallery" 
+              className="inline-flex items-center text-indigo-600 hover:text-indigo-800"
+            >
+              Visit Gallery
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+          
+          {/* Card 2 */}
+          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+            <div className="mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-pink-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">Blog</h3>
+            <p className="text-gray-600 mb-4">
+              Insights, stories, and perspectives from our team
+            </p>
+            <Link 
+              href="/posts" 
+              className="inline-flex items-center text-pink-600 hover:text-pink-800"
+            >
+              Read Blog
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+          
+          {/* Card 3 */}
+          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+            <div className="mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-amber-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">Showcase</h3>
+            <p className="text-gray-600 mb-4">
+              Featured projects and collaborative works
+            </p>
+            <Link 
+              href="/showcase" 
+              className="inline-flex items-center text-amber-600 hover:text-amber-800"
+            >
+              View Showcase
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        </div>
       </div>
 
-      <div className="flex flex-col items-center space-y-4">
-        <Link
-          className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          href="/studio/intent/create/template=post;type=post/"
-          target={target}
-        >
-          <svg
-            className="-ml-0.5 mr-1.5 h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-          </svg>
-          Create Post
-        </Link>
+      {/* Bottom section with admin link */}
+      <div className="flex flex-col items-center space-y-4 mt-8">
+        <div className="max-w-2xl text-center">
+          <h2 className="text-2xl font-semibold mb-4 text-gray-800">About Palace</h2>
+          <p className="text-gray-600 mb-8">
+            Palace is a digital platform showcasing creative works, thought leadership, and interactive experiences. 
+            Explore our gallery, read our latest posts, or discover featured projects in our showcase section.
+          </p>
+        </div>
         
-        <Link
-          className="inline-flex items-center rounded-md bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
-          href="/studio"
-          target={target}
-        >
-          <svg
-            className="-ml-0.5 mr-1.5 h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
+        <div className="flex gap-4">
+          <Link
+            href="/contact"
+            className="inline-flex items-center rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-300 transition-colors"
           >
-            <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-          </svg>
-          Go to Sanity Studio
-        </Link>
-        
-        <p className="mt-2 text-xs text-gray-400">
-          In the Sanity Studio, you can create both posts and gallery items for your homepage.
-        </p>
+            Contact Us
+          </Link>
+          
+          <Link
+            href="/about"
+            className="inline-flex items-center rounded-md bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-300 transition-colors"
+          >
+            Learn More
+          </Link>
+          
+          <Link
+            href="/studio"
+            className="inline-flex items-center rounded-md bg-gray-800 px-4 py-2 text-sm font-medium text-white hover:bg-gray-700 transition-colors"
+          >
+            Admin
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -63,13 +63,13 @@ export default async function PostPage({ params }: Props) {
   }
 
   return (
-    <div className="bg-[#ffffff] min-h-screen">
+    <div className="bg-black min-h-screen">
       {/* Back Link */}
       <div className="max-w-7xl mx-auto px-6 pt-6">
         <div className="max-w-6xl mx-auto">
         <Link
           href="/gallery"
-          className="text-[#050507] hover:text-[#050507]/80 text-lg font-medium transition-colors duration-200"
+          className="text-white hover:text-white/80 text-lg font-medium transition-colors duration-200"
         >
           ← Back to Gallery
         </Link>
@@ -77,24 +77,20 @@ export default async function PostPage({ params }: Props) {
       </div>
 
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-[#ffffff]">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.4'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3Ccircle cx='53' cy='7' r='1'/%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3Ccircle cx='7' cy='53' r='1'/%3E%3Ccircle cx='53' cy='53' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            }}
-          />
-        </div>
-
+      <div className="relative overflow-hidden bg-black">
         {/* Hero Content */}
-        <div className="relative z-10 bg-[#ffffff]">
-          <div className="max-w-7xl mx-auto px-6 text-left bg-[#ffffff] pt-6 pb-8">
+        <div className="relative z-10 bg-black">
+          <div className="max-w-7xl mx-auto px-6 text-left bg-black pt-6 pb-8">
             <div className="max-w-6xl mx-auto">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-medium text-[#050507] mb-4">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-medium text-white mb-4">
               {post.title}
             </h1>
+
+            {post.excerpt && (
+              <p className="text-lg text-white/80 mb-6 max-w-4xl leading-relaxed">
+                {post.excerpt}
+              </p>
+            )}
 
             {post.author && (
               <div className="flex items-center justify-start gap-6">
@@ -107,16 +103,16 @@ export default async function PostPage({ params }: Props) {
                     <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full" />
                   </div>
                   <div className="text-left">
-                    <p className="font-semibold text-[#050507]">{post.author.name}</p>
-                    <p className="text-sm text-[#050507]">Author</p>
+                    <p className="font-semibold text-white">{post.author.name}</p>
+                    <p className="text-sm text-white/80">Author</p>
                   </div>
                 </div>
 
-                <div className="w-px h-8 bg-[#050507]" />
+                <div className="w-px h-8 bg-white" />
 
                 <div className="text-left">
-                  <p className="font-semibold text-[#050507]">5 min read</p>
-                  <p className="text-sm text-[#050507]">Estimated</p>
+                  <p className="font-semibold text-white">5 min read</p>
+                  <p className="text-sm text-white/80">Estimated</p>
                 </div>
               </div>
             )}
@@ -125,12 +121,12 @@ export default async function PostPage({ params }: Props) {
         </div>
       </div>
 {/* Main Content */}
-<article className="max-w-7xl mx-auto px-0 sm:px-6 pb-8 bg-[#ffffff]">
+<article className="max-w-7xl mx-auto px-0 sm:px-6 pb-8 bg-black">
   {post.content?.length && (
     <div className="prose prose-lg prose-slate max-w-none">
-      <div className="bg-white border-2 border-white sm:mx-6">
+      <div className="bg-black border-2 border-black sm:mx-6">
         <PortableText
-          className="leading-relaxed text-[#050507]"
+          className="leading-relaxed text-white"
           value={post.content as PortableTextBlock[]}
         />
       </div>
@@ -140,7 +136,7 @@ export default async function PostPage({ params }: Props) {
 
       {/* Author Bio Section */}
       {post.author && (
-        <section className="bg-[#ffffff] pb-8">
+        <section className="bg-black pb-8">
           <div className="max-w-7xl mx-auto px-6">
             <div className="bg-black border-2 border-black p-6 lg:p-8 max-w-2xl">
               <div className="flex flex-col md:flex-row items-center gap-6">
@@ -154,10 +150,10 @@ export default async function PostPage({ params }: Props) {
                   <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 border-2 border-white rounded-full" />
                 </div>
                 <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-xl font-bold text-[#050507] mb-2">
+                  <h3 className="text-xl font-bold text-white mb-2">
                     Written by {post.author.name}
                   </h3>
-                  <p className="text-[#050507] leading-relaxed">
+                  <p className="text-white/80 leading-relaxed">
                     Professional at being cool.
                   </p>
                 </div>

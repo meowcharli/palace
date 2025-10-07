@@ -212,6 +212,13 @@ export default defineType({
       type: "reference",
       to: [{ type: authorType.name }],
     }),
+    defineField({
+      name: "featured",
+      title: "Featured",
+      type: "boolean",
+      description: "Mark this post as featured to display it on the homepage",
+      initialValue: false,
+    }),
   ],
   preview: {
     select: {

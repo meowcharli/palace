@@ -14,6 +14,7 @@ const postFields = /* groq */ `
   excerpt,
   coverImage,
   videoEmbed,
+  featured,
   "date": coalesce(date, _updatedAt),
   "author": author->{"name": coalesce(name, "Anonymous"), picture},
 `;
@@ -34,6 +35,18 @@ export const moreStoriesQuery = defineQuery(`
 export const postQuery = defineQuery(`
   *[_type == "post" && slug.current == $slug] [0] {
     content,
+    ${postFields}
+  }
+`);
+
+export const featuredPostsQuery = defineQuery(`
+  *[_type == "post" && featured == true && defined(slug.current)] | order(date desc, _updatedAt desc) {
+    ${postFields}
+  }
+`);
+
+export const recentPostsQuery = defineQuery(`
+  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0...6] {
     ${postFields}
   }
 `);

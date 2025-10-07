@@ -4,8 +4,8 @@
 
 /* ========== Base Styles ========== */
 html, body {
-  background-color: #ffffff !important;
-  color: #1D1D1F !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
   font-size: 18px; /* 80% of 18px */
 }
 
@@ -38,7 +38,7 @@ header.site-header {
 /* Update search input styling */
 .search-input {
   background-color: transparent !important;
-  color: #1D1D1F !important;
+  color: #ffffff !important;
   border: none !important;
   outline: none !important;
   padding: 0.25rem 0.5rem;
@@ -102,22 +102,22 @@ article p {
   max-width: none;
   font-size: 1.125rem; /* 80% of 1.125rem */
   line-height: 1.8;
-  color: #1D1D1F;
+  color: #ffffff;
 }
 
-/* Adjust prose text colors for light mode */
+/* Adjust prose text colors for dark mode */
 .prose h1, .prose h2, .prose h3,
 .prose h4, .prose h5, .prose h6,
 .prose p, .prose li, .prose blockquote {
-  color: #1D1D1F;
+  color: #ffffff;
 }
 
 .prose a {
-  color: #0066CC;
+  color: #3399FF;
 }
 
 .prose strong {
-  color: #1D1D1F;
+  color: #ffffff;
 }
 
 /* ========== Components ========== */
@@ -130,15 +130,15 @@ article {
 footer {
   margin-top: 0rem;
   padding-top: 0rem;
-  background-color: #E5E5EA !important;
+  background-color: #0C0C0C !important;
 }
 
 footer * {
-  color: #636366 !important;
+  color: #D3D3D3 !important;
 }
 
 footer [class*="bg-"] {
-  background-color: #E5E5EA !important;
+  background-color: #1E1E1E !important;
 }
 
 /* Video and Iframe Containers */
@@ -150,7 +150,7 @@ footer [class*="bg-"] {
   width: 100%;
   margin-bottom: 1.5rem;
   border-radius: 0rem;
-  background-color: #ffffff;
+  background-color: #000000;
 }
 
 .responsive-iframe-container iframe {
@@ -160,7 +160,25 @@ footer [class*="bg-"] {
   width: 100%;
   height: 100%;
   border-radius: 0rem;
-  background-color: #ffffff;
+  background-color: #000000;
 }
 
 /* Remove the backdrop CSS - we're doing it inline in layout.tsx */
+
+/* Utility classes */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Utility classes */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

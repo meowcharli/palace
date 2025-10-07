@@ -10,9 +10,9 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
   return (
     <>
       <style dangerouslySetInnerHTML={{
-        __html: `.footer-link { color: #1D1D1F; text-decoration: none; transition: text-decoration 0.2s ease; } .footer-link:hover { text-decoration: underline; } .footer-desktop { display: flex; justify-content: space-between; align-items: center; } .footer-mobile { display: none; } @media (max-width: 768px) { .footer-desktop { display: none; } .footer-mobile { display: block; } }`
+        __html: `.footer-link { color: #D3D3D3; text-decoration: none; transition: text-decoration 0.2s ease; } .footer-link:hover { text-decoration: underline; } .footer-desktop { display: flex; justify-content: space-between; align-items: center; } .footer-mobile { display: none; } @media (max-width: 768px) { .footer-desktop { display: none; } .footer-mobile { display: block; } }`
       }} />
-      <div style={{ backgroundColor: '#fff' }} className='border-t border-gray-200'>
+      <div style={{ backgroundColor: '#0C0C0C' }}>
         <div style={{
           maxWidth: '12000px',
           margin: '0 auto',
@@ -30,7 +30,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
                 width={160}
                 height={46}
                 priority={false}
-                style={{ filter: 'brightness(0) saturate(100%) invert(38%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(98%) contrast(99%)' }}
+                style={{ filter: 'brightness(0) saturate(100%) invert(85%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(95%) contrast(95%)' }}
               />
 
               <div style={{
@@ -45,14 +45,14 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
                 >
                   contact
                 </Link>
-                <span style={{ color: '#5d5d5f' }}>/</span>
+                <span style={{ color: '#D3D3D3' }}>/</span>
                 <Link
                   href='/about'
                   className='footer-link'
                 >
                   about
                 </Link>
-                <span style={{ color: '#5d5d5f' }}>/</span>
+                <span style={{ color: '#D3D3D3' }}>/</span>
                 <a
                   href='https://bsky.app/profile/type.tax'
                   className='footer-link'
@@ -63,7 +63,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
             </div>
             
             <div style={{ 
-              color: '#1D1D1F', 
+              color: '#D3D3D3', 
               fontSize: '0.75rem',
               textAlign: 'right'
             }}>
@@ -85,7 +85,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
                 width={80}
                 height={37}
                 priority={false}
-                style={{ filter: 'brightness(0) saturate(100%) invert(38%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(98%) contrast(99%)' }}
+                style={{ filter: 'brightness(0) saturate(100%) invert(85%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(95%) contrast(95%)' }}
               />
               
               <div style={{
@@ -100,14 +100,14 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
                 >
                   contact
                 </Link>
-                <span style={{ color: '#5d5d5f' }}>/</span>
+                <span style={{ color: '#D3D3D3' }}>/</span>
                 <Link
                   href='/about'
                   className='footer-link'
                 >
                   about
                 </Link>
-                <span style={{ color: '#5d5d5f' }}>/</span>
+                <span style={{ color: '#D3D3D3' }}>/</span>
                 <a
                   href='https://bsky.app/profile/type.tax'
                   className='footer-link'
@@ -118,7 +118,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
             </div>
             
             <div style={{ 
-              color: '#1D1D1F', 
+              color: '#D3D3D3', 
               fontSize: '0.75rem',
               textAlign: 'center'
             }}>

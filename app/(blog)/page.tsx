@@ -2,532 +2,150 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import type { GalleryItem } from '@/utils/types';
-import Onboarding from './onboarding';
+import { urlForImage } from '@/sanity/lib/utils';
+
+interface Post {
+  _id: string;
+  title: string;
+  slug: string;
+  coverImage?: any;
+  date: string;
+  excerpt?: string;
+}
 
 export default function Page() {
-  const [allGalleryItems, setAllGalleryItems] = useState<GalleryItem[]>([]);
+  const [featuredPosts, setFeaturedPosts] = useState<Post[]>([]);
+  const [recentPosts, setRecentPosts] = useState<Post[]>([]);
+  const [currentFeaturedIndex, setCurrentFeaturedIndex] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isAboutHovered, setIsAboutHovered] = useState(false);
-  const [cardsLoaded, setCardsLoaded] = useState(false);
 
-  // Check if the device is mobile
-  useEffect(() => {
-    const checkMobile = () => {
-      const width = window.innerWidth;
-      const isMobileCheck = width < 768;
-      setIsMobile(isMobileCheck);
-    };
-    
-    checkMobile();
-    
-    let resizeTimer: NodeJS.Timeout;
-    const handleResize = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(checkMobile, 100);
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      clearTimeout(resizeTimer);
-    };
-  }, []);
-
-  // Fetch gallery data
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch('/api/gallery');
-        if (!res.ok) throw new Error('Failed to fetch gallery');
-        const galleryData: GalleryItem[] = await res.json();
-        setAllGalleryItems(galleryData);
+        const response = await fetch('/api/posts');
+        if (!response.ok) throw new Error('Failed to fetch posts');
+        const data = await response.json();
+        
+        setFeaturedPosts(data.featuredPosts || []);
+        setRecentPosts(data.recentPosts || []);
       } catch (error) {
-        console.error('Error fetching gallery:', error);
+        console.error('Error fetching posts:', error);
       } finally {
         setLoading(false);
-        setTimeout(() => {
-          setCardsLoaded(true);
-        }, 200);
       }
     }
+    
     fetchData();
   }, []);
 
+  // Shuffle through featured posts every 4 seconds
+  useEffect(() => {
+    if (featuredPosts.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentFeaturedIndex((prev) => (prev + 1) % featuredPosts.length);
+      }, 4000);
+      
+      return () => clearInterval(interval);
+    }
+  }, [featuredPosts.length]);
+
   if (loading) {
     return (
-      <div className="fixed inset-0 bg-white" style={{ zIndex: 9999 }}></div>
-    );
-  }
-
-  if (!allGalleryItems || allGalleryItems.length === 0) {
-    return (
-      <div className="container mx-auto px-0">
-        <Onboarding />
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-white">Loading...</div>
       </div>
     );
   }
 
+  const currentFeatured = featuredPosts[currentFeaturedIndex];
+
   return (
-    <div className="relative">
-      {/* Grid Container */}
-      <div className={`grid-container ${cardsLoaded ? 'cards-loaded' : ''}`}>
-        {/* Desktop: Featured Card at top, Mobile: Will be repositioned */}
-        {!isMobile && (
-          <div className={`featured-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.1s' }}>
-            <Link href="/posts/banknote" className="card-wrapper">
-              <div className="card-scalable featured-card">
-                <div className="vimeo-wrapper">
-                  <iframe
-                    src="https://player.vimeo.com/video/1112961637?autoplay=1&loop=1&title=0&byline=0&portrait=0&controls=0&muted=1&background=1&quality=1080p"
-                    width="100%"
-                    height="100%"
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
-                    className="vimeo-iframe"
-                    style={{ pointerEvents: 'none' }}
-                  ></iframe>
-                  <div className="overlay-content">
-                    <div className="text-overlay">
-                      <span className="plus-sign">+</span>
-                      <span className="featured-text">Featured</span>
-                      <span className="subtitle-text">Climatopoly | Art Direction</span>
-                    </div>
-                  </div>
+    <div className="min-h-screen bg-black text-white">
+      {/* Featured Post Hero */}
+      {currentFeatured && (
+        <div className="relative h-screen w-full overflow-hidden md:h-screen h-[80vh]">
+          <Link href={`/posts/${currentFeatured.slug}`}>
+            <div className="relative w-full h-full cursor-pointer">
+              {currentFeatured.coverImage && (
+                <img
+                  src={urlForImage(currentFeatured.coverImage)?.width(1920).height(1080).url()}
+                  alt={currentFeatured.coverImage.alt || currentFeatured.title}
+                  className="w-full h-full object-cover md:object-cover object-contain"
+                />
+              )}
+              
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-black bg-opacity-40" />
+              
+              {/* Content */}
+              <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 lg:p-16">
+                <div className="max-w-4xl">
+                  <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold text-white mb-2 md:mb-4 leading-tight">
+                    {currentFeatured.title}
+                  </h1>
+                  {currentFeatured.excerpt && (
+                    <p className="text-sm md:text-lg text-white/90 max-w-2xl">
+                      {currentFeatured.excerpt}
+                    </p>
+                  )}
                 </div>
               </div>
-            </Link>
-          </div>
-        )}
-
-        {/* Three Cards Row */}
-        <div className="three-cards-row">
-          {/* Type Card */}
-          <div className={`card-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: isMobile ? '0.1s' : '0.3s' }}>
-            <Link href="/gallery" className="card-wrapper">
-              <div className="card-scalable typography-card">
-                <svg viewBox="0 0 345 483" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                  <image href="https://i.imgur.com/FheUxPW.gif" width="345" height="483" preserveAspectRatio="xMidYMid slice" />
-                  <rect width="345" height="483" fill="transparent" />
-                  <text x="28" y="52" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#1D1D1F">+</text>
-                  <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#1D1D1F">Type</text>
-                </svg>
-              </div>
-            </Link>
-          </div>
-
-          {/* Visuals Card */}
-          <div className={`card-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: isMobile ? '0.2s' : '0.4s' }}>
-            <Link href="/showcase" className="card-wrapper">
-              <div className="card-scalable visuals-card">
-                <svg viewBox="0 0 345 483" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                  <image href="https://i.imgur.com/U2gmmAY.gif" width="345" height="483" preserveAspectRatio="xMidYMid slice" />
-                  <rect width="345" height="483" fill="transparent" />
-                  <text x="28" y="52" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#fDfDfF">+</text>
-                  <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#fDfDfF">Visuals</text>
-                </svg>
-              </div>
-            </Link>
-          </div>
-
-          {/* About Card */}
-          <div className={`card-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: isMobile ? '0.3s' : '0.2s' }}>
-            <Link 
-              href="/about"
-              className="card-wrapper"
-              onMouseEnter={() => setIsAboutHovered(true)}
-              onMouseLeave={() => setIsAboutHovered(false)}
-            >
-              <div className="card-scalable about-card">
-                <svg viewBox="0 0 345 483" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                  <image 
-                    href={isAboutHovered ? "https://i.imgur.com/CRpeERR.gif" : "https://i.imgur.com/o1Vonsi.gif"} 
-                    width="345" 
-                    height="483" 
-                    preserveAspectRatio="xMidYMid slice" 
-                  />
-                  <rect width="345" height="483" fill="transparent" />
-                  <text x="28" y="52" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#1D1D1F">+</text>
-                  <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#1D1D1F">About</text>
-                </svg>
-              </div>
-            </Link>
-          </div>
-
-          {/* Featured Card - Mobile Only (appears after About card) */}
-          {isMobile && (
-            <div className={`card-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.4s' }}>
-              <Link href="/posts/banknote" className="card-wrapper">
-                <div className="card-scalable featured-card">
-                  <svg viewBox="0 0 345 483" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                    <image href="https://i.imgur.com/RaWGLkI.jpeg" width="345" height="483" preserveAspectRatio="xMidYMid slice" />
-                    <rect width="345" height="483" fill="transparent" />
-                    <text x="28" y="52" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#F4FFF4">+</text>
-                    <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#F4FFF4">Featured</text>
-                    <text x="28" y="104" fontFamily="sans-serif" fontSize="13" fill="#DEFFDE">NBS | Banknote</text>
-                  </svg>
+              
+              {/* Featured indicator dots */}
+              {featuredPosts.length > 1 && (
+                <div className="absolute bottom-8 right-8 flex space-x-2">
+                  {featuredPosts.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCurrentFeaturedIndex(index);
+                      }}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        index === currentFeaturedIndex ? 'bg-white' : 'bg-white/40'
+                      }`}
+                    />
+                  ))}
                 </div>
-              </Link>
-            </div>
-          )}
-        </div>
-
-        {/* Contact Card */}
-        <div className={`contact-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.5s', marginBottom: 0 }}>
-          <Link href="/contact" className="card-wrapper">
-            <div className="card-scalable contact-card">
-              {isMobile ? (
-                <svg viewBox="0 0 345 483" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                  <image href="https://i.imgur.com/xVua8wQ.gif" width="345" height="483" preserveAspectRatio="xMidYMid slice" />
-                  <rect width="345" height="483" fill="transparent" />
-                  <text x="28" y="52" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#f5f5f7">+</text>
-                  <text x="28" y="85" fontFamily="sans-serif" fontSize="26" fill="#f5f5f7">Contact</text>
-                </svg>
-              ) : (
-                <svg viewBox="0 0 483 145" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                  <image href="https://i.imgur.com/pobQT3u.png" width="483" height="145" preserveAspectRatio="xMidYMid slice" />
-                  <rect width="483" height="100" fill="transparent" />
-                  <text x="11" y="20" fontFamily="sans-serif" fontSize="13" fontWeight="600" fill="#f5f5f7">+</text>
-                  <text x="11" y="33" fontFamily="sans-serif" fontSize="11" fill="#f5f5f7">Contact</text>
-                </svg>
               )}
             </div>
           </Link>
         </div>
+      )}
 
-        {/* Three Squares - Desktop Only */}
-        {!isMobile && (
-          <div className="three-squares-row">
-            <div className={`square-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.6s' }}>
-              <Link href="/posts/portrait-series-or-1" className="card-wrapper">
-                <div className="card-scalable square-card">
-                  <svg viewBox="0 0 345 345" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                    <image href="https://i.imgur.com/m4Bwkvf.gif" width="345" height="345" preserveAspectRatio="xMidYMid slice" />
-                    <rect width="345" height="345" fill="transparent" />
-                    <text x="20" y="37" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#303030">+</text>
-                    <text x="20" y="59" fontFamily="sans-serif" fontSize="20" fill="#303030"></text>
-                    <text x="20" y="84" fontFamily="sans-serif" fontSize="13" fill="#303030"></text>
-                  </svg>
+      {/* Recent Posts Grid */}
+      <div className="py-16 px-8 md:px-16">
+        <h2 className="text-2xl font-bold mb-12">Recent Work</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {recentPosts.map((post) => (
+            <Link key={post._id} href={`/posts/${post.slug}`}>
+              <div className="cursor-pointer">
+                <div className="relative overflow-hidden bg-gray-900 rounded-lg" style={{ aspectRatio: '5/4' }}>
+                  {post.coverImage && (
+                    <img
+                      src={urlForImage(post.coverImage)?.width(600).height(480).url()}
+                      alt={post.coverImage.alt || post.title}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
                 </div>
-              </Link>
-            </div>
-
-            <div className={`square-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.7s' }}>
-              <Link href="/posts/secret-zoo" className="card-wrapper">
-                <div className="card-scalable square-card">
-                  <svg viewBox="0 0 345 345" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                    <image href="https://cdn.sanity.io/images/cl4twyq2/production/153a9621d38b0f978c2b02257022e34d53f6d5e6-2480x3508.jpg?w=1200&q=100&fit=max&auto=format" width="345" height="345" preserveAspectRatio="xMidYMid slice" />
-                    <rect width="345" height="345" fill="transparent" />
-                    <text x="20" y="37" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#ffffff">+</text>
-                    <text x="20" y="59" fontFamily="sans-serif" fontSize="20" fill="#303030"></text>
-                    <text x="20" y="84" fontFamily="sans-serif" fontSize="13" fill="#303030"></text>
-                  </svg>
+                
+                <div className="mt-4">
+                  <h3 className="text-lg font-semibold text-white">
+                    {post.title}
+                  </h3>
+                  {post.excerpt && (
+                    <p className="text-sm text-gray-400 mt-2 line-clamp-2">
+                      {post.excerpt}
+                    </p>
+                  )}
                 </div>
-              </Link>
-            </div>
-
-            <div className={`square-item card-animate ${cardsLoaded ? 'card-loaded' : ''}`} style={{ animationDelay: '0.8s' }}>
-              <Link href="/posts/signal-social-media-advertisement" className="card-wrapper">
-                <div className="card-scalable square-card">
-                  <svg viewBox="0 0 345 345" xmlns="http://www.w3.org/2000/svg" className="card-svg">
-                    <image href="https://i.imgur.com/KJLLfx6.gif" width="345" height="345" preserveAspectRatio="xMidYMid slice" />
-                    <rect width="345" height="345" fill="transparent" />
-                    <text x="20" y="37" fontFamily="sans-serif" fontSize="32" fontWeight="600" fill="#ffffff">+</text>
-                    <text x="20" y="59" fontFamily="sans-serif" fontSize="20" fill="#303030"></text>
-                    <text x="20" y="84" fontFamily="sans-serif" fontSize="13" fill="#303030"></text>
-                  </svg>
-                </div>
-              </Link>
-            </div>
-          </div>
-        )}
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
-
-      <style jsx>{`
-        .grid-container {
-          display: flex;
-          flex-direction: column;
-          padding: 0;
-          margin: 0;
-          margin-bottom: 0px;
-          transition: margin-bottom 0.6s ease-out;
-        }
-        
-        .grid-container.cards-loaded {
-          margin-bottom: 0;
-        }
-
-        .featured-item {
-          width: 100%;
-          padding: 0;
-          margin: 0;
-        }
-
-        .three-cards-row {
-          display: flex;
-          width: 100%;
-          padding: 0;
-          margin: 0;
-        }
-
-        .card-item {
-          flex: 1;
-          padding: 0;
-          margin: 0;
-        }
-
-        .contact-item {
-          width: 100%;
-          padding: 0;
-          margin: 0;
-          margin-bottom: 0 !important;
-        }
-
-        /* Three Squares Row - Desktop Only */
-        .three-squares-row {
-          display: flex;
-          width: 100%;
-          padding: 0;
-          margin: 0;
-        }
-
-        .square-item {
-          flex: 1;
-          padding: 0;
-          margin: 0;
-        }
-
-        .square-card {
-          filter: grayscale(100%);
-        }
-
-        /* Improved Vimeo video container */
-        .vimeo-wrapper {
-          position: relative;
-          width: 100%;
-          height: 0;
-          padding-bottom: 56.25%; /* 16:9 aspect ratio */
-          overflow: hidden;
-          background: #000;
-        }
-
-        .vimeo-iframe {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          border: none;
-          transform: scale(1.1); /* Slight scale to ensure full coverage */
-          transform-origin: center center;
-          pointer-events: none; /* This prevents the iframe from capturing clicks */
-        }
-
-        .overlay-content {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-          z-index: 2;
-        }
-
-        .text-overlay {
-          position: absolute;
-          top: 30px;
-          left: 38px;
-        }
-
-        .plus-sign {
-          display: block;
-          font-family: sans-serif;
-          font-size: 42px;
-          font-weight: 600;
-          color:rgba(0, 0, 0, 1);
-          line-height: 1;
-        }
-
-        .featured-text {
-          display: block;
-          font-family: sans-serif;
-          font-size: 42px;
-          color:rgba(0, 0, 0, 1);
-          line-height: 1;
-          margin-top: 2px;
-        }
-
-        .subtitle-text {
-          display: block;
-          font-family: sans-serif;
-          font-size: 22px;
-          color:rgba(0, 0, 0, 1);
-          line-height: 1;
-          margin-top: 2px;
-        }
-
-        .featured-card {
-          cursor: pointer;
-        }
-
-        /* Desktop specific styles */
-        @media (min-width: 768px) {
-          .grid-container {
-            max-width: 100vw;
-            margin: 0;
-            padding: 0;
-            gap: 0;
-          }
-
-          .three-cards-row {
-            gap: 0;
-          }
-
-          .three-squares-row {
-            gap: 0;
-          }
-
-          /* Adjust aspect ratio for desktop featured card */
-          .featured-item .vimeo-wrapper {
-            padding-bottom: calc(271.7 / 483 * 100%); /* Match your original dimensions */
-          }
-
-          .square-card:hover {
-            filter: grayscale(0%);
-          }
-
-          .square-card:hover .card-svg image {
-            transform: scale(1.00);
-          }
-        }
-        
-        .card-animate:not(.card-loaded) {
-          transform: translateY(20px);
-          opacity: 0;
-        }
-        
-        .card-animate {
-          transition: transform 0.6s ease-out, opacity 0.6s ease-out;
-          opacity: 1;
-        }
-        
-        .card-wrapper {
-          display: block;
-          position: relative;
-          width: 100%;
-          height: auto;
-          transform-origin: center center;
-          transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1);
-        }
-        
-        .card-scalable {
-          width: 100%;
-          position: relative;
-          transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1), filter 0.4s ease;
-          overflow: hidden;
-          will-change: transform, filter;
-          transform: translateZ(0);
-          filter: grayscale(100%);
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-          border-radius: 0px;
-        }
-        
-        .about-card {
-          filter: grayscale(100%) brightness(0.98) !important;
-        }
-        
-        .featured-card {
-          filter: grayscale(0%) !important;
-        }
-
-        .contact-card {
-          filter: grayscale(100%);
-        }
-        
-        .card-svg {
-          display: block;
-          width: 100%;
-          height: auto;
-          border-radius: 0px;
-        }
-        
-        @media (min-width: 768px) {
-          .card-scalable:hover {
-            filter: grayscale(0%);
-          }
-          .about-card:hover {
-            filter: grayscale(0%) brightness(1) !important;
-          }
-          
-          .card-scalable:not(.about-card):not(.featured-card):not(.visuals-card):hover .card-svg image {
-            transform: scale(1.00);
-          }
-          
-          /* Add rotation effect to typography card */
-          .typography-card:hover .card-svg image {
-            transform: rotate(2deg);
-          }
-        }
-        
-        .card-scalable .card-svg image {
-          transition: transform 0.3s ease, filter 0.3s ease;
-          transform-origin: center center;
-        }
-        
-        /* Mobile styles */
-        @media (max-width: 767px) {
-          .grid-container {
-            padding: 0;
-            gap: 0;
-            margin: 0;
-            margin-bottom: -50px;
-          }
-          
-          .grid-container.cards-loaded {
-            margin-bottom: 0;
-          }
-
-          .three-cards-row {
-            flex-direction: column;
-            gap: 0;
-          }
-
-          .card-scalable {
-            filter: none !important;
-            transform: none !important;
-            transition: none !important;
-            margin: 0;
-            padding: 0;
-          }
-          
-          .card-scalable:hover {
-            transform: none !important;
-            filter: none !important;
-          }
-          
-          .card-scalable .card-svg image {
-            transform: none !important;
-            transition: none !important;
-          }
-          
-          .card-animate:not(.card-loaded) {
-            transform: translateY(50px) !important;
-            opacity: 1 !important;
-          }
-
-          /* Hide vimeo wrapper on mobile since you're using static image */
-          .vimeo-wrapper {
-            display: none;
-          }
-
-          /* Hide three squares on mobile */
-          .three-squares-row {
-            display: none;
-          }
-        }
-      `}</style>
     </div>
   );
 }
