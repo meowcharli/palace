@@ -11,10 +11,7 @@ import * as demo from "@/sanity/lib/demo";
 
 import BlogFooter from "@/components/BlogFooter";
 
-export async function generateMetadata({ params, searchParams }: {
-  params: { [key: string]: string | string[] | undefined };
-  searchParams: { [key: string]: string | string[] | undefined };
-}): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   const settings = await sanityFetch({ query: settingsQuery });
   
   // Get domain from environment if available, else use default
