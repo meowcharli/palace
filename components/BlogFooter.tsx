@@ -27,7 +27,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
               <Image
                 src="/images/logo-default.svg"
                 alt="Typetax Logo"
-                width={100}
+                width={160}
                 height={46}
                 priority={false}
                 style={{ filter: 'brightness(0) saturate(100%) invert(38%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(98%) contrast(99%)' }}

@@ -80,7 +80,7 @@ export default function Page() {
               <div className="card-scalable featured-card">
                 <div className="vimeo-wrapper">
                   <iframe
-                    src="https://player.vimeo.com/video/1099244012?autoplay=1&loop=1&title=0&byline=0&portrait=0&controls=0&muted=1&background=1&quality=1080p"
+                    src="https://player.vimeo.com/video/1112961637?autoplay=1&loop=1&title=0&byline=0&portrait=0&controls=0&muted=1&background=1&quality=1080p"
                     width="100%"
                     height="100%"
                     frameBorder="0"
@@ -93,7 +93,7 @@ export default function Page() {
                     <div className="text-overlay">
                       <span className="plus-sign">+</span>
                       <span className="featured-text">Featured</span>
-                      <span className="subtitle-text">NBS | Banknote</span>
+                      <span className="subtitle-text">Climatopoly | Art Direction</span>
                     </div>
                   </div>
                 </div>
@@ -346,7 +346,7 @@ export default function Page() {
           font-family: sans-serif;
           font-size: 42px;
           font-weight: 600;
-          color:rgb(255, 255, 255);
+          color:rgba(0, 0, 0, 1);
           line-height: 1;
         }
 
@@ -354,7 +354,7 @@ export default function Page() {
           display: block;
           font-family: sans-serif;
           font-size: 42px;
-          color:rgb(255, 255, 255);
+          color:rgba(0, 0, 0, 1);
           line-height: 1;
           margin-top: 2px;
         }
@@ -363,7 +363,7 @@ export default function Page() {
           display: block;
           font-family: sans-serif;
           font-size: 22px;
-          color:rgba(255, 255, 255, 0.75);
+          color:rgba(0, 0, 0, 1);
           line-height: 1;
           margin-top: 2px;
         }
