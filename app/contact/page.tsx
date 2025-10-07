@@ -50,7 +50,7 @@ export default function ContactPage() {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText('c@type.tax');
+    navigator.clipboard.writeText('contact@palace.com');
     setActiveNotification(true);
     setTimeout(() => setActiveNotification(false), 2000);
   };
@@ -88,13 +88,13 @@ export default function ContactPage() {
           <div className="mb-8 md:mb-12 gap-2 text-left max-w-8xl px-4 sm:px-0">
             <div className="max-w-2xl mx-auto">
               <p className="text-xl text-black hidden md:block text-center">
-                Send us an email at c@type.tax to start something fresh.
+                Send us an email at contact@palace.com to start something fresh.
               </p>
               
               {/* Mobile layout - subtitle then wave */}
               <div className="md:hidden">
                 <p className="text-xl text-black text-left mb-4">
-                  Send us an email at c@type.tax to start something fresh.
+                  Send us an email at contact@palace.com to start something fresh.
                 </p>
                 <img 
                   src="/images/wave.gif" 
@@ -151,7 +151,7 @@ export default function ContactPage() {
                   </h3>
                   <div className="space-y-1 md:space-y-3">
                     <p className="text-sm md:text-xl text-black leading-relaxed">
-                      All-Purpose Email: c@type.tax
+                      All-Purpose Email: contact@palace.com
                     </p>
                     <p className="text-sm md:text-xl text-black leading-relaxed">
                       We usually respond fast, though you may wait up to 48 hours.
@@ -162,7 +162,7 @@ export default function ContactPage() {
                 {/* Card footer */}
                 <div className="mt-2 md:mt-6 pt-2 md:pt-6 border-t border-gray-300 relative">
                   <div className="text-xs md:text-base text-gray-600 font-mono">
-                    c@type.tax | www.type.tax
+                    contact@palace.com | www.palace.com
                   </div>
                   
                   {/* Click to copy hint */}
