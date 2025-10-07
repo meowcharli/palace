@@ -26,7 +26,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
             }}>
               <Image
                 src="/images/logo-default.svg"
-                alt="Typetax Logo"
+                alt="Palace Studio Logo"
                 width={160}
                 height={46}
                 priority={false}
@@ -67,7 +67,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
               fontSize: '0.75rem',
               textAlign: 'right'
             }}>
-              <p style={{ margin: 0 }}>© 2025 Typetax. All rights reserved.</p>
+              <p style={{ margin: 0 }}>© 2025 Palace Ad Agency. All rights reserved.</p>
               <p style={{ margin: 0 }}>Designed with 🍺 in Serbia.</p>
             </div>
           </div>
@@ -81,7 +81,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
             }}>
               <Image
                 src="/images/logo-default.svg"
-                alt="Typetax Logo"
+                alt="Palace Logo"
                 width={80}
                 height={37}
                 priority={false}
@@ -122,7 +122,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
               fontSize: '0.75rem',
               textAlign: 'center'
             }}>
-              <p style={{ margin: 0 }}>© 2025 Typetax. All rights reserved.</p>
+              <p style={{ margin: 0 }}>© 2025 Palace Ad Agency. All rights reserved.</p>
               <p style={{ margin: 0 }}>Designed with 🍺 in Serbia.</p>
             </div>
           </div>
