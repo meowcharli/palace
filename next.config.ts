@@ -26,8 +26,6 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: false,
   },
-  // Ensure client-side animations aren't stripped
-  swcMinify: true,
   // Keep framer-motion animations in production
   transpilePackages: ['framer-motion'],
 };
