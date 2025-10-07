@@ -3,12 +3,16 @@
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSiteTitle } from '@/utils/hostname';
 
 export default function ClientLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Get site title based on the hostname
+  const siteTitle = useSiteTitle();
+  
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
@@ -498,9 +502,11 @@ export default function ClientLayout({
                 onBlur={() => setIsFocused(false)}
                 onMouseDown={() => { setIsHovered(false); setIsFocused(false); }}
               >
+                {/* Dynamic logo based on site title */}
                 <img
-                  src="/images/logo.svg"
-                  alt="Home"
+                  src={siteTitle.includes('Type') ? "/images/logo-type.svg" : "/images/logo.svg"}
+                  alt={siteTitle}
+                  title={siteTitle}
                   className="home-icon"
                   style={{ height: '39px', width: 'auto', display: 'block', transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)', flexShrink: 0 }}
                   draggable={false}

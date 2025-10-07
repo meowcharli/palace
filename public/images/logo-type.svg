@@ -1,0 +1,8 @@
+<svg width="200" height="60" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .title { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; }
+    .domain { font-family: Arial, sans-serif; font-size: 18px; font-style: italic; }
+  </style>
+  <text x="10" y="30" class="title" fill="#333">Type</text>
+  <text x="70" y="30" class="domain" fill="#666">.tax</text>
+</svg>

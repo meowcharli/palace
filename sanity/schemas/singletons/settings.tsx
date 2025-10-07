@@ -11,11 +11,45 @@ export default defineType({
   fields: [
     defineField({
       name: "title",
-      description: "This field is the title of your blog.",
-      title: "Title",
+      description: "Default title for your site.",
+      title: "Default Title",
       type: "string",
       initialValue: demo.title,
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "domainTitles",
+      title: "Domain-Specific Titles",
+      description: "Set different titles for different domains",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          name: "domainTitle",
+          fields: [
+            {
+              name: "domain",
+              title: "Domain",
+              type: "string",
+              description: "Domain name (e.g., palace.ad, type.tax)",
+              validation: (rule) => rule.required(),
+            },
+            {
+              name: "title",
+              title: "Title",
+              type: "string",
+              description: "Title to display for this domain",
+              validation: (rule) => rule.required(),
+            }
+          ],
+          preview: {
+            select: {
+              title: 'domain',
+              subtitle: 'title'
+            }
+          }
+        }
+      ]
     }),
     defineField({
       name: "description",

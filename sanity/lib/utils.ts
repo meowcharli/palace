@@ -47,6 +47,48 @@ export const urlForImage = (source: any) => {
 };
 
 /**
+ * Get the site title based on the current domain
+ * @param settings The settings object from Sanity
+ * @param domain The current domain
+ * @returns The title for the current domain or default title
+ */
+export function getTitleForDomain(settings: any, domain?: string): string {
+  if (!domain || !settings) {
+    return settings?.title || "Palace";
+  }
+
+  // Normalize domain by removing www. prefix and http/https
+  const normalizedDomain = domain
+    .replace(/^https?:\/\//, '')
+    .replace(/^www\./, '')
+    .split('/')[0] // Get just the domain part
+    .split(':')[0]; // Remove port if present
+
+  // Debug
+  if (process.env.NODE_ENV !== "production") {
+    console.log(`Domain check: ${normalizedDomain}`);
+  }
+
+  // Define specific domain mappings
+  if (normalizedDomain.includes('type.tax')) {
+    return 'Type.tax';
+  }
+  
+  if (normalizedDomain.includes('palace.ad')) {
+    return 'Palace.ad';
+  }
+
+  // Look for a matching domain in domainTitles from Sanity
+  const domainSpecificTitle = settings.domainTitles?.find(
+    (dt: { domain: string; title: string }) => 
+      dt.domain.toLowerCase() === normalizedDomain.toLowerCase()
+  );
+
+  // Return domain-specific title if found, otherwise default title
+  return domainSpecificTitle?.title || settings.title || "Palace";
+}
+
+/**
  * Helper function to directly create a Sanity image URL from an asset reference
  * This is useful as a fallback when the standard approach fails
  */
