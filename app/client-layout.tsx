@@ -420,6 +420,7 @@ export default function ClientLayout({
               .desktop-logo {
                 pointer-events: auto;
                 -webkit-tap-highlight-color: transparent;
+                display: none; /* Hide logo on mobile */
               }
               
               .desktop-logo * {
@@ -514,7 +515,7 @@ export default function ClientLayout({
             top: '16px', 
             left: '8px', 
             zIndex: 999998, 
-            display: 'flex', 
+            display: isMobile ? 'none' : 'flex', 
             alignItems: 'center', 
             height: isAtTop ? '90px' : '22px',
             width: 'auto',
@@ -545,7 +546,7 @@ export default function ClientLayout({
               >
                 {/* Dynamic logo based on site title and scroll position */}
                 <img
-                  src={isAtTop ? (isMobile ? "/images/mobilelogo.svg" : "/images/logobig.svg") : (siteTitle.includes('Type') ? "/images/logo-type.svg" : "/images/logo.svg")}
+                  src={isMobile ? "/images/mobilelogo.svg" : (isAtTop ? "/images/logobig.svg" : (siteTitle.includes('Type') ? "/images/logo-type.svg" : "/images/logo.svg"))}
                   alt={siteTitle}
                   title={siteTitle}
                   className="home-icon"
@@ -577,8 +578,8 @@ export default function ClientLayout({
             transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-56px)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'flex-end',
-            paddingRight: '22px'
+            justifyContent: isMobile ? 'center' : 'flex-end',
+            paddingRight: isMobile ? '0' : '22px'
           }}
         >
           {/* Navigation SVGs - Always rendered for smooth transitions */}
