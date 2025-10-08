@@ -21,6 +21,7 @@ export default function ClientLayout({
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isAtTop, setIsAtTop] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const desktopSearchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
@@ -34,13 +35,31 @@ export default function ClientLayout({
     return () => clearTimeout(timer);
   }, []);
 
+  // Detect mobile screen size
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // Handle scroll for banner and header visibility
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
       // Track if user is at the very top
-      setIsAtTop(currentScrollY === 0);
+      const newIsAtTop = currentScrollY === 0;
+      setIsAtTop(newIsAtTop);
+      
+      // Close search when reaching the top
+      if (newIsAtTop && isSearchOpen) {
+        closeSearch();
+      }
       
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsHeaderVisible(false);
@@ -56,7 +75,7 @@ export default function ClientLayout({
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [lastScrollY]);
+  }, [lastScrollY, isSearchOpen]);
 
   // Toggle search input
   const toggleSearch = () => {
@@ -515,7 +534,7 @@ export default function ClientLayout({
               >
                 {/* Dynamic logo based on site title and scroll position */}
                 <img
-                  src={isAtTop ? "/images/logobig.svg" : (siteTitle.includes('Type') ? "/images/logo-type.svg" : "/images/logo.svg")}
+                  src={isAtTop ? (isMobile ? "/images/mobilelogo.svg" : "/images/logobig.svg") : (siteTitle.includes('Type') ? "/images/logo-type.svg" : "/images/logo.svg")}
                   alt={siteTitle}
                   title={siteTitle}
                   className="home-icon"
@@ -726,8 +745,9 @@ export default function ClientLayout({
                 aria-label="Search"
                 style={{ 
                   cursor: 'pointer',
-                  opacity: isSearchOpen ? 0 : 1,
-                  transition: 'opacity 0.3s ease'
+                  opacity: (isSearchOpen || isAtTop) ? 0 : 1,
+                  transition: 'opacity 0.3s ease',
+                  pointerEvents: (isSearchOpen || isAtTop) ? 'none' : 'auto'
                 }}
               >
                 <circle cx="11" cy="10" r="8" stroke="currentColor" strokeWidth="2" fill="none"/>
