@@ -20,6 +20,7 @@ export default function ClientLayout({
   const [isFocused, setIsFocused] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isAtTop, setIsAtTop] = useState(true);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const desktopSearchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
@@ -37,6 +38,9 @@ export default function ClientLayout({
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+      
+      // Track if user is at the very top
+      setIsAtTop(currentScrollY === 0);
       
       if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsHeaderVisible(false);
@@ -158,7 +162,7 @@ export default function ClientLayout({
               display: flex;
               align-items: center;
               height: 48px;
-              overflow: hidden;
+              overflow: visible;
               transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             }
             
@@ -482,9 +486,11 @@ export default function ClientLayout({
             zIndex: 999998, 
             display: 'flex', 
             alignItems: 'center', 
-            height: '22px',
+            height: isAtTop ? '90px' : '22px',
+            width: 'auto',
             transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-60px)',
-            transition: 'transform 0.3s ease'
+            transition: 'all 0.3s ease',
+            overflow: 'visible'
           }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => { setIsHovered(false); setIsFocused(false); }}
@@ -493,7 +499,12 @@ export default function ClientLayout({
             <div 
               onContextMenu={handleLogoRightClick}
               onMouseDown={(e) => { if (e.button === 2) e.preventDefault(); }}
-              style={{ display: 'inline-block', position: 'relative', marginTop: '5px' }}
+              style={{ 
+                display: 'inline-block', 
+                position: 'relative', 
+                marginTop: isAtTop ? '0' : '5px',
+                overflow: 'visible'
+              }}
             >
               <Link 
                 href="/" 
@@ -502,29 +513,22 @@ export default function ClientLayout({
                 onBlur={() => setIsFocused(false)}
                 onMouseDown={() => { setIsHovered(false); setIsFocused(false); }}
               >
-                {/* Dynamic logo based on site title */}
+                {/* Dynamic logo based on site title and scroll position */}
                 <img
-                  src={siteTitle.includes('Type') ? "/images/logo-type.svg" : "/images/logo.svg"}
+                  src={isAtTop ? "/images/logobig.svg" : (siteTitle.includes('Type') ? "/images/logo-type.svg" : "/images/logo.svg")}
                   alt={siteTitle}
                   title={siteTitle}
                   className="home-icon"
-                  style={{ height: '39px', width: 'auto', display: 'block', transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)', flexShrink: 0 }}
+                  style={{ 
+                    height: isAtTop ? '90px' : '39px', 
+                    width: 'auto', 
+                    display: 'block', 
+                    transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)', 
+                    flexShrink: 0 
+                  }}
                   draggable={false}
                 />
               </Link>
-            </div>
-            
-            <div 
-              className="access-link"
-              onClick={() => window.location.href = '/accessible.html'}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.href = '/accessible.html'; } }}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => setIsFocused(false)}
-              onMouseDown={() => { setIsHovered(false); setIsFocused(false); }}
-            >
-              <img src="/images/access.svg" alt="Accessibility" className="access-icon" style={{ height: '19px', width: 'auto', display: 'block' }} draggable={false} />
             </div>
           </div>
         </div>
@@ -536,13 +540,74 @@ export default function ClientLayout({
             top: '0px', 
             left: '0px',
             right: '0px',
-            height: '56px',
+            height: isAtTop ? '120px' : '56px',
             backgroundColor: '#FF4E00',
             zIndex: 999997,
-            transition: 'transform 0.3s ease',
-            transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-56px)'
+            transition: 'all 0.3s ease',
+            transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-56px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            paddingRight: '22px'
           }}
-        />
+        >
+          {/* Navigation SVGs - Always rendered for smooth transitions */}
+          <div style={{ 
+            display: 'flex', 
+            gap: '20px', 
+            alignItems: 'center',
+            opacity: isAtTop ? 1 : 0,
+            transform: isAtTop ? 'translateY(0)' : 'translateY(-40px)',
+            transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+            pointerEvents: isAtTop ? 'auto' : 'none'
+          }}>
+            <Link href="/work">
+              <img
+                src="/images/work.svg"
+                alt="Work"
+                style={{ 
+                  height: '100px', 
+                  width: 'auto', 
+                  display: 'block', 
+                  transition: 'all 0.3s ease 0.1s',
+                  transform: isAtTop ? 'translateY(0)' : 'translateY(-20px)',
+                  opacity: isAtTop ? 1 : 0
+                }}
+                draggable={false}
+              />
+            </Link>
+            <Link href="/contact">
+              <img
+                src="/images/contact.svg"
+                alt="Contact"
+                style={{ 
+                  height: '100px', 
+                  width: 'auto', 
+                  display: 'block', 
+                  transition: 'all 0.3s ease 0.2s',
+                  transform: isAtTop ? 'translateY(0)' : 'translateY(-20px)',
+                  opacity: isAtTop ? 1 : 0
+                }}
+                draggable={false}
+              />
+            </Link>
+            <Link href="/about">
+              <img
+                src="/images/about.svg"
+                alt="About"
+                style={{ 
+                  height: '100px', 
+                  width: 'auto', 
+                  display: 'block', 
+                  transition: 'all 0.3s ease 0.3s',
+                  transform: isAtTop ? 'translateY(0)' : 'translateY(-20px)',
+                  opacity: isAtTop ? 1 : 0
+                }}
+                draggable={false}
+              />
+            </Link>
+          </div>
+        </div>
 
         {/* Right Navigation and Search */}
         <div 
@@ -606,10 +671,22 @@ export default function ClientLayout({
             className={`svg-buttons-container ${isSearchOpen ? 'buttons-slide-out' : ''}`}
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', position: 'relative' }}
           >
-            {/* Navigation Links - Desktop Only */}
-            <div className="nav-links" style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '4px' }}>
-              <Link href="/gallery" className="nav-link">Type</Link>
-              <Link href="/showcase" className="nav-link">Visuals</Link>
+            {/* Navigation Links - Desktop Only - Hidden when at top */}
+            <div 
+              className="nav-links" 
+              style={{ 
+                display: 'flex', 
+                gap: '20px', 
+                alignItems: 'center', 
+                marginBottom: '4px',
+                opacity: isAtTop ? 0 : 1,
+                transform: isAtTop ? 'translateY(-20px)' : 'translateY(0)',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                pointerEvents: isAtTop ? 'none' : 'auto'
+              }}
+            >
+              <Link href="/work" className="nav-link">Work</Link>
+              <Link href="/contact" className="nav-link">Contact</Link>
               
               {/* Search Button inline - Desktop */}
               <svg 
