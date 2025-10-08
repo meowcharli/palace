@@ -60,27 +60,28 @@ export default function Page() {
   const currentFeatured = featuredPosts[currentFeaturedIndex];
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white" style={{ paddingTop: '60px' }}>
       {/* Featured Post Hero */}
       {currentFeatured && (
-        <div className="relative h-screen w-full overflow-hidden md:h-screen h-[80vh]">
-          <Link href={`/posts/${currentFeatured.slug}`}>
-            <div className="relative w-full h-full cursor-pointer">
-              {currentFeatured.coverImage && (
-                <img
-                  src={urlForImage(currentFeatured.coverImage)?.width(1920).height(1080).url()}
-                  alt={currentFeatured.coverImage.alt || currentFeatured.title}
-                  className="w-full h-full object-cover md:object-cover object-contain"
-                />
-              )}
-              
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-black bg-opacity-40" />
-              
-              {/* Content */}
+        <div className="px-2 md:px-4 lg:px-6" style={{ marginTop: window.innerWidth < 768 ? '-35px' : '-20px' }}>
+          <div className="relative h-[70vh] md:h-[80vh] lg:h-[85vh] w-full overflow-hidden rounded-xl">
+            <Link href={`/posts/${currentFeatured.slug}`}>
+              <div className="relative w-full h-full cursor-pointer">
+                {currentFeatured.coverImage && (
+                  <img
+                    src={urlForImage(currentFeatured.coverImage)?.width(1920).height(1080).url()}
+                    alt={currentFeatured.coverImage.alt || currentFeatured.title}
+                    className="w-full h-full object-cover"
+                  />
+                )}
+                
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-black bg-opacity-40" />
+                
+                {/* Content */}
               <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 lg:p-16">
                 <div className="max-w-4xl">
-                  <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold text-white mb-2 md:mb-4 leading-tight">
+                  <h1 className="text-2xl md:text-4xl lg:text-6xl font-medium text-white mb-2 md:mb-4 leading-tight">
                     {currentFeatured.title}
                   </h1>
                   {currentFeatured.excerpt && (
@@ -111,11 +112,12 @@ export default function Page() {
             </div>
           </Link>
         </div>
+        </div>
       )}
 
       {/* Recent Posts Grid */}
       <div className="py-16 px-8 md:px-16">
-        <h2 className="text-2xl font-bold mb-12">Recent Work</h2>
+        <h2 className="text-2xl font-medium mb-12">Recent Work</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {recentPosts.map((post) => (
@@ -132,7 +134,7 @@ export default function Page() {
                 </div>
                 
                 <div className="mt-4">
-                  <h3 className="text-lg font-semibold text-white">
+                  <h3 className="text-lg font-medium text-white">
                     {post.title}
                   </h3>
                   {post.excerpt && (

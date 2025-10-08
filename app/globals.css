@@ -2,6 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ========== Custom Scrollbar Styles ========== */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+  background: #000000 !important;
+  border-radius: 0 !important;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+  background: #FF4E00 !important;
+  border-radius: 8px !important;
+  border: none !important;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover {
+  background: #e04400 !important;
+}
+
+html::-webkit-scrollbar-corner,
+body::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-corner {
+  background: #000000 !important;
+}
+
+/* Firefox scrollbar */
+html,
+body,
+* {
+  scrollbar-width: auto !important;
+  scrollbar-color: #FF4E00 #000000 !important;
+}
+
 /* ========== Base Styles ========== */
 html, body {
   background-color: #000000 !important;

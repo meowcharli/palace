@@ -63,15 +63,15 @@ export default async function PostPage({ params }: Props) {
   }
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-black min-h-screen" style={{ paddingTop: '50px' }}>
       {/* Back Link */}
       <div className="max-w-7xl mx-auto px-6 pt-6">
         <div className="max-w-6xl mx-auto">
         <Link
-          href="/gallery"
+          href="/work"
           className="text-white hover:text-white/80 text-lg font-medium transition-colors duration-200"
         >
-          ← Back to Gallery
+          ← Back to Work
         </Link>
         </div>
       </div>

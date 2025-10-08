@@ -441,6 +441,17 @@ export default function ClientLayout({
               }
             }
             
+            /* Content spacing to account for fixed header */
+            body {
+              padding-top: 60px; /* Further reduced space for extended header */
+            }
+            
+            @media (max-width: 768px) {
+              body {
+                padding-top: 50px; /* Further reduced mobile padding */
+              }
+            }
+            
             @media (max-width: 480px) {
               .mobile-search-overlay {
                 left: 13px;
@@ -539,7 +550,7 @@ export default function ClientLayout({
                   title={siteTitle}
                   className="home-icon"
                   style={{ 
-                    height: isAtTop ? '90px' : '39px', 
+                    height: isAtTop ? (isMobile ? '60px' : '90px') : '39px', 
                     width: 'auto', 
                     display: 'block', 
                     transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)', 

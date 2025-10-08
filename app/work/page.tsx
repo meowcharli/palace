@@ -358,7 +358,7 @@ export default function WorkPage() {
   }
 
   return (
-    <div className="container mx-auto px-5">
+    <div className="container mx-auto px-5" style={{ paddingTop: '60px' }}>
       <div style={styles.container}>
         {/* Mobile: Single column layout */}
         <div className="block md:hidden">
