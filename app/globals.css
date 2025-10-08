@@ -13,14 +13,14 @@ body::-webkit-scrollbar,
 html::-webkit-scrollbar-track,
 body::-webkit-scrollbar-track,
 *::-webkit-scrollbar-track {
-  background: #000000 !important;
+  background: #2c2c2c !important;
   border-radius: 0 !important;
 }
 
 html::-webkit-scrollbar-thumb,
 body::-webkit-scrollbar-thumb,
 *::-webkit-scrollbar-thumb {
-  background: #FF4E00 !important;
+  background: #000000 !important;
   border-radius: 8px !important;
   border: none !important;
 }
@@ -28,13 +28,13 @@ body::-webkit-scrollbar-thumb,
 html::-webkit-scrollbar-thumb:hover,
 body::-webkit-scrollbar-thumb:hover,
 *::-webkit-scrollbar-thumb:hover {
-  background: #e04400 !important;
+  background: #000000 !important;
 }
 
 html::-webkit-scrollbar-corner,
 body::-webkit-scrollbar-corner,
 *::-webkit-scrollbar-corner {
-  background: #000000 !important;
+  background: #2c2c2c !important;
 }
 
 /* Firefox scrollbar */
@@ -42,7 +42,43 @@ html,
 body,
 * {
   scrollbar-width: auto !important;
-  scrollbar-color: #FF4E00 #000000 !important;
+  scrollbar-color: #000000 #2c2c2c !important;
+}
+
+/* ========== iOS/Mobile Styling ========== */
+/* Style the status bar area on iOS devices */
+html {
+  /* Set status bar style to light content */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* iOS Safari status bar background */
+body {
+  /* Viewport meta for iOS status bar */
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+
+/* Safe area styling for devices with notch/dynamic island */
+@supports (padding: max(0px)) {
+  body {
+    padding-top: max(60px, env(safe-area-inset-top));
+  }
+  
+  /* Override for mobile devices to ensure proper spacing with notch/island */
+  @media (max-width: 768px) {
+    body {
+      padding-top: max(50px, env(safe-area-inset-top));
+    }
+  }
+}
+
+/* PWA/standalone mode status bar color for iOS */
+@media (display-mode: standalone) {
+  html {
+    background-color: #FF4E00;
+  }
 }
 
 /* ========== Base Styles ========== */

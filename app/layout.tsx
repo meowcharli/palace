@@ -25,6 +25,17 @@ export async function generateMetadata(): Promise<Metadata> {
   
   return {
     title: title,
+    viewport: 'width=device-width, initial-scale=1, viewport-fit=cover',
+    themeColor: '#FF4E00',
+    appleWebApp: {
+      capable: true,
+      statusBarStyle: 'default',
+      title: title,
+    },
+    other: {
+      'apple-mobile-web-app-capable': 'yes',
+      'apple-mobile-web-app-status-bar-style': 'default',
+    },
   };
 }
 

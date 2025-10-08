@@ -420,7 +420,6 @@ export default function ClientLayout({
               .desktop-logo {
                 pointer-events: auto;
                 -webkit-tap-highlight-color: transparent;
-                display: none; /* Hide logo on mobile */
               }
               
               .desktop-logo * {
@@ -515,13 +514,15 @@ export default function ClientLayout({
             top: '16px', 
             left: '8px', 
             zIndex: 999998, 
-            display: isMobile ? 'none' : 'flex', 
+            display: 'flex', 
             alignItems: 'center', 
-            height: isAtTop ? '90px' : '22px',
+            height: isMobile ? '25px' : (isAtTop ? '90px' : '22px'),
             width: 'auto',
             transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-60px)',
             transition: 'all 0.3s ease',
-            overflow: 'visible'
+            overflow: 'visible',
+            opacity: isMobile ? (isAtTop ? 0 : 1) : 1,
+            pointerEvents: isMobile ? (isAtTop ? 'none' : 'auto') : 'auto'
           }}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => { setIsHovered(false); setIsFocused(false); }}
@@ -551,7 +552,7 @@ export default function ClientLayout({
                   title={siteTitle}
                   className="home-icon"
                   style={{ 
-                    height: isAtTop ? (isMobile ? '60px' : '90px') : '39px', 
+                    height: isMobile ? '39px' : (isAtTop ? '90px' : '39px'), 
                     width: 'auto', 
                     display: 'block', 
                     transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)', 
