@@ -63,7 +63,7 @@ export default function Page() {
     <div className="min-h-screen bg-black text-white" style={{ paddingTop: '60px' }}>
       {/* Featured Post Hero */}
       {currentFeatured && (
-        <div className="px-2 md:px-4 lg:px-6" style={{ marginTop: window.innerWidth < 768 ? '-10px' : '-20px' }}>
+        <div className="px-2 md:px-4 lg:px-6" style={{ marginTop: window.innerWidth < 768 ? '-5px' : '-20px' }}>
           <div className="relative h-[70vh] md:h-[80vh] lg:h-[85vh] w-full overflow-hidden rounded-xl">
             <Link href={`/posts/${currentFeatured.slug}`}>
               <div className="relative w-full h-full cursor-pointer">

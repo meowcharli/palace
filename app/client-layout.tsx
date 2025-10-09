@@ -462,14 +462,6 @@ export default function ClientLayout({
             /* Content spacing to account for fixed header */
           `
         }} />
-        {/* Dynamic body padding based on mobile banner state */}
-        <style dangerouslySetInnerHTML={{
-          __html: `
-            body {
-              padding-top: ${isMobile && isAtTop ? '80px' : (isMobile ? '50px' : '60px')} !important;
-            }
-          `
-        }} />
         {/* React handles the scroll behavior now */}
       </head>
       <body className="min-h-screen">
@@ -581,7 +573,7 @@ export default function ClientLayout({
               top: '0px', 
               left: '0px',
               right: '0px',
-              height: '30px',
+              height: '20px',
               backgroundColor: '#FF4E00',
               zIndex: 999996,
               transition: 'transform 0.3s ease',
@@ -614,7 +606,7 @@ export default function ClientLayout({
         <div 
           style={{ 
             position: 'fixed', 
-            top: (isMobile && isAtTop) ? '30px' : '0px', 
+            top: (isMobile && isAtTop) ? '20px' : '0px', 
             left: '0px',
             right: '0px',
             height: isAtTop ? '120px' : '56px',
