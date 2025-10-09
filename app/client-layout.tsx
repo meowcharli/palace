@@ -448,7 +448,7 @@ export default function ClientLayout({
             
             @media (max-width: 768px) {
               body {
-                padding-top: 50px; /* Further reduced mobile padding */
+                padding-top: 50px; /* Standard mobile padding when thin banner is not visible */
               }
             }
             
@@ -462,6 +462,14 @@ export default function ClientLayout({
             /* Content spacing to account for fixed header */
           `
         }} />
+        {/* Dynamic body padding based on mobile banner state */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            body {
+              padding-top: ${isMobile && isAtTop ? '80px' : (isMobile ? '50px' : '60px')} !important;
+            }
+          `
+        }} />
         {/* React handles the scroll behavior now */}
       </head>
       <body className="min-h-screen">
@@ -471,12 +479,12 @@ export default function ClientLayout({
           ref={searchContainerRef}
           style={{
             position: 'fixed',
-            top: '8px',
+            top: (isMobile && isAtTop) ? '38px' : '8px',
             left: '8px',
             right: '8px',
             height: '40px',
             zIndex: 999999,
-            transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-60px)',
+            transform: isHeaderVisible ? 'translateY(0)' : `translateY(${(isMobile && isAtTop) ? '-150px' : '-60px'})`,
             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             backgroundColor: '#FF4E00',
             borderRadius: '8px',
@@ -511,14 +519,14 @@ export default function ClientLayout({
           className={`desktop-logo ${isSearchOpen ? 'logo-hidden-mobile' : ''}`}
           style={{ 
             position: 'fixed', 
-            top: '16px', 
+            top: (isMobile && isAtTop) ? '46px' : '16px', 
             left: '8px', 
             zIndex: 999998, 
             display: 'flex', 
             alignItems: 'center', 
             height: isMobile ? '25px' : (isAtTop ? '90px' : '22px'),
             width: 'auto',
-            transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-60px)',
+            transform: isHeaderVisible ? 'translateY(0)' : `translateY(${(isMobile && isAtTop) ? '-150px' : '-60px'})`,
             transition: 'all 0.3s ease',
             overflow: 'visible',
             opacity: isMobile ? (isAtTop ? 0 : 1) : 1,
@@ -565,18 +573,55 @@ export default function ClientLayout({
           </div>
         </div>
         
+        {/* Thin Mobile Back Banner - Only shows on mobile */}
+        {isMobile && (
+          <div 
+            style={{ 
+              position: 'fixed', 
+              top: '0px', 
+              left: '0px',
+              right: '0px',
+              height: '30px',
+              backgroundColor: '#FF4E00',
+              zIndex: 999996,
+              transition: 'transform 0.3s ease',
+              transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              paddingLeft: '16px'
+            }}
+          >
+            <Link 
+              href="/" 
+              style={{
+                color: '#ffffff',
+                textDecoration: 'none',
+                fontSize: '16px',
+                fontWeight: '400',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px'
+              }}
+            >
+              <span>◤</span>
+              <span>home</span>
+            </Link>
+          </div>
+        )}
+
         {/* Full Width Banner */}
         <div 
           style={{ 
             position: 'fixed', 
-            top: '0px', 
+            top: (isMobile && isAtTop) ? '30px' : '0px', 
             left: '0px',
             right: '0px',
             height: isAtTop ? '120px' : '56px',
             backgroundColor: '#FF4E00',
             zIndex: 999997,
             transition: 'all 0.3s ease',
-            transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-56px)',
+            transform: isHeaderVisible ? 'translateY(0)' : `translateY(${(isMobile && isAtTop) ? '-150px' : '-56px'})`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: isMobile ? 'center' : 'flex-end',
@@ -646,12 +691,12 @@ export default function ClientLayout({
           className={`desktop-buttons ${isSearchOpen ? 'buttons-hidden-mobile' : ''}`}
           style={{ 
             position: 'fixed', 
-            top: '13.5px', 
+            top: (isMobile && isAtTop) ? '43.5px' : '13.5px', 
             right: '22px', 
             zIndex: 999998, 
             display: 'flex', 
             alignItems: 'flex-start',
-            transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-60px)',
+            transform: isHeaderVisible ? 'translateY(0)' : `translateY(${(isMobile && isAtTop) ? '-150px' : '-60px'})`,
             transition: 'transform 0.3s ease'
           }}
         >
