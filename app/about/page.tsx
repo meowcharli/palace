@@ -11,7 +11,9 @@ export default function AboutPage() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isInScrollSection, setIsInScrollSection] = useState(false);
   const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null);
+  const [mobileCardOffset, setMobileCardOffset] = useState(0);
   const cardsContainerRef = useRef<HTMLDivElement>(null);
+  const prevCardIndex = useRef(0);
 
   useEffect(() => {
     // Update portal container visibility and progress bar
@@ -29,10 +31,11 @@ export default function AboutPage() {
       left: 50% !important;
       transform: translateX(-50%) !important;
       z-index: 999999 !important;
-      background-color: rgba(255, 255, 255, 0.9) !important;
+      background: #000000 !important;
+      background-color: #FF4E00 !important;
       color: black !important;
       border-radius: 9999px !important;
-      padding: 0.6rem !important;
+      padding: 0.15rem 0.15rem !important;
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
       pointer-events: none !important;
       display: flex !important;
@@ -121,7 +124,7 @@ export default function AboutPage() {
       translateX: { mobile: 0, desktop: -20 },
       translateY: { mobile: 0, desktop: 30 },
       rotation: -2,
-      image: "https://i.imgur.com/9TXGHIk.png"
+      image: "/images/shapes.svg"
     },
     {
       title: "Science is awesome!",
@@ -129,7 +132,7 @@ export default function AboutPage() {
       translateX: { mobile: 0, desktop: 10 },
       translateY: { mobile: 0, desktop: 60 },
       rotation: 2,
-      image: "https://i.imgur.com/ITj3Osr.jpeg"
+      image: "/images/science.svg"
     },
     {
       title: "Team & Values",
@@ -142,7 +145,7 @@ export default function AboutPage() {
       translateX: { mobile: 0, desktop: -20 },
       translateY: { mobile: 0, desktop: 90 },
       rotation: -4,
-      image: "https://i.imgur.com/zh1YNti.png"
+      image: "/images/team.svg"
     }
   ];
 
@@ -152,12 +155,21 @@ export default function AboutPage() {
     const baseTranslateX = isMobile ? currentCard.translateX.mobile : currentCard.translateX.desktop;
     const baseTranslateY = isMobile ? currentCard.translateY.mobile : currentCard.translateY.desktop;
     
-    // Add scroll-based movement - vertical only with rotation
-    const scrollTranslateY = -scrollProgress * 40; // Move up as you scroll (negative for upward movement)
-    const scrollRotation = scrollProgress * 8; // Gradual rotation as you scroll
+    // Add scroll-based movement - different behavior for mobile vs desktop
+    let scrollTranslateY;
+    if (isMobile) {
+      // On mobile: simple gradual movement, less pronounced than desktop
+      scrollTranslateY = -scrollProgress * 40; // Gradual movement up, less than desktop
+    } else {
+      // On desktop: original smooth vertical movement
+      scrollTranslateY = -scrollProgress * 40; // Move up as you scroll (negative for upward movement)
+    }
+    
+    const scrollRotation = isMobile ? 0 : scrollProgress * 8; // No rotation on mobile, gradual rotation on desktop
+    const baseRotation = isMobile ? 0 : currentCard.rotation; // No base rotation on mobile
     
     return {
-      transform: `translate(${baseTranslateX}px, ${baseTranslateY + scrollTranslateY * 2}px) rotate(${currentCard.rotation + scrollRotation / 2}deg)`,
+      transform: `translate(${baseTranslateX}px, ${baseTranslateY + (isMobile ? scrollTranslateY : scrollTranslateY * 2)}px) rotate(${baseRotation + scrollRotation / 2}deg)`,
       transformOrigin: 'center center'
     };
   };
@@ -167,16 +179,16 @@ export default function AboutPage() {
       {/* PORTAL PROGRESS BAR - RENDERS DIRECTLY TO BODY */}
       {portalContainer && createPortal(
         <div style={{ 
-          width: '6rem', 
-          height: '0.25rem', 
-          backgroundColor: '#e5e7eb', 
+          width: '8rem', 
+          height: '0.8rem', 
+          backgroundColor: 'rgba(0, 0, 0, 1)', 
           borderRadius: '9999px', 
           overflow: 'hidden' 
         }}>
           <div 
             style={{ 
               height: '100%', 
-              backgroundColor: '#000000', 
+              backgroundColor: '#FF4E00', 
               borderRadius: '9999px', 
               transition: 'width 100ms ease-out',
               width: `${scrollProgress * 100}%`
@@ -186,12 +198,12 @@ export default function AboutPage() {
         portalContainer
       )}
 
-      {/* Top section with white background */}
-      <div className="bg-white">
-        <div className="container mx-auto px-5 py-3">
+      {/* Top section with black background */}
+      <div className="bg-black">
+        <div className="container mx-auto px-5 py-3 pt-12 md:pt-16">
           {/* Page header */}
           <div className="mb-3 gap-6 text-left max-w-8xl px-4 sm:px-0 font-semibold">
-            <div className="text-3xl max-w-2xl mx-auto text-black">
+            <div className="text-3xl max-w-2xl mx-auto text-white">
               {"We're"}{' '}
               <span 
                 className="relative inline-block cursor-pointer transition-all duration-300 ease-in-out"
@@ -203,7 +215,7 @@ export default function AboutPage() {
                     isHoveringTypetax ? 'opacity-0' : 'opacity-100'
                   }`}
                 >
-                  Typetax
+                  Boundless Palace
                 </span>
                 <span 
                   className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${
@@ -211,8 +223,8 @@ export default function AboutPage() {
                   }`}
                 >
                   <img 
-                    src="/images/logo-default.svg" 
-                    alt="Typetax Logo" 
+                    src="/images/aboutlogo.svg" 
+                    alt="Boundless Palace Logo" 
                     className="h-8 object-contain"
                   />
                 </span>
@@ -223,7 +235,7 @@ export default function AboutPage() {
 
           {/* Page header desc */}
           <div className="mb-4 md:mb-6 gap-2 text-left max-w-8xl px-4 sm:px-0">
-            <div className="text-xl max-w-2xl mx-auto text-black">
+            <div className="text-xl max-w-2xl mx-auto text-white">
               {"We're"} dedicated to experimentation and innovation in all things type-design, glyphs, geometry and graphics. In other words; we just really really like shapes.
             </div>
           </div>
@@ -252,7 +264,7 @@ export default function AboutPage() {
               className="relative w-full max-w-2xl md:max-w-3xl transition-all duration-700 ease-out"
               style={getDynamicTransform()}
             >
-              <div className="w-full bg-white relative overflow-hidden shadow-lg flex flex-col md:flex-row">
+              <div className="w-full bg-white relative overflow-hidden shadow-lg flex flex-col md:flex-row rounded-xl">
                 {/* Square image section */}
                 <div className="aspect-square w-60 md:w-80 md:flex-shrink-0 overflow-hidden mx-auto md:mx-0">
                   <img 
@@ -291,12 +303,12 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Bottom section with white background */}
-      <div className="bg-white">
+      {/* Bottom section with black background */}
+      <div className="bg-black">
         <div className="container mx-auto px-5 py-8">
           <div className="text-center space-y-4">
             <div>
-              <button className="text-black inline-flex items-center font-medium">
+              <button className="text-white inline-flex items-center font-medium">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
                 </svg>

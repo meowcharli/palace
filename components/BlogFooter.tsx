@@ -67,7 +67,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
               fontSize: '0.75rem',
               textAlign: 'right'
             }}>
-              <p style={{ margin: 0 }}>© 2025 Palace Ad Agency. All rights reserved.</p>
+              <p style={{ margin: 0 }}>© 2025 Boundless Palace. All rights reserved.</p>
               <p style={{ margin: 0 }}>Designed with 🍺 in Serbia.</p>
             </div>
           </div>
@@ -122,7 +122,7 @@ export default function BlogFooter({ footer, description }: BlogFooterProps) {
               fontSize: '0.75rem',
               textAlign: 'center'
             }}>
-              <p style={{ margin: 0 }}>© 2025 Palace Ad Agency. All rights reserved.</p>
+              <p style={{ margin: 0 }}>© 2025 Boundless Palace. All rights reserved.</p>
               <p style={{ margin: 0 }}>Designed with 🍺 in Serbia.</p>
             </div>
           </div>
