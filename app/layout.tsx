@@ -45,10 +45,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable}`}>
-      <ClientLayout>
-        {children}
-      </ClientLayout>
+    <html lang="en" className={`${inter.variable}`}> 
+      <body>
+        <ClientLayout>
+          {children}
+        </ClientLayout>
+      </body>
     </html>
   );
 }

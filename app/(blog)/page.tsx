@@ -27,6 +27,7 @@ export default function Page() {
         if (!response.ok) throw new Error('Failed to fetch posts');
         const data = await response.json();
         
+        console.log('Featured posts data:', data.featuredPosts);
         setFeaturedPosts(data.featuredPosts || []);
         setRecentPosts(data.recentPosts || []);
       } catch (error) {
@@ -50,6 +51,15 @@ export default function Page() {
     }
   }, [featuredPosts.length]);
 
+  // Log color changes for debugging
+  useEffect(() => {
+    const current = featuredPosts[currentFeaturedIndex];
+    if (current) {
+      console.log('Current featured post:', current.title);
+      console.log('Featured text color:', current.featuredTextColor);
+    }
+  }, [currentFeaturedIndex, featuredPosts]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
@@ -60,8 +70,8 @@ export default function Page() {
 
   const currentFeatured = featuredPosts[currentFeaturedIndex];
 
-  // Determine text color for featured post
-  const featuredTextColor = currentFeatured?.featuredTextColor || '#fff';
+  // Determine text color for featured post - ensure we get the value from the current featured post
+  const featuredTextColor = currentFeatured?.featuredTextColor || '#ffffff';
 
   return (
     <div className="min-h-screen bg-black text-white" style={{ paddingTop: '60px' }}>
@@ -79,19 +89,30 @@ export default function Page() {
                   />
                 )}
                 {/* Content with local overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 lg:p-8">
+                <div 
+                  className="absolute bottom-0 left-0 right-0 p-4 md:p-6 lg:p-8"
+                  style={{ 
+                    ['--featured-text-color' as any]: featuredTextColor 
+                  }}
+                >
                   <div className="relative max-w-2xl">
                     <div>
                       <h1
                         className="text-xl md:text-xl lg:text-2xl font-medium mb-1 md:mb-2 leading-tight"
-                        style={{ color: featuredTextColor }}
+                        style={{ 
+                          color: featuredTextColor,
+                          textShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                        }}
                       >
                         {currentFeatured.title}
                       </h1>
                       {currentFeatured.excerpt && (
                         <p
                           className="text-base md:text-base max-w-xl"
-                          style={{ color: featuredTextColor }}
+                          style={{ 
+                            color: featuredTextColor,
+                            textShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                          }}
                         >
                           {currentFeatured.excerpt}
                         </p>

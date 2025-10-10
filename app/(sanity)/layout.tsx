@@ -33,99 +33,78 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable}`}>
-      <head>
-        <style dangerouslySetInnerHTML={{
-          __html: `
+    <>
+      {/* Glass Header Styles - consider moving to globals.css for production */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          .glass-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 55px;
+            z-index: 999997;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px) saturate(1.8);
+            -webkit-backdrop-filter: blur(20px) saturate(1.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            will-change: backdrop-filter;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          .glass-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+              180deg,
+              rgba(255, 255, 255, 0.1) 0%,
+              rgba(255, 255, 255, 0.05) 50%,
+              rgba(255, 255, 255, 0.15) 100%
+            );
+            pointer-events: none;
+            mix-blend-mode: overlay;
+          }
+          .glass-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+              90deg,
+              transparent 0%,
+              rgba(255, 255, 255, 0.2) 50%,
+              transparent 100%
+            );
+            animation: shimmer 3s ease-in-out infinite;
+            pointer-events: none;
+          }
+          @keyframes shimmer {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+          }
+          @supports (-webkit-touch-callout: none) {
             .glass-header {
-              position: fixed;
-              top: 0;
-              left: 0;
-              right: 0;
-              height: 55px;
-              z-index: 999997;
-              
-              /* Core glass effect - Safari compatible */
-              background: rgba(255, 255, 255, 0.5);
-              backdrop-filter: blur(20px) saturate(1.8);
-              -webkit-backdrop-filter: blur(20px) saturate(1.8);
-              
-              /* Subtle border for definition */
-              border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-              
-              /* Hardware acceleration */
-              transform: translateZ(0);
-              -webkit-transform: translateZ(0);
-              will-change: backdrop-filter;
-              
-              /* Smooth transitions */
-              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+              background: rgba(255, 255, 255, 0.50);
+              backdrop-filter: blur(15px) saturate(1.5);
+              -webkit-backdrop-filter: blur(15px) saturate(1.5);
             }
-            
-            /* Enhanced glass effect with gradient overlay */
-            .glass-header::before {
-              content: '';
-              position: absolute;
-              inset: 0;
-              background: linear-gradient(
-                180deg,
-                rgba(255, 255, 255, 0.1) 0%,
-                rgba(255, 255, 255, 0.05) 50%,
-                rgba(255, 255, 255, 0.15) 100%
-              );
-              pointer-events: none;
-              mix-blend-mode: overlay;
-            }
-            
-            /* Subtle shimmer effect */
-            .glass-header::after {
-              content: '';
-              position: absolute;
-              top: 0;
-              left: -100%;
-              width: 100%;
-              height: 100%;
-              background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(255, 255, 255, 0.2) 50%,
-                transparent 100%
-              );
-              animation: shimmer 3s ease-in-out infinite;
-              pointer-events: none;
-            }
-            
-            @keyframes shimmer {
-              0% { left: -100%; }
-              50% { left: 100%; }
-              100% { left: 100%; }
-            }
-            
-            /* iOS-specific optimizations */
-            @supports (-webkit-touch-callout: none) {
-              .glass-header {
-                background: rgba(255, 255, 255, 0.50);
-                backdrop-filter: blur(15px) saturate(1.5);
-                -webkit-backdrop-filter: blur(15px) saturate(1.5);
-              }
-            }
-            
-            /* Content spacing to account for fixed header */
-            body {
-              padding-top: 55px;
-            }
-          `
-        }} />
-      </head>
-      <body className="min-h-screen">
-        {/* Simplified Glass Header */}
-        <div className="glass-header">
-          {/* Optional: Add your header content here */}
-        </div>
-
-        <FloatingButtons />
-        {children}
-      </body>
-    </html>
+          }
+          .glass-header + * {
+            padding-top: 55px;
+          }
+        `
+      }} />
+      {/* Simplified Glass Header */}
+      <div className="glass-header">
+        {/* Optional: Add your header content here */}
+      </div>
+      <FloatingButtons />
+      {children}
+    </>
   );
 }

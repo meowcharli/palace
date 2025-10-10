@@ -223,14 +223,8 @@ export default defineType({
       name: "featuredTextColor",
       title: "Featured Text Color",
       type: "string",
-      description: "Hex, rgb(a), or CSS color for the text on the featured post (e.g. #fff, #000, white, black)",
-      options: {
-        list: [
-          { title: 'White', value: '#fff' },
-          { title: 'Black', value: '#000' },
-          { title: 'Custom…', value: '' },
-        ],
-      },
+      description: "Enter any valid CSS color (e.g. #fff, #000, white, black, rgb(0,0,0)) for the text on the featured post.",
+      placeholder: "#fff or #000 or any CSS color",
     }),
   ],
   preview: {
