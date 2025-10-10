@@ -219,6 +219,19 @@ export default defineType({
       description: "Mark this post as featured to display it on the homepage",
       initialValue: false,
     }),
+    defineField({
+      name: "featuredTextColor",
+      title: "Featured Text Color",
+      type: "string",
+      description: "Hex, rgb(a), or CSS color for the text on the featured post (e.g. #fff, #000, white, black)",
+      options: {
+        list: [
+          { title: 'White', value: '#fff' },
+          { title: 'Black', value: '#000' },
+          { title: 'Custom…', value: '' },
+        ],
+      },
+    }),
   ],
   preview: {
     select: {

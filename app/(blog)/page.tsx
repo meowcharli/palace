@@ -11,6 +11,7 @@ interface Post {
   coverImage?: any;
   date: string;
   excerpt?: string;
+  featuredTextColor?: string;
 }
 
 export default function Page() {
@@ -59,11 +60,14 @@ export default function Page() {
 
   const currentFeatured = featuredPosts[currentFeaturedIndex];
 
+  // Determine text color for featured post
+  const featuredTextColor = currentFeatured?.featuredTextColor || '#fff';
+
   return (
     <div className="min-h-screen bg-black text-white" style={{ paddingTop: '60px' }}>
       {/* Featured Post Hero */}
       {currentFeatured && (
-        <div className="px-2 md:px-4 lg:px-6" style={{ marginTop: window.innerWidth < 768 ? '-5px' : '-20px' }}>
+        <div className="px-3 md:px-4 lg:px-6" style={{ marginTop: window.innerWidth < 768 ? '-5px' : '-20px' }}>
           <div className="relative h-[70vh] md:h-[80vh] lg:h-[85vh] w-full overflow-hidden rounded-xl">
             <Link href={`/posts/${currentFeatured.slug}`}>
               <div className="relative w-full h-full cursor-pointer">
@@ -74,44 +78,47 @@ export default function Page() {
                     className="w-full h-full object-cover"
                   />
                 )}
-                
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-black bg-opacity-40" />
-                
-                {/* Content */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 lg:p-16">
-                <div className="max-w-4xl">
-                  <h1 className="text-2xl md:text-4xl lg:text-6xl font-medium text-white mb-2 md:mb-4 leading-tight">
-                    {currentFeatured.title}
-                  </h1>
-                  {currentFeatured.excerpt && (
-                    <p className="text-sm md:text-lg text-white/90 max-w-2xl">
-                      {currentFeatured.excerpt}
-                    </p>
-                  )}
+                {/* Content with local overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 lg:p-8">
+                  <div className="relative max-w-2xl">
+                    <div>
+                      <h1
+                        className="text-xl md:text-xl lg:text-2xl font-medium mb-1 md:mb-2 leading-tight"
+                        style={{ color: featuredTextColor }}
+                      >
+                        {currentFeatured.title}
+                      </h1>
+                      {currentFeatured.excerpt && (
+                        <p
+                          className="text-base md:text-base max-w-xl"
+                          style={{ color: featuredTextColor }}
+                        >
+                          {currentFeatured.excerpt}
+                        </p>
+                      )}
+                    </div>
+                  </div>
                 </div>
+                {/* Featured indicator dots */}
+                {featuredPosts.length > 1 && (
+                  <div className="absolute bottom-8 right-8 flex space-x-2">
+                    {featuredPosts.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setCurrentFeaturedIndex(index);
+                        }}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          index === currentFeaturedIndex ? 'bg-white' : 'bg-white/40'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
-              
-              {/* Featured indicator dots */}
-              {featuredPosts.length > 1 && (
-                <div className="absolute bottom-8 right-8 flex space-x-2">
-                  {featuredPosts.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setCurrentFeaturedIndex(index);
-                      }}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        index === currentFeaturedIndex ? 'bg-white' : 'bg-white/40'
-                      }`}
-                    />
-                  ))}
-                </div>
-              )}
-            </div>
-          </Link>
-        </div>
+            </Link>
+          </div>
         </div>
       )}
 
