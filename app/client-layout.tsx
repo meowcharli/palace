@@ -170,301 +170,297 @@ export default function ClientLayout({
 
   return (
     <>
-      <head>
-        <style dangerouslySetInnerHTML={{
-          __html: `
-            /* React handles transitions now */
-            
-            /* Floating Button Styles */
-            .icon-hover-container {
-              position: relative;
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          /* React handles transitions now */
+          
+          /* Floating Button Styles */
+          .icon-hover-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 48px;
+            overflow: visible;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          }
+          
+          .access-link {
+            display: flex;
+            align-items: center;
+            margin-left: 0;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: none;
+            cursor: pointer;
+          }
+          
+          .icon-hover-container:not(.loaded) .access-link {
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+          }
+          
+          .icon-hover-container.loaded .access-link {
+            visibility: visible;
+          }
+          
+          .icon-hover-container.show-access .access-link {
+            opacity: 1;
+            transform: translateX(0);
+            margin-left: -5px;
+            pointer-events: auto;
+          }
+          
+          /* Navigation Links */
+          .nav-links {
+            transition: opacity 0.3s ease;
+          }
+          
+          .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 17px;
+            font-weight: 400;
+            font-variation-settings: 'wght' 400;
+            transition: font-variation-settings 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+          }
+          
+          .nav-link:hover {
+            font-variation-settings: 'wght' 600;
+          }
+          
+          /* Mobile search overlay */
+          .mobile-search-overlay {
+            display: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          
+          .mobile-search-overlay.mobile-search-active {
+            opacity: 1;
+            pointer-events: auto;
+          }
+          
+          @media (max-width: 768px) {
+            .mobile-search-overlay {
               display: flex;
-              align-items: center;
-              height: 48px;
-              overflow: visible;
-              transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            }
+            
+            .desktop-search {
+              display: none !important;
+            }
+            
+            .mobile-search-overlay.mobile-search-active {
+              display: flex;
+              opacity: 1;
+              pointer-events: auto;
+            }
+          }
+          
+          .mobile-search-input {
+            flex: 1;
+            height: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: #ffffff;
+            font-size: 16px;
+            -webkit-appearance: none;
+            -webkit-tap-highlight-color: transparent;
+          }
+          
+          .mobile-search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+          }
+          
+          .mobile-close-button, .desktop-close-button {
+            background: none;
+            border: none;
+            padding: 6px;
+            margin-left: 6px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 44px;
+            min-width: 44px;
+          }
+          
+          .desktop-close-button {
+            padding: 12px;
+          }
+          
+          .mobile-close-button:hover, .desktop-close-button:hover {
+            color: rgba(255, 255, 255, 1);
+          }
+          
+          .svg-buttons-container {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: right center;
+          }
+          
+          .buttons-slide-out {
+            transform: translateX(80px);
+            opacity: 0;
+          }
+          
+          /* Desktop search styles now controlled directly by React */
+          .desktop-search {
+            display: flex;
+            align-items: center;
+          }
+          
+          .search-input {
+            flex: 1;
+            height: 100%;
+            padding: 0 8px;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: #ffffff;
+            font-size: 16px;
+            transition: opacity 0.2s ease;
+            -webkit-appearance: none;
+          }
+          
+          .search-closed .search-input {
+            opacity: 0;
+          }
+          
+          .search-open .search-input {
+            opacity: 1;
+          }
+          
+          .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+          }
+          
+          .svg-clickable {
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+            color: rgba(255, 255, 255, 0.7);
+          }
+          
+          .svg-clickable:hover {
+            color: rgba(255, 255, 255, 1);
+          }
+          
+          /* Search button visibility */
+          .mobile-search-btn {
+            display: none;
+          }
+          
+          .desktop-search-btn {
+            display: block;
+          }
+          
+          /* Mobile styles */
+          @media (max-width: 768px) {
+            .svg-buttons-container {
+              align-items: center !important;
+            }
+            
+            .mobile-search-overlay {
+              display: flex;
+            }
+            
+            .desktop-search {
+              display: none !important;
+            }
+            
+            .nav-links {
+              display: none !important;
+            }
+            
+            .mobile-search-btn {
+              display: block;
+            }
+            
+            .desktop-search-btn {
+              display: none;
+            }
+            
+            .logo-hidden-mobile {
+              transform: translateX(-80px);
+              opacity: 0;
+            }
+            
+            .buttons-hidden-mobile {
+              transform: translateX(80px);
+              opacity: 0;
+            }
+            
+            .desktop-logo, .desktop-buttons {
+              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .icon-hover-container {
+              pointer-events: auto;
+              -webkit-tap-highlight-color: transparent;
+              touch-action: manipulation;
             }
             
             .access-link {
-              display: flex;
-              align-items: center;
-              margin-left: 0;
-              opacity: 0;
-              transform: translateX(-20px);
-              transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-              pointer-events: none;
-              cursor: pointer;
-            }
-            
-            .icon-hover-container:not(.loaded) .access-link {
+              display: none !important;
               visibility: hidden !important;
               opacity: 0 !important;
               pointer-events: none !important;
             }
             
-            .icon-hover-container.loaded .access-link {
-              visibility: visible;
-            }
-            
-            .icon-hover-container.show-access .access-link {
-              opacity: 1;
-              transform: translateX(0);
-              margin-left: -5px;
+            .desktop-logo {
               pointer-events: auto;
-            }
-            
-            /* Navigation Links */
-            .nav-links {
-              transition: opacity 0.3s ease;
-            }
-            
-            .nav-link {
-              color: #ffffff;
-              text-decoration: none;
-              font-size: 17px;
-              font-weight: 400;
-              font-variation-settings: 'wght' 400;
-              transition: font-variation-settings 0.2s ease;
               -webkit-tap-highlight-color: transparent;
             }
             
-            .nav-link:hover {
-              font-variation-settings: 'wght' 600;
-            }
-            
-            /* Mobile search overlay */
-            .mobile-search-overlay {
-              display: none;
-              opacity: 0;
-              pointer-events: none;
-              transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-            
-            .mobile-search-overlay.mobile-search-active {
-              opacity: 1;
+            .desktop-logo * {
               pointer-events: auto;
-            }
-            
-            @media (max-width: 768px) {
-              .mobile-search-overlay {
-                display: flex;
-              }
-              
-              .desktop-search {
-                display: none !important;
-              }
-              
-              .mobile-search-overlay.mobile-search-active {
-                display: flex;
-                opacity: 1;
-                pointer-events: auto;
-              }
-            }
-            
-            .mobile-search-input {
-              flex: 1;
-              height: 100%;
-              border: none;
-              outline: none;
-              background: transparent;
-              color: #ffffff;
-              font-size: 16px;
-              -webkit-appearance: none;
               -webkit-tap-highlight-color: transparent;
+              touch-action: manipulation;
             }
             
-            .mobile-search-input::placeholder {
-              color: rgba(255, 255, 255, 0.7);
+            .home-icon {
+              transition: none !important;
             }
             
-            .mobile-close-button, .desktop-close-button {
-              background: none;
-              border: none;
-              padding: 6px;
-              margin-left: 6px;
-              cursor: pointer;
-              color: rgba(255, 255, 255, 0.7);
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              transition: color 0.2s ease;
-              -webkit-tap-highlight-color: transparent;
-              min-height: 44px;
-              min-width: 44px;
+            .logo-hidden-mobile {
+              pointer-events: none !important;
             }
             
-            .desktop-close-button {
-              padding: 12px;
+            .logo-hidden-mobile * {
+              pointer-events: none !important;
             }
-            
-            .mobile-close-button:hover, .desktop-close-button:hover {
-              color: rgba(255, 255, 255, 1);
-            }
-            
-            .svg-buttons-container {
-              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-              transform-origin: right center;
-            }
-            
-            .buttons-slide-out {
-              transform: translateX(80px);
-              opacity: 0;
-            }
-            
-            /* Desktop search styles now controlled directly by React */
-            .desktop-search {
-              display: flex;
-              align-items: center;
-            }
-            
-            .search-input {
-              flex: 1;
-              height: 100%;
-              padding: 0 8px;
-              border: none;
-              outline: none;
-              background: transparent;
-              color: #ffffff;
-              font-size: 16px;
-              transition: opacity 0.2s ease;
-              -webkit-appearance: none;
-            }
-            
-            .search-closed .search-input {
-              opacity: 0;
-            }
-            
-            .search-open .search-input {
-              opacity: 1;
-            }
-            
-            .search-input::placeholder {
-              color: rgba(255, 255, 255, 0.7);
-            }
-            
-            .svg-clickable {
-              cursor: pointer;
-              transition: opacity 0.3s ease;
-              -webkit-tap-highlight-color: transparent;
-              -webkit-user-select: none;
-              user-select: none;
-              color: rgba(255, 255, 255, 0.7);
-            }
-            
-            .svg-clickable:hover {
-              color: rgba(255, 255, 255, 1);
-            }
-            
-            /* Search button visibility */
-            .mobile-search-btn {
-              display: none;
-            }
-            
-            .desktop-search-btn {
-              display: block;
-            }
-            
-            /* Mobile styles */
-            @media (max-width: 768px) {
-              .svg-buttons-container {
-                align-items: center !important;
-              }
-              
-              .mobile-search-overlay {
-                display: flex;
-              }
-              
-              .desktop-search {
-                display: none !important;
-              }
-              
-              .nav-links {
-                display: none !important;
-              }
-              
-              .mobile-search-btn {
-                display: block;
-              }
-              
-              .desktop-search-btn {
-                display: none;
-              }
-              
-              .logo-hidden-mobile {
-                transform: translateX(-80px);
-                opacity: 0;
-              }
-              
-              .buttons-hidden-mobile {
-                transform: translateX(80px);
-                opacity: 0;
-              }
-              
-              .desktop-logo, .desktop-buttons {
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-              }
-              
-              .icon-hover-container {
-                pointer-events: auto;
-                -webkit-tap-highlight-color: transparent;
-                touch-action: manipulation;
-              }
-              
-              .access-link {
-                display: none !important;
-                visibility: hidden !important;
-                opacity: 0 !important;
-                pointer-events: none !important;
-              }
-              
-              .desktop-logo {
-                pointer-events: auto;
-                -webkit-tap-highlight-color: transparent;
-              }
-              
-              .desktop-logo * {
-                pointer-events: auto;
-                -webkit-tap-highlight-color: transparent;
-                touch-action: manipulation;
-              }
-              
-              .home-icon {
-                transition: none !important;
-              }
-              
-              .logo-hidden-mobile {
-                pointer-events: none !important;
-              }
-              
-              .logo-hidden-mobile * {
-                pointer-events: none !important;
-              }
-            }
-            
-            /* Content spacing to account for fixed header */
+          }
+          
+          /* Content spacing to account for fixed header */
+          body {
+            padding-top: 60px; /* Further reduced space for extended header */
+          }
+          
+          @media (max-width: 768px) {
             body {
-              padding-top: 60px; /* Further reduced space for extended header */
+              padding-top: 50px; /* Standard mobile padding when thin banner is not visible */
             }
-            
-            @media (max-width: 768px) {
-              body {
-                padding-top: 50px; /* Standard mobile padding when thin banner is not visible */
-              }
+          }
+          
+          @media (max-width: 480px) {
+            .mobile-search-overlay {
+              left: 13px;
+              right: 13px;
             }
-            
-            @media (max-width: 480px) {
-              .mobile-search-overlay {
-                left: 13px;
-                right: 13px;
-              }
-            }
-            
-            /* Content spacing to account for fixed header */
-          `
-        }} />
-        {/* React handles the scroll behavior now */}
-      </head>
-      <body className="min-h-screen">
+          }
+          
+          /* Content spacing to account for fixed header */
+        `
+      }} />
         {/* Mobile Search Bar - Only visible on mobile */}
         <div 
           className={`mobile-search-overlay ${isSearchOpen ? 'mobile-search-active' : ''}`}
@@ -808,7 +804,6 @@ export default function ClientLayout({
         </div>
 
         {children}
-      </body>
     </>
   );
 }

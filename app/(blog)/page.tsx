@@ -108,7 +108,7 @@ export default function Page() {
                       </h1>
                       {currentFeatured.excerpt && (
                         <p
-                          className="text-base md:text-base max-w-xl"
+                          className="text-base font-medium md:text-base max-w-xl"
                           style={{ 
                             color: featuredTextColor,
                             textShadow: '0 2px 4px rgba(0,0,0,0.1)'
