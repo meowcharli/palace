@@ -77,8 +77,8 @@ export default function Page() {
     <div className="min-h-screen bg-black text-white" style={{ paddingTop: '60px' }}>
       {/* Featured Post Hero */}
       {currentFeatured && (
-        <div className="px-3 md:px-4 lg:px-6" style={{ marginTop: window.innerWidth < 768 ? '-5px' : '-20px' }}>
-          <div className="relative h-[70vh] md:h-[80vh] lg:h-[85vh] w-full overflow-hidden rounded-xl">
+        <div className="px-4 md:px-8 lg:px-16">
+          <div className="relative h-[60vh] md:h-[80vh] lg:h-[85vh] w-full overflow-hidden rounded-xl">
             <Link href={`/posts/${currentFeatured.slug}`}>
               <div className="relative w-full h-full cursor-pointer">
                 {currentFeatured.coverImage && (
@@ -144,14 +144,14 @@ export default function Page() {
       )}
 
       {/* Recent Posts Grid */}
-      <div className="py-16 px-8 md:px-16">
+      <div className="py-16 px-4 md:px-8 lg:px-16">
         <h2 className="text-2xl font-medium mb-12">Recent Work</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {recentPosts.map((post) => (
             <Link key={post._id} href={`/posts/${post.slug}`}>
               <div className="cursor-pointer">
-                <div className="relative overflow-hidden bg-gray-900 rounded-lg" style={{ aspectRatio: '5/4' }}>
+                <div className="relative overflow-hidden bg-gray-900 rounded-lg" style={{ aspectRatio: '3/2' }}>
                   {post.coverImage && (
                     <img
                       src={urlForImage(post.coverImage)?.width(600).height(480).url()}
