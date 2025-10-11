@@ -22,12 +22,18 @@ export default function ClientLayout({
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isAtTop, setIsAtTop] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [desktopSideOffset, setDesktopSideOffset] = useState<number>(12);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const desktopSearchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const desktopSearchContainerRef = useRef<HTMLDivElement>(null);
   const searchButtonRef = useRef<SVGSVGElement>(null);
   const router = useRouter();
+  // Centralized primary color — change this value to update all uses
+  const PRIMARY_COLOR = '#000000';
+  // Banner outline (thin line) color and thickness
+  const BANNER_BORDER_COLOR = '#ffffff';
+  const BANNER_BORDER_THICKNESS = '3px';
 
   // Prevent flash on load
   useEffect(() => {
@@ -45,6 +51,26 @@ export default function ClientLayout({
     window.addEventListener('resize', checkMobile);
     
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Compute desktop side offset so fixed banners align with centered page content
+  useEffect(() => {
+    const computeOffset = () => {
+      // Page container uses: max-w-[1600px] mx-auto px-3 xl:px-4
+      const viewport = window.innerWidth;
+      const maxContentWidth = 1600;
+      // base padding: px-3 -> 12px, xl:px-4 -> 16px at large screens (Tailwind xl ~1280px)
+      const basePadding = viewport >= 1280 ? 16 : 12;
+      const extra = Math.max((viewport - maxContentWidth) / 2, 0);
+      // nudge it slightly inward so it doesn't sit exactly on the container edge
+      const raw = Math.round(extra + basePadding);
+      const nudged = Math.max(raw - 8, 8);
+      setDesktopSideOffset(nudged);
+    };
+
+    computeOffset();
+    window.addEventListener('resize', computeOffset);
+    return () => window.removeEventListener('resize', computeOffset);
   }, []);
 
   // Handle scroll for banner and header visibility
@@ -172,6 +198,8 @@ export default function ClientLayout({
     <>
       <style dangerouslySetInnerHTML={{
         __html: `
+          :root { --primary: ${PRIMARY_COLOR}; --banner-border-color: ${BANNER_BORDER_COLOR}; --banner-border-thickness: ${BANNER_BORDER_THICKNESS}; }
+          /* React handles transitions now */
           /* React handles transitions now */
           
           /* Floating Button Styles */
@@ -474,7 +502,8 @@ export default function ClientLayout({
             zIndex: 999999,
             transform: isHeaderVisible ? 'translateY(0)' : `translateY(${(isMobile && isAtTop) ? '-150px' : '-60px'})`,
             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-            backgroundColor: '#FF4E00',
+              // keep mobile search background black for contrast
+              backgroundColor: PRIMARY_COLOR,
             borderRadius: '8px',
             padding: '0 16px',
             alignItems: 'center'
@@ -505,10 +534,11 @@ export default function ClientLayout({
         {/* Left Logo */}
         <div 
           className={`desktop-logo ${isSearchOpen ? 'logo-hidden-mobile' : ''}`}
-          style={{ 
-            position: 'fixed', 
-            top: (isMobile && isAtTop) ? '46px' : '16px', 
-            left: '8px', 
+      style={{ 
+        position: 'fixed', 
+        top: (isMobile && isAtTop) ? '46px' : '16px', 
+        // Align left logo with page content on desktop using computed offset
+        left: isMobile ? '8px' : `${desktopSideOffset}px`, 
             zIndex: 999998, 
             display: 'flex', 
             alignItems: 'center', 
@@ -570,9 +600,10 @@ export default function ClientLayout({
               left: '0px',
               right: '0px',
               height: '20px',
-              backgroundColor: '#FF4E00',
+              backgroundColor: PRIMARY_COLOR,
+              boxShadow: isHeaderVisible ? `0 ${BANNER_BORDER_THICKNESS} 0 0 ${BANNER_BORDER_COLOR}` : 'none',
               zIndex: 999996,
-              transition: 'transform 0.3s ease',
+              transition: 'transform 0.3s ease, box-shadow 0.18s ease',
               transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-100%)',
               display: 'flex',
               alignItems: 'center',
@@ -606,14 +637,15 @@ export default function ClientLayout({
             left: '0px',
             right: '0px',
             height: isAtTop ? '120px' : '56px',
-            backgroundColor: '#FF4E00',
+            backgroundColor: PRIMARY_COLOR,
+            boxShadow: isHeaderVisible ? `0 ${BANNER_BORDER_THICKNESS} 0 0 ${BANNER_BORDER_COLOR}` : 'none',
             zIndex: 999997,
-            transition: 'all 0.3s ease',
+            transition: 'all 0.3s ease, box-shadow 0.18s ease',
             transform: isHeaderVisible ? 'translateY(0)' : `translateY(${(isMobile && isAtTop) ? '-150px' : '-56px'})`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: isMobile ? 'center' : 'flex-end',
-            paddingRight: isMobile ? '0' : '22px'
+            paddingRight: isMobile ? '0' : '8px'
           }}
         >
           {/* Navigation SVGs - Always rendered for smooth transitions */}
@@ -624,7 +656,9 @@ export default function ClientLayout({
             opacity: isAtTop ? 1 : 0,
             transform: isAtTop ? 'translateY(0)' : 'translateY(-40px)',
             transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-            pointerEvents: isAtTop ? 'auto' : 'none'
+            pointerEvents: isAtTop ? 'auto' : 'none',
+            // Add right padding on desktop so the icons line up with the page content width
+            paddingRight: isMobile ? undefined : `${desktopSideOffset}px`
           }}>
             <Link href="/work">
               <img
@@ -678,9 +712,10 @@ export default function ClientLayout({
         <div 
           className={`desktop-buttons ${isSearchOpen ? 'buttons-hidden-mobile' : ''}`}
           style={{ 
-            position: 'fixed', 
-            top: (isMobile && isAtTop) ? '43.5px' : '13.5px', 
-            right: '22px', 
+              position: 'fixed', 
+              top: (isMobile && isAtTop) ? '43.5px' : '13.5px', 
+              // keep desktop buttons aligned with content by anchoring to computed offset
+              right: isMobile ? '22px' : `${desktopSideOffset}px`, 
             zIndex: 999998, 
             display: 'flex', 
             alignItems: 'flex-start',
@@ -694,7 +729,8 @@ export default function ClientLayout({
             ref={desktopSearchContainerRef}
             style={{ 
               position: "fixed", 
-              right: '12px', 
+              // place the popup so its right edge lines up with the content container
+              right: isMobile ? '12px' : `${desktopSideOffset}px`, 
               top: "-7px", // Adjusted position higher
               zIndex: 999999,
               height: '40px',
@@ -703,7 +739,8 @@ export default function ClientLayout({
               transform: isSearchOpen ? 'scaleX(1)' : 'scaleX(0)',
               transformOrigin: 'right center',
               borderRadius: '8px',
-              backgroundColor: '#FF4E00',
+              // ensure popup background is the primary (black) color to match header
+              backgroundColor: PRIMARY_COLOR,
               transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               overflow: 'hidden',
               display: 'flex',
